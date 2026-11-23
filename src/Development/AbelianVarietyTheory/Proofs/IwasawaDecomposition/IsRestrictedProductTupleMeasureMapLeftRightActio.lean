@@ -156,7 +156,7 @@ theorem map_lrAct {S' : Type} [CommRing S'] (φ : S →+* S') (g : Matrix (Fin M
 
 theorem continuous_lrAct [TopologicalSpace S] [IsTopologicalRing S] (g : Matrix (Fin M) (Fin M) S)
     (γ : Matrix (Fin n) (Fin n) S) : Continuous (lrAct g γ) := by
-  unfold lrAct Matrix.mulVec dotProduct
+  change Continuous fun (X : Fin n → Fin M → S) a i => ∑ j, g i j * ∑ c, X c j * γ c a
   fun_prop
 
 def lrHomeo [TopologicalSpace S] [IsTopologicalRing S] (g : GL (Fin M) S) (γ : GL (Fin n) S) :
