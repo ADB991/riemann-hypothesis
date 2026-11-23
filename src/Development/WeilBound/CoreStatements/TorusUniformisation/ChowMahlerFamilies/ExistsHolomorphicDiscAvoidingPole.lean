@@ -280,7 +280,7 @@ theorem PositivityTheory.Xgn.exists_holomorphic_disc_avoiding_pole : ∀ (K : Ty
     (hV.primeIdealOf ⟨x.1, hx⟩).asIdeal.primeCompl w
   obtain ⟨h, h1, h2⟩ := hV.exists_basicOpen_le ⟨genPt ξ, hW⟩ hg
   let φ : Γ(X, V) → Ω := fun t => (Scheme.stalkClosedPointTo ξ).hom (X.presheaf.germ V (genPt ξ) hg t)
-  have hφ : ∀ t, genMap ξ x (algebraMap Γ(X, V) (X.presheaf.stalk x.1) t) = φ t := genMap_germ V x hx hg
+  have hφ : ∀ t, genMap ξ x (algebraMap Γ(X, V) (X.presheaf.stalk x.1) t) = φ t := PositivityTheory.Xgn.NoPoleDisc.genMap_germ V x hx hg
   have hub := IsLocalization.map_units (X.presheaf.stalk x.1) b
   have fab : f * φ a = φ b := by
     rw [← hφ, ← hφ, ← hab, map_mul, ← _root_.mul_assoc, hfw, _root_.one_mul]
@@ -306,7 +306,7 @@ theorem PositivityTheory.Xgn.exists_holomorphic_disc_avoiding_pole : ∀ (K : Ty
     exact (congrArg _ (hu ▸ u.inv_val)).trans (_root_.mul_one _)
   refine ⟨sp z, X.presheaf.germ V _ (centre_mem hV (ψ z)) b.1 * u.inv, mul_right_cancel₀ a0 ?_, eq_div_of_mul_eq c₄ ?_⟩
   · have := congrArg (genMap ξ ⟨_, sp z⟩) k
-    rw [map_mul, genMap_germ V ⟨_, sp z⟩ _ hg a, genMap_germ V ⟨_, sp z⟩ _ hg b.1] at this
+    rw [map_mul, PositivityTheory.Xgn.NoPoleDisc.genMap_germ V ⟨_, sp z⟩ _ hg a, PositivityTheory.Xgn.NoPoleDisc.genMap_germ V ⟨_, sp z⟩ _ hg b.1] at this
     rw [fab]
     exact this
   · let F : X.presheaf.stalk (centre (spMap (ψ z) ≫ hV.fromSpec)) →+* ℂ :=
