@@ -225,7 +225,7 @@ theorem exists_sab_glue : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
   have o₁ : IsOpenImmersion ψ₁ := MorphismProperty.of_isPullback gp₁.1.flip inferInstance
   have o₂ : IsOpenImmersion ψ₂ := MorphismProperty.of_isPullback gp₂.1.flip inferInstance
   have sq : IsPullback m₁.φ m₂.φ ψ₁ ψ₂ := by
-    have big := m₁.cart.1.paste_vert (isPullback_opens_inf U V)
+    have big := m₁.cart.1.paste_vert (_root_.AlgebraicGeometry.isPullback_opens_inf U V)
     rw [← m₂.cart.1.w, ← gp₁.1.w] at big
     exact big.of_bot hφ gp₂.1
   have cov : Set.range ψ₁ ∪ Set.range ψ₂ = Set.univ := by
