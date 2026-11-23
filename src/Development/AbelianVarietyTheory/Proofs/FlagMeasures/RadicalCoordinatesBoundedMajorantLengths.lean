@@ -261,7 +261,7 @@ theorem dr_eq (z z' : Fin (2 * r + k + 1) → ℂ) (g : Mat k r) :
   unfold Dmin
   congr 1
   ext a b
-  simp [Zhat, Zr, fvec, NfMid.herm_e, mulVec_bvec]
+  simp [Formalism.QuantumDeterminants.Zhat, Zr, fvec, NfMid.herm_e, mulVec_bvec]
 
 end
 
