@@ -171,7 +171,7 @@ section Vacuum
 
 open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.TaylorLogMetric Formalism.MainNotions.StandardLatticesGL3 Formalism.L2.Ker GlobalTheory.ThetaAlgebraic Formalism.L2.Th1 GlobalTheory.Mem.Col2 Classical
 
-variable {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} (B : Base D cc δ)
+variable {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} (B : Formalism.L2.Ker.Base D cc δ)
 
 theorem kappa_mem : B.kappa ∈ Qbar := by
   have hrt : ∀ q : {p : ℕ // p.Prime ∧ SplitK D p}, B.kc.rt q ∈ Qbar := by
