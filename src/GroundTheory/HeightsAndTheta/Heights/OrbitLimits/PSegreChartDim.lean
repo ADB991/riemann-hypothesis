@@ -99,7 +99,8 @@ theorem ringKrullDim_of_mem_minimalPrimes_chartIdeal {P : Ideal (MvPolynomial (�
     (hP : ReciprocityTheory.AnForm.R.IsMultiHomogIdeal P) (e : ℕ)
     (hdim : ∀ Q ∈ P.minimalPrimes,
       ringKrullDim (MvPolynomial (Σ k, ι k) ℂ ⧸ Q) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞))
-    (p : (k : K) → ι k) {𝔮 : Ideal (MvPolynomial (Σ k, ι k) ℂ)} (h𝔮 : 𝔮 ∈ (chartIdeal P p).minimalPrimes) :
+    (p : (k : K) → ι k) {𝔮 : Ideal (MvPolynomial (Σ k, ι k) ℂ)}
+    (h𝔮 : 𝔮 ∈ (ReciprocityTheory.AnForm.R.chartIdeal P p).minimalPrimes) :
     ringKrullDim (MvPolynomial (Σ k, ι k) ℂ ⧸ 𝔮) = e := by
   classical
   have : 𝔮.IsPrime := h𝔮.1.1
