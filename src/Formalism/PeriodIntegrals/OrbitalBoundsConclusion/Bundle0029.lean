@@ -25,13 +25,13 @@ namespace PI.AmpOrbQuot
 
 open Formalism.QuantumDeterminants Formalism.MainNotions.S PI.AmpRootCommon
 
-theorem muN_smul {k r : ℕ} (L : LocBessel k r) : L.μN = L.κN • haarLie (Nset k r) 1 := by
+theorem muN_smul {k r : ℕ} (L : LocBessel k r) : L.μN = L.κN • Formalism.MainNotions.S.haarLie (Nset k r) 1 := by
   rw [LocBessel.μN]
-  unfold haarLie
+  unfold Formalism.MainNotions.S.haarLie
   rw [one_smul]
 
 theorem exists_isOrbQuot_of_isHaarOn {k r : ℕ} (L : LocBessel k r) (g : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ)
-    (μR : Measure (Mt k r)) (hg : g ∈ UH (Hpk k r)) (hμ : IsHaarOn (RStab k r g) μR)
+    (μR : Measure (Mt k r)) (hg : g ∈ UH (Hpk k r)) (hμ : Formalism.MainNotions.S.IsHaarOn (Formalism.MainNotions.S.RStab k r g) μR)
     [SFinite L.μN] (hN : ∀ s ∈ Nset k r, L.μN.map (lmulM s) = L.μN) (hc : L.μN (NS k r)ᶜ = 0) :
     ∃ ν : Measure (PairSp k r), IsOrbQuot L g μR ν := by
   have : SigmaFinite μR := hμ.1
@@ -56,7 +56,7 @@ theorem exists_isOrbQuot_of_isHaarOn {k r : ℕ} (L : LocBessel k r) (g : Matrix
   have hm1 : Measurable (Function.uncurry fun (x : PairSp k r) (a : Mt k r) => θ x * f (stabAct g (Matrix.of a) x)) :=
     (hθ.comp measurable_fst).mul (hJ.comp (f := Prod.swap) measurable_swap)
   rw [lintegral_lintegral_swap hm1.aemeasurable]
-  have step2 : ∀ a : Mt k r, Matrix.of a ∈ RStab k r g →
+  have step2 : ∀ a : Mt k r, Matrix.of a ∈ Formalism.MainNotions.S.RStab k r g →
       ∫⁻ x, θ x * f (stabAct g (Matrix.of a) x) ∂(pairMeas L) =
         ∫⁻ y, θ (stabAct g (Matrix.of a)⁻¹ y) * f y ∂(pairMeas L) := by
     intro a ha
@@ -66,7 +66,7 @@ theorem exists_isOrbQuot_of_isHaarOn {k r : ℕ} (L : LocBessel k r) (g : Matrix
     rw [lintegral_map hh (measurable_stabAct_one g _)]
     refine lintegral_congr fun x => ?_
     rw [stabAct_inv_cancel hg ha.1.1]
-  have hR : ∀ᵐ a ∂μR, Matrix.of a ∈ RStab k r g := ae_iff.2 hμ.2.2.1
+  have hR : ∀ᵐ a ∂μR, Matrix.of a ∈ Formalism.MainNotions.S.RStab k r g := ae_iff.2 hμ.2.2.1
   rw [lintegral_congr_ae (hR.mono step2)]
   have hm2 : Measurable (Function.uncurry fun (a : Mt k r) (y : PairSp k r) => θ (stabAct g (Matrix.of a)⁻¹ y) * f y) :=
     (hθ.comp (measurable_stabAct_inv g)).mul (hf.comp measurable_snd)
@@ -96,7 +96,7 @@ theorem orbQuotEx_of_haarLieN (h : PI.AmpOrbQ.HaarLieN) : PI.AmpOrbQ.OrbQuotEx :
       unfold lmulM
       exact continuous_const.matrix_mul continuous_id).measurable.aemeasurable
   · rw [e, Measure.smul_apply]
-    have h0 : haarLie (Nset k r) 1 (NS k r)ᶜ = 0 := hnull
+    have h0 : Formalism.MainNotions.S.haarLie (Nset k r) 1 (NS k r)ᶜ = 0 := hnull
     rw [h0, smul_eq_mul, mul_zero]
 end
 end
