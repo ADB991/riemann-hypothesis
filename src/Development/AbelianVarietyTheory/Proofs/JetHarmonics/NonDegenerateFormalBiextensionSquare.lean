@@ -160,7 +160,7 @@ theorem dfc_right {a : Fin dd → MvPowerSeries τ C} (ha : Zc a) : dfc Y a 0 0 
 theorem ph2_eq_subst_exp : Y.B.ph2 = PowerSeries.subst (dfc Y (pt C dd (0 : Fin 3)) (pt C dd 1) (pt C dd 2))
     (PowerSeries.exp C) := by
   have e := Y.gauge.ph2
-  rw [FB.toK, map_self, FK_self] at e
+  rw [FB.toK, GlobalTheory.RowLawSquare.map_self, FK_self] at e
   exact e
 
 theorem van_h {T : Set τ} {a b : Fin dd → MvPowerSeries τ C} (ha : Zc a) (hb : Zc b) (hT : ∀ i, Van T (a i)) :

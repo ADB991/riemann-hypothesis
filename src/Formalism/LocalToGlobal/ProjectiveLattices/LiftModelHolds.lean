@@ -191,7 +191,7 @@ theorem liftModelSt_of (G : GlobalFamilyData (xplus X E hM) ka wL wF) (la : Heig
     ⟨frac (xplus X E hM) la G.w k p, (mem_Frac0 _ _ _).2 (frac_mem_Hfr _ _ _ hp)⟩
   let FQ : ↥(Frac0 (xplus X E hM) la G.w) :=
     ⟨frac (xplus X E hM) la G.w k q, (mem_Frac0 _ _ _).2 (frac_mem_Hfr _ _ _ hq)⟩
-  have hw0 : ∀ ζ, ((hsW hw ζ).ev (sec (xplus X E hM) la G.w 0))⁻¹ ^ k ≠ 0 :=
+  have hw0 : ∀ ζ, ((hsW hw ζ).ev (Formalism.MainNotions.Gaps.EtaleWeightGaps.sec (xplus X E hM) la G.w 0))⁻¹ ^ k ≠ 0 :=
     fun ζ => pow_ne_zero _ (inv_ne_zero (hsW hw ζ).s0.ne_zero)
   have hFP0 : ∀ ζ, (hsW hw ζ).lift (FP : Lw (xplus X E hM) la G.w) ≠ 0 := fun ζ => by
     show (hsW hw ζ).lift (frac (xplus X E hM) la G.w k p) ≠ 0

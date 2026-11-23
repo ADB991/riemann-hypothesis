@@ -33,7 +33,7 @@ theorem multilin_of_isFamily {I : AllFam} (hI : I.IsFamily) : IsMultilinFam I :=
   | zero => exact j.elim0
   | succ m =>
     obtain ⟨hsym, hadd, -⟩ := hI K ι
-    have e : ∀ X : HermLine ι, IsSmoothHerm X →
+    have e : ∀ X : HermLine ι, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm X →
         I K ι P (m + 1) (Function.update L j X) =
           I K ι P (m + 1)
             (Fin.snoc (fun i : Fin m => L (Equiv.swap j (Fin.last m) i.castSucc)) X) := by

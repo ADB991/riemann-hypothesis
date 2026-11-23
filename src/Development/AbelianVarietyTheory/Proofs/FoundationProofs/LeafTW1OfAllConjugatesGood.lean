@@ -274,7 +274,7 @@ theorem Reads.lix_le [StarRing K] {v : HeightOneSpectrum (𝓞 K)} {e : V →ₗ
     unfold LengthCommensurable at this ⊢
     rwa [relLength_map_of_injective _ (toFrac_injective _ _ _), relLength_map_of_injective _ (toFrac_injective _ _ _)]
   · have := h2 O' hi hf _ l0
-    rw [← Set.image_congr fun y _ => up_eq Y i j b O' k y, sIdx_eq (X.l i) _ ((eTh Y i j b (SgJ Y E i j b)).baseChange O'),
+    rw [← Set.image_congr fun y _ => up_eq Y i j b O' k y, GlobalTheory.ExportCompare.sIdx_eq (X.l i) _ ((eTh Y i j b (SgJ Y E i j b)).baseChange O'),
       signedLength, sub_self, Int.cast_zero, zero_div, zero_add] at this
     rw [eΘ, eX, sIdx_map _ (toFrac_injective _ _ _), ← hl]
     exact this
