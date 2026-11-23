@@ -158,7 +158,7 @@ def ker (V : VF C) {R : Type} [CommRing R] (f : R →+* C) (hf : ∀ x, V.Ge 0 (
   carrier := {x | V.MM (f x)}
   add_mem' := fun {a b} ha hb => by
     show V.MM (f (a + b))
-    rw [map_add (f := _)]; exact mm_add ha hb
+    rw [map_add (f := _)]; exact GlobalTheory.UnrIdem.mm_add ha hb
   zero_mem' := by
     show V.MM (f 0)
     simp [VF.MM]
@@ -194,7 +194,7 @@ theorem GlobalTheory.exists_idempotent_of_unramified_place : ∀ (E : Type) [Fie
       obtain ⟨k, hk⟩ := Nat.exists_eq_succ_of_ne_zero V.l_prime.ne_zero
       rw [hk, pow_succ]
       exact mm_mul ((hint _ _).pow k) hs
-    simpa using mm_add h1 h2
+    simpa using GlobalTheory.UnrIdem.mm_add h1 h2
   have hall : ∀ x, V.MM (emA3 io ι (tau 0) x) → ∀ a, V.MM (emA3 io ι (tau a) x) := by
     intro x h0 a
     have : ∀ n : ℕ, V.MM (emA3 io ι (tau (n : ZMod d)) x) := by

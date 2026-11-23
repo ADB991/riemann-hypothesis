@@ -86,7 +86,7 @@ theorem exists_dvd_of_stable {K : Type} [Field K] {N : ℕ} {f : (ZMod g)[X]} (h
         ⟨Module.End.mem_eigenspace_iff.2 (Subtype.ext h2), fun h => h1 (congrArg Subtype.val h)⟩
   have hst : ∀ x ∈ S, x ^ g ∈ S := fun x hx => by
     obtain ⟨hx1, hx2⟩ := Multiset.mem_filter.1 hx
-    refine Multiset.mem_filter.2 ⟨rootsBar_frob f ▸ Multiset.mem_map_of_mem _ hx1, ?_⟩
+    refine Multiset.mem_filter.2 ⟨GlobalTheory.TameLabels.rootsBar_frob f ▸ Multiset.mem_map_of_mem _ hx1, ?_⟩
     obtain ⟨w, hw, h1, h2⟩ := (hroot _).1 hx2
     have h3 : ∀ n : ℕ, ((T ^ n : GL (Fin N) K) : Matrix (Fin N) (Fin N) K).mulVec w = a x ^ n • w := fun n => by
       induction n with

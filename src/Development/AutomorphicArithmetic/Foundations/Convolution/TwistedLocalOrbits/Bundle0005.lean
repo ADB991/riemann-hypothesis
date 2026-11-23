@@ -135,7 +135,7 @@ theorem UpperTheory.ConvolutionTheory.Loc.nearUp :
   have hs0 : r * valuation E (Module.finrank k E : E) ≠ 0 := (mul_pos hr0 (hr0.trans hr)).ne'
   obtain ⟨ρ, hρ, hρb⟩ := small (k := k) (n := n) hs0
   refine ⟨ρ, hρ, fun f hf hs => ?_⟩
-  set K := ballSub n r hr1 with hK
+  set K := UpperTheory.ConvolutionTheory.Loc.BallG.ballSub n r hr1 with hK
   have hKo : IsOpen (K : Set (GL (Fin n) E)) := isOpen_ball hr0.ne'
   have hKc : IsCompact (K : Set (GL (Fin n) E)) := isCompact_ball hr1
   set K' : Subgroup (GL (Fin n) k) := K.comap (incl : GL (Fin n) k →* GL (Fin n) E) with hK'

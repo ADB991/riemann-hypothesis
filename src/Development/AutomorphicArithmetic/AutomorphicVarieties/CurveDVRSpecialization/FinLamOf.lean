@@ -9,6 +9,8 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Commutative
 
 open IsLocalRing UpperTheory.V UpperTheory.V.Alg
 
+attribute [-instance] UpperTheory.V.Pr.IsCD.toIsDomain UpperTheory.V.Pr.IsCD.toIsDiscreteValuationRing
+
 attribute [local instance] IsCO.toIsLocalRing
 
 private theorem flo_sub_mem {O R : Type} [CommRing O] [IsLocalRing O] [Finite (ResidueField O)] [CommRing R]

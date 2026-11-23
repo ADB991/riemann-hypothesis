@@ -117,8 +117,8 @@ theorem IsHeckeOf.val_eq (ha : IsGlobalArtin art) (h : IsHeckeOf art r χ) (hu :
   exact h _ _ e
 
 theorem IsHeckeOf.loc_eq_one (ha : IsGlobalArtin art) (h : IsHeckeOf art r χ) (hA : IsPlaceOver A v)
-    (H : ∀ σ ∈ Dec (F := E) A, r σ = 1) (x : (v.adicCompletion E)ˣ) : χ.loc v x = 1 := by
-  have hm : art (Neutral.B1.localIdele E v x) ∈ (Dec (F := E) A).map (toAb E Ω) := by
+    (H : ∀ σ ∈ ReciprocityTheory.Gal.Dec (F := E) A, r σ = 1) (x : (v.adicCompletion E)ˣ) : χ.loc v x = 1 := by
+  have hm : art (Neutral.B1.localIdele E v x) ∈ (ReciprocityTheory.Gal.Dec (F := E) A).map (toAb E Ω) := by
     rw [← ha.dec v A hA]
     exact Subgroup.le_topologicalClosure _ ⟨x, rfl⟩
   obtain ⟨σ, hσ, e⟩ := hm
@@ -345,7 +345,7 @@ theorem exists_frob_inert [IsAlgClosure E Ω] (c : E ≃ₐ[F] E) (h2 : Module.f
   obtain ⟨τ, hτ⟩ := exists_isFrob hAv
   have hq := normV_inert h2 hr hP
   set q := normV (P.under (𝓞 F))
-  have hτd : τ ∈ Dec (F := F) A := hτ.1
+  have hτd : τ ∈ ReciprocityTheory.Gal.Dec (F := F) A := hτ.1
   have hres : ∀ x : E, τ (algebraMap E Ω x) = algebraMap E Ω (AlgEquiv.restrictNormal τ E x) := fun x =>
     (AlgEquiv.restrictNormal_commutes τ E x).symm
   rcases hall (AlgEquiv.restrictNormal τ E) with h | h
@@ -372,7 +372,7 @@ theorem exists_frob_inert [IsAlgClosure E Ω] (c : E ≃ₐ[F] E) (h2 : Module.f
     refine ⟨g, g', fun x => ?_, ?_, fun x hx => ?_⟩
     · show cc (τ x) = cc (τ (cc (cc.symm x)))
       rw [cc.apply_symm_apply]
-    · show g * g' ∈ Dec (F := E) A
+    · show g * g' ∈ ReciprocityTheory.Gal.Dec (F := E) A
       rw [mem_Dec]
       ext x
       rw [ValuationSubring.mem_pointwise_smul_iff_inv_smul_mem, AlgEquiv.smul_def]

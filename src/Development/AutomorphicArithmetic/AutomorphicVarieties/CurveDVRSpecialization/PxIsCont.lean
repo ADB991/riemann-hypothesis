@@ -18,6 +18,8 @@ set_option linter.overlappingInstances false
 
 open IsLocalRing Matrix UpperTheory.V.Alg UpperTheory.V.U3 UpperTheory.V.Fr UpperTheory.V
 
+attribute [-instance] UpperTheory.V.Pr.IsCD.toIsDomain UpperTheory.V.Pr.IsCD.toIsDiscreteValuationRing
+
 section Gen
 
 variable {n : ℕ} {A G : Type} [CommRing A] [Group G]

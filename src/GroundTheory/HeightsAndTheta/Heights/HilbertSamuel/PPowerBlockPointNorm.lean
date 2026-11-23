@@ -132,7 +132,7 @@ theorem pn_aeval_mem {S : Type*} [CommRing S] (T : Subalgebra ℤ S) {σ : Type*
     rw [map_mul, aeval_X]
     exact T.mul_mem hf (hu p)
 
-theorem pn_relevant {P : Ideal (MRing ι)} {x : (Σ k, ι k) → ℂ} (hx : x ∈ mcPts P) : IsRelevant P := fun k => by
+theorem pn_relevant {P : Ideal (MRing ι)} {x : (Σ k, ι k) → ℂ} (hx : x ∈ mcPts P) : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant P := fun k => by
   obtain ⟨i, hi⟩ := hx.1 k
   exact ⟨i, fun hX => hi (by simpa using hx.2 _ hX)⟩
 

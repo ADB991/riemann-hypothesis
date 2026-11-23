@@ -88,8 +88,8 @@ theorem sqOf_of_iso_of_siegPB {h k : ℕ} {o o' : Type} [CommRing o] [CommRing o
   have hΛ : (abelian₂ P.A P.L).IsLB := DVR.linComb_isLB _ P.isLB _ _
   refine ⟨e.inv.left ≫ φ, ⟨((isGrpPullback_of_iso e.symm).comp gp).congr (Category.id_comp _) rfl, hg,
     (e.inv ⊗ₘ e.inv).left ≫ φ₂, isSquare_comp (isSquare_tensor e.inv) sq, ?_⟩, fun a => ?_⟩
-  · have k₁ := lbIso_pull_comp hP (e.inv ⊗ₘ e.inv).left
-    have k₂ := lbIso_pull_comp iP (e.inv ⊗ₘ e.inv).left
+  · have k₁ := GlobalTheory.ZM.SiegPull.lbIso_pull_comp hP (e.inv ⊗ₘ e.inv).left
+    have k₂ := GlobalTheory.ZM.SiegPull.lbIso_pull_comp iP (e.inv ⊗ₘ e.inv).left
     have k₃ : (e.inv ⊗ₘ e.inv).left ≫ (lift (fst c'.A c'.A ≫ e.hom) (snd c'.A c'.A ≫ e.hom)).left = 𝟙 _ := by
       rw [← Over.comp_left, ← Over.id_left]
       congr 1

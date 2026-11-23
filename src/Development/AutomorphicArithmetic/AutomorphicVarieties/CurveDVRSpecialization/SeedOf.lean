@@ -21,6 +21,8 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCh
 
 open IsLocalRing Matrix UpperTheory.V.Alg UpperTheory.V.U3 UpperTheory.V.Fr UpperTheory.V.W UpperTheory.V.CA
 
+attribute [-instance] UpperTheory.V.Pr.IsCD.toIsDomain UpperTheory.V.Pr.IsCD.toIsDiscreteValuationRing
+
 namespace UpperTheory.V.Pr
 
 section Gen

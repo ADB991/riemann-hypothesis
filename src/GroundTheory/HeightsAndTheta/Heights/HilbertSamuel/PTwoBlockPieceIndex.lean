@@ -84,7 +84,7 @@ theorem evPiece_mul_le (y : (Σ k, ι k) → Ω) (m n : K → ℕ) :
 
 theorem one_le_evPiece (y : (Σ k, ι k) → Ω) : 1 ≤ evPiece y 0 := by
   rw [Submodule.one_le]
-  exact ⟨1, (mem_mHom_iff _ _).mpr isMultiHomog_one, by simp⟩
+  exact ⟨1, (mem_mHom_iff _ _).mpr ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_one, by simp⟩
 
 theorem pow_le_evPiece (y : (Σ k, ι k) → Ω) {L : Submodule ℤ Ω} {d : K → ℕ} (h : L ≤ evPiece y d) :
     ∀ n : ℕ, L ^ n ≤ evPiece y (n • d)

@@ -183,11 +183,11 @@ theorem hi1 (Y : FBChart C V O dd) (i : Fin dd) :
     funext k j; fin_cases k
     · exact eval_outer_points_first j
     · exact eval_outer_points_middle j
-  rw [hph, pderiv_expS hg, ← hph, ev_mul constant_zero_outer_points, Y.B.cocycleLeft_zero_snd, one_mul, map_sub, map_add (f := _), ev_sub constant_zero_outer_points,
+  rw [hph, pderiv_expS hg, ← hph, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul constant_zero_outer_points, Y.B.cocycleLeft_zero_snd, one_mul, map_sub, map_add (f := _), ev_sub constant_zero_outer_points,
     ev_add constant_zero_outer_points, hA, ev_zero constant_zero_outer_points, zero_add, hB, hE1B, hC, ev_sum constant_zero_outer_points]
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_
-  rw [ev_mul constant_zero_outer_points, hE1C, hE1D]
+  rw [Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul constant_zero_outer_points, hE1C, hE1D]
 
 theorem hs1 (Y : FBChart C V O dd) (i : Fin dd) :
     ev (n := 2) (![0, pt C dd 1] : Fin 2 → Pt C 2 dd) (pderiv (R := C) ((0 : Fin 2), i) Y.B.sy) =
@@ -217,7 +217,7 @@ theorem hs1 (Y : FBChart C V O dd) (i : Fin dd) :
     funext k j; fin_cases k
     · exact ev_X constant_zero_second_axis 1 j
     · exact ev_X constant_zero_second_axis 0 j
-  rw [hsy, pderiv_expS hg, ← hsy, ev_mul constant_zero_second_axis, h1, one_mul, map_sub, ev_sub constant_zero_second_axis, hd, hE]
+  rw [hsy, pderiv_expS hg, ← hsy, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul constant_zero_second_axis, h1, one_mul, map_sub, ev_sub constant_zero_second_axis, hd, hE]
 
 end RowTiePCEqM
 

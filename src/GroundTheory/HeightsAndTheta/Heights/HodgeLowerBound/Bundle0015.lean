@@ -74,7 +74,7 @@ theorem isConeTangent_lift {P J : Ideal (MRing ι)} {e : ℕ} (R : AnLogRes P J 
   simpa [smul_eq_mul, mul_comm] using h1
 
 theorem isPsh_potOf {P J : Ideal (MRing ι)} {e : ℕ} (R : AnLogRes P J e) {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι}
-    (hA : IsSemipositiveH P A) : IsPsh R.A (potOf R A) := by
+    (hA : ReciprocityTheory.ChartRestriction.G.Geo.IsSemipositiveH P A) : IsPsh R.A (potOf R A) := by
   intro x j y hy w
   have hy' : y ∈ (R.A.chart j).target ∩ (R.A.chart j).symm ⁻¹' R.U x := hy
   set τ : (Fin e → ℂ) → (Σ k, ι k) → ℂ := fun y' => R.lift x ((R.A.chart j).symm y') with hτdef

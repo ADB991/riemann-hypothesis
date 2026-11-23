@@ -32,7 +32,7 @@ theorem eq_zero_of_mem_inertiaGal (hη : Continuous η) {τ : Gal(PadicAlgCl p/K
   have h2 : ∀ n, conductor (charTower η 2) ≤ n → 2 ≤ artinLevel K η n := by
     intro n hn
     obtain ⟨-, a, ha, ha'⟩ := artinLevel_spec (hA n)
-    have ha2 := artinImage_le_of_conductor_le hη hn ha
+    have ha2 := GroundTheory.PAdicHodge.SenTateChar.artinImage_le_of_conductor_le hη hn ha
     by_contra hlt
     push Not at hlt
     exact ha' (unitsOneAdd_antitone (by omega) ha2)

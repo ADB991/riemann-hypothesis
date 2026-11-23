@@ -286,9 +286,9 @@ theorem flat {T : CDVR} {p : ℕ} [Fact p.Prime] (X : ValExt T p) :
 theorem linPart_add {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
     {Xo : Moduli Dw l} {c : Coeff l} [StarRing (𝓞 E)] {T : CDVR} {io : c.F →+* T.Fr} {y : IntFr Xo c T io}
     (Ch : IntegralChartA3 Xo c T io y) (a b : 𝓞 E) :
-    linPart (Ch.actT (a + b)) = linPart (Ch.actT a) + linPart (Ch.actT b) := by
+    ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart (Ch.actT (a + b)) = ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart (Ch.actT a) + ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart (Ch.actT b) := by
   letI := io.toAlgebra
-  have key : ∀ a i j, ReciprocityTheory.ChartRestriction.G.TB.dAct T.Fr Ch.ch.B a i j = algebraMap T.V T.Fr (linPart (Ch.actT a) i j) := by
+  have key : ∀ a i j, ReciprocityTheory.ChartRestriction.G.TB.dAct T.Fr Ch.ch.B a i j = algebraMap T.V T.Fr (ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart (Ch.actT a) i j) := by
     intro a i j
     show MvPowerSeries.coeff (Finsupp.single ((0 : Fin 1), j) 1)
       (MvPowerSeries.map (algebraMap T.Fr T.Fr) (Ch.ch.B.A.act a i)) = _

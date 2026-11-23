@@ -33,6 +33,7 @@ theorem UpperTheory.V.UnitaryThreeInertia.universal_diagonal_of_triangular_point
       ∀ r : Γ →* GG (m := 3) (R := A), F.IsPt g₁ r → Upper F.η r ∨ Lower F.η r) →
       Module.Finite O (wpart O u 0) := by
   intro O _ _ _ _ _ _ G Γ ι _ _ _ _ _ _ _ _ _ _ _ _ _ F hOk hCl g₁ hg₁ R _ _ _ u hu htri
+  haveI : IsLocalRing R := IsCO.toIsLocalRing O
   obtain ⟨W, hW, -⟩ := exists_adapted F hOk g₁ hg₁ u hu
   rw [← hW.part 0]
   have key : ∀ {A : Type} [CommRing A] [Algebra O A] (f : R →ₐ[O] A) (g : Γ) (a b : Fin 3),

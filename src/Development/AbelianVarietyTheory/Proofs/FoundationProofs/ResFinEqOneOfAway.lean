@@ -286,9 +286,9 @@ theorem exists_frob_inert {P : HeightOneSpectrum (𝓞 E)} (h : ConjPl c.toRingE
   have hg : ∀ x, (g * GlobalTheory.AntiLAdic.conjHom cc hc g) x = φ (φ x) := fun x => by
     show φ (cc (cc (φ (cc (cc.symm x))))) = _
     rw [hinv, RingEquiv.apply_symm_apply]
-  have hd : φ ∈ Dec (F := F) A := hφA
+  have hd : φ ∈ ReciprocityTheory.Gal.Dec (F := F) A := hφA
   refine ⟨g, GlobalTheory.AntiLAdic.conjHom cc hc g, fun _ => rfl, ?_, fun x hx => ?_⟩
-  · show _ ∈ Dec (F := E) A
+  · show _ ∈ ReciprocityTheory.Gal.Dec (F := E) A
     rw [mem_Dec]
     ext x
     rw [ValuationSubring.mem_pointwise_smul_iff_inv_smul_mem, AlgEquiv.smul_def]

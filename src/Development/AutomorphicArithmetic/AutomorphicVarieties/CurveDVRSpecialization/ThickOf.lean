@@ -12,6 +12,8 @@ noncomputable section
 
 open IsLocalRing Matrix Polynomial UpperTheory.V.Alg UpperTheory.V.U3 UpperTheory.V.Fr UpperTheory.V.W UpperTheory.V.CA UpperTheory.V.Pr.Thick
 
+attribute [-instance] UpperTheory.V.Pr.IsCD.toIsDomain UpperTheory.V.Pr.IsCD.toIsDiscreteValuationRing
+
 namespace UpperTheory.V.Pr
 
 private theorem exists_emb' {k κ K : Type} [Field k] [Field κ] [Algebra k κ] [Algebra.IsAlgebraic k κ] [Field K]

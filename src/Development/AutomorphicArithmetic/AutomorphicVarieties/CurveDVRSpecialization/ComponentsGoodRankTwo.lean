@@ -18,6 +18,8 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSm
 
 open IsLocalRing UpperTheory.V.Alg UpperTheory.V.Fr UpperTheory.V.Pr
 
+attribute [-instance] UpperTheory.V.Pr.IsCD.toIsDomain UpperTheory.V.Pr.IsCD.toIsDiscreteValuationRing
+
 set_option linter.overlappingInstances false
 
 noncomputable section
