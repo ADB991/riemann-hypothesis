@@ -184,7 +184,7 @@ theorem valuation_det_basis_change_zero (Tt : Forms0 D u) (hU : UnramifiedAtLeve
     (hB : IsLocBasis (D.mem u).A.T (Ld D u i hi c : Set _) B)
     (hB' : IsLocBasis (D.mem u).A.T (Lk Tt.atT i hi v c : Set _) B') :
     ((((B⁻¹ * B' : GL (Fin (D.R.N i)) D.host.E) : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)).map
-        (embT D ((D.fm u).tauOf w v))).det * (((D.mem u).A.T : ℂ))⁻¹ ∈ bwA_Ow D w := by
+        (Forms.embT D ((D.fm u).tauOf w v))).det * (((D.mem u).A.T : ℂ))⁻¹ ∈ bwA_Ow D w := by
   obtain ⟨S, x, hS, hx0, hxe⟩ := det_basis_change_mem_prime_zero D u Tt w hw v i hi h0 c B B' hB hB'
   have hv := hU w hw hs v x hx0
   set σ := D.host.sigmaOf (D.eTau ((D.fm u).tauOf w v) : D.R.GG) with hσ
@@ -208,9 +208,9 @@ theorem det_basis_change_unit_zero (Tt : Forms0 D u) (hU : UnramifiedAtLevelPrim
     (hB : IsLocBasis (D.mem u).A.T (Ld D u i hi c : Set _) B)
     (hB' : IsLocBasis (D.mem u).A.T (Lk Tt.atT i hi v c : Set _) B') :
     ((((B⁻¹ * B' : GL (Fin (D.R.N i)) D.host.E) : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)).map
-        (embT D ((D.fm u).tauOf w v))).det * (((D.mem u).A.T : ℂ))⁻¹ ∈ bwA_Ow D w ∧
+        (Forms.embT D ((D.fm u).tauOf w v))).det * (((D.mem u).A.T : ℂ))⁻¹ ∈ bwA_Ow D w ∧
     ((D.mem u).A.T : ℂ) * (((((B⁻¹ * B' : GL (Fin (D.R.N i)) D.host.E) : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)).map
-        (embT D ((D.fm u).tauOf w v))).det)⁻¹ ∈ bwA_Ow D w :=
+        (Forms.embT D ((D.fm u).tauOf w v))).det)⁻¹ ∈ bwA_Ow D w :=
   ⟨valuation_det_basis_change_zero D u Tt hU w hw hs v i hi h0 c B B' hB hB',
     (Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.S0.basis_change_mem_elementary (D := D) (u := u) Tt w hw v ((D.fm u).tauOf w v) i hi h0 c B B' hB hB').2.2.2⟩
 

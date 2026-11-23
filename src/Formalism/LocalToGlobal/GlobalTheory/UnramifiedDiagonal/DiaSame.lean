@@ -72,7 +72,7 @@ theorem diaU_same (T : Forms0 D u) (hM : UpDiaSame0F T) (v : (D.mem u).A.vT)
   obtain ⟨G, hG, hGφ⟩ := S0.forms_from_adelic_function T 0 (Nat.zero_le _) rfl (Uop D u 0 v φ) (U_op_preserves_forms_zero T v φ hφ)
   have hGA := (Submodule.mem_inf.1 hG).1
   obtain ⟨k, hk, δ, hδ⟩ := diamond_elements_exist_all T 0 (Nat.zero_le _) rfl v a
-  have hgδ := S0.adelic_function_right_translate_diamond T.cls0.lev (embT D) _ _ (S0.level_places_not_bad T.atT v) hδ hgA
+  have hgδ := S0.adelic_function_right_translate_diamond T.cls0.lev (Forms.embT D) _ _ (S0.level_places_not_bad T.atT v) hδ hgA
   have hdφ : ∀ c1, dia D u 0 v a φ c1 =
       fun s => g (T.cls0.y c1 * δ) (T.val0.eY s) := by
     intro c1
@@ -98,7 +98,7 @@ theorem diaU_same (T : Forms0 D u) (hM : UpDiaSame0F T) (v : (D.mem u).A.vT)
     exact T.val0.dilT v a k hk c δ hδ G hGA
   rw [hL, U_op_eq_move_sum T v (dia D u 0 v a φ) hgδ hdφ c Mv hMv]
   funext s
-  rw [S0.adelic_value_translate T.cls0.lev (embT D) (fun τ x => S0.embedding_conj_compat D τ x) hGA γd hγd _ _
+  rw [S0.adelic_value_translate T.cls0.lev (Forms.embT D) (fun τ x => S0.embedding_conj_compat D τ x) hGA γd hγd _ _
     ⟨κ0.1, hκ⟩ hx]
   have hG2 : ∀ y', G (T.cls0.y ((D.fm u).dil 0 v a c)) y' =
       ∑ x, g (T.cls0.y ((D.fm u).dil 0 v a c) * Mv2 x) y' := by
@@ -129,7 +129,7 @@ theorem diaU_same (T : Forms0 D u) (hM : UpDiaSame0F T) (v : (D.mem u).A.vT)
       hs2i (conj_off _ _ _ hs1 hδ.1) ⟨κ0.1, hκ⟩ 1 m
       (by simp only [m, Subgroup.coe_mul, InvMemClass.coe_inv, OneMemClass.coe_one, mul_one])
     rw [this, map_one, mul_one]
-  rw [S0.adelic_value_translate T.cls0.lev (embT D) (fun τ x => S0.embedding_conj_compat D τ x) hgA γd hγd _ _
+  rw [S0.adelic_value_translate T.cls0.lev (Forms.embT D) (fun τ x => S0.embedding_conj_compat D τ x) hgA γd hγd _ _
     m hx2, hχ]
 
 
@@ -143,7 +143,7 @@ theorem diaD_same (T : Forms0 D u) (hM : DnDiaSame0F T) (v : (D.mem u).A.vT)
   obtain ⟨G, hG, hGφ⟩ := S0.forms_from_adelic_function T 0 (Nat.zero_le _) rfl (Dop D u 0 v φ) (D_op_preserves_forms_zero T v φ hφ)
   have hGA := (Submodule.mem_inf.1 hG).1
   obtain ⟨k, hk, δ, hδ⟩ := diamond_elements_exist_all T 0 (Nat.zero_le _) rfl v a
-  have hgδ := S0.adelic_function_right_translate_diamond T.cls0.lev (embT D) _ _ (S0.level_places_not_bad T.atT v) hδ hgA
+  have hgδ := S0.adelic_function_right_translate_diamond T.cls0.lev (Forms.embT D) _ _ (S0.level_places_not_bad T.atT v) hδ hgA
   have hdφ : ∀ c1, dia D u 0 v a φ c1 =
       fun s => g (T.cls0.y c1 * δ) (T.val0.eY s) := by
     intro c1
@@ -169,7 +169,7 @@ theorem diaD_same (T : Forms0 D u) (hM : DnDiaSame0F T) (v : (D.mem u).A.vT)
     exact T.val0.dilT v a k hk c δ hδ G hGA
   rw [hL, D_op_eq_move_sum T v (dia D u 0 v a φ) hgδ hdφ c Mv hMv]
   funext s
-  rw [S0.adelic_value_translate T.cls0.lev (embT D) (fun τ x => S0.embedding_conj_compat D τ x) hGA γd hγd _ _
+  rw [S0.adelic_value_translate T.cls0.lev (Forms.embT D) (fun τ x => S0.embedding_conj_compat D τ x) hGA γd hγd _ _
     ⟨κ0.1, hκ⟩ hx]
   have hG2 : ∀ y', G (T.cls0.y ((D.fm u).dil 0 v a c)) y' =
       ∑ x, g (T.cls0.y ((D.fm u).dil 0 v a c) * Mv2 x) y' := by
@@ -200,7 +200,7 @@ theorem diaD_same (T : Forms0 D u) (hM : DnDiaSame0F T) (v : (D.mem u).A.vT)
       hs2i (conj_off _ _ _ hs1 hδ.1) ⟨κ0.1, hκ⟩ 1 m
       (by simp only [m, Subgroup.coe_mul, InvMemClass.coe_inv, OneMemClass.coe_one, mul_one])
     rw [this, map_one, mul_one]
-  rw [S0.adelic_value_translate T.cls0.lev (embT D) (fun τ x => S0.embedding_conj_compat D τ x) hgA γd hγd _ _
+  rw [S0.adelic_value_translate T.cls0.lev (Forms.embT D) (fun τ x => S0.embedding_conj_compat D τ x) hgA γd hγd _ _
     m hx2, hχ]
 
 theorem diamond_same_place_of_matchings (T : Forms0 D u) (hU : UpDiaSame0F T) (hD : DnDiaSame0F T) : DiamondOperatorCommutationAtPlace D u :=

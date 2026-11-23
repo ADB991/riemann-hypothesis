@@ -82,6 +82,7 @@ theorem act_one {k r : ℕ} {z z' : Fin (2 * r + k + 1) → ℂ} {π : Mx k r �
     rw [Matrix.one_apply_ne (Ne.symm hb)]; rfl
   · simp
 
+attribute [-instance] Formalism.BasicNotions.Examples₂.instIsEmptyClsEmptyColumnChain in
 theorem integrable_pair_of_cor (P : M.Par) (z z' : Fin (2 * P.r + P.k + 1) → ℂ) (π : Mx P.k P.r → (Wp →L[ℂ] Wp))
     (π' : Mx P.k P.r → (Wq →L[ℂ] Wq)) (μ : Measure (Mt P.k P.r)) [SFinite μ]
     (L : R.LevelData (Pr (RadSp P.k P.r z z' π π')) P.r) (st : Fr.Start (Pr (RadSp P.k P.r z z' π π')))
@@ -537,7 +538,7 @@ theorem planeWave_top (hP : P5.ThmPActualCpt) (hHT : KB.HeadTop) (hOne : FormCon
       rw [Formalism.FourierDecayAlt.P.PBFV.first_minor_top_eq_zeta hr0]
     have hΨ := Formalism.FourierDecayAlt.P.PBFV.radPic_wave (p.T.bs jF) ε s w x hxn Φ hΦ _ (by omega) hm Wv Wv' hW
     have hform := hOne Wp Wq P p.T jF X μ L st p.l0 hD hμ hl1 hlk w _ _ _ _ (waveG_cptCoef _ s w x hcx) hcx' hΨ hΦ'
-    have hmeas : Measurable fun ζ => fsv s ζ * ψ ζ := (continuous_fsv s).measurable.mul hψm
+    have hmeas : Measurable fun ζ => fsv s ζ * ψ ζ := (Formalism.FourierDecayAlt.P5.continuous_fsv s).measurable.mul hψm
     have hlaw := zetaNorm_integral hμ (fun ζ => fsv s ζ * ψ ζ) hmeas
     rw [hTz, hTz'] at hlaw
     calc ∫ c, fsv s c * φ c = ∫ ζ, (B2.zWeight P.k P.T P.T' ζ : ℂ) * (fsv s ζ * ψ ζ) := by

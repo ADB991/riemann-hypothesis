@@ -97,7 +97,9 @@ theorem isAlgebraic_of_relfinrank_pos {F E : Type} [Field F] [Field E] [Algebra 
     {A B : IntermediateField F E} (h : A ≤ B) (hpos : 0 < IntermediateField.relfinrank A B) :
     ∀ t ∈ B, IsAlgebraic A t := by
   rw [IntermediateField.relfinrank_eq_finrank_of_le h] at hpos
+  haveI : Module.Free A (IntermediateField.extendScalars h) := Module.Free.of_divisionRing _ _
   haveI := Module.finite_of_finrank_pos hpos
+  haveI : Algebra.IsAlgebraic A (IntermediateField.extendScalars h) := Algebra.IsAlgebraic.of_finite _ _
   intro t ht
   have h1 : IsAlgebraic A (⟨t, ht⟩ : IntermediateField.extendScalars h) :=
     Algebra.IsAlgebraic.isAlgebraic _

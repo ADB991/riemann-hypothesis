@@ -409,6 +409,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Au
 open GroundTheory.Automorphic.AutomorphicForm GroundTheory.Automorphic.CuspidalSpectrum UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C
 open scoped TensorProduct InnerProductSpace ComplexConjugate Pointwise
 
+attribute [-instance] GlobalTheory.SplitFlip.t2Space_general_linear_group GlobalTheory.SplitFlip.secondCountable_GL in
 theorem UpperTheory.ConvolutionTheory.Tf.prjFix :
     ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure] (U : Subgroup (AdelicGLn.FiniteAdelicGL K n)),
       IsOpen (U : Set (AdelicGLn.FiniteAdelicGL K n)) → IsCompact (U : Set (AdelicGLn.FiniteAdelicGL K n)) →

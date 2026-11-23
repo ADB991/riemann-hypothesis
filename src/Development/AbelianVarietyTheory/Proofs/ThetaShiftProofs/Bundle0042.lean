@@ -338,6 +338,8 @@ theorem hasSum_evR_of_chart (hL : GlobalTheory.Reg.EvLaws Xo c) (σ : c.F →+* 
     (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) (F : Rul Xo c) (hF : F ∈ sec Xo c a n) :
     HasSum (fun m : ℤ => (evR Xo c F y).coeff m * v ^ m) (Formalism.L2.PjFree.toC (evR Xo c F yw)) := by
   let A := ptRing σ hK hv
+  letI iR : CommRing A := inferInstance
+  letI iA : Algebra c.F A := inferInstance
   let φA : R →ₐ[c.F] A := φ.codRestrict A fun f => (hφ f).summable
   let GA : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) A :=
     fun τ i k => ⟨G τ i k, (hG τ i k).summable⟩

@@ -131,6 +131,7 @@ theorem qy_res (T : Thick (Wc.L l F ρ (n + 1))) (c : k) :
       Ideal.Quotient.mk T.J (T.i (Ideal.Quotient.mk _ (WittVector.teichmuller l c))) from T.w _]
   rfl
 
+attribute [-instance] Formalism.BasicNotions.Examples₂.instIsEmptyClsEmptyColumnChain in
 def qT (T : Thick (Wc.L l F ρ (n + 1))) : Thick (Wc.L l F ρ n) where
   B := T.B ⧸ lI n T
   i := qi T
@@ -197,6 +198,7 @@ theorem qpt {T T' : Thick (Wc.L l F ρ (n + 1))} (f : T ⟶ T') :
     CommRingCat.hom_ext (Ideal.Quotient.ringHom_ext (RingHom.ext fun b => rfl))
   rw [← hpt, ← Functor.map_comp_apply, ← Functor.map_comp_apply, hcomp]
 
+attribute [-instance] Formalism.BasicNotions.Examples₂.instIsEmptyClsEmptyColumnChain in
 def qmap {T T' : Thick (Wc.L l F ρ (n + 1))} (f : T ⟶ T') : qT hn T ⟶ qT hn T' where
   φ := qφ f
   u j := j.elim

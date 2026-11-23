@@ -64,7 +64,7 @@ theorem sc_over {A B : Type} [CommRing A] [CommRing B] {f : A →+* B} {G : Over
 theorem eq_sc_of_isLieComb {S : Type} [CommRing S] {G : Over (Sp S)} [GrpObj G] {n : ℕ} {v : Fin n → (epsR S ⟶ G)}
     {c : Fin n → S} {a : S} {u w : epsR S ⟶ G} (hu : IsLieComb c v u) (hw : IsLieComb (a • c) v w) : w = sc a ≫ u := by
   rw [CM.IntCoord.isLieComb_iff] at hu hw
-  have e := map_list_prod (preHom (G := G) (sc a)) (List.ofFn fun i => sc (c i) ≫ v i)
+  have e := map_list_prod (ReciprocityTheory.ChartRestriction.G.Geo.Tor.preHom (G := G) (sc a)) (List.ofFn fun i => sc (c i) ≫ v i)
   rw [List.map_ofFn, ← hu] at e
   refine hw.trans (Eq.trans ?_ e.symm)
   congr 2
@@ -85,7 +85,7 @@ theorem c_pow_of_pull {A B : Type} [CommRing A] [IsDomain A] [CommRing B] [IsDom
   have gp := pull_grp p
   let U : Over.mk ((𝟙_ (Over (Sp B))).hom ≫ spMap f) ⟶ 𝟙_ (Over (Sp A)) := toUnit _
   have hU : U.left = spMap f := ((Category.comp_id _).symm.trans (Over.w U)).trans (Category.id_comp _)
-  have e : pushHom gp _ (D'.c y) = preHom U (D.c (p.xe y)) :=
+  have e : pushHom gp _ (D'.c y) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.preHom U (D.c (p.xe y)) :=
     Over.OverMorphism.ext ((p.c_pr y).trans (congrArg (· ≫ (D.c (p.xe y)).left) hU.symm))
   have e' : pushHom gp _ (D'.c y ^ n) = pushHom gp _ 1 := by
     rw [map_pow, e, ← map_pow, h, map_one, map_one]

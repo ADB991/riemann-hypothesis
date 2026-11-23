@@ -118,7 +118,7 @@ section Lead
 
 variable {K : Type} [Field K] [NumberField K] {i : ℕ} {F F' : HermLattice K i} {T : Type} [Fintype T]
 
-theorem lead_of_coords {b : Module.Basis T ℤ (dualLattice F)} {b' : Module.Basis T ℤ (dualLattice F')}
+theorem lead_of_coords {b : Module.Basis T ℤ (GroundTheory.Heights₂.Heights.dualLattice F)} {b' : Module.Basis T ℤ (GroundTheory.Heights₂.Heights.dualLattice F')}
     {k : Type} [Field k] {ρ : 𝓞 K →+* k} {π : 𝓞 K} {y₀ : Fin i → K} {m : ℕ} {g : Fin m → Fin i → K}
     {α : T → k} {M : T → Fin (m + 1) → k} (hco : IsExcCoords F F' b b' ρ π y₀ g α M) {d e : ℕ}
     {f : MRing (stackedBlocks T)} (hf : IsMultiHomog f (bidegree d e))
@@ -213,7 +213,7 @@ theorem lead_of_coords {b : Module.Basis T ℤ (dualLattice F)} {b' : Module.Bas
     exact (mul_eq_zero.mp h1.symm).resolve_left (pow_ne_zero _ (X_ne_zero _))
   rw [hlin, blockEval_scale _ _ _ _ hf, e3, mul_zero]
 
-theorem centre_mem_of_coords {b : Module.Basis T ℤ (dualLattice F)} {b' : Module.Basis T ℤ (dualLattice F')}
+theorem centre_mem_of_coords {b : Module.Basis T ℤ (GroundTheory.Heights₂.Heights.dualLattice F)} {b' : Module.Basis T ℤ (GroundTheory.Heights₂.Heights.dualLattice F')}
     {a : T → ℤ} (hab : ∀ t, (b t : Fin i → K) = a t • (b' t : Fin i → K)) {k : Type} [Field k]
     {ρ : 𝓞 K →+* k} {π : 𝓞 K} {y₀ : Fin i → K} {m : ℕ} {g : Fin m → Fin i → K}
     {α : T → k} {M : T → Fin (m + 1) → k} (hco : IsExcCoords F F' b b' ρ π y₀ g α M) (t : T) :

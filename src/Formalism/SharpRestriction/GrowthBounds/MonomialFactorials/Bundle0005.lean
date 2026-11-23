@@ -21,7 +21,7 @@ theorem finrank_zp_le {V : Type} [AddCommGroup V] [Module ℚ_[p] V] [Module ℤ
     (M : Submodule ℤ_[p] V) (W : Submodule ℚ_[p] V) [FiniteDimensional ℚ_[p] W] (hMW : ∀ x ∈ M, x ∈ W) :
     Module.finrank ℤ_[p] M ≤ Module.finrank ℚ_[p] W := by
   have hr : Module.rank ℤ_[p] M ≤ (Module.finrank ℚ_[p] W : Cardinal) := by
-    apply rank_le
+    apply _root_.rank_le
     intro s hs
     have h1 : LinearIndependent ℤ_[p] (fun i : s => ((i : M) : V)) :=
       hs.map' M.subtype (Submodule.ker_subtype M)

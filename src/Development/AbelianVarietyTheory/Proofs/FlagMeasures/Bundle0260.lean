@@ -69,6 +69,7 @@ theorem ae_mem_N (κ : ℝ≥0∞) : ∀ᵐ y ∂(haarLie (Nset k r) κ), Matrix
     fun_prop
   have h : AEMeasurable (fun x : lieE (Nset k r) =>
       (fun i j => NormedSpace.exp (unrealify (x : EuclideanSpace ℝ _)) i j : Mt k r)) volume := by
+    haveI : BorelSpace (Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) := inferInstanceAs (BorelSpace (Fin (2 * r + k + 1) → Fin (2 * r + k + 1) → ℂ))
     exact (GlobalTheory.Amp.NLie.cont_exp.comp hu).measurable.aemeasurable
   have hcl : IsClosed {y : Mt k r | Matrix.of y ∈ Nset k r} := (Formalism.FourierDecayAlt.P.unipotent_radical_closed k r).closed
   rw [ae_map_iff h hcl.measurableSet]
@@ -283,6 +284,7 @@ theorem isHaarOn_smul {k r : ℕ} {S : Set (Mat k r)} {μ : Measure (Mt k r)} (h
   · rw [Measure.smul_apply, h3, smul_zero]
   · intro s hs
     rw [Measure.map_smul, h4 s hs]
+    haveI : BorelSpace (Mat k r) := inferInstanceAs (BorelSpace (Fin (2 * r + k + 1) → Fin (2 * r + k + 1) → ℂ))
     exact (continuous_const.matrix_mul (continuous_id (X := Mat k r))).measurable.aemeasurable
 
 theorem oneSide_of_bessel {k r : ℕ} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]

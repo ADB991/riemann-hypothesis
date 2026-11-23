@@ -40,7 +40,7 @@ def phi (hSD : IsSDLoc σ J v Λ) {e : Fin n → Fin n → Fv F v ⊗[F] E} (he 
     have h : cf σ J v Λ hSD he (0 : lamA v Λ a) i p = 0 := by
       apply Subtype.ext
       rw [cf_coe]
-      simp [hR, hform]
+      simp [hR, Formalism.UG.hform]
     simp only [h, map_zero, Pi.zero_apply]
   map_add' X Y := by
     funext i p

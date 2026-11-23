@@ -232,7 +232,7 @@ theorem fibre_unfOf {g : ℕ} (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult �
     exact ⟨t2 * t1, (GlobalTheory.Frames.frBor_calculus E H Dw l Xo c (CAt σ) _ _ _).2.2.1 t1 t2 ht1 ht2⟩
 
 theorem rdU_of_mem (U : Formalism.L2.PjFree.Unf Xo c σ r) (f : Rul Xo c) (k : U.Comp) {x : Frame (U.X k).Ψ r}
-    (h : x ∈ (U.X k).dom) : rdU U f k x = Formalism.L2.PjFree.toC (evR Xo c f (U.un k ⟨x, h⟩)) := by
+    (h : x ∈ (U.X k).dom) : Formalism.L2.PjFree.rdU U f k x = Formalism.L2.PjFree.toC (evR Xo c f (U.un k ⟨x, h⟩)) := by
   simp only [Formalism.L2.PjFree.rdU, LinearMap.coe_mk, AddHom.coe_mk, dif_pos h]
 
 theorem readSec_unfOf {g : ℕ} (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ))
@@ -241,7 +241,7 @@ theorem readSec_unfOf {g : ℕ} (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult
     (hW : ∀ (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ), ∀ f ∈ sec Xo c a n, ∀ (t : Ix Dw → (CAt σ)ˣ)
       (y y' : FrPt Xo c (CAt σ)), FrBor t y y' → evR Xo c f y' = wchar (ex Dw a n) t * evR Xo c f y) :
     ∀ a n, Dom a n → ∀ f ∈ sec Xo c a n, ∀ k,
-      ((unfOf e F M un).X k).IsSec (laU (unfOf e F M un) a n k) (rdU (unfOf e F M un) f k) := by
+      ((unfOf e F M un).X k).IsSec (laU (unfOf e F M un) a n k) (Formalism.L2.PjFree.rdU (unfOf e F M un) f k) := by
   intro a n hd f hf k
   refine ⟨hun.2.2.2 a n hd f hf k, fun x hx b hb => ?_, fun γ hγ x hx => ?_⟩
   · have hxb : rmul x b ∈ ((unfOf e F M un).X k).dom := (hM.domStab k x hx).1 b hb
