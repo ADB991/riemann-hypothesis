@@ -12,6 +12,7 @@ namespace GlobalTheory.AdelicU
 
 open scoped TensorProduct NNReal ENNReal Pointwise
 open NumberField IsDedekindDomain MeasureTheory Filter Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+attribute [-instance] Formalism.BasicNotions.Examples₂.instIsEmptyClsEmptyColumnChain
 
 section Generic
 
