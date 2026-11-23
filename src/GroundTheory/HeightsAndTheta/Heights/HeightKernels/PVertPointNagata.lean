@@ -78,7 +78,7 @@ theorem VertPointNagata.proof (hCh : VertPointChart.Statement) : VertPointNagata
   have hPW : mCoordIdeal y ≤ W := le_sup_left.trans hW.1.1.2
   have hPh : IsMultiHomogIdeal (mCoordIdeal y) := hP.2.1.2.1
   have hWh : IsMultiHomogIdeal W := isMultiHomogIdeal_of_mem_minimalPrimes hPh hs hW.1
-  have hformP : ∀ (g : MRing (fun _ : Unit => T)) (d : ℕ), IsMultiHomog g (fun _ => d) →
+  have hformP : ∀ (g : MRing (fun _ : Unit => T)) (d : ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => d) →
       g ∈ mCoordIdeal y → aeval y g = 0 := by
     intro g d hg hgP
     have h0 : mConeMap y g = 0 := hgP
@@ -123,11 +123,11 @@ theorem VertPointNagata.proof (hCh : VertPointChart.Statement) : VertPointNagata
     show IsLocalization.lift hu (IsLocalization.mk' Bm (a p.2) (⟨b p.2, hb p.2⟩ : m.primeCompl)) = _
     rw [IsLocalization.lift_mk'_spec]
     exact (hab p.2).symm
-  have hιev : ∀ (g : MRing (fun _ : Unit => T)) (d : ℕ), IsMultiHomog g (fun _ => d) →
+  have hιev : ∀ (g : MRing (fun _ : Unit => T)) (d : ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => d) →
       ι (aeval r g) = aeval y g * (y ⟨(), t⟩ ^ d)⁻¹ := fun g d hg => by
     rw [hιaeval, VerticalPointResidue.aeval_div y t g d hg]
 
-  have hcrit : ∀ (g : MRing (fun _ : Unit => T)) (d : ℕ), IsMultiHomog g (fun _ => d) →
+  have hcrit : ∀ (g : MRing (fun _ : Unit => T)) (d : ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => d) →
       (g ∈ W ↔ aeval r g ∈ IsLocalRing.maximalIdeal Bm) := by
     intro g d hg
     have h3 := (hCh T K' y s hP hs hsP W hW t ht).2.2 d g hg
@@ -160,7 +160,7 @@ theorem VertPointNagata.proof (hCh : VertPointChart.Statement) : VertPointNagata
   let M := (IsLocalRing.maximalIdeal Bm).map (Polynomial.C : Bm →+* Polynomial Bm)
   let N := nagataRing Bm
   have hψcoeff : ∀ f n, (ψ f).coeff n = aeval r (comp n f) := fun f n => coeff_aeval r f n
-  have hψform : ∀ (G : MRing (fun _ : Unit => T)) (d : ℕ), IsMultiHomog G (fun _ => d) →
+  have hψform : ∀ (G : MRing (fun _ : Unit => T)) (d : ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog G (fun _ => d) →
       ψ G = Polynomial.C (aeval r G) * Polynomial.X ^ d := fun G d hG => aeval_C_mul_X' r G d hG
   have hrt : r ⟨(), t⟩ = 1 := by
     apply hι
@@ -217,7 +217,7 @@ theorem VertPointNagata.proof (hCh : VertPointChart.Statement) : VertPointNagata
     IsLocalization.injective (R := Polynomial Bm) (M := M.primeCompl) N (Ideal.primeCompl_le_nonZeroDivisors M)
   refine ⟨Φ, ?_, ?_, hΦ⟩
   ·
-    have hB : ∀ β : curveRing y, ∃ (d : ℕ) (G : MRing (fun _ : Unit => T)), IsMultiHomog G (fun _ => d) ∧
+    have hB : ∀ β : curveRing y, ∃ (d : ℕ) (G : MRing (fun _ : Unit => T)), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog G (fun _ => d) ∧
         aeval r G = algebraMap _ Bm β := by
       intro β
       have hβ := mem_curveRing.mp β.2 (fun _ => t) (fun _ => hyt)

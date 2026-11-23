@@ -162,14 +162,14 @@ end TwoBlockHorizDiv
 open TwoBlockHorizDiv in
 theorem TwoBlockHorizDiv.proof : TwoBlockHorizDiv.Statement := by
   intro Ω _ _ κ _ x B c l hsp hl W hW
-  have hiff : IsRelevant W → ∀ Q : Ideal (MRing (FinTwoTypeFamily κ)), Q.IsPrime → Q ≤ W →
+  have hiff : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W → ∀ Q : Ideal (MRing (FinTwoTypeFamily κ)), Q.IsPrime → Q ≤ W →
       (twoBlockIdeal x (matAct B x) ⊔ Ideal.span {twoBlockNum l} ≤ Q ↔
         twoBlockIdeal x (matAct B x) ⊔ Ideal.span {twoBlockDen c} ≤ Q) := by
     intro hr Q hQ hQW
     have hH : IsHorizontal Q := by
       unfold IsHorizontal at hW ⊢
       exact le_bot_iff.mp (hW ▸ Ideal.comap_mono hQW)
-    have hR : IsRelevant Q := fun k => (hr k).imp fun i hi h => hi (hQW h)
+    have hR : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant Q := fun k => (hr k).imp fun i hi h => hi (hQW h)
     exact sup_le_iff_of_horiz hsp hl hQ hH hR
   refine ⟨⟨fun ⟨hm, hr⟩ => ⟨(mem_minimalPrimes_iff (hiff hr)).1 hm, hr⟩,
     fun ⟨hm, hr⟩ => ⟨(mem_minimalPrimes_iff (hiff hr)).2 hm, hr⟩⟩, ?_⟩

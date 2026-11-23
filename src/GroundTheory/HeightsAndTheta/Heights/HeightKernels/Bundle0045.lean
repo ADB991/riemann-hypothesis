@@ -27,7 +27,7 @@ namespace StandardDualBaseChange
 variable {K : Type} [Field K] [NumberField K] {i : ℕ} {T : Type} [Fintype T] [DecidableEq T]
 
 theorem isMultiHomog_linForm (A : ∀ _ : Unit, Fin i → T → ℤ) (q : Σ _ : Unit, Fin i) :
-    IsMultiHomog (linForm (ι := dualBlocks T) (ι₂ := PBlk i) A q) fun _ => 1 := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι := dualBlocks T) (ι₂ := PBlk i) A q) fun _ => 1 := by
   classical
   intro m hm k
   obtain ⟨t, -, ht⟩ := Finset.mem_biUnion.mp (MvPolynomial.support_sum hm)
@@ -41,8 +41,8 @@ theorem isMultiHomog_linForm (A : ∀ _ : Unit, Fin i → T → ℤ) (q : Σ _ :
 omit [DecidableEq T] in
 theorem exists_linForm_not_mem (b : Module.Basis T ℤ (dualLattice (HermLattice.standard K i)))
     (hP : IsArithVar (dualIdeal b) i)
-    (hBP : IsBasePtFree (K₂ := Unit) (ι₂ := PBlk i) (dualIdeal b) (linForm (ι₂ := PBlk i) (dualStdCoordMat b))) :
-    ∀ k₂ : Unit, ∃ j, linForm (ι₂ := PBlk i) (dualStdCoordMat b) ⟨k₂, j⟩ ∉ dualIdeal b := by
+    (hBP : IsBasePtFree (K₂ := Unit) (ι₂ := PBlk i) (dualIdeal b) (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι₂ := PBlk i) (dualStdCoordMat b))) :
+    ∀ k₂ : Unit, ∃ j, ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι₂ := PBlk i) (dualStdCoordMat b) ⟨k₂, j⟩ ∉ dualIdeal b := by
   intro k₂
   by_contra hall
   simp only [not_exists, not_not] at hall
@@ -50,7 +50,7 @@ theorem exists_linForm_not_mem (b : Module.Basis T ℤ (dualLattice (HermLattice
   obtain ⟨t, ht⟩ := hrel ()
   obtain ⟨N, hN⟩ := hBP k₂ fun _ => t
   have hle : Ideal.span (Set.range fun j : Fin i =>
-      linForm (ι₂ := PBlk i) (dualStdCoordMat b) ⟨k₂, j⟩) ≤ dualIdeal b :=
+      ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι₂ := PBlk i) (dualStdCoordMat b) ⟨k₂, j⟩) ≤ dualIdeal b :=
     Ideal.span_le.mpr (Set.range_subset_iff.mpr hall)
   rw [sup_eq_left.mpr hle, Fintype.prod_unique] at hN
   exact ht (hprime.mem_of_pow_mem N hN)
@@ -71,14 +71,14 @@ theorem DualStdBaseChange.proof (hCM : ChangeOfModelStatement) (hGr : GraphState
     DualArithVar.proof (CoordConeArithVar.proof IntDomainDim.proof) K i _ T b hi
   have hBPb := hBP K i T b
   have hGraph := (hGr Unit (dualBlocks T) Unit (PBlk i) (dualIdeal b) i
-    (linForm (ι₂ := PBlk i) (dualStdCoordMat b)) (fun _ _ => 1) hP
+    (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι₂ := PBlk i) (dualStdCoordMat b)) (fun _ _ => 1) hP
     (isMultiHomog_linForm _) (exists_linForm_not_mem b hP hBPb)).1
   obtain ⟨G⟩ := hGF Unit (PBlk i) (Unit ⊕ Unit) (Sum.elim (dualBlocks T) (PBlk i)) Sum.inr inrV _ i
     isBlockMap_inr hGraph
   obtain ⟨J, hJ, -⟩ := hEU G.Φ _ (fibreIdx (Sum.elim (dualBlocks T) (PBlk i)) (Sum.inr : Unit → Unit ⊕ Unit))
   obtain ⟨n, rfl⟩ : ∃ n, i = n + 1 := ⟨i - 1, by omega⟩
   have hbot : IsArithVar (imageZ (inrV (ι := dualBlocks T) (ι₂ := PBlk (n + 1)))
-      (graphIdeal (dualIdeal b) (linForm (ι₂ := PBlk (n + 1)) (dualStdCoordMat b)))) (n + 1) := by
+      (graphIdeal (dualIdeal b) (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι₂ := PBlk (n + 1)) (dualStdCoordMat b)))) (n + 1) := by
     rw [hIm K (n + 1) T b]
     exact IndefiniteRowSideFullHecke.Inter.isArithVar_bot n
   have key := hCM II hII Unit (dualBlocks T) (PBlk (n + 1)) (dualIdeal b) (n + 1) (dualStdCoordMat b) G J
