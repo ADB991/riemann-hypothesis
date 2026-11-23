@@ -235,7 +235,7 @@ def PtsBddConv.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (e : ℕ)
     (L : HermLine ι) (r : ℝ) (g : ℝ → ((Σ k, ι k) → ℂ) → ℝ) (g₀ : ((Σ k, ι k) → ℂ) → ℝ)
     (N : Set ((Σ k, ι k) → ℂ)) (C s₀ : ℝ),
-    IsArithVar P (e + 1) → IsSmoothHerm L → 0 < r → IsPtsNull P e N → 0 < s₀ →
+    IsArithVar P (e + 1) → ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm L → 0 < r → IsPtsNull P e N → 0 < s₀ →
     (∀ s : ℝ, 0 < s → s < s₀ → (∀ z ∈ mcPts P, |g s z| ≤ C) ∧ ContinuousOn (g s) (mcPts P \ N) ∧
       ∀ c : K → ℂ, (∀ k, c k ≠ 0) → ∀ z ∈ mcPts P, g s (torusSmul c z) = g s z) →
     (∀ z ∈ mcPts P, z ∉ N → Tendsto (fun s => g s z) (𝓝[>] 0) (𝓝 (g₀ z))) →

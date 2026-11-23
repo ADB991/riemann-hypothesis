@@ -261,7 +261,7 @@ theorem blockSum_add_negExp (a : (Σ k, ι k) → ℤ) (k : K) :
   omega
 
 theorem isMultiHomog_posExp (a : (Σ k, ι k) → ℤ) :
-    IsMultiHomog (monomial (posExp a) (1 : S) : MRingOver S ι) fun k => ∑ i, posExp a ⟨k, i⟩ :=
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (monomial (posExp a) (1 : S) : MRingOver S ι) fun k => ∑ i, posExp a ⟨k, i⟩ :=
   isMultiHomog_monomial _ _ _ fun _ => rfl
 
 theorem mk_posExp_mem (a : (Σ k, ι k) → ℤ) (e : K → ℤ) (he : ∀ k, e k = ((∑ i, posExp a ⟨k, i⟩ : ℕ) : ℤ)) :

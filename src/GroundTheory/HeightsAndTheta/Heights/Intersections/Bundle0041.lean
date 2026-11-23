@@ -112,7 +112,7 @@ def ArithmeticIntersectionFibreMultiHomogeneous.Statement : Prop :=
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (p : ℕ) [Fact p.Prime] (W' : Ideal (MRing ι')),
     IsBlockMap κ v → ((p : ℕ) : MRing ι') ∈ W' →
     IsMultiHomogIdeal (W'.map (MvPolynomial.map (Int.castRingHom (ZMod p)))) →
-    ∀ G' : GenFibre v W', IsMultiHomogIdeal (fibreIdeal κ G')
+    ∀ G' : GenFibre v W', IsMultiHomogIdeal (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G')
 
 section Inhabitants
 

@@ -108,7 +108,7 @@ namespace BirationalRatioClosure
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
 theorem aeval_eq_prod_mul (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0)
-    {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) :
+    {g : MRing ι} {d : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) :
     aeval y g = (∏ k, y ⟨k, c k⟩ ^ d k) * aeval (fun p ↦ y p / y ⟨p.1, c p.1⟩) g := by
   classical
   rw [aeval_def, aeval_def, eval₂_eq', eval₂_eq', Finset.mul_sum]
