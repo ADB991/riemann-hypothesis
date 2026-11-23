@@ -231,16 +231,16 @@ theorem kappa_ne_zero {γ₀ : IsoK D} (k : KapChoice γ₀) : k.kappa ≠ 0 := 
   rw [h0, zero_pow (mul_ne_zero two_ne_zero (classNumber_ne_zero _))] at h1
   exact div_ne_zero ((map_ne_zero _).2 hE) ((map_ne_zero _).2 ((map_ne_zero _).2 hE)) h1.symm
 
-theorem thMM_spec (B : Base D cc δ) (h : B.StdOK) : B.IsThMM B.thMM ∧ B.thMM ≠ 0 := by
+theorem thMM_spec (B : Formalism.L2.Ker.Base D cc δ) (h : B.StdOK) : B.IsThMM B.thMM ∧ B.thMM ≠ 0 := by
   obtain ⟨e, u⟩ := ThetaVec.thetaVector _ _ _ _ _ _ _ _ h _ (kappa_ne_zero B.kc)
   have h1 : B.IsThMM B.thMM := Classical.epsilon_spec (p := IsThM B.L B.ω₀ B.cq B.lamM B.gC B.kappa) e
   exact ⟨h1, (u _ h1.1 h1.2).1⟩
 
-theorem areaOK (B : Base D cc δ) : B.AreaOK := by
-  rw [Base.AreaOK, ThetaVec.area_eq]
+theorem areaOK (B : Formalism.L2.Ker.Base D cc δ) : B.AreaOK := by
+  rw [Formalism.L2.Ker.Base.AreaOK, ThetaVec.area_eq]
   exact GlobalTheory.OddTheta.area_eq B.L _ fun z => by rw [← B.lat]; rfl
 
-theorem q_int (B : Base D cc δ) (h : B.StdOK) {x : D.what₂.Tau → ℂ} (hx : x ∈ B.lamM) :
+theorem q_int (B : Formalism.L2.Ker.Base D cc δ) (h : B.StdOK) {x : D.what₂.Tau → ℂ} (hx : x ∈ B.lamM) :
     ∃ m : ℤ, qOf B.cq (matH (hOne B.L D.what₂.Tau)) x = m := by
   have hs : ∀ a, slice a (0 : Fin 4 × D.what₂.Tau → ℂ) = 0 := fun _ => rfl
   have h1 := h.betaSemi.1 (B.gC (ThetaVec.ins 0 x)) ⟨ThetaVec.ins 0 x, fun a => by
@@ -256,13 +256,13 @@ theorem q_int (B : Base D cc δ) (h : B.StdOK) {x : D.what₂.Tau → ℂ} (hx :
     linear_combination hm
   exact_mod_cast this
 
-theorem entry_mem (B : Base D cc δ) {N N' : ℕ} {x : VC D N N'}
+theorem entry_mem (B : Formalism.L2.Ker.Base D cc δ) {N N' : ℕ} {x : VC D N N'}
     (hx : x ∈ La D (tor0 D cc δ) (stdL D N) (stdL D N')) : x ∈ powLat B.lamM N N' := by
   refine (AddSubgroup.closure_le _).2 ?_ hx
   rintro _ ⟨w, hw, A, hA, rfl⟩ i j
   exact AddSubgroup.subset_closure ⟨w, hw, A i j, (GlobalTheory.OddGenus.mem_iff_entries D N N' A).1 hA i j, rfl⟩
 
-theorem Hf_eq (B : Base D cc δ) {N N' : ℕ} (z w : VC D N N') :
+theorem Hf_eq (B : Formalism.L2.Ker.Base D cc δ) {N N' : ℕ} (z w : VC D N N') :
     Hf D (tor0 D cc δ) z w =
       ∑ i, ∑ j, matH (hOne B.L D.what₂.Tau) (fun τ => z τ i j) (fun τ => w τ i j) := by
   have hA : area (tor0 D cc δ).abelian₂ = latticeArea B.L := (areaOK B).trans (ThetaVec.area_eq _)
@@ -272,12 +272,12 @@ theorem Hf_eq (B : Base D cc δ) {N N' : ℕ} (z w : VC D N N') :
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_comm
 
-theorem thZero_mem (B : Base D cc δ) (h : B.StdOK) (N N' : ℕ) :
+theorem thZero_mem (B : Formalism.L2.Ker.Base D cc δ) (h : B.StdOK) (N N' : ℕ) :
     B.thZero N N' ∈ Th D (tor0 D cc δ) (stdL D N) (stdL D N') := by
   have hθ := (thMM_spec B h).1.1
   refine ⟨?_, fun x hx z => ?_⟩
   · have hd : Differentiable ℂ B.thMM := differentiableOn_univ.1 hθ.1.differentiableOn
-    unfold Base.thZero tensPow
+    unfold Formalism.L2.Ker.Base.thZero tensPow
     fun_prop
   · have hx' := entry_mem B hx
     choose m hm using fun i j => q_int B h (hx' i j)
@@ -293,7 +293,7 @@ theorem thZero_mem (B : Base D cc δ) (h : B.StdOK) (N N' : ℕ) :
       push_cast
       ring
     rw [h2, U, Hf_eq B, Hf_eq B]
-    simp only [Base.thZero, tensPow, Finset.mul_sum, Finset.sum_div, ← Finset.sum_sub_distrib, Complex.exp_sum,
+    simp only [Formalism.L2.Ker.Base.thZero, tensPow, Finset.mul_sum, Finset.sum_div, ← Finset.sum_sub_distrib, Complex.exp_sum,
       ← Finset.prod_mul_distrib]
     exact Finset.prod_congr rfl fun i _ => Finset.prod_congr rfl fun j _ => hθ.2 _ (hx' i j) fun τ => z τ i j
 
