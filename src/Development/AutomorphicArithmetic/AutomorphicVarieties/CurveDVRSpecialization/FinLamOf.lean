@@ -9,11 +9,12 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Commutative
 
 open IsLocalRing UpperTheory.V UpperTheory.V.Alg
 
+attribute [local instance] IsCO.toIsLocalRing
+
 private theorem flo_sub_mem {O R : Type} [CommRing O] [IsLocalRing O] [Finite (ResidueField O)] [CommRing R]
     [Algebra O R] [IsCO O R] (P : Ideal R) (a c : R) (h : res O R a = res O R c) (ha : IsUnit a)
     (hp : a ^ (Nat.card (ResidueField O) - 1) - c ^ (Nat.card (ResidueField O) - 1) ∈ P) : a - c ∈ P := by
   classical
-  letI : IsLocalRing R := IsCO.toIsLocalRing O
   haveI := Fintype.ofFinite (ResidueField O)
   set q := Nat.card (ResidueField O) with hq
   have hq2 : 2 ≤ q := by
