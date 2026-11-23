@@ -29,6 +29,8 @@ theorem isNilpotent_of_mem_J (hp : b.p ≠ 0) {L : b.Fun} (T : Thick L) {x : T.B
   refine ⟨b.p * N, ?_⟩
   rw [pow_mul, ← T.δ.factorial_mul_dpow_eq_pow hx, hc, Nat.cast_mul, mul_assoc, mul_pow, hN, zero_mul]
 
+attribute [local instance 1100] Empty.instIsEmpty
+
 def push (T : Thick (F.cr b ht κ)) {B' : Type} [CommRing B'] (g : T.B →+* B') (δ' : DividedPowers (T.J.map g))
     (hg : IsDPMorphism T.δ δ' g) : Thick (F.cr b ht κ) where
   B := B'
@@ -298,6 +300,8 @@ theorem comp_eq (T : Thick (F.cr b ht κ)) {g : s.R →+* T.B ⧸ T.J}
 
 variable (𝓛 : Lift s.a (fun k => (s.T k : s.R)) b.R b.I κ) (δ : DividedPowers (b.I.map 𝓛.i))
   (hδ : IsDPMorphism b.γ δ 𝓛.i) (hp : b.p ≠ 0) (hn : IsNilpotent (b.p : b.R))
+
+attribute [local instance 1100] Empty.instIsEmpty
 
 theorem s_eq_one (T : Thick (F.cr b ht κ)) : T.s = 1 := by
   have h : (1 : T.B) = T.s * T.i b.t := (Finset.prod_of_isEmpty (ι := Empty) _).symm.trans T.hs
