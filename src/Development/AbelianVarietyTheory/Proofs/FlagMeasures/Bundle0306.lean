@@ -149,12 +149,12 @@ theorem dom_of_basis {W : Type} [NormedAddCommGroup W] [NormedSpace ℝ W] {ι :
   have := h2 ⟨l', hl'⟩ (by simpa [Submodule.vadd_def, add_comm] using h')
   simpa using congrArg Subtype.val this
 
-theorem dInv_ne_zero (K : Type) [Field K] [NumberField K] (j : ℕ) : dInv K j ≠ 0 := by
-  unfold dInv
+theorem dInv_ne_zero (K : Type) [Field K] [NumberField K] (j : ℕ) : GlobalTheory.SgGlob.dInv K j ≠ 0 := by
+  unfold GlobalTheory.SgGlob.dInv
   refine pow_ne_zero _ (inv_ne_zero ?_)
   exact FractionalIdeal.coeIdeal_ne_zero.2 differentIdeal_ne_bot
 
-theorem skew_covol_dInv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → Algebra.FormallyUnramified (𝓞 F) (𝓞 E) → ∀ (t : ℕ) (c : ℝ), 0 < c → HasDom volume (skewLat (σ : E →+* E) (dInv E (2 * t)) c : Set (InfinitePlace E → ℝ)) (ENNReal.ofReal (|(NumberField.discr F : ℝ)| ^ (1 / 2 - 2 * (t : ℝ)) * c ^ Fintype.card (InfinitePlace E))) := by
+theorem skew_covol_dInv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → Algebra.FormallyUnramified (𝓞 F) (𝓞 E) → ∀ (t : ℕ) (c : ℝ), 0 < c → HasDom volume (skewLat (σ : E →+* E) (GlobalTheory.SgGlob.dInv E (2 * t)) c : Set (InfinitePlace E → ℝ)) (ENNReal.ofReal (|(NumberField.discr F : ℝ)| ^ (1 / 2 - 2 * (t : ℝ)) * c ^ Fintype.card (InfinitePlace E))) := by
   intro F E _ _ _ _ _ σ hCM hU t c hc
   have hTC : IsTotallyComplex E := hCM.2.1
   have hTR : IsTotallyReal F := hCM.1
@@ -163,13 +163,13 @@ theorem skew_covol_dInv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
   have hre : ∀ x : E, reV (σ x) = reV x := fun x => funext fun w => by simp [reV, hσw]
   have him : ∀ x : E, imV (σ x) = -imV x := fun x => funext fun w => by simp [imV, hσw]
   obtain ⟨e, he, hex⟩ := _root_.GlobalTheory.SnMass.SkewVol.mixedSpace_reIm_coords E hTC
-  obtain ⟨ι, _, b, hbs, hbv⟩ := GlobalTheory.T.fractionalIdeal_basis_transport_measurePreserving E volume e he (Units.mk0 (dInv E (2 * t)) (dInv_ne_zero E _))
+  obtain ⟨ι, _, b, hbs, hbv⟩ := GlobalTheory.T.fractionalIdeal_basis_transport_measurePreserving E volume e he (Units.mk0 (GlobalTheory.SgGlob.dInv E (2 * t)) (dInv_ne_zero E _))
   obtain ⟨e1, he1, he1x⟩ := _root_.GlobalTheory.SnMass.ReCoords.mixedSpace_reCoords F E σ hCM
   obtain ⟨ι1, _, b1, hb1s, hb1v⟩ :=
-    GlobalTheory.T.fractionalIdeal_basis_transport_measurePreserving F volume e1 he1 (Units.mk0 (dInv F (2 * t)) (dInv_ne_zero F _))
+    GlobalTheory.T.fractionalIdeal_basis_transport_measurePreserving F volume e1 he1 (Units.mk0 (GlobalTheory.SgGlob.dInv F (2 * t)) (dInv_ne_zero F _))
   simp only [Units.val_mk0] at hbs hbv hb1s hb1v
   set Λ := Submodule.span ℤ (Set.range b) with hΛdef
-  have hΛ : ∀ p, p ∈ Λ ↔ ∃ x ∈ dInv E (2 * t), (reV x, imV x) = p := by
+  have hΛ : ∀ p, p ∈ Λ ↔ ∃ x ∈ GlobalTheory.SgGlob.dInv E (2 * t), (reV x, imV x) = p := by
     intro p
     rw [← SetLike.mem_coe, hbs]
     simp [hex]
@@ -194,7 +194,7 @@ theorem skew_covol_dInv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
     intro a y hay
     obtain ⟨x, hx, hxe⟩ := (hΛ _).1 hay
     rw [Prod.mk.injEq] at hxe
-    refine (hΛ _).2 ⟨x - σ x, Submodule.sub_mem (dInv E (2 * t) : Submodule (𝓞 E) E) hx (_root_.GlobalTheory.SnMass.VolN.conj_mem_dInv F E σ hCM _ x hx), ?_⟩
+    refine (hΛ _).2 ⟨x - σ x, Submodule.sub_mem (GlobalTheory.SgGlob.dInv E (2 * t) : Submodule (𝓞 E) E) hx (_root_.GlobalTheory.SnMass.VolN.conj_mem_dInv F E σ hCM _ x hx), ?_⟩
     have h1 : reV (x - σ x) = reV x - reV (σ x) := funext fun w => by simp [reV]
     have h1' : imV (x - σ x) = imV x - imV (σ x) := funext fun w => by simp [imV]
     rw [h1, h1', hre, him, ← hxe.2]
@@ -208,7 +208,7 @@ theorem skew_covol_dInv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
   have heq := _root_.GlobalTheory.addFundamentalDomains_measure_eq ((volume : Measure (InfinitePlace E → ℝ)).prod (volume : Measure (InfinitePlace E → ℝ))) Λ _ _ ((ZSpan.fundamentalDomain_measurableSet b1).prod hD2m)
     (ZSpan.fundamentalDomain_measurableSet b) hprod (dom_of_basis b)
   rw [Measure.prod_prod, ← Measure.volume_eq_prod, hbv, hb1v] at heq
-  have hL2 : ∀ y, (∃ a, (a, y) ∈ Λ) ↔ ∃ x ∈ dInv E (2 * t), imV x = y := by
+  have hL2 : ∀ y, (∃ a, (a, y) ∈ Λ) ↔ ∃ x ∈ GlobalTheory.SgGlob.dInv E (2 * t), imV x = y := by
     intro y
     simp only [hΛ, Prod.mk.injEq]
     constructor
@@ -217,7 +217,7 @@ theorem skew_covol_dInv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
     · rintro ⟨x, hx, rfl⟩
       exact ⟨_, x, hx, rfl, rfl⟩
   obtain ⟨θ, hθ⟩ := _root_.GlobalTheory.exists_integer_add_conj_eq_one_of_formallyUnramified F E σ hCM hU
-  have hfin := _root_.GlobalTheory.SnMass.SkewDom.skewDom F E σ hCM (dInv E (2 * t)) (fun x hx => _root_.GlobalTheory.SnMass.VolN.conj_mem_dInv F E σ hCM _ x hx) θ hθ c hc D2 _
+  have hfin := _root_.GlobalTheory.SnMass.SkewDom.skewDom F E σ hCM (GlobalTheory.SgGlob.dInv E (2 * t)) (fun x hx => _root_.GlobalTheory.SnMass.VolN.conj_mem_dInv F E σ hCM _ x hx) θ hθ c hc D2 _
     hD2m (fun y => by simpa only [Set.mem_setOf_eq, hL2] using hD2 y) rfl
   have hd : (1 : ℝ) ≤ |(discr F : ℝ)| := by
     have h := Int.one_le_abs (discr_ne_zero F)
