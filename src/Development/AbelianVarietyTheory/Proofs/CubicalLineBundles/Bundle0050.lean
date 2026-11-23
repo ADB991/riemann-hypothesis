@@ -121,46 +121,46 @@ variable {Xo : Moduli Dw l} {c : Coeff l}
 theorem comb_eq {S : Type} [CommRing S] {x : Sp S ⟶ Xo.X} {m : ℕ}
     {v : Fin m → (Sp (DualNumber S) ⟶ Xo.univ.t.G.left)} (hv : ∀ j, IsTanAt x (v j)) {a : Fin m → S}
     {w : Sp (DualNumber S) ⟶ Xo.univ.t.G.left} (h : IsCombAt x v a w) :
-    (combT x (fun j => GlobalTheory.IntRebase.ovT (t := Xo.univ.t) (hv j)) a).left = w :=
-  (isCombAtG_iff Xo.univ.t x (fun j => GlobalTheory.IntRebase.ovT (t := Xo.univ.t) (hv j)) _ _).1 h
+    (GlobalTheory.IntRebase.combT x (fun j => GlobalTheory.IntRebase.ovT (t := Xo.univ.t) (hv j)) a).left = w :=
+  (GlobalTheory.IntRebase.isCombAtG_iff Xo.univ.t x (fun j => GlobalTheory.IntRebase.ovT (t := Xo.univ.t) (hv j)) _ _).1 h
 
 theorem lieInt_change (T : CDVR) (io : c.F →+* T.Fr) {G : SAB H (Sp T.V)} {t' : SAB H (Sp T.Fr)}
     {x : Sp T.Fr ⟶ Xo.X} (m1 : SABMap t' Xo.univ.t x) (m2 : SABMap t' G (spMap (algebraMap T.V T.Fr)))
     (u : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Sp (DualNumber T.Fr) ⟶ Xo.univ.t.G.left))
     (hu : ∀ τ j, IsTanAt x (u τ j)) (h : LieInt T io m1 m2 u)
     (k : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) T.V) (hk : ∀ τ, IsUnit (k τ).det) :
-    LieInt T io m1 m2 (fun τ i => (combT x (fun j => GlobalTheory.IntRebase.ovT (t := Xo.univ.t) (hu τ j))
+    LieInt T io m1 m2 (fun τ i => (GlobalTheory.IntRebase.combT x (fun j => GlobalTheory.IntRebase.ovT (t := Xo.univ.t) (hu τ j))
       (fun j => algebraMap T.V T.Fr (k τ j i))).left) := by
   obtain ⟨ub, htan, heig, hbas, hlift⟩ := h
   let Ub : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (tEpsG (𝟙 (Sp T.V)) ⟶ G.G) := fun τ j => kap ≫ ub τ j
-  have hUb0 : ∀ τ j, smT (𝟙 (Sp T.V)) 0 (Ub τ j) = 1 := fun τ j => smT_zero_kap _ (htan τ j)
+  have hUb0 : ∀ τ j, GlobalTheory.IntRebase.smT (𝟙 (Sp T.V)) 0 (Ub τ j) = 1 := fun τ j => GlobalTheory.IntRebase.smT_zero_kap _ (htan τ j)
   have hUbE : ∀ τ j (a : 𝓞 E) (z : T.V), algebraMap T.V T.Fr z = io (embK c τ a) →
-      Ub τ j ≫ G.act.act a = smT (𝟙 (Sp T.V)) z (Ub τ j) := fun τ j =>
-    (isEigV_kapI_iff io G τ _).1 (by rw [kapI_kap_assoc]; exact heig τ j)
-  refine ⟨fun τ i => kapI ≫ combT (𝟙 (Sp T.V)) (Ub τ) (fun j => k τ j i), ?_, ?_, ?_, ?_⟩
+      Ub τ j ≫ G.act.act a = GlobalTheory.IntRebase.smT (𝟙 (Sp T.V)) z (Ub τ j) := fun τ j =>
+    (GlobalTheory.IntRebase.isEigV_kapI_iff io G τ _).1 (by rw [GlobalTheory.IntRebase.kapI_kap_assoc]; exact heig τ j)
+  refine ⟨fun τ i => GlobalTheory.IntRebase.kapI ≫ GlobalTheory.IntRebase.combT (𝟙 (Sp T.V)) (Ub τ) (fun j => k τ j i), ?_, ?_, ?_, ?_⟩
   · intro τ i
-    exact isTan_kapI _ (combT_tan _ _ (hUb0 τ) _)
+    exact GlobalTheory.IntRebase.isTan_kapI _ (GlobalTheory.IntRebase.combT_tan _ _ (hUb0 τ) _)
   · intro τ i
-    refine (isEigV_kapI_iff io G τ _).2 fun a z hz => ?_
+    refine (GlobalTheory.IntRebase.isEigV_kapI_iff io G τ _).2 fun a z hz => ?_
     have := G.act.hom a
-    exact combT_eig _ _ _ _ (fun j => hUbE τ j a z hz) _
+    exact GlobalTheory.IntRebase.combT_eig _ _ _ _ (fun j => hUbE τ j a z hz) _
   · intro τ w hw he
-    have h1 : ∃! a : Fin (Dw.mult τ) → T.V, kap ≫ w = combT (𝟙 (Sp T.V)) (Ub τ) a := by
+    have h1 : ∃! a : Fin (Dw.mult τ) → T.V, kap ≫ w = GlobalTheory.IntRebase.combT (𝟙 (Sp T.V)) (Ub τ) a := by
       obtain ⟨a, ha, hu⟩ := hbas τ w hw he
-      refine ⟨a, (isComb_iff _ _ _).1 (by rw [kapI_kap_assoc]; exact ha), fun b hb => hu b ?_⟩
-      have h2 := (isComb_iff (ub τ) b (kap ≫ w)).2 hb
-      rw [kapI_kap_assoc] at h2
+      refine ⟨a, (GlobalTheory.IntRebase.isComb_iff _ _ _).1 (by rw [GlobalTheory.IntRebase.kapI_kap_assoc]; exact ha), fun b hb => hu b ?_⟩
+      have h2 := (GlobalTheory.IntRebase.isComb_iff (ub τ) b (kap ≫ w)).2 hb
+      rw [GlobalTheory.IntRebase.kapI_kap_assoc] at h2
       exact h2
-    obtain ⟨a, ha, hu⟩ := reframe_basis _ (Ub τ) (hUb0 τ) (k τ) (hk τ) _ h1
-    have e : (fun i => kap ≫ (kapI ≫ combT (𝟙 (Sp T.V)) (Ub τ) (fun j => k τ j i))) =
-        fun i => combT (𝟙 (Sp T.V)) (Ub τ) (fun j => k τ j i) := funext fun i => kap_kapI_assoc _
+    obtain ⟨a, ha, hu⟩ := GlobalTheory.IntRebase.reframe_basis _ (Ub τ) (hUb0 τ) (k τ) (hk τ) _ h1
+    have e : (fun i => kap ≫ (GlobalTheory.IntRebase.kapI ≫ GlobalTheory.IntRebase.combT (𝟙 (Sp T.V)) (Ub τ) (fun j => k τ j i))) =
+        fun i => GlobalTheory.IntRebase.combT (𝟙 (Sp T.V)) (Ub τ) (fun j => k τ j i) := funext fun i => GlobalTheory.IntRebase.kap_kapI_assoc _
     refine ⟨a, ?_, fun b hb => hu b ?_⟩
-    · have h2 := (isComb_iff (fun i => kapI ≫ combT (𝟙 (Sp T.V)) (Ub τ) (fun j => k τ j i)) a (kap ≫ w)).2
+    · have h2 := (GlobalTheory.IntRebase.isComb_iff (fun i => GlobalTheory.IntRebase.kapI ≫ GlobalTheory.IntRebase.combT (𝟙 (Sp T.V)) (Ub τ) (fun j => k τ j i)) a (kap ≫ w)).2
         (by rw [e]; exact ha)
-      rw [kapI_kap_assoc] at h2
+      rw [GlobalTheory.IntRebase.kapI_kap_assoc] at h2
       exact h2
-    · have h2 := (isComb_iff (fun i => kapI ≫ combT (𝟙 (Sp T.V)) (Ub τ) (fun j => k τ j i)) b (kap ≫ w)).1
-        (by rw [kapI_kap_assoc]; exact hb)
+    · have h2 := (GlobalTheory.IntRebase.isComb_iff (fun i => GlobalTheory.IntRebase.kapI ≫ GlobalTheory.IntRebase.combT (𝟙 (Sp T.V)) (Ub τ) (fun j => k τ j i)) b (kap ≫ w)).1
+        (by rw [GlobalTheory.IntRebase.kapI_kap_assoc]; exact hb)
       rw [e] at h2
       exact h2
   · intro τ i
@@ -168,33 +168,33 @@ theorem lieInt_change (T : CDVR) (io : c.F →+* T.Fr) {G : SAB H (Sp T.V)} {t' 
     have hδ : spMap (Formalism.L2.Pj.dualMap (algebraMap T.V T.Fr)) ≫
         spMap ((algebraMap T.V (DualNumber T.V)).comp (algebraMap T.V T.V)) =
         spMap (algebraMap T.Fr (DualNumber T.Fr)) ≫ spMap (algebraMap T.V T.Fr) := by
-      rw [spMap_comp', spMap_comp']
+      rw [Formalism.L2.PjFree.spMap_comp', Formalism.L2.PjFree.spMap_comp']
       show spMap ((Formalism.L2.Pj.dualMap (algebraMap T.V T.Fr)).comp (algebraMap T.V (DualNumber T.V))) = _
-      rw [dualMap_comp_alg]
+      rw [GlobalTheory.IntRebase.dualMap_comp_alg]
     have hov : ∀ j, u' j ≫ t'.G.hom = spMap (algebraMap T.Fr (DualNumber T.Fr)) := by
       intro j
-      apply spMap_frac_cancel (V := T.V)
+      apply GlobalTheory.IntRebase.spMap_frac_cancel (V := T.V)
       rw [Category.assoc, ← m2.cart.1.w, ← Category.assoc, hu2 j, Category.assoc, Over.w (ub τ j)]
       exact hδ
     let T' : Over (Sp T.Fr) := Over.mk (spMap (algebraMap T.Fr (DualNumber T.Fr)))
     let cf : Fin (Dw.mult τ) → T.Fr := fun j => algebraMap T.V T.Fr (k τ j i)
     let Y : Fin (Dw.mult τ) → (T' ⟶ t'.G) := fun j => Over.homMk (spMap (epsMul (cf j)) ≫ u' j) (by
       show (spMap (epsMul (cf j)) ≫ u' j) ≫ t'.G.hom = spMap (algebraMap T.Fr (DualNumber T.Fr))
-      rw [Category.assoc, hov, spMap_comp', epsMul_comp_alg])
+      rw [Category.assoc, hov, Formalism.L2.PjFree.spMap_comp', Formalism.L2.PjFree.epsMul_comp_alg])
     refine ⟨(∏ j, Y j).left, ?_, ?_⟩
-    · have hA := grpPull_prod m1.cart T' Finset.univ Y
-        (fun j => smT x (cf j) (GlobalTheory.IntRebase.ovT (t := Xo.univ.t) (hu τ j))) (fun j => by
+    · have hA := GlobalTheory.IntRebase.grpPull_prod m1.cart T' Finset.univ Y
+        (fun j => GlobalTheory.IntRebase.smT x (cf j) (GlobalTheory.IntRebase.ovT (t := Xo.univ.t) (hu τ j))) (fun j => by
           show spMap (epsMul (cf j)) ≫ u τ j = (spMap (epsMul (cf j)) ≫ u' j) ≫ m1.φ
           rw [Category.assoc, hu1])
       exact hA.symm
     · let δ : Over.mk (T'.hom ≫ spMap (algebraMap T.V T.Fr)) ⟶ epsOver T.V T.V :=
         Over.homMk (spMap (Formalism.L2.Pj.dualMap (algebraMap T.V T.Fr))) hδ
-      have hB := grpPull_prod m2.cart T' Finset.univ Y
-        (fun j => δ ≫ kapI ≫ smT (𝟙 (Sp T.V)) (k τ j i) (Ub τ j)) (fun j => by
-          simp only [Over.comp_left, δ, kapI, IntRebase.kap, Ub, smT_left, Over.homMk_left, Category.id_comp, Y,
+      have hB := GlobalTheory.IntRebase.grpPull_prod m2.cart T' Finset.univ Y
+        (fun j => δ ≫ GlobalTheory.IntRebase.kapI ≫ GlobalTheory.IntRebase.smT (𝟙 (Sp T.V)) (k τ j i) (Ub τ j)) (fun j => by
+          simp only [Over.comp_left, δ, GlobalTheory.IntRebase.kapI, GlobalTheory.IntRebase.kap, Ub, GlobalTheory.IntRebase.smT_left, Over.homMk_left, Category.id_comp, Y,
             Category.assoc]
-          rw [hu2 j, ← Category.assoc, ← Category.assoc, spMap_comp', spMap_comp', dualMap_comp_epsMul])
-      rw [← hB, ← comp_prodT, ← comp_prodT]
+          rw [hu2 j, ← Category.assoc, ← Category.assoc, Formalism.L2.PjFree.spMap_comp', Formalism.L2.PjFree.spMap_comp', GlobalTheory.IntRebase.dualMap_comp_epsMul])
+      rw [← hB, ← GlobalTheory.IntRebase.comp_prodT, ← GlobalTheory.IntRebase.comp_prodT]
       rfl
 
 end GlobalTheory.LamT.LocLie
