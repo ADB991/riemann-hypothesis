@@ -19,6 +19,9 @@ open CyclNorms GroundTheory.LocalField ValuativeRel
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
+local instance (K : IntermediateField ℚ_[p] (PadicAlgCl p)) : ValuativeExtension K (PadicAlgCl p) :=
+  GroundTheory.LocalField.intermediateField_valuativeExtension_right K
+
 instance charP_residueField_intermediateField (K : IntermediateField ℚ_[p] (PadicAlgCl p))
     [FiniteDimensional ℚ_[p] K] : CharP 𝓀[K] p :=
   charP_residueField_of_valuativeExtension p K
