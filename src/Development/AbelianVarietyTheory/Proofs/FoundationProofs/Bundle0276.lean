@@ -57,7 +57,7 @@ def sesqOf (D : D7) (T : Tor D) (N N' : ℕ) : Sesq (VC D N N') :=
       simp only [Hf, Pi.smul_apply, smul_eq_mul, map_mul, mul_left_comm _ (starRingEnd ℂ c), ← Finset.mul_sum,
         mul_div_assoc])
 
-theorem isHerm_sesqOf (D : D7) (T : Tor D) (N N' : ℕ) : IsHerm (sesqOf D T N N') := by
+theorem isHerm_sesqOf (D : D7) (T : Tor D) (N N' : ℕ) : IsHerm (GlobalTheory.ConjNorm.Inter.sesqOf D T N N') := by
   intro x y
   change Hf D T y x = starRingEnd ℂ (Hf D T x y)
   set_option synthInstance.maxHeartbeats 100000 in
@@ -196,8 +196,8 @@ theorem klat_finite (h : GL3Theta.InducedCMType D) (hcc : cc ≠ ⊥) {A₁ A₂
     exact klat_mul_mem h hcc h₁ B
 
 theorem klat_facts (hc : Crv D cc δ) {A : AddSubgroup (VC D N N')} (hA : KLat D (tor0 D cc δ) A) :
-    A.FG ∧ Submodule.span ℝ (A : Set (VC D N N')) = ⊤ ∧ IsSelfDual (sesqOf D (tor0 D cc δ) N N') A ∧
-      IsSemiChar (sesqOf D (tor0 D cc δ) N N') A (al D (tor0 D cc δ)) := by
+    A.FG ∧ Submodule.span ℝ (A : Set (VC D N N')) = ⊤ ∧ IsSelfDual (GlobalTheory.ConjNorm.Inter.sesqOf D (tor0 D cc δ) N N') A ∧
+      IsSemiChar (GlobalTheory.ConjNorm.Inter.sesqOf D (tor0 D cc δ) N N') A (al D (tor0 D cc δ)) := by
   obtain ⟨-, -, h1, h2, h3, h4, h5⟩ := GlobalTheory.ConjNorm.Line.theta_line D (GlobalTheory.InducedType.induced_type D).1 cc δ hc N N' A hA
   refine ⟨h3, h4, le_antisymm h2 h1, ?_⟩
   obtain ⟨a, ha⟩ := GlobalTheory.NormSum.exists_integer_map_eq_w0 D
@@ -223,9 +223,9 @@ theorem GlobalTheory.ConjNorm.unitary_all : ∀ D : D7, IntertwinerUnitary D := 
     MeasureTheory.Measure.pi.isAddHaarMeasure _
   have t₁ := discrete_of_selfDual hH d₁ f₁
   have t₂ := discrete_of_selfDual hH d₂ f₂
-  have hF : th ∈ Formalism.L2.Th1.H.fixedBy (sesqOf D (tor0 D cc δ) N N') (al D (tor0 D cc δ)) A₁ := hth.2
+  have hF : th ∈ Formalism.L2.Th1.H.fixedBy (GlobalTheory.ConjNorm.Inter.sesqOf D (tor0 D cc δ) N N') (al D (tor0 D cc δ)) A₁ := hth.2
   exact ⟨fun x => mean_opU MeasureTheory.volume hH t₁ s₁ c₁ hth.1.continuous hF x,
-    ⟨differentiable_inter (H := sesqOf D (tor0 D cc δ) N N') (α := al D (tor0 D cc δ)) A₁ A₂ hth.1,
+    ⟨differentiable_inter (H := GlobalTheory.ConjNorm.Inter.sesqOf D (tor0 D cc δ) N N') (α := al D (tor0 D cc δ)) A₁ A₂ hth.1,
       inter_mem_fixedBy hH c₁ d₂ c₂ hF⟩,
     mean_inter MeasureTheory.volume hH t₁ s₁ t₂ s₂ d₁ c₁ d₂ c₂ hth.1 hF,
     inter_inter hH d₁ d₂ c₁ hF⟩
