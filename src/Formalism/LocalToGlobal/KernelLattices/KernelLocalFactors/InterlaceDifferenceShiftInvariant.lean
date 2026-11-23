@@ -4171,7 +4171,7 @@ theorem nm_kap_le_weyl (hI : Br.Interlace hN l s) (hS : SameShift l s) :
   exact h
 
 theorem nm_lamZ (a : Fin (n + 1)) : lamZ (lamN hN l) a = (l.natW (Fin.cast hN.symm a) : ℤ) := by
-  unfold lamZ
+  unfold Formalism.BranchingDeterminantCap.lamZ
   by_cases h : a.val < n
   · rw [dif_pos h]; rfl
   · rw [dite_eq_right h]
