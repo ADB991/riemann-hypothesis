@@ -74,7 +74,7 @@ def psiR : (Γ → Dt.T') →ₛₗ[(eO : O →+* Ow)] (G → TrV e VT') where
   map_smul' a c := by
     funext g
     show tr e (a • ((c (ι g) : VT'))) = eO a • tr e ((c (ι g) : VT'))
-    rw [smul_eO heO]
+    exact (smul_eO heO a (c (ι g) : VT')).symm
 
 theorem psiR_inj (hι : Function.Bijective ι) : Function.Injective (psiR e eO heO ι Dt) := by
   intro a b h
