@@ -188,7 +188,7 @@ theorem structure_sqrt_neg : ∀ (l : ℕ) [Fact l.Prime], l ≠ 2 → ∀ (K : 
     rw [← hd, ← GlobalTheory.HubLoc.finrank_sup_adjoin, ← e1]
   have hpos := GlobalTheory.HubLoc.finrank_maxUnramifiedSubfield_padicFinExt_pos K
   have := K.2
-  haveI : Module.Free ↥(K0 K) ↥K.1 := Module.Free.of_divisionRing _ _
+  have : Module.Free ↥(K0 K) ↥K.1 := Module.Free.of_divisionRing _ _
   have htow := Module.finrank_mul_finrank ℚ_[l] ↥(K0 K) ↥K.1
   have e3 : Module.finrank ↥(K0 K) ↥K.1 = 2 := by
     rw [hf] at htow
