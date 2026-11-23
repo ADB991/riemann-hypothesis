@@ -40,8 +40,7 @@ theorem meas_invM : Measurable (invM : Mt k r → Mt k r) := by
     funext x
     rw [Matrix.inv_def]
   have hc' : Measurable fun x : Mt k r => ((Matrix.of x).adjugate : Mt k r) :=
-    Measurable.of_eval fun i => Measurable.of_eval fun j =>
-      ((continuous_apply j).comp ((continuous_apply i).comp hc)).measurable
+    hc.measurable
   rw [he]
   exact hd.smul hc'
 
@@ -49,8 +48,7 @@ theorem meas_mulM : Measurable (mulM : Mt k r × Mt k r → Mt k r) := by
   unfold mulM
   have hc : Continuous (fun p : Mt k r × Mt k r => (Matrix.of p.1 * Matrix.of p.2 : Mat k r)) :=
     Continuous.matrix_mul continuous_fst continuous_snd
-  exact Measurable.of_eval fun i => Measurable.of_eval fun j =>
-    ((continuous_apply j).comp ((continuous_apply i).comp hc)).measurable
+  exact hc.measurable
 
 def Cm (g : Mt k r) (p : SS k r) : Mt k r := mulM (mulM (mulM (mulM (p.1.1, p.1.2), g), p.2.2), p.2.1)
 
