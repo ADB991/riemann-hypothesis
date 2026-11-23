@@ -233,7 +233,7 @@ theorem fibre_unfOf {g : ℕ} (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult �
 
 theorem rdU_of_mem (U : Formalism.L2.PjFree.Unf Xo c σ r) (f : Rul Xo c) (k : U.Comp) {x : Frame (U.X k).Ψ r}
     (h : x ∈ (U.X k).dom) : rdU U f k x = Formalism.L2.PjFree.toC (evR Xo c f (U.un k ⟨x, h⟩)) := by
-  simp only [rdU, LinearMap.coe_mk, AddHom.coe_mk, dif_pos h]
+  simp only [Formalism.L2.PjFree.rdU, LinearMap.coe_mk, AddHom.coe_mk, dif_pos h]
 
 theorem readSec_unfOf {g : ℕ} (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ))
     (F : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) (fun j => Formalism.L2.Pj.relab c σ (e j).1))
