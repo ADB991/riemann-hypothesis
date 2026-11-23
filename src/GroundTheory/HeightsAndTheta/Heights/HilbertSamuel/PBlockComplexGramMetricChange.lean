@@ -24,7 +24,7 @@ namespace BlockComplexGramMetricChange
 variable {D : ℕ} {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {Ω : Type} [Field Ω] [CharZero Ω]
 
-theorem eval_torus {F : MvPolynomial (Σ k, ι k) ℂ} {k₀ : K} {n : ℕ} (hF : IsMultiHomog F (blockDeg k₀ n))
+theorem eval_torus {F : MvPolynomial (Σ k, ι k) ℂ} {k₀ : K} {n : ℕ} (hF : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog F (blockDeg k₀ n))
     (c : K → ℂ) (z : (Σ k, ι k) → ℂ) :
     eval (fun p => c p.1 * z p) F = c k₀ ^ n * eval z F := by
   rw [eval_eq', eval_eq', Finset.mul_sum]
@@ -38,27 +38,27 @@ theorem eval_torus {F : MvPolynomial (Σ k, ι k) ℂ} {k₀ : K} {n : ℕ} (hF 
   simp_rw [mul_pow, Finset.prod_mul_distrib, hc]
   ring
 
-theorem isMultiHomog_mapQ {f : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) :
-    IsMultiHomog (map (Int.castRingHom ℚ) f) a := fun m hm => hf m (support_map_subset _ _ hm)
+theorem isMultiHomog_mapQ {f : MRing ι} {a : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (map (Int.castRingHom ℚ) f) a := fun m hm => hf m (support_map_subset _ _ hm)
 
-theorem isMultiHomog_mapC {b : MvPolynomial (Σ k, ι k) ℚ} {a : K → ℕ} (hb : IsMultiHomog b a) :
-    IsMultiHomog (map (algebraMap ℚ ℂ) b) a := fun m hm => hb m (support_map_subset _ _ hm)
+theorem isMultiHomog_mapC {b : MvPolynomial (Σ k, ι k) ℚ} {a : K → ℕ} (hb : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog b a) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (map (algebraMap ℚ ℂ) b) a := fun m hm => hb m (support_map_subset _ _ hm)
 
-theorem prod_norm_unitDeg (c : K → ℂ) (k₀ : K) : ∏ k, ‖c k‖ ^ unitDeg k₀ k = ‖c k₀‖ := by
-  rw [Fintype.prod_eq_single k₀ fun k hk => by simp [unitDeg, hk]]
-  simp [unitDeg]
+theorem prod_norm_unitDeg (c : K → ℂ) (k₀ : K) : ∏ k, ‖c k‖ ^ ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg k₀ k = ‖c k₀‖ := by
+  rw [Fintype.prod_eq_single k₀ fun k hk => by simp [ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg, hk]]
+  simp [ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg]
 
-theorem h_torus (B : HermLine ι) {k₀ : K} (hB : B.a = unitDeg k₀) (c : K → ℂ) (hc : ∀ k, c k ≠ 0)
+theorem h_torus (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) {k₀ : K} (hB : B.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg k₀) (c : K → ℂ) (hc : ∀ k, c k ≠ 0)
     (z : (Σ k, ι k) → ℂ) : B.h (fun p => c p.1 * z p) = ‖c k₀‖ * B.h z := by
   rw [B.smul c z hc, hB, prod_norm_unitDeg]
 
 theorem blockPt_mem (d : HSMBlockDatum D K ι Ω) (y : d.R.X) : ∀ k, ∃ i, blockPt d y ⟨k, i⟩ ≠ 0 :=
   (d.R.mem y y (d.R.mem_U y)).1
 
-theorem pair_torus (B : HermLine ι) {k₀ : K} (hB : B.a = unitDeg k₀) {z : (Σ k, ι k) → ℂ}
+theorem pair_torus (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) {k₀ : K} (hB : B.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg k₀) {z : (Σ k, ι k) → ℂ}
     (hz : ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) {c : K → ℂ} (hc : ∀ k, c k ≠ 0) {n : ℕ}
-    {b b' : MvPolynomial (Σ k, ι k) ℚ} (hb : IsMultiHomog b (blockDeg k₀ n))
-    (hb' : IsMultiHomog b' (blockDeg k₀ n)) :
+    {b b' : MvPolynomial (Σ k, ι k) ℚ} (hb : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog b (blockDeg k₀ n))
+    (hb' : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog b' (blockDeg k₀ n)) :
     eval (fun p => c p.1 * z p) (map (algebraMap ℚ ℂ) b) *
         conj (eval (fun p => c p.1 * z p) (map (algebraMap ℚ ℂ) b')) *
         ((Real.exp (-(n : ℝ) * (2 * Real.log (B.h (fun p => c p.1 * z p)))) : ℝ) : ℂ) =
@@ -136,7 +136,7 @@ theorem BlockComplexGramMetricChange.proof (hMC : MetricChange.Statement)
     fun n => SupBoundCount.exists_isSecBasisM d.y d.k₀ n
   let p : ℕ → (Σ r : ℕ, Fin r → MvPolynomial (Σ k, ι k) ℚ) := fun n => (hex n).choose
   have hp' : ∀ n, IsSecBasisM d.y d.k₀ n (p n).2 := fun n => (hex n).choose_spec
-  have hhom : ∀ n k, IsMultiHomog ((p n).2 k) (blockDeg d.k₀ n) := fun n k => by
+  have hhom : ∀ n k, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog ((p n).2 k) (blockDeg d.k₀ n) := fun n k => by
     obtain ⟨f, hf, hfe⟩ := (hp' n).1 k
     rw [hfe]
     exact isMultiHomog_mapQ hf
@@ -164,7 +164,7 @@ theorem BlockComplexGramMetricChange.proof (hMC : MetricChange.Statement)
   let eB : ∀ n, Module.Basis (Fin (Module.finrank ℂ (V n))) ℂ (V n) := fun n =>
     (Module.Basis.span (hli n)).reindex (finCongr (hrank n).symm)
 
-  have hgram : ∀ (W : Weight L) (B : HermLine ι), B.a = unitDeg d.k₀ →
+  have hgram : ∀ (W : Weight L) (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι), B.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀ →
       (∀ y, W.φ (chartIdx A y) y = 2 * Real.log (B.h (fun q => c y q.1 * blockPt d y q))) → ∀ n,
       chiGram W dV n (fun a => ((eB n a : V n) : Fin A.n → d.R.X → ℂ)) =
         -(1 / 2) * Real.log (Matrix.det (fun k l => ∫ y, pairValH B n ((p n).2 k) ((p n).2 l) (blockPt d y) ∂d.dV :

@@ -72,11 +72,11 @@ theorem brBad_null (R : AnRes P J e) (Ψ : (((k : K) → ι k) → ℂ) →ₗ[�
   exact measure_union_null (measure_union_null (R.null j) (psi0_null R Ψ hP hΨ j))
     (ram_null R Ψ hP hΨ j)
 
-theorem potOf_isPotential (R : AnRes P J e) (L : HermLine ι) (hL : IsSmoothHerm L) :
+theorem potOf_isPotential (R : AnRes P J e) (L : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hL : IsSmoothHerm L) :
     IsPotential R.A (potOf R L) :=
   isPotential_potOf R hL
 
-theorem brIntegrable (R : AnRes P J e) (L : Fin e → HermLine ι) (A : HermLine ι) (s : MRing ι)
+theorem brIntegrable (R : AnRes P J e) (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι)
     (hP : IsArithVar P (e + 1)) (hL : ∀ j, IsSmoothHerm (L j)) (hA : IsSmoothHerm A)
     (hs : IsSectionOn P A s) :
     MIntegrable R.A (fun j => potOf R (L j)) (fun x => logNorm A s (R.lift x x)) :=
@@ -88,10 +88,10 @@ theorem brQ_image_null (R : AnRes P J e) (Ψ : (((k : K) → ι k) → ℂ) →�
   brQ_image_null_of R Ψ (brBad_null R Ψ hP hΨ)
 
 theorem brFibreSum_ae (R : AnRes P J e) (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ))
-    (L : Fin e → HermLine ι) (A : HermLine ι) (s : MRing ι)
+    (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι)
     (hP : IsArithVar P (e + 1)) (hΨ : IsGoodProj P Ψ) (hL : ∀ j, IsSmoothHerm (L j))
     (hA : IsSmoothHerm A) (hs : IsSectionOn P A s) :
-    ∀ᵐ y, ∑ᶠ w ∈ fibre P Ψ y, sheetDensity P Ψ (pot L) (logNorm A s) y w =
+    ∀ᵐ y, ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, sheetDensity P Ψ (pot L) (logNorm A s) y w =
       ∑ᶠ x ∈ brQ R Ψ ⁻¹' {y} \ brBad R Ψ,
         logNorm A s (R.lift x x) * pushDens R.A (fun j => potOf R (L j)) (brQ R Ψ) x := by
   have hN : volume ({y : Fin e → ℂ | ∃ z ∈ mcPts P, z ∈ mcPts J ∧ Ψ (segre z) = Fin.cons 1 y} ∪
@@ -102,7 +102,7 @@ theorem brFibreSum_ae (R : AnRes P J e) (Ψ : (((k : K) → ι k) → ℂ) →�
     ae_iff.mpr (by simpa only [not_not, Set.ofPred_mem_eq] using hN)
   filter_upwards [hNae, sheetIndep K ι P e Ψ L A s hP hΨ hL hA hs] with y hyN hind
   have hy1 : ¬ ∃ z ∈ mcPts P, z ∈ mcPts J ∧ Ψ (segre z) = Fin.cons 1 y := fun h => hyN (Or.inl h)
-  have hfib : fibre P Ψ y = brW R Ψ '' (brQ R Ψ ⁻¹' {y} \ brBad R Ψ) := by
+  have hfib : ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y = brW R Ψ '' (brQ R Ψ ⁻¹' {y} \ brBad R Ψ) := by
     ext w
     constructor
     · intro hw
@@ -124,7 +124,7 @@ end Res
 
 theorem bridge {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {P J : Ideal (MRing ι)} {e : ℕ}
     (R : AnRes P J e) (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ))
-    (L : Fin e → HermLine ι) (A : HermLine ι) (s : MRing ι)
+    (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι)
     (hP : IsArithVar P (e + 1)) (hΨ : IsGoodProj P Ψ) (hL : ∀ j, IsSmoothHerm (L j)) (hA : IsSmoothHerm A)
     (hs : IsSectionOn P A s) :
     ptsIntegralAt P Ψ (pot L) (logNorm A s) =
@@ -382,8 +382,8 @@ theorem H1GenerationDevissage.proof (hPF : KH.PrimeFiltStatement) (hSES : KH.Cec
             GeneratedMod S ι (quotGrading (subGrading 𝓜 (F (j + 1))) L) (e + n • N) := by
         by_cases hrel : IsMultiProjPrime (𝔭 l)
         · exact hP (𝔭 l) hrel (hV.trans (h𝔭 l).2.2) (F (j + 1) ⧸ L) _ hfinQ hq hann e
-        · have hirr : ¬ IsRelevant (𝔭 l) := fun h => hrel ⟨(h𝔭 l).1, (h𝔭 l).2.1, h⟩
-          simp only [IsRelevant, not_forall, not_exists, not_not] at hirr
+        · have hirr : ¬ ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant (𝔭 l) := fun h => hrel ⟨(h𝔭 l).1, (h𝔭 l).2.1, h⟩
+          simp only [ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant, not_forall, not_exists, not_not] at hirr
           obtain ⟨k, hk⟩ := hirr
           refine ⟨0, fun n _ => h1_vanish_generated_of_localized_subsingleton (fun _ I => ?_) _ _⟩
           obtain ⟨i, hi⟩ := I.2.1 k

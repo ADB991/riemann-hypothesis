@@ -31,7 +31,7 @@ namespace PullSectionIntegral
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
 theorem aeval_scale_of_isMultiHomog (y : (Σ k, ι k) → Ω) (t : K → Ω) {f : MRing ι} {e : K → ℕ}
-    (hf : IsMultiHomog f e) :
+    (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f e) :
     aeval (fun p => t p.1 * y p) f = (∏ k, t k ^ e k) * aeval y f := by
   simp only [aeval_def, eval₂_eq', Finset.mul_sum]
   refine Finset.sum_congr rfl fun d hd => ?_
@@ -388,9 +388,9 @@ namespace ProjFrameGraph
 variable {κ : Type} {D : ℕ}
 
 theorem linForm_projMat [Fintype κ] (e : Fin (D + 1) → Ix κ) (k : Fin (D + 1)) :
-    linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e) ⟨(), k⟩ = X (e k) := by
+    ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e) ⟨(), k⟩ = X (e k) := by
   classical
-  simp only [linForm, projMat]
+  simp only [ReciprocityTheory.ChartRestriction.G.AI.I4.linForm, projMat]
   rw [Finset.sum_eq_single (e k).2]
   · simp
   · intro i _ hi
