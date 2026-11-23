@@ -78,7 +78,7 @@ theorem map_cT {R S : Type} [CommRing R] [Algebra X.B.I.F R] [CommRing S] [Algeb
   have hcT : (Formalism.UG.cT (sigR R X.B.I.cm.sig) g).map (tensMap (E := X.B.I.E) φ) =
       Formalism.UG.cT (sigR S X.B.I.cm.sig) (g.map (tensMap (E := X.B.I.E) φ)) := by
     ext i j
-    simp [Formalism.UG.cT, Matrix.map_apply, Matrix.transpose_apply, tensMap, PI.VolStabSW.CompGAux.tmap_sigR]
+    exact PI.VolStabSW.CompGAux.tmap_sigR X.B.I.cm.sig φ (g j i)
   have hJ : (JR R X.B.I.J).map (tensMap (E := X.B.I.E) φ) = JR S X.B.I.J := by
     ext i j
     simp [JR, Matrix.map_apply, tensMap, PI.VolStabSW.CompGAux.tmap_inclR]
