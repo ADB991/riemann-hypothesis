@@ -175,9 +175,9 @@ variable {p n}
 
 section
 
-local instance (L : IntermediateField (KO p n) (Om p n)) : Module.IsTorsionFree (KO p n) L :=
-  (Module.isTorsionFree_iff_algebraMap_injective (R := KO p n) (A := ↥L)).2
-    (algebraMap (KO p n) ↥L).injective
+local instance (F : Type) [Field F] [Algebra (KO p n) F] : Module.IsTorsionFree (KO p n) F :=
+  (Module.isTorsionFree_iff_algebraMap_injective (R := KO p n) (A := F)).2
+    (algebraMap (KO p n) F).injective
 
 def gL (L : IntermediateField (KO p n) (Om p n)) : L →+* Kc p :=
   letI : Algebra (KO p n) (Kc p) := (gK p n).toAlgebra
