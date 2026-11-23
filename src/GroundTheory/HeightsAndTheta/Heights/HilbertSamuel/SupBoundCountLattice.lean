@@ -85,7 +85,7 @@ theorem coeff_eq_zero {y : (Σ k, ι k) → Ω} {r : ℕ} {f : Fin r → MRing �
 
 variable {D : ℕ}
 
-theorem pairRe_comm (A : HermLine ι) (n : ℕ) (f f' : MRing ι) (z : (Σ k, ι k) → ℂ) :
+theorem pairRe_comm (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (n : ℕ) (f f' : MRing ι) (z : (Σ k, ι k) → ℂ) :
     pairRe A n f f' z = pairRe A n f' f z := by
   simp only [pairRe]
   ring

@@ -146,7 +146,7 @@ def geoNumMulti {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 variable {κ : Type} [Fintype κ]
 
 theorem geoNum_comp_perm {P W : Ideal (MRing (FinTwoTypeFamily κ))} {D : ℕ} (hP : IsArithVar P (D + 1)) {s : MRing (FinTwoTypeFamily κ)}
-    {α : Fin 2 → ℕ} (hs : IsMultiHomog s α) (hW : W ∈ divSupp P s) (hv : ¬ IsHorizontal W)
+    {α : Fin 2 → ℕ} (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s α) (hW : W ∈ divSupp P s) (hv : ¬ IsHorizontal W)
     (v : Fin D → Fin 2 → ℤ) (σ : Equiv.Perm (Fin D)) : geoNum D W (v ∘ σ) = geoNum D W v := by
   have hPp : P.IsPrime := hP.2.1.1
   have hWp : W.IsPrime := hW.1.1.1
@@ -168,7 +168,7 @@ theorem geoNum_comp_perm {P W : Ideal (MRing (FinTwoTypeFamily κ))} {D : ℕ} (
     MixedNumberPolynomial.intNum_perm]
 
 theorem vertCycleNum_expand {P : Ideal (MRing (FinTwoTypeFamily κ))} {D : ℕ} (hP : IsArithVar P (D + 1)) {s : MRing (FinTwoTypeFamily κ)}
-    {α : Fin 2 → ℕ} (hs : IsMultiHomog s α) (a b : ℕ) :
+    {α : Fin 2 → ℕ} (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s α) (a b : ℕ) :
     vertCycleNum P s (fun _ : Fin D => ![(a : ℤ), (b : ℤ)]) =
       ∑ i ∈ Finset.range (D + 1), (D.choose i : ℝ) * (a : ℝ) ^ i * (b : ℝ) ^ (D - i) *
         vertCycleNum P s (twoBlockDegList D i) := by
@@ -191,11 +191,11 @@ theorem vertCycleNum_expand {P : Ideal (MRing (FinTwoTypeFamily κ))} {D : ℕ} 
     ring
 
 theorem isMultiHomog_twoBlockDen (c : κ) :
-    IsMultiHomog (twoBlockDen c) (fun k => ∑ i, (Finsupp.single (⟨0, c⟩ : Σ k, FinTwoTypeFamily κ k) 1) ⟨k, i⟩) :=
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (twoBlockDen c) (fun k => ∑ i, (Finsupp.single (⟨0, c⟩ : Σ k, FinTwoTypeFamily κ k) 1) ⟨k, i⟩) :=
   isMultiHomog_X _
 
 theorem isMultiHomog_twoBlockNum (l : Ix κ → ℤ) :
-    IsMultiHomog (twoBlockNum l) (fun k : Fin 2 => if k = 1 then 1 else 0) := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (twoBlockNum l) (fun k : Fin 2 => if k = 1 then 1 else 0) := by
   classical
   intro m hm k
   unfold twoBlockNum at hm
@@ -258,7 +258,7 @@ def FibreNormDehomIntegral.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] [CharZero Ω]
     (y : (Σ k, ι k) → Ω) (D : ℕ) (e : K → ℕ) (L : Fin (D + 1) → MRing ι) (q : ℕ),
     IsArithVar (mCoordIdeal y) (D + 1) → Birational y →
-    (∀ k, 1 ≤ e k) → (∀ j, IsMultiHomog (L j) e) →
+    (∀ k, 1 ≤ e k) → (∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (L j) e) →
     (∀ z ∈ mcPts (mCoordIdeal y), ∃ j, eval z (map (Int.castRingHom ℂ) (L j)) ≠ 0) →
     ∃ M₀ : ℕ, 1 ≤ M₀ ∧
       ∀ τ : ℕ, ∀ s ∈ chartLatNm y (fun k => ((q * e k : ℕ) : ℤ)) τ, ∀ (j : Fin (D + 1))
@@ -291,14 +291,14 @@ def GenNear (S : Type*) [CommRing S] {K : Type*} [Fintype K] [LinearOrder K] (ι
     (f : MRingOver S ι) (δ : K → ℕ) : Prop :=
   ∀ I : KH.Cell K ι 0, ∀ x ∈ KH.locPart ι 𝓜 (KH.cellMon S I.1) d,
     ∃ (n : ℕ) (t : MRingOver S ι) (a : K → ℕ) (r : ℕ) (p : Fin r → MRingOver S ι) (z : Fin r → KH.CechC S ι M 0),
-      t ∈ KH.cellMon S I.1 ∧ IsMultiHomog t a ∧ (∀ j, IsMultiHomog (p j) (a + n • δ)) ∧
+      t ∈ KH.cellMon S I.1 ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog t a ∧ (∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (p j) (a + n • δ)) ∧
       (∀ j, z j ∈ KH.cechZc ι 𝓜 d 0) ∧ (f ^ n * t) • x = ∑ j, p j • z j I
 
 def locIdealPart {S : Type*} [CommRing S] {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
     {M : Type*} [AddCommGroup M] [Module (MRingOver S ι) M] [Module S M] [IsScalarTower S (MRingOver S ι) M]
     (𝓜 : (K → ℤ) → Submodule S M) (T : Submonoid (MRingOver S ι)) (P : Ideal (MRingOver S ι)) (d : K → ℤ) :
     Submodule S (LocalizedModule T M) :=
-  Submodule.span S {w | ∃ (p : MRingOver S ι) (a : K → ℕ) (y : LocalizedModule T M), p ∈ P ∧ IsMultiHomog p a ∧
+  Submodule.span S {w | ∃ (p : MRingOver S ι) (a : K → ℕ) (y : LocalizedModule T M), p ∈ P ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p a ∧
     y ∈ KH.locPart ι 𝓜 T (d - fun k => (a k : ℤ)) ∧ w = p • y}
 
 section Point
@@ -354,8 +354,8 @@ def GraphIsometricForms.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (K₂ : Type) [Fintype K₂] (ι₂ : K₂ → Type) [∀ k, Fintype (ι₂ k)]
     (P : Ideal (MRing ι)) (d : ℕ) (g : (Σ k, ι₂ k) → MRing ι) (δ : K₂ → K → ℕ)
-    (B₁ : HermLine ι) (B : HermLine ι₂) (B₁' B' : HermLine (Sum.elim ι ι₂)),
-    IsArithVar P d → (∀ q, IsMultiHomog (g q) (δ q.1)) → IsBasePtFree P g →
+    (B₁ : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι₂) (B₁' B' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (Sum.elim ι ι₂)),
+    IsArithVar P d → (∀ q, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (g q) (δ q.1)) → IsBasePtFree P g →
     (∀ k, B₁.a k = ∑ k₂, B.a k₂ * (δ k₂ k : ℤ)) →
     (∀ z ∈ mcPts P, B₁.h z = B.h (formApply g z)) →
     IsPullHerm Sum.inl inlV B₁ B₁' → IsPullHerm Sum.inr inrV B B' →
@@ -407,12 +407,12 @@ noncomputable section
 
 def PowerBlockPointNorm.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    (y : (Σ k, ι k) → Ω) (A : HermLine ι) (m N : ℕ) (v : Fin N → Ω) (B : HermLine (addIdx ι N)),
-    ContinuousOn A.h {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} → B.a = unitDeg (none : Option K) →
+    (y : (Σ k, ι k) → Ω) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (m N : ℕ) (v : Fin N → Ω) (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (addIdx ι N)),
+    ContinuousOn A.h {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} → B.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg (none : Option K) →
     (∀ j, v j ∈ chartLat y A.a m) →
     (∀ z ∈ mcPts (mCoordIdeal (addBlock y v)), ∀ j : Fin N,
       secNormAt y A m (v j) (basePart₂ z) * B.h z = ‖z ⟨none, j⟩‖) →
-    ∀ (q : ℕ) (F : MRing (addIdx ι N)), IsMultiHomog F (blockDeg (none : Option K) q) →
+    ∀ (q : ℕ) (F : MRing (addIdx ι N)), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog F (blockDeg (none : Option K) q) →
       ContinuousOn (secNormAt y A (m * q) (aeval (addBlock y v) F)) (mcPts (mCoordIdeal y)) ∧
       ∀ z ∈ mcPts (mCoordIdeal (addBlock y v)),
         secNormAt y A (m * q) (aeval (addBlock y v) F) (basePart₂ z) =

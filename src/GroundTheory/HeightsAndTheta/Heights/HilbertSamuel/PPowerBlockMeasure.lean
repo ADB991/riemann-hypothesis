@@ -36,7 +36,7 @@ theorem measurableSet_mcPts (P : Ideal (MRing ι)) : MeasurableSet (mcPts P) := 
     exact isClosed_iInter fun f => isClosed_iInter fun _ => isClosed_eq (continuous_eval _) continuous_const
   exact isOpen_nz.measurableSet.inter hcl.measurableSet
 
-theorem eval_smul_homogC (g : MvPolynomial (Σ k, ι k) ℂ) (d : K → ℕ) (hg : IsMultiHomog g d) (c : K → ℂ)
+theorem eval_smul_homogC (g : MvPolynomial (Σ k, ι k) ℂ) (d : K → ℕ) (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) (c : K → ℂ)
     (z : (Σ k, ι k) → ℂ) :
     eval (fun p => c p.1 * z p) g = (∏ k, c k ^ d k) * eval z g := by
   rw [eval_eq', eval_eq', Finset.mul_sum]
@@ -49,8 +49,8 @@ theorem eval_smul_homogC (g : MvPolynomial (Σ k, ι k) ℂ) (d : K → ℕ) (hg
   simp only [mul_pow, Finset.prod_mul_distrib, hc]
   ring
 
-theorem isMultiHomog_map {F : MRing ι} {d : K → ℕ} (hF : IsMultiHomog F d) :
-    IsMultiHomog (map (Int.castRingHom ℂ) F) d :=
+theorem isMultiHomog_map {F : MRing ι} {d : K → ℕ} (hF : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog F d) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (map (Int.castRingHom ℂ) F) d :=
   fun e he => hF e (support_map_subset _ _ he)
 
 theorem eval_conjPt_map (z : (Σ k, ι k) → ℂ) (f : MRing ι) :
@@ -108,7 +108,7 @@ theorem oldPart_mem {y : (Σ k, ι k) → Ω} {v : Fin N → Ω} {z : (Σ k, add
   have h := hz.2 _ (rename_old_mem y v hf)
   rwa [map_rename, eval_rename] at h
 
-theorem eval_oldPart_orbit {g : MvPolynomial (Σ k, ι k) ℂ} {d : K → ℕ} (hg : IsMultiHomog g d)
+theorem eval_oldPart_orbit {g : MvPolynomial (Σ k, ι k) ℂ} {d : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d)
     {z z' : (Σ k, addIdx ι N k) → ℂ} (h : SameOrbit z z') :
     ∃ u : ℂ, u ≠ 0 ∧ eval (basePart₂ z) g = u * eval (basePart₂ z') g := by
   obtain ⟨c, hc, rfl⟩ := h
@@ -336,9 +336,9 @@ theorem PowerBlockMeasure.proof (hPN : PowerBlockPointNorm.Statement) (hOS : Pow
         · simp
       have hB' : B.h (fun p => c p.1 * z' p) = ‖c none‖ * B.h z' := by
         rw [B.smul c z' hc, hBa, Finset.prod_eq_single (none : Option K)]
-        · simp [unitDeg]
+        · simp [ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg]
         · intro k _ hk
-          simp [unitDeg, hk]
+          simp [ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg, hk]
         · simp
       have hcn : ‖c none‖ ^ q ≠ 0 := pow_ne_zero _ (norm_ne_zero_iff.2 (hc none))
       simp only [hΦdef, hF', hB', norm_mul, norm_pow, mul_pow]

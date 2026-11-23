@@ -32,7 +32,7 @@ set_option linter.unusedSectionVars false
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)] {κ : Type} [Fintype κ]
 
 theorem isMultiHomog_blockForms (k₀ : K) (M : Matrix (Ix κ) (ι k₀) ℤ) (q : Σ k, GlobalTheory κ k) :
-    IsMultiHomog (blockForms k₀ M q) (blockDeg k₀ 1) := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (blockForms k₀ M q) (blockDeg k₀ 1) := by
   classical
   intro m hm k
   obtain ⟨t, -, ht⟩ := Finset.mem_biUnion.mp (MvPolynomial.support_sum hm)
@@ -103,7 +103,7 @@ theorem BlockImageTop.proof (hCM : GraphChangeOfModel.Statement) (hIm : BlockGra
     (by rw [himg]; exact hx) hJ (fun _ => isSmoothHerm_ofCone hm) (fun _ => hA)
     (fun _ k => by
       rw [ha]
-      by_cases hk : k = k₀ <;> simp [unitDeg, blockDeg, HermLine.ofCone, hk])
+      by_cases hk : k = k₀ <;> simp [ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg, blockDeg, HermLine.ofCone, hk])
     (fun _ z hz => by rw [hh z hz, formApply_blockForms]; rfl)
   rw [himg, hJ1] at key
   simpa [top] using key
@@ -134,7 +134,7 @@ def blockDeg (k₂ : K) : K → ℕ := fun k => if k = k₂ then 1 else 0
 
 omit [Fintype K] [∀ k, Fintype (ι₂ k)] in
 theorem isMultiHomog_linForm (A : ∀ k, ι₂ k → ι k → ℤ) (q : Σ k, ι₂ k) :
-    IsMultiHomog (linForm A q) (blockDeg q.1) := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A q) (blockDeg q.1) := by
   classical
   intro m hm k
   obtain ⟨t, -, ht⟩ := Finset.mem_biUnion.mp (MvPolynomial.support_sum hm)
@@ -150,14 +150,14 @@ theorem isMultiHomog_linForm (A : ∀ k, ι₂ k → ι k → ℤ) (q : Σ k, ι
 
 omit [∀ k, Fintype (ι₂ k)] in
 theorem exists_linForm_not_mem {P : Ideal (MRing ι)} {d : ℕ} {A : ∀ k, ι₂ k → ι k → ℤ} (hP : IsArithVar P d)
-    (hBP : IsBasePtFree P (linForm A)) : ∀ k₂, ∃ j, linForm A ⟨k₂, j⟩ ∉ P := by
+    (hBP : IsBasePtFree P (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A)) : ∀ k₂, ∃ j, ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k₂, j⟩ ∉ P := by
   intro k₂
   by_contra hall
   push Not at hall
   obtain ⟨-, ⟨hprime, -, hrel⟩, -, -⟩ := hP
   choose i hi using hrel
   obtain ⟨N, hN⟩ := hBP k₂ i
-  have hle : Ideal.span (Set.range fun j : ι₂ k₂ => linForm A ⟨k₂, j⟩) ≤ P :=
+  have hle : Ideal.span (Set.range fun j : ι₂ k₂ => ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k₂, j⟩) ≤ P :=
     Ideal.span_le.mpr (Set.range_subset_iff.mpr hall)
   rw [sup_eq_left.mpr hle] at hN
   have := hprime
@@ -174,7 +174,7 @@ theorem ChangeOfModel.proof (hAI3 : Inter.PushforwardArithIntersection.Statement
       ExistsUniqueStatement F ι)
     (hIso : IsomInvariance.Statement) (hGI : GraphIsometric.Statement) : ChangeOfModelStatement := by
   intro I hI K _ ι ι₂ _ _ P d A G J L L₁ hP hBP hImg hJ hL hL₁ ha hh
-  obtain ⟨hΓ, himg, hdeg⟩ := hGr K ι K ι₂ P d (linForm A) blockDeg hP
+  obtain ⟨hΓ, himg, hdeg⟩ := hGr K ι K ι₂ P d (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A) blockDeg hP
     (isMultiHomog_linForm A) (exists_linForm_not_mem hP hBP)
   obtain ⟨G'⟩ := hGF K ι (K ⊕ K) (Sum.elim ι ι₂) Sum.inl inlV _ d isBlockMap_inl hΓ
   obtain ⟨J', hJ', -⟩ := hEU G'.Φ _ (fibreIdx (Sum.elim ι ι₂) (Sum.inl : K → K ⊕ K))
@@ -467,7 +467,7 @@ noncomputable section
 def ChartPrimePowerInverse.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] [CharZero Ω]
     (y : (Σ k, ι k) → Ω) (D : ℕ) (e : K → ℕ) (L : Fin (D + 1) → MRing ι),
-    (∀ j, IsMultiHomog (L j) e) →
+    (∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (L j) e) →
     (∀ z ∈ mcPts (mCoordIdeal y), ∃ j, eval z (map (Int.castRingHom ℂ) (L j)) ≠ 0) →
     ∀ p : ℕ, p.Prime → ∀ j : Fin (D + 1), aeval y (L j) ≠ 0 →
       ∃ M : ℕ, ∀ c : ∀ k, ι k, (∀ k, y ⟨k, c k⟩ ≠ 0) →
