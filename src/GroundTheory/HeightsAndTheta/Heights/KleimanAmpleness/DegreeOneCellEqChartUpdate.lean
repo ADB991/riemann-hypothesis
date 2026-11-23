@@ -246,7 +246,7 @@ theorem aeval_ratio_cellMon {c : ∀ k, ι k} (hc : ∀ k, y ⟨k, c k⟩ ≠ 0)
   | mul x w _ _ hx hw => rw [map_mul, hx, hw, one_mul]
 
 theorem aeval_homog_eq {c : ∀ k, ι k} (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {p : MRingOver S ι} {d : K → ℕ}
-    (hp : IsMultiHomog p d) : aeval y p = (∏ k, y ⟨k, c k⟩ ^ d k) * aeval (ratio y c) p := by
+    (hp : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p d) : aeval y p = (∏ k, y ⟨k, c k⟩ ^ d k) * aeval (ratio y c) p := by
   have hP : ∏ k, y ⟨k, c k⟩ ^ d k ≠ 0 := Finset.prod_ne_zero_iff.mpr fun k _ => pow_ne_zero _ (hc k)
   conv_lhs => rw [p.as_sum]
   conv_rhs => rw [p.as_sum]
@@ -316,10 +316,10 @@ theorem HZeroRowPlaceData.full : GlobalSectionsComparisonStatement := by
   have hg₀ : Good y (cell0 c₀).1 := good_chart hc₀
   let Z := cechZc ι (quotPart S (mIdealOver S y)) n 0
   let φ : ↥Z →ₗ[S] Ω := (evMap y (cell0 c₀).1).comp ((LinearMap.proj (R := S)
-    (φ := fun I : Cell K ι 0 => LocalizedModule (cellMon S I.1) (MRingOver S ι ⧸ mIdealOver S y)) (cell0 c₀)).comp
+    (φ := fun I : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι 0 => LocalizedModule (cellMon S I.1) (MRingOver S ι ⧸ mIdealOver S y)) (cell0 c₀)).comp
       Z.subtype)
   have hφ : ∀ z : ↥Z, φ z = evMap y (cell0 c₀).1 (z.1 (cell0 c₀)) := fun z => rfl
-  have hZ : ∀ z : ↥Z, (∀ I : Cell K ι 0, z.1 I ∈
+  have hZ : ∀ z : ↥Z, (∀ I : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι 0, z.1 I ∈
       locPart ι (quotPart S (mIdealOver S y)) (cellMon S I.1) n) ∧ cechD S ι _ 0 z.1 = 0 := by
     intro z
     obtain ⟨hC, hK⟩ := Submodule.mem_inf.mp z.2
@@ -369,19 +369,19 @@ theorem HZeroRowPlaceData.full : GlobalSectionsComparisonStatement := by
           s * ∏ k, y ⟨k, c k⟩ ^ (-n k) ∈ chartRingOver S y c := by
         intro c hc
         exact (Submodule.mem_iInf _).mp ((Submodule.mem_iInf _).mp hs c) hc
-      have hlift : ∀ I : Cell K ι 0, Good y I.1 → ∃ w ∈ locPart ι (quotPart S (mIdealOver S y)) (cellMon S I.1) n,
+      have hlift : ∀ I : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι 0, Good y I.1 → ∃ w ∈ locPart ι (quotPart S (mIdealOver S y)) (cellMon S I.1) n,
           evMap y I.1 w = s := fun I hI =>
         exists_lift hI (fun k => Finset.min'_mem _ (I.2.1 k)) n
           (hs' _ fun k => hI k _ (Finset.min'_mem _ (I.2.1 k)))
       classical
       let z : CechC S ι (MRingOver S ι ⧸ mIdealOver S y) 0 := fun I =>
         if hI : Good y I.1 then (hlift I hI).choose else 0
-      have hzC : ∀ I : Cell K ι 0, z I ∈ locPart ι (quotPart S (mIdealOver S y)) (cellMon S I.1) n := by
+      have hzC : ∀ I : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι 0, z I ∈ locPart ι (quotPart S (mIdealOver S y)) (cellMon S I.1) n := by
         intro I
         by_cases hI : Good y I.1
         · simp only [z, dif_pos hI]; exact (hlift I hI).choose_spec.1
         · simp only [z, dif_neg hI]; exact Submodule.zero_mem _
-      have hzv : ∀ I : Cell K ι 0, Good y I.1 → evMap y I.1 (z I) = s := by
+      have hzv : ∀ I : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι 0, Good y I.1 → evMap y I.1 (z I) = s := by
         intro I hI
         simp only [z, dif_pos hI]
         exact (hlift I hI).choose_spec.2

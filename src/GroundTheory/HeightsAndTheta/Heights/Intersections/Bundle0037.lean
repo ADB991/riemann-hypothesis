@@ -221,7 +221,7 @@ namespace BlockGenFinite
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {K' : Type} [Fintype K'] {ι' : K' → Type} [∀ k, Fintype (ι' k)]
 
-theorem eval_smul_of_isMultiHomog {s : MRing ι} {a : K → ℕ} (hs : IsMultiHomog s a) (c : K → ℂ)
+theorem eval_smul_of_isMultiHomog {s : MRing ι} {a : K → ℕ} (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a) (c : K → ℂ)
     (u : (Σ k, ι k) → ℂ) :
     eval (fun p ↦ c p.1 * u p) (map (Int.castRingHom ℂ) s) =
       (∏ k, c k ^ a k) * eval u (map (Int.castRingHom ℂ) s) := by

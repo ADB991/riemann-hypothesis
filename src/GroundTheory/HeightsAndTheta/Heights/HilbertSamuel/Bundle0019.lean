@@ -266,7 +266,7 @@ noncomputable section
 
 def ArithmeticVolumeDegreeZero.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : HermLine ι) (P0 : Ideal (MRing ι)) (II : IntersectionSystem),
+    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (P0 : Ideal (MRing ι)) (II : IntersectionSystem),
     1 ≤ D → IsIntersectionSystem II → IsArithVar (mCoordIdeal y) (D + 1) → Birational y →
     P0 ≤ mCoordIdeal y → IsSemipositiveRel P0 (mCoordIdeal y) A → NefOnFibres (mCoordIdeal y) A.a →
     IsConjInvariantH A → genDeg (mCoordIdeal y) D A.a ≤ 0 →
@@ -300,7 +300,7 @@ theorem hasFDerivAt_eval {σ : Type*} [Fintype σ] (g : MvPolynomial σ ℂ) (z 
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem maDensity_nonneg {P P0 W : Ideal (MRing ι)} {A : HermLine ι} (hP0 : P0 ≤ P) (hPW : P ≤ W)
+theorem maDensity_nonneg {P P0 W : Ideal (MRing ι)} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hP0 : P0 ≤ P) (hPW : P ≤ W)
     (hs : IsSemipositiveRel P0 P A) {Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (1 + 1) → ℂ)}
     {y : Fin 1 → ℂ} {w : ((k : K) → ι k) → ℂ} {γ : (Fin 1 → ℂ) → (Σ k, ι k) → ℂ}
     (h : IsSheet W Ψ y w γ) :
@@ -332,7 +332,7 @@ theorem maDensity_nonneg {P P0 W : Ideal (MRing ι)} {A : HermLine ι} (hP0 : P0
   apply div_nonneg _ (by positivity)
   linarith
 
-theorem geomDeg_one_nonneg {P P0 W : Ideal (MRing ι)} {A : HermLine ι} (hP0 : P0 ≤ P)
+theorem geomDeg_one_nonneg {P P0 W : Ideal (MRing ι)} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hP0 : P0 ≤ P)
     (hs : IsSemipositiveRel P0 P A) (hPW : P ≤ W) : 0 ≤ geomDeg W A 1 := by
   classical
   unfold geomDeg ptsIntegral
@@ -445,7 +445,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo
 
 def ArithKleiman.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P P0 : Ideal (MRing ι)) (D : ℕ)
-    (A : HermLine ι) (II : IntersectionSystem),
+    (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (II : IntersectionSystem),
     IsIntersectionSystem II → IsArithVar P (D + 1) → P0 ≤ P → IsSemipositiveRel P0 P A →
     NefOnFibres P A.a → IsConjInvariantH A →
     (∀ W, IsArithVar W 1 → P ≤ W → 0 ≤ II K ι W 1 ![A]) →
