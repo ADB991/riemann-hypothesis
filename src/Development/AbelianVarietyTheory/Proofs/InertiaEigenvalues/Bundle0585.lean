@@ -178,7 +178,7 @@ theorem exists_solution {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} {R :
 theorem isCrisVal_toW {P : PhiMod O K l e a ι} (jB : (ι → OB l O) ≃ₗ[OB l O] TW (OB l O) T) {w : Vec K a ι}
     (hL : w ∈ P.L) (hS : w ∈ P.MMl) :
     IsCrisVal t ϖ P jB (toW t ϖ P ⟨w, mem_ME_of_mem_L hL⟩) (jB (toBcris t ϖ P ⟨w, hS⟩)) := by
-  refine ⟨1, fun i => ϖ.iTot t K (GlobalTheory.BKReal.coordL P _ ⟨_, hL⟩ i), by rw [map_one]; exact isUnit_one, ?_, ?_⟩
+  refine ⟨1, fun i => ϖ.iTot t K (GlobalTheory.BKReal.coordL P (GlobalTheory.BK.A O K) ⟨_, hL⟩ i), by rw [map_one]; exact isUnit_one, ?_, ?_⟩
   · rw [map_one, one_smul]
     exact (toW_toCris_of_mem_L t ϖ P hL (P.ext_mono (A_le_S l e) hL)).1
   · rw [map_one, one_smul]
