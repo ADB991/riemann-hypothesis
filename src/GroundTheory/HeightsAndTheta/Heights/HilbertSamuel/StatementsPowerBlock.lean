@@ -38,7 +38,7 @@ def PowerBlockDatum.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] [CharZero Ω]
     (y : (Σ k, ι k) → Ω) (D : ℕ) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (P0 : Ideal (MRing ι)),
     1 ≤ D → IsArithVar (mCoordIdeal y) (D + 1) → Birational y →
-    IsSmallGeneratedDatum P0 y D A → IsConjInvariantH A →
+    GroundTheory.Heights₂.Heights.HilbertSamuel.IsSmallGeneratedDatum P0 y D A → IsConjInvariantH A →
     ∃ (m N : ℕ) (v : Fin N → Ω) (d : HSMBlockDatum D (Option K) (addIdx ι N) Ω)
       (μ : Measure ((Σ k, ι k) → ℂ)),
       1 ≤ m ∧ d.y = addBlock y v ∧ d.k₀ = none ∧

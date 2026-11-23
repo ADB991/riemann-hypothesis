@@ -23,8 +23,8 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : 
 
 
 omit [Fintype K] in
-theorem isMultiHomog_sub {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) (hg : IsMultiHomog g a) :
-    IsMultiHomog (f - g) a := by
+theorem isMultiHomog_sub {f g : MRing ι} {a : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f - g) a := by
   classical
   intro m hm k
   rcases Finset.mem_union.mp (MvPolynomial.support_sub _ f g hm) with h | h
@@ -32,8 +32,8 @@ theorem isMultiHomog_sub {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a
   · exact hg m h k
 
 theorem eval_cross {y : (Σ k, ι k) → Ω} {a : K → ℤ} {τ : ℕ} {s : Ω} {dg dh dg' dh' : K → ℕ}
-    {g h g' h' : MRing ι} (hg : IsMultiHomog g dg) (hh : IsMultiHomog h dh)
-    (hg' : IsMultiHomog g' dg') (hh' : IsMultiHomog h' dh')
+    {g h g' h' : MRing ι} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g dg) (hh : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h dh)
+    (hg' : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g' dg') (hh' : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h' dh')
     (hd : ∀ k, (dg k : ℤ) = dh k + τ * a k) (hd' : ∀ k, (dg' k : ℤ) = dh' k + τ * a k)
     (he : aeval y g = s * aeval y h) (he' : aeval y g' = s * aeval y h')
     {z : (Σ k, ι k) → ℂ} (hz : z ∈ mcPts (mCoordIdeal y)) :
@@ -44,7 +44,7 @@ theorem eval_cross {y : (Σ k, ι k) → Ω} {a : K → ℤ} {τ : ℕ} {s : Ω}
     have e2 := hd' k
     have : ((dg' k + dh k : ℕ) : ℤ) = ((dg k + dh' k : ℕ) : ℤ) := by push_cast; linarith
     simpa only [Pi.add_apply] using (Nat.cast_inj.mp this)
-  have hm : IsMultiHomog (g * h' - g' * h) (dg + dh') :=
+  have hm : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (g * h' - g' * h) (dg + dh') :=
     isMultiHomog_sub (LocalRep.isMultiHomog_mul hg hh') (by rw [← hdeg]; exact LocalRep.isMultiHomog_mul hg' hh)
   have h0 : aeval y (g * h' - g' * h) = 0 := by
     rw [map_sub, map_mul, map_mul, he, he']
@@ -57,7 +57,7 @@ theorem eval_cross {y : (Σ k, ι k) → Ω} {a : K → ℤ} {τ : ℕ} {s : Ω}
   exact this
 
 def IsSectionValue (y : (Σ k, ι k) → Ω) (a : K → ℤ) (τ : ℕ) (s : Ω) (z : (Σ k, ι k) → ℂ) (v : ℂ) : Prop :=
-  ∃ (dg dh : K → ℕ) (g h : MRing ι), IsMultiHomog g dg ∧ IsMultiHomog h dh ∧
+  ∃ (dg dh : K → ℕ) (g h : MRing ι), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g dg ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h dh ∧
     (∀ k, (dg k : ℤ) = dh k + τ * a k) ∧ aeval y g = s * aeval y h ∧
     eval z (map (Int.castRingHom ℂ) h) ≠ 0 ∧
     v = eval z (map (Int.castRingHom ℂ) g) / eval z (map (Int.castRingHom ℂ) h)

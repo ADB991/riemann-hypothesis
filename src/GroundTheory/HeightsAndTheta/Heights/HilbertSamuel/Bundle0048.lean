@@ -51,7 +51,7 @@ theorem mul_mem_chartLat {y : (Σ k, ι k) → Ω} {a : K → ℤ} {n j : ℕ} {
   exact mul_mem (hs c hc) (ht c hc)
 
 theorem isBoundedH_mono {P : Ideal (MRing ι)} {y : (Σ k, ι k) → Ω} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {τ : ℕ} {s : Ω}
-    {c c' : ℝ} (hs : IsBoundedH P y A τ c s) (hc : c ≤ c') : IsBoundedH P y A τ c' s := by
+    {c c' : ℝ} (hs : GroundTheory.Heights₂.Heights.HilbertSamuel.IsBoundedH P y A τ c s) (hc : c ≤ c') : GroundTheory.Heights₂.Heights.HilbertSamuel.IsBoundedH P y A τ c' s := by
   intro dg dh g h z hg hh hd he hz
   refine (hs dg dh g h z hg hh hd he hz).trans ?_
   have h0 : 0 ≤ A.h z ^ τ := pow_nonneg (A.pos z hz.1).le τ

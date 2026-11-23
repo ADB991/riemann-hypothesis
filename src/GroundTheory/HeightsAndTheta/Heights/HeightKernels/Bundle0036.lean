@@ -89,7 +89,7 @@ theorem fg_sectionMod (hy : IsArithVar (mCoordIdeal y) 1) : AddGroup.FG (section
 
 
 omit [NumberField K'] in
-theorem aeval_ne_zero {s : MRing (fun _ : Unit => T)} (hs : IsMultiHomog s (fun _ => 1))
+theorem aeval_ne_zero {s : MRing (fun _ : Unit => T)} (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s (fun _ => 1))
     (hsP : s ∉ mCoordIdeal y) : aeval y s ≠ 0 := by
   intro h0
   apply hsP
@@ -99,7 +99,7 @@ theorem aeval_ne_zero {s : MRing (fun _ : Unit => T)} (hs : IsMultiHomog s (fun 
   rw [h0, map_zero, zero_mul]
 
 theorem exists_nat_mul_mem_span (hy : IsArithVar (mCoordIdeal y) 1) {s : MRing (fun _ : Unit => T)}
-    (hs : IsMultiHomog s (fun _ => 1)) (hsP : s ∉ mCoordIdeal y) {m : K'} (hm : m ∈ sectionMod y) :
+    (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s (fun _ => 1)) (hsP : s ∉ mCoordIdeal y) {m : K'} (hm : m ∈ sectionMod y) :
     ∃ n : ℕ, n ≠ 0 ∧ (n : K') * m ∈ Submodule.span (curveRing y) {aeval y s} := by
   set x := aeval y s with hxdef
   have hx0 : x ≠ 0 := aeval_ne_zero y hs hsP
@@ -119,7 +119,7 @@ theorem exists_nat_mul_mem_span (hy : IsArithVar (mCoordIdeal y) 1) {s : MRing (
   field_simp
 
 theorem isTorsion (hy : IsArithVar (mCoordIdeal y) 1) {s : MRing (fun _ : Unit => T)}
-    (hs : IsMultiHomog s (fun _ => 1)) (hsP : s ∉ mCoordIdeal y) (q : sectionQuot y (aeval y s)) :
+    (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s (fun _ => 1)) (hsP : s ∉ mCoordIdeal y) (q : sectionQuot y (aeval y s)) :
     ∃ n : ℕ, n ≠ 0 ∧ n • q = 0 := by
   obtain ⟨m, rfl⟩ := Submodule.Quotient.mk_surjective _ q
   obtain ⟨n, hn, hnm⟩ := exists_nat_mul_mem_span y hy hs hsP m.2

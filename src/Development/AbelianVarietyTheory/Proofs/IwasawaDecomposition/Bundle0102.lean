@@ -85,7 +85,7 @@ variable (H) (cc : Ω ≃+* Ω) (l : ℕ)
 
 def IsDel (M : ℕ) (T : Set (PlE H)) (d : G H.E Ω →* Multiplicative (ZMod (l ^ M))) : Prop :=
   IsOpen (d.ker : Set (G H.E Ω)) ∧ AntiHom cc d ∧
-    (∀ v ∈ placesOver H.E l, ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∀ σ ∈ Dec (F := H.E) A, d σ = 1) ∧
+    (∀ v ∈ placesOver H.E l, ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∀ σ ∈ ReciprocityTheory.Gal.Dec (F := H.E) A, d σ = 1) ∧
     (∀ v, v ∉ T → ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∀ σ ∈ Ine (F := H.E) A, d σ = 1) ∧
     (∀ v, v ∈ T → ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∀ c, ∃ σ ∈ Ine (F := H.E) A, d σ = c)
 
@@ -100,7 +100,7 @@ theorem isDel_delOf {M : ℕ} {T : Set (PlE H)} (h : ∃ d, IsDel H cc l M T d) 
 
 theorem delOf_laws (M : ℕ) (T : Set (PlE H)) :
     IsOpen ((delOf H cc l M T).ker : Set (G H.E Ω)) ∧ AntiHom cc (delOf H cc l M T) ∧
-    (∀ v ∈ placesOver H.E l, ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∀ σ ∈ Dec (F := H.E) A,
+    (∀ v ∈ placesOver H.E l, ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∀ σ ∈ ReciprocityTheory.Gal.Dec (F := H.E) A,
       delOf H cc l M T σ = 1) ∧
     (∀ v, v ∉ T → ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∀ σ ∈ Ine (F := H.E) A, delOf H cc l M T σ = 1) := by
   by_cases h : ∃ d, IsDel H cc l M T d
@@ -129,7 +129,7 @@ theorem delU_eq_one_iff (Q : Finset (PlE H)) (M : ℕ) (σ : G H.E Ω) :
 
 theorem delCoord_laws (Q : Finset (PlE H)) (M : ℕ) (P : PlE H) :
     IsOpen ((delCoord H cc l Q M P).ker : Set (G H.E Ω)) ∧ AntiHom cc (delCoord H cc l Q M P) ∧
-    (∀ v ∈ placesOver H.E l, ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∀ σ ∈ Dec (F := H.E) A,
+    (∀ v ∈ placesOver H.E l, ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∀ σ ∈ ReciprocityTheory.Gal.Dec (F := H.E) A,
       delCoord H cc l Q M P σ = 1) ∧
     (∀ v, v ∉ Q → ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∀ σ ∈ Ine (F := H.E) A,
       delCoord H cc l Q M P σ = 1) := by
@@ -149,7 +149,7 @@ theorem delCoord_of_closed {Q : Finset (PlE H)} (hQ : ∀ P ∈ Q, ∀ P', IsCon
 def UniversalAnticyclotomicCharLaws : Prop :=
   (∀ Q M v, v ∉ Q → ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∀ σ ∈ Ine (F := H.E) A, delU H cc l Q M σ = 1) ∧
   (∀ Q M v, v ∈ placesOver H.E l → ∀ A : ValuationSubring Ω, IsPlaceOver A v →
-    ∀ σ ∈ Dec (F := H.E) A, delU H cc l Q M σ = 1) ∧
+    ∀ σ ∈ ReciprocityTheory.Gal.Dec (F := H.E) A, delU H cc l Q M σ = 1) ∧
   (∀ Q M, AntiHom cc (delU H cc l Q M)) ∧
   (∀ (Q : Finset (PlE H)) (M : ℕ), IsOpen ((delU H cc l Q M).ker : Set (G H.E Ω))) ∧
   (∀ (M : ℕ) (Q' Q : Finset (PlE H)) (h : Q' ⊆ Q),

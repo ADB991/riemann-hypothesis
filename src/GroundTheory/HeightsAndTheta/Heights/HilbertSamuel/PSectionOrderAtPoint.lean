@@ -80,14 +80,14 @@ theorem mulIdeal_exact (W I : Ideal R) (f : R) :
 
 theorem locLen_le_of_surjective {M N : Type v} [AddCommGroup M] [Module R M] [AddCommGroup N]
     [Module R N] (g : M →ₗ[R] N) (hg : Function.Surjective g) (p : PrimeSpectrum R) :
-    locLen N p ≤ locLen M p := by
+    ReciprocityTheory.ChartRestriction.G.AI.locLen N p ≤ ReciprocityTheory.ChartRestriction.G.AI.locLen M p := by
   rw [locLen_add (LinearMap.ker g).subtype g (Submodule.injective_subtype _) hg
     (LinearMap.exact_subtype_ker_map g) p]
   exact le_add_self
 
 theorem locLen_pow_ne_top {W : Ideal R} (hW : W.IsPrime) {b : R} (hb : b ∉ W) (p : PrimeSpectrum R)
-    (h : locLen (R ⧸ (W ⊔ Ideal.span {b})) p ≠ ⊤) (k : ℕ) :
-    locLen (R ⧸ (W ⊔ Ideal.span {b ^ k})) p ≠ ⊤ := by
+    (h : ReciprocityTheory.ChartRestriction.G.AI.locLen (R ⧸ (W ⊔ Ideal.span {b})) p ≠ ⊤) (k : ℕ) :
+    ReciprocityTheory.ChartRestriction.G.AI.locLen (R ⧸ (W ⊔ Ideal.span {b ^ k})) p ≠ ⊤ := by
   induction k with
   | zero =>
     rw [pow_zero, locLen_quot_eq_zero p fun h1 => p.isPrime.ne_top ((Ideal.eq_top_iff_one _).mpr h1)]
@@ -143,8 +143,8 @@ theorem mul_powIdeal_le {W : Ideal R} {a b : R} {n : ℕ} (c : ℕ → R)
 theorem locLen_le_of_monic {W : Ideal R} (hW : W.IsPrime) {a b : R} (ha : a ∉ W) (hb : b ∉ W)
     (p : PrimeSpectrum R) {n : ℕ} (c : ℕ → R)
     (hrel : a ^ (n + 1) + ∑ j ∈ Finset.range (n + 1), c j * a ^ j * b ^ (n + 1 - j) ∈ W)
-    (hfin : locLen (R ⧸ (W ⊔ Ideal.span {b})) p ≠ ⊤) :
-    locLen (R ⧸ (W ⊔ Ideal.span {b})) p ≤ locLen (R ⧸ (W ⊔ Ideal.span {a})) p := by
+    (hfin : ReciprocityTheory.ChartRestriction.G.AI.locLen (R ⧸ (W ⊔ Ideal.span {b})) p ≠ ⊤) :
+    ReciprocityTheory.ChartRestriction.G.AI.locLen (R ⧸ (W ⊔ Ideal.span {b})) p ≤ ReciprocityTheory.ChartRestriction.G.AI.locLen (R ⧸ (W ⊔ Ideal.span {a})) p := by
   set I := powIdeal a b n
   have hA := locLen_add (mulIdeal W I a) (Submodule.factor (sup_mul_le W I a))
     (mulIdeal_injective hW I ha) (Submodule.factor_surjective _) (mulIdeal_exact W I a) p
@@ -156,7 +156,7 @@ theorem locLen_le_of_monic {W : Ideal R} (hW : W.IsPrime) {a b : R} (ha : a ∉ 
   have hI : W ⊔ Ideal.span {b ^ n} ≤ W ⊔ I :=
     sup_le_sup_left ((Ideal.span_singleton_le_iff_mem _).mpr (pow_mem_powIdeal a b n)) W
   have h2 := locLen_le_of_surjective (Submodule.factor hI) (Submodule.factor_surjective hI) p
-  have hIfin : locLen (R ⧸ (W ⊔ I)) p ≠ ⊤ :=
+  have hIfin : ReciprocityTheory.ChartRestriction.G.AI.locLen (R ⧸ (W ⊔ I)) p ≠ ⊤ :=
     ne_top_of_le_ne_top (locLen_pow_ne_top hW hb p hfin n) h2
   rw [hA, hB] at h1
   exact (ENat.add_le_add_iff_left hIfin).mp h1
@@ -164,8 +164,8 @@ theorem locLen_le_of_monic {W : Ideal R} (hW : W.IsPrime) {a b : R} (ha : a ∉ 
 theorem locLen_le_of_rel {W : Ideal R} (hW : W.IsPrime) {a b u : R} (ha : a ∉ W) (hb : b ∉ W)
     (p : PrimeSpectrum R) (hWp : W ≤ p.asIdeal) (hu : u ∉ p.asIdeal) {n : ℕ} (c : ℕ → R)
     (hrel : u * a ^ n + ∑ j ∈ Finset.range n, c j * a ^ j * b ^ (n - j) ∈ W)
-    (hfin : locLen (R ⧸ (W ⊔ Ideal.span {b})) p ≠ ⊤) :
-    locLen (R ⧸ (W ⊔ Ideal.span {b})) p ≤ locLen (R ⧸ (W ⊔ Ideal.span {a})) p := by
+    (hfin : ReciprocityTheory.ChartRestriction.G.AI.locLen (R ⧸ (W ⊔ Ideal.span {b})) p ≠ ⊤) :
+    ReciprocityTheory.ChartRestriction.G.AI.locLen (R ⧸ (W ⊔ Ideal.span {b})) p ≤ ReciprocityTheory.ChartRestriction.G.AI.locLen (R ⧸ (W ⊔ Ideal.span {a})) p := by
   have huW : u ∉ W := fun h => hu (hWp h)
   cases n with
   | zero =>

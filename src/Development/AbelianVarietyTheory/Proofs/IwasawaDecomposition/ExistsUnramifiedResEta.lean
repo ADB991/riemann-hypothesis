@@ -243,11 +243,11 @@ theorem compat {c : L ≃ₐ[F] L} {I : Type} [Fintype I] {φ : I → L →+* �
   obtain rfl : k = δ * upF F a := by rw [ha, mul_inv_cancel_left]
   exact cmHeckeChar_ideleCompat_finprod h hord hprod hn δ hδ hδ' a m hk
 
-theorem infIdele_mem (w : InfinitePlace L) (y : (w.Completion)ˣ) : infIdele L w y ∈ unitIdl L := fun v => by
+theorem infIdele_mem (w : InfinitePlace L) (y : (w.Completion)ˣ) : GlobalTheory.Mem.Chr.infIdele L w y ∈ unitIdl L := fun v => by
   show Valued.v (1 : v.adicCompletion L) = 1
   exact map_one _
 
-theorem infDiag_eq (k : Lˣ) : infDiag k = ∏ w, infIdele L w (atInf w k) := by
+theorem infDiag_eq (k : Lˣ) : infDiag k = ∏ w, GlobalTheory.Mem.Chr.infIdele L w (atInf w k) := by
   unfold infDiag
   rw [MonoidHom.finsetProd_apply]; rfl
 

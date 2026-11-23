@@ -152,8 +152,8 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {P J : Ideal (MRing ι)} {e : ℕ}
 
 theorem brIntegrable_of (hLA : LogAbsLocIntStatement) (R : AnRes P J e)
-    (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) (hL : ∀ j, IsSmoothHerm (L j))
-    (hA : IsSmoothHerm A) (hs : IsSectionOn P A s) :
+    (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) (hL : ∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm (L j))
+    (hA : ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm A) (hs : IsSectionOn P A s) :
     MIntegrable R.A (fun j => potOf R (L j)) (fun x => logNorm A s (R.lift x x)) := by
   intro j K hK hKc
   refine LocallyIntegrableOn.integrableOn_compact_subset ?_ hK hKc

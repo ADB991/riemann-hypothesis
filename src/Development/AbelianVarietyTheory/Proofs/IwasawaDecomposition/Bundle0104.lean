@@ -434,7 +434,7 @@ namespace GlobalTheory.Mem.KerDet
 variable {L : Type} [Field L] [NumberField L]
 
 theorem finPartI_localIdele (v : HeightOneSpectrum (𝓞 L)) (x : (v.adicCompletion L)ˣ) :
-    finPartI L (localIdele L v x) = localIdele L v x :=
+    finPartI L (Neutral.B1.localIdele L v x) = Neutral.B1.localIdele L v x :=
   finPartI_eq_self fun _ => rfl
 
 theorem map_finPartI_locF {F : Type} [Field F] [NumberField F] [Algebra F L] {χ : HChar L} (h : χ.TrivOn F)

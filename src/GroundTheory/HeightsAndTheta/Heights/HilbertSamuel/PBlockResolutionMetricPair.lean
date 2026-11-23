@@ -275,7 +275,7 @@ def weight (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hA : A.a 
 
 theorem weight_isSemipositive (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hA : A.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀) (P0 : Ideal (MRing ι))
     (hP0 : P0 ≤ mCoordIdeal d.y) (hsp : IsSemipositiveRel P0 (mCoordIdeal d.y) A) :
-    (weight d pt hcov A hA hsp.1).IsSemipositive := by
+    (GroundTheory.Heights₂.Heights.HilbertSamuel.BlockResolutionMetricPair.weight d pt hcov A hA hsp.1).IsSemipositive := by
   intro l y hy w
   have hU := (mem_atlas_target d pt hcov hy).2
   have hG := analyticAt_lift d pt hcov l l hy hU
@@ -288,7 +288,7 @@ theorem weight_isSemipositive (A : ReciprocityTheory.ChartRestriction.G.Geo.Herm
       (fun y p => d.R.lift (pt l) (((atlas d pt hcov).chart l).symm y) p) y' ∈ mcPts (mCoordIdeal d.y) := by
     filter_upwards [((atlas d pt hcov).chart l).open_target.mem_nhds hy] with y' hy'
     exact d.R.mem _ _ (mem_atlas_target d pt hcov hy').2
-  have hcomp : (weight d pt hcov A hA hsp.1).φ l ∘ ((atlas d pt hcov).chart l).symm =
+  have hcomp : (GroundTheory.Heights₂.Heights.HilbertSamuel.BlockResolutionMetricPair.weight d pt hcov A hA hsp.1).φ l ∘ ((atlas d pt hcov).chart l).symm =
       (fun z => 2 * Real.log (A.h z)) ∘
         (fun y p => d.R.lift (pt l) (((atlas d pt hcov).chart l).symm y) p) := rfl
   rw [hcomp, levi_comp w hG (contDiffAt_const.mul hlog), levi_const_mul 2 hlog]
@@ -342,7 +342,7 @@ theorem lift_chartIdx (y : d.R.X) :
 theorem locDens_eq_chernTopDens (A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hA' : A'.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀) (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm A') (t : ℝ)
     (j : Fin r) {y : Fin D → ℂ} (hy : y ∈ ((atlas d pt hcov).chart j).target) :
     locDens (atlas d pt hcov) (fun _ => blockInterpPot d d.A A' t) j y =
-      chernTopDens ((weight d pt hcov d.A d.deg d.semipos.1).lerp (weight d pt hcov A' hA' hs) t) j y := by
+      chernTopDens ((GroundTheory.Heights₂.Heights.HilbertSamuel.BlockResolutionMetricPair.weight d pt hcov d.A d.deg d.semipos.1).lerp (GroundTheory.Heights₂.Heights.HilbertSamuel.BlockResolutionMetricPair.weight d pt hcov A' hA' hs) t) j y := by
   obtain ⟨hy1, hyU⟩ := mem_atlas_target d pt hcov hy
   have hΦ : ∀ _ : Fin D, IsPotential d.R.A (blockInterpPot d d.A A' t) :=
     fun _ => isPotential_blockInterpPot d hs t
@@ -353,10 +353,10 @@ theorem locDens_eq_chernTopDens (A' : ReciprocityTheory.ChartRestriction.G.Geo.H
       t * Real.log (A'.h (d.R.lift (pt j) (((atlas d pt hcov).chart j).symm y'))) with hψ
   have hL : locDens (atlas d pt hcov) (fun _ => blockInterpPot d d.A A' t) j y = maDens (fun _ => ψ) y :=
     hbase
-  have hgerm : ((weight d pt hcov d.A d.deg d.semipos.1).lerp (weight d pt hcov A' hA' hs) t).φ j ∘
+  have hgerm : ((GroundTheory.Heights₂.Heights.HilbertSamuel.BlockResolutionMetricPair.weight d pt hcov d.A d.deg d.semipos.1).lerp (GroundTheory.Heights₂.Heights.HilbertSamuel.BlockResolutionMetricPair.weight d pt hcov A' hA' hs) t).φ j ∘
       ((atlas d pt hcov).chart j).symm =ᶠ[𝓝 y] fun y' => 2 * ψ y' := by
     refine Filter.Eventually.of_forall fun y' => ?_
-    simp only [Function.comp_apply, Weight.lerp, weight, hψ]
+    simp only [Function.comp_apply, Weight.lerp, GroundTheory.Heights₂.Heights.HilbertSamuel.BlockResolutionMetricPair.weight, hψ]
     ring
   rw [hL]
   unfold chernTopDens maDens
