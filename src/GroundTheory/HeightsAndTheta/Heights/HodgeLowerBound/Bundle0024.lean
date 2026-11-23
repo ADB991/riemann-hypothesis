@@ -226,7 +226,7 @@ def modelW (x : M.Xc) : ((k : K) → ι k) → ℂ :=
   (Ψ (segre (modelLift M x x)) 0)⁻¹ • segre (modelLift M x x)
 
 theorem modelW_mem_fibre (hK : Nonempty K) (hPh : IsMultiHomogIdeal P) {x : M.Xc}
-    (h0 : Ψ (segre (modelLift M x x)) 0 ≠ 0) : modelW M Ψ x ∈ fibre P Ψ (modelQ M Ψ x) := by
+    (h0 : Ψ (segre (modelLift M x x)) 0 ≠ 0) : modelW M Ψ x ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ (modelQ M Ψ x) := by
   classical
   obtain ⟨k0⟩ := hK
   let c : K → ℂ := Function.update (fun _ => (1 : ℂ)) k0 (Ψ (segre (modelLift M x x)) 0)⁻¹

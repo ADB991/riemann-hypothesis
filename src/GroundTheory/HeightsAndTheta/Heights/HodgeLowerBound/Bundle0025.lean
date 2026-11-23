@@ -48,7 +48,7 @@ theorem intNum_snoc_eq_zero {K : Type} [Fintype K] [DecidableEq K] {ι : K → T
       NumbersDVR.divCycle (P.map φ) (φ v') W' = NumbersDVR.divCycle (P.map φ) (φ u') W' := by
     intro W' hW' hle hrel
     have hPle : P ≤ W'.comap φ := fun x hx => hle (Ideal.mem_map_of_mem φ hx)
-    have hrel' : IsRelevant (W'.comap φ) := by
+    have hrel' : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant (W'.comap φ) := by
       intro k
       obtain ⟨i, hi⟩ := hrel k
       refine ⟨i, fun h => hi ?_⟩
