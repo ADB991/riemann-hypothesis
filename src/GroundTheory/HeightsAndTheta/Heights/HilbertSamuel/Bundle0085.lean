@@ -240,7 +240,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.Cha
 namespace VeroneseGraphDeg
 
 theorem isMultiHomog_forms (D : ℕ) (q : Ix (Veronese.Idx D)) :
-    IsMultiHomog (Veronese.forms D q) ((fun _ _ => 2 : Unit → Unit → ℕ) q.1) := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (Veronese.forms D q) ((fun _ _ => 2 : Unit → Unit → ℕ) q.1) := by
   have h := Inter.AvoidRing.isMultiHomog_mul
     (Inter.AvoidRing.isMultiHomog_X (R := ℤ) (ι := GlobalTheory (Fin (D + 1))) () q.2.1.1)
     (Inter.AvoidRing.isMultiHomog_X (R := ℤ) (ι := GlobalTheory (Fin (D + 1))) () q.2.1.2)
@@ -429,7 +429,7 @@ def ClosedPtGenUniform.Statement : Prop :=
     (𝓜 : (K → ℤ) → Submodule S M),
       Module.Finite (MRingOver S ι) M → KH.IsMGraded S ι 𝓜 → V ≤ Module.annihilator (MRingOver S ι) M →
       ∀ (e : K → ℤ) (P : Ideal (MRingOver S ι)), IsClosedMultiPt P →
-        ∃ (f : MRingOver S ι) (δ : K → ℕ) (c₀ : ℕ), IsMultiHomog f δ ∧ f ∉ P ∧
+        ∃ (f : MRingOver S ι) (δ : K → ℕ) (c₀ : ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f δ ∧ f ∉ P ∧
           ∀ c : ℕ, c₀ ≤ c → GenNear S ι 𝓜 (e + c • N) f δ
 
 end

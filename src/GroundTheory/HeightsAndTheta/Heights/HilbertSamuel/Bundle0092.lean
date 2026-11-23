@@ -32,13 +32,13 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 omit [Fintype K] in
 theorem isMultiHomog_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {f : MRingOver R ι}
-    {a : K → ℕ} (hf : IsMultiHomog f a) : IsMultiHomog (map φ f : MRingOver S ι) a :=
+    {a : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (map φ f : MRingOver S ι) a :=
   fun m hm => hf m (support_map_subset φ f hm)
 
 
 omit [Fintype K] in
-theorem isMultiHomog_lincomb {f g : MRingOver ℂ ι} {a : K → ℕ} (hf : IsMultiHomog f a)
-    (hg : IsMultiHomog g a) (c d : ℂ) : IsMultiHomog (C c * f - C d * g) a := by
+theorem isMultiHomog_lincomb {f g : MRingOver ℂ ι} {a : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a)
+    (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a) (c d : ℂ) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (C c * f - C d * g) a := by
   classical
   intro m hm
   rw [C_mul', C_mul'] at hm
@@ -46,7 +46,7 @@ theorem isMultiHomog_lincomb {f g : MRingOver ℂ ι} {a : K → ℕ} (hf : IsMu
   · exact hf m (support_smul h)
   · exact hg m (support_smul h)
 
-theorem eval_smul {s : MRingOver ℂ ι} {a : K → ℕ} (hs : IsMultiHomog s a) (r : K → ℂ)
+theorem eval_smul {s : MRingOver ℂ ι} {a : K → ℕ} (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a) (r : K → ℂ)
     (z : (Σ k, ι k) → ℂ) : eval (fun p => r p.1 * z p) s = (∏ k, r k ^ a k) * eval z s := by
   rw [eval_eq', eval_eq', Finset.mul_sum]
   refine Finset.sum_congr rfl fun d hd => ?_
@@ -59,7 +59,7 @@ theorem eval_smul {s : MRingOver ℂ ι} {a : K → ℕ} (hs : IsMultiHomog s a)
   ring
 
 theorem eval_eq_zero_of_homog {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (z : (Σ k, ι k) → ℂ)
-    (hz : ∀ f ∈ mCoordIdeal y, (∃ a, IsMultiHomog f a) → eval z (map (Int.castRingHom ℂ) f) = 0)
+    (hz : ∀ f ∈ mCoordIdeal y, (∃ a, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) → eval z (map (Int.castRingHom ℂ) f) = 0)
     (f : MRing ι) (hf : f ∈ mCoordIdeal y) : eval z (map (Int.castRingHom ℂ) f) = 0 := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [eq_sum_multihomogeneous_components f, map_sum, map_sum]
@@ -83,7 +83,7 @@ theorem FibreRepresentatives.proof (h : AvoidFormFinite.Statement) : FibreRepres
     push Not at hne
     exact hζ (funext hne)
   let S : Set (MRingOver ℂ ι) :=
-    {g | ∃ f ∈ mCoordIdeal y, (∃ a, IsMultiHomog f a) ∧ g = map (Int.castRingHom ℂ) f} ∪
+    {g | ∃ f ∈ mCoordIdeal y, (∃ a, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) ∧ g = map (Int.castRingHom ℂ) f} ∪
       Set.range fun j => C (ζ j₀) * Lc j - C (ζ j) * Lc j₀
 
   have key : ∀ z : (Σ k, ι k) → ℂ, ((∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) ∧ ∀ s ∈ S, eval z s = 0) ↔
@@ -103,7 +103,7 @@ theorem FibreRepresentatives.proof (h : AvoidFormFinite.Statement) : FibreRepres
       · exact hz.2 f hf
       · simp only [map_sub, map_mul, eval_C, ht]
         ring
-  have hSh : ∀ s ∈ S, ∃ a, IsMultiHomog s a := by
+  have hSh : ∀ s ∈ S, ∃ a, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a := by
     rintro s (⟨f, -, ⟨a, ha⟩, rfl⟩ | ⟨j, rfl⟩)
     · exact ⟨a, isMultiHomog_map _ ha⟩
     · exact ⟨e, isMultiHomog_lincomb (isMultiHomog_map _ (hL j)) (isMultiHomog_map _ (hL j₀)) _ _⟩
@@ -273,7 +273,7 @@ variable {S : Type} [CommRing S] {K : Type} [Fintype K] {ι : K → Type} [∀ k
 
 theorem isMultiHomog_of_weighted {q : MRingOver S ι} {c : K → ℤ}
     (hq : IsWeightedHomogeneous (QuotPartGraded.blockWeight ι) q c) :
-    IsMultiHomog q (fun k => (c k).toNat) := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog q (fun k => (c k).toNat) := by
   by_cases h0 : q = 0
   · intro m hm
     simp [h0] at hm
@@ -339,7 +339,7 @@ theorem mem_annihilator_of_homog {𝓜 : (K → ℤ) → Submodule S M} (hM : KH
   rw [smul_add, hx, hy, add_zero]
 
 def prodSet (𝓜 : (K → ℤ) → Submodule S M) (P : Ideal (MRingOver S ι)) : Set M :=
-  {y | ∃ (p : MRingOver S ι) (a : K → ℕ) (m : M) (c : K → ℤ), IsMultiHomog p a ∧ p ∈ P ∧ m ∈ 𝓜 c ∧ y = p • m}
+  {y | ∃ (p : MRingOver S ι) (a : K → ℕ) (m : M) (c : K → ℤ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p a ∧ p ∈ P ∧ m ∈ 𝓜 c ∧ y = p • m}
 
 theorem prodSet_homog {𝓜 : (K → ℤ) → Submodule S M} (hM : KH.IsMGraded S ι 𝓜) (P : Ideal (MRingOver S ι)) :
     ∀ y ∈ prodSet 𝓜 P, ∃ c, y ∈ 𝓜 c := by
@@ -399,7 +399,7 @@ theorem GradedSubmodules.proof : GradedSubmodules.Statement := by
   refine ⟨?_, fun P hP => ?_⟩
   ·
     set 𝒜 := weightedHomogeneousSubmodule S (QuotPartGraded.blockWeight ι)
-    refine ⟨{q | (∃ a, IsMultiHomog q a) ∧ q ∈ Module.annihilator (MRingOver S ι) M}, fun q hq => hq.1, ?_⟩
+    refine ⟨{q | (∃ a, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog q a) ∧ q ∈ Module.annihilator (MRingOver S ι) M}, fun q hq => hq.1, ?_⟩
     apply le_antisymm
     · intro f hf
       rw [← DirectSum.sum_support_decompose 𝒜 f]
@@ -463,9 +463,9 @@ def ClosedPtChartUnit.Statement : Prop :=
   ∀ (S : Type) [CommRing S] (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (P : Ideal (MRingOver S ι)), IsClosedMultiPt P →
     ∀ I : ∀ k, Finset (ι k), (∀ k, (I k).Nonempty) → (∀ k, ∀ i ∈ I k, (X ⟨k, i⟩ : MRingOver S ι) ∉ P) →
-    ∀ (f : MRingOver S ι) (a : K → ℕ), IsMultiHomog f a → f ∉ P →
+    ∀ (f : MRingOver S ι) (a : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a → f ∉ P →
       ∃ t ∈ KH.cellMon S I, ∃ (g : MRingOver S ι) (b : K → ℕ),
-        IsMultiHomog t (a + b) ∧ IsMultiHomog g b ∧ t - g * f ∈ P
+        ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog t (a + b) ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g b ∧ t - g * f ∈ P
 
 end
 

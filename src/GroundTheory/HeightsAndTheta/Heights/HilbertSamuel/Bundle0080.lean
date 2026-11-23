@@ -31,14 +31,14 @@ variable {D : ℕ} {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀
   {Ω : Type} [Field Ω] [CharZero Ω]
 
 theorem gram_symm (d : HSMBlockDatum D K ι Ω) (n : ℕ) {r : ℕ} (f : Fin r → MRing ι)
-    (hf : ∀ k, IsMultiHomog (f k) (blockDeg d.k₀ n)) (k l : Fin r) :
+    (hf : ∀ k, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f k) (blockDeg d.k₀ n)) (k l : Fin r) :
     blockGram d n (fun j => map (Int.castRingHom ℚ) (f j)) l k =
       blockGram d n (fun j => map (Int.castRingHom ℚ) (f j)) k l := by
   rw [blockGram_eq d n f hf, blockGram_eq d n f hf]
   simp only [pairRe_comm]
 
 theorem quad_nonneg (d : HSMBlockDatum D K ι Ω) (n : ℕ) {r : ℕ} (f : Fin r → MRing ι)
-    (hf : ∀ k, IsMultiHomog (f k) (blockDeg d.k₀ n)) (a : Fin r → ℝ) :
+    (hf : ∀ k, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f k) (blockDeg d.k₀ n)) (a : Fin r → ℝ) :
     0 ≤ a ⬝ᵥ (blockGram d n (fun j => map (Int.castRingHom ℚ) (f j)) *ᵥ a) := by
   rw [gram_quad d n f hf]
   have h : ∀ z, 0 ≤ ‖comb f a z‖ ^ 2 / d.A.h z ^ (2 * n) := fun z =>
@@ -111,7 +111,7 @@ theorem BlockChiCovolume.proof : BlockChiCovolume.Statement := by
     rw [hnorm _ (∑ j, m j • f j) (isMultiHomog_zsum f m hf), blockL2Norm_sum_eq_sqrt_gram d n f hf m,
       Real.sq_sqrt (quad_nonneg d n f hf _)]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [ε, hw, aeval_map_int, map_sum]
+      simp [ε, hw, GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.aeval_map_int, map_sum]
   have hgram : Matrix.gram ℝ (fun i => (B i : EuclideanSpace ℝ (Fin r))) = G := by
     ext k l
     rw [entry_of_quad G (gram_symm d n f hf) k l, ← cast_single_add, ← cast_single, ← cast_single, ← key, ← key,
@@ -146,7 +146,7 @@ variable {D : ℕ} {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀
   {Ω : Type} [Field Ω] [CharZero Ω]
 
 theorem sup_one_le (hS : SupBoundBlock.Statement) (d : HSMBlockDatum D K ι Ω) :
-    ∃ C : ℝ, 1 ≤ C ∧ ∀ n : ℕ, 1 ≤ n → ∀ F : MRing ι, IsMultiHomog F (blockDeg d.k₀ n) →
+    ∃ C : ℝ, 1 ≤ C ∧ ∀ n : ℕ, 1 ≤ n → ∀ F : MRing ι, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog F (blockDeg d.k₀ n) →
       ∀ z ∈ mcPts (mCoordIdeal d.y),
         ‖eval z (map (Int.castRingHom ℂ) F)‖ / d.A.h z ^ n ≤ (C * (n : ℝ) ^ ((D : ℝ) / 2)) * blockL2Norm d n F := by
   obtain ⟨C, hC⟩ := hS D K ι Ω d
@@ -163,7 +163,7 @@ theorem integral_le_of_le {X : Type*} [MeasurableSpace X] (μ : Measure X) [IsPr
   exact (le_abs_self _).trans h
 
 theorem quad_nonneg (d : HSMBlockDatum D K ι Ω) (n : ℕ) {r : ℕ} (f : Fin r → MRing ι)
-    (hf : ∀ k, IsMultiHomog (f k) (blockDeg d.k₀ n)) (a : Fin r → ℝ) :
+    (hf : ∀ k, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f k) (blockDeg d.k₀ n)) (a : Fin r → ℝ) :
     0 ≤ a ⬝ᵥ (blockGram d n (fun j => map (Int.castRingHom ℚ) (f j)) *ᵥ a) := by
   rw [gram_quad d n f hf a]
   have hp : ∀ (w : ℂ) (t : ℝ), 0 ≤ ‖w‖ ^ 2 / t ^ (2 * n) := fun w t =>
@@ -176,12 +176,12 @@ theorem quad_nonneg (d : HSMBlockDatum D K ι Ω) (n : ℕ) {r : ℕ} (f : Fin r
   positivity
 
 theorem quad_le (d d' : HSMBlockDatum D K ι Ω) (hy : d'.y = d.y) (hk : d'.k₀ = d.k₀) (hA : d'.A = d.A) (n : ℕ)
-    {r : ℕ} (f : Fin r → MRing ι) (hf : ∀ k, IsMultiHomog (f k) (blockDeg d.k₀ n)) {c : ℝ} (hc : 0 < c)
-    (hsup : ∀ F : MRing ι, IsMultiHomog F (blockDeg d.k₀ n) → ∀ z ∈ mcPts (mCoordIdeal d.y),
+    {r : ℕ} (f : Fin r → MRing ι) (hf : ∀ k, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f k) (blockDeg d.k₀ n)) {c : ℝ} (hc : 0 < c)
+    (hsup : ∀ F : MRing ι, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog F (blockDeg d.k₀ n) → ∀ z ∈ mcPts (mCoordIdeal d.y),
       ‖eval z (map (Int.castRingHom ℂ) F)‖ / d.A.h z ^ n ≤ c * blockL2Norm d n F) (a : Fin r → ℝ) :
     a ⬝ᵥ (blockGram d' n (fun j => map (Int.castRingHom ℚ) (f j)) *ᵥ a) ≤
       c ^ 2 * (a ⬝ᵥ (blockGram d n (fun j => map (Int.castRingHom ℚ) (f j)) *ᵥ a)) := by
-  have hf' : ∀ k, IsMultiHomog (f k) (blockDeg d'.k₀ n) := fun k => by rw [hk]; exact hf k
+  have hf' : ∀ k, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f k) (blockDeg d'.k₀ n) := fun k => by rw [hk]; exact hf k
   have := d'.vol.1
   have hQ := quad_nonneg d n f hf a
   set Q := a ⬝ᵥ (blockGram d n (fun j => map (Int.castRingHom ℚ) (f j)) *ᵥ a)
@@ -233,10 +233,10 @@ theorem BlockMeasureChange.proof (hS : SupBoundBlock.Statement) : BlockMeasureCh
     have hb := hex.choose_spec
     choose f hf hfe using hb.1
     have hbf : hex.choose.2 = fun j => map (Int.castRingHom ℚ) (f j) := funext hfe
-    have hf' : ∀ k, IsMultiHomog (f k) (blockDeg d'.k₀ n) := fun k => by rw [hk]; exact hf k
+    have hf' : ∀ k, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f k) (blockDeg d'.k₀ n) := fun k => by rw [hk]; exact hf k
     have hli : LinearIndependent ℤ fun k => aeval d.y (f k) := by
       have := hb.2.1
-      simp only [hbf, aeval_map_int] at this
+      simp only [hbf, GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.aeval_map_int] at this
       exact this
     have hli' : LinearIndependent ℤ fun k => aeval d'.y (f k) := by rw [hy]; exact hli
     have hsame : ∀ (y' : (Σ k, ι k) → Ω) (k' : K), y' = d.y → k' = d.k₀ →

@@ -21,15 +21,15 @@ set_option linter.unusedSectionVars false
 variable {S : Type} [CommRing S] {K : Type} [Fintype K] [LinearOrder K] {ι : K → Type}
   [∀ k, Fintype (ι k)] [∀ k, LinearOrder (ι k)]
 
-theorem isMultiHomog_mul {p q : MRingOver S ι} {a b : K → ℕ} (hp : IsMultiHomog p a)
-    (hq : IsMultiHomog q b) : IsMultiHomog (p * q) (a + b) := by
+theorem isMultiHomog_mul {p q : MRingOver S ι} {a b : K → ℕ} (hp : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p a)
+    (hq : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog q b) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (p * q) (a + b) := by
   classical
   intro m hm k
   obtain ⟨m₁, h₁, m₂, h₂, rfl⟩ := Finset.mem_add.mp (MvPolynomial.support_mul p q hm)
   simp only [Finsupp.add_apply, Finset.sum_add_distrib, Pi.add_apply, hp m₁ h₁ k, hq m₂ h₂ k]
 
 theorem isMultiHomog_X (k : K) (i : ι k) :
-    IsMultiHomog (X ⟨k, i⟩ : MRingOver S ι) (fun l => if l = k then 1 else 0) := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (X ⟨k, i⟩ : MRingOver S ι) (fun l => if l = k then 1 else 0) := by
   classical
   intro m hm l
   rw [Finset.mem_singleton.mp (MvPolynomial.support_monomial_subset hm)]
@@ -44,7 +44,7 @@ theorem isMultiHomog_X (k : K) (i : ι k) :
     simp [this, hl]
 
 theorem cellMon_homog {I : ∀ k, Finset (ι k)} {u : MRingOver S ι} (hu : u ∈ KH.cellMon S I) :
-    ∃ e : K → ℕ, IsMultiHomog u e := by
+    ∃ e : K → ℕ, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog u e := by
   induction hu using Submonoid.closure_induction with
   | mem f hf =>
     obtain ⟨k, i, -, rfl⟩ := hf
@@ -61,13 +61,13 @@ variable {M : Type*} [AddCommGroup M] [Module (MRingOver S ι) M] [Module S M]
   [IsScalarTower S (MRingOver S ι) M] {𝓜 : (K → ℤ) → Submodule S M}
 
 theorem mk_mem_locPart {T : Submonoid (MRingOver S ι)} {c : K → ℤ} (m : M) (t : T) (a : K → ℕ)
-    (ht : IsMultiHomog (t : MRingOver S ι) a) (hm : m ∈ 𝓜 (c + fun k => (a k : ℤ))) :
+    (ht : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (t : MRingOver S ι) a) (hm : m ∈ 𝓜 (c + fun k => (a k : ℤ))) :
     LocalizedModule.mk m t ∈ KH.locPart ι 𝓜 T c :=
   Submodule.subset_span ⟨m, t, a, ht, hm, rfl⟩
 
 theorem locPart_normal (h𝓜 : KH.IsMGraded S ι 𝓜) {T : Submonoid (MRingOver S ι)} {c : K → ℤ}
     {x : LocalizedModule T M} (hx : x ∈ KH.locPart ι 𝓜 T c) :
-    ∃ (m : M) (t : T) (a : K → ℕ), IsMultiHomog (t : MRingOver S ι) a ∧
+    ∃ (m : M) (t : T) (a : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (t : MRingOver S ι) a ∧
       m ∈ 𝓜 (c + fun k => (a k : ℤ)) ∧ x = LocalizedModule.mk m t := by
   induction hx using Submodule.span_induction with
   | mem x hx => exact hx
@@ -92,7 +92,7 @@ theorem locPart_normal (h𝓜 : KH.IsMGraded S ι 𝓜) {T : Submonoid (MRingOve
     exact ⟨s • m, t, a, ht, Submodule.smul_mem _ s hm, LocalizedModule.smul'_mk s m t⟩
 
 theorem smul_mem_locPart (h𝓜 : KH.IsMGraded S ι 𝓜) {T : Submonoid (MRingOver S ι)} {c : K → ℤ}
-    {p : MRingOver S ι} {a : K → ℕ} (hp : IsMultiHomog p a) {x : LocalizedModule T M}
+    {p : MRingOver S ι} {a : K → ℕ} (hp : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p a) {x : LocalizedModule T M}
     (hx : x ∈ KH.locPart ι 𝓜 T c) : p • x ∈ KH.locPart ι 𝓜 T (c + fun k => (a k : ℤ)) := by
   obtain ⟨m, t, b, ht, hm, rfl⟩ := locPart_normal h𝓜 hx
   rw [LocalizedModule.smul'_mk]
@@ -195,7 +195,7 @@ theorem proof (hSES : KH.CechSESStatement) (hMap : KH.CechMapDegStatement) : Gen
     exact h𝓜.2 _ _ _ _ hue hm
 
   let v : KH.cellMon S I.1 := ⟨t₁, ht₁T⟩ * u * s
-  have hv : IsMultiHomog (v : MRingOver S ι) (a₁ + e + b) := isMultiHomog_mul (isMultiHomog_mul ht₁ hue) hs
+  have hv : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (v : MRingOver S ι) (a₁ + e + b) := isMultiHomog_mul (isMultiHomog_mul ht₁ hue) hs
   have hy'' : LocalizedModule.mk m' v ∈ KH.locPart ι 𝓜' (KH.cellMon S I.1) d := by
     refine mk_mem_locPart _ v _ hv ?_
     have edeg : (d + fun k => ((a₁ + e + b) k : ℤ)) =

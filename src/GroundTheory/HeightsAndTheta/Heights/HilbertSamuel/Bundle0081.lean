@@ -378,7 +378,7 @@ theorem prod_weights {n : ℕ} (q : ℝ) (s : Fin n → Fin 2) :
 theorem proof : ShiftIntersectionPolynomial.Statement := by
   intro K _ ι _ II P n A B hII hP hA hB
   have hI : IsIntersectionFamily (II K ι) := hII K ι
-  set e : Fin 2 → HermLine ι := ![A, B] with he_def
+  set e : Fin 2 → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := ![A, B] with he_def
   have he : ∀ i, IsSmoothHerm (e i) := by
     intro i
     rcases Fin.exists_fin_two.mp ⟨i, rfl⟩ with h | h <;> rw [h] <;> simpa [e]
@@ -406,7 +406,7 @@ theorem proof : ShiftIntersectionPolynomial.Statement := by
   · intro q
     set Z := HermLine.zcomb A B (q : ℤ) 1 with hZ_def
     have hZ : IsSmoothHerm Z := ZCombLimit.isSmoothHerm_zcomb_int hA hB _ _
-    have hposition : ∀ (L : Fin n → HermLine ι) (a : Fin n), (∀ j, IsSmoothHerm (L j)) →
+    have hposition : ∀ (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (a : Fin n), (∀ j, IsSmoothHerm (L j)) →
         II K ι P n (Function.update L a Z) =
           (![(q : ℝ), 1] : Fin 2 → ℝ) 0 * II K ι P n (Function.update L a (e 0)) +
             (![(q : ℝ), 1] : Fin 2 → ℝ) 1 * II K ι P n (Function.update L a (e 1)) := by

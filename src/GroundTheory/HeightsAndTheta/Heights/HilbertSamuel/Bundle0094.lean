@@ -65,7 +65,7 @@ namespace BlockResolutionInterpIntegral
 variable {D : ℕ} {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {Ω : Type} [Field Ω] [CharZero Ω]
 
-theorem locDens_interp (d : HSMBlockDatum D K ι Ω) {A' : HermLine ι} (hA' : IsSmoothHerm A')
+theorem locDens_interp (d : HSMBlockDatum D K ι Ω) {A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA' : IsSmoothHerm A')
     (t : ℝ) (j : Fin d.R.A.n) {y : Fin D → ℂ} (hy : y ∈ (d.R.A.chart j).target) :
     locDens d.R.A (fun _ => blockInterpPot d d.A A' t) j y =
       ∑ i ∈ Finset.range (D + 1), (D.choose i : ℝ) * t ^ i * (1 - t) ^ (D - i) *
@@ -77,7 +77,7 @@ theorem locDens_interp (d : HSMBlockDatum D K ι Ω) {A' : HermLine ι} (hA' : I
   have hV : IsOpen ((d.R.A.chart j).target ∩ (d.R.A.chart j).symm ⁻¹' d.R.U x0) :=
     (d.R.A.chart j).isOpen_inter_preimage_symm (d.R.isOpen_U x0)
   have hyV : y ∈ (d.R.A.chart j).target ∩ (d.R.A.chart j).symm ⁻¹' d.R.U x0 := ⟨hy, d.R.mem_U x0⟩
-  have hsm : ∀ {L : HermLine ι}, IsSmoothHerm L → ∀ᶠ y' in 𝓝 y,
+  have hsm : ∀ {L : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι}, IsSmoothHerm L → ∀ᶠ y' in 𝓝 y,
       ContDiffAt ℝ 2 (fun y'' => Real.log (L.h (d.R.lift x0 ((d.R.A.chart j).symm y'')))) y' := by
     intro L hL
     filter_upwards [hV.mem_nhds hyV] with y' hy'
@@ -125,7 +125,7 @@ theorem locDens_interp (d : HSMBlockDatum D K ι Ω) {A' : HermLine ι} (hA' : I
   rw [e, Complex.re_ofReal_mul]
   ring
 
-theorem continuous_logRatio (d : HSMBlockDatum D K ι Ω) {A' : HermLine ι} (hdeg : A'.a = unitDeg d.k₀)
+theorem continuous_logRatio (d : HSMBlockDatum D K ι Ω) {A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hdeg : A'.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀)
     (hA' : IsSmoothHerm A') :
     Continuous fun x => Real.log (A'.h (blockPt d x) / d.A.h (blockPt d x)) := by
   have hA : IsSmoothHerm d.A := d.semipos.1
@@ -156,7 +156,7 @@ theorem continuous_logRatio (d : HSMBlockDatum D K ι Ω) {A' : HermLine ι} (hd
     Finset.prod_ne_zero_iff.mpr fun k _ => zpow_ne_zero _ (norm_ne_zero_iff.mpr (hc0 k))
   rw [he, A'.smul c _ hc0, d.A.smul c _ hc0, hdeg', mul_div_mul_left _ _ hp]
 
-theorem mInt_interp (d : HSMBlockDatum D K ι Ω) {A' : HermLine ι} (hdeg : A'.a = unitDeg d.k₀)
+theorem mInt_interp (d : HSMBlockDatum D K ι Ω) {A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hdeg : A'.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀)
     (hA' : IsSmoothHerm A') (t : ℝ) :
     mInt d.R.A (fun _ => blockInterpPot d d.A A' t)
         (fun x => Real.log (A'.h (blockPt d x) / d.A.h (blockPt d x))) =
@@ -250,7 +250,7 @@ theorem ClosedPtChartUnit.proof : ClosedPtChartUnit.Statement := by
     have hfW : f ∈ W :=
       hWf f a ((NumbersDVR.Objects.isMultiHomog_iff f a).mpr hf)
         (hJp (Ideal.mem_sup_right (Ideal.mem_span_singleton_self f)))
-    have hrel : IsRelevant W := by
+    have hrel : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W := by
       intro k
       obtain ⟨i, hi⟩ := hI k
       refine ⟨i, fun hXW => Set.disjoint_left.mp hdisj (hWp hXW) ?_⟩
@@ -403,7 +403,7 @@ theorem ClosedPtSkyscraper.proof (hU : ClosedPtChartUnit.Statement) : ClosedPtSk
   have hinv : ∀ J : ∀ k, Finset (ι k), (∀ k, (J k).Nonempty) →
       (∀ k, ∀ i ∈ J k, (X ⟨k, i⟩ : MRingOver S ι) ∉ P) →
       ∃ t ∈ KH.cellMon S J, ∃ (g : MRingOver S ι) (b : K → ℕ),
-        IsMultiHomog t (a + b) ∧ IsMultiHomog g b ∧ t - g * s ∈ P :=
+        ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog t (a + b) ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g b ∧ t - g * s ∈ P :=
     fun J hne hJ => hU S K ι P hP J hne hJ s a hsa hsP
   choose t ht g b htb hgb htg using hinv
   let z : KH.CechC S ι N 0 := fun J =>

@@ -27,7 +27,7 @@ namespace BlockGraphDeg
 
 theorem isMultiHomog_blockForms {K : Type} [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)] {κ : Type}
     (k₀ : K) (M : Matrix (Ix κ) (ι k₀) ℤ) (q : Σ k, GlobalTheory κ k) :
-    IsMultiHomog (blockForms k₀ M q) (blockDeg k₀ 1) := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (blockForms k₀ M q) (blockDeg k₀ 1) := by
   classical
   intro m hm k
   obtain ⟨t, -, ht⟩ := Finset.mem_biUnion.mp (MvPolynomial.support_sum hm)
@@ -141,7 +141,7 @@ theorem eval_mConeMap {Ω : Type} [Field Ω] (v : (Σ k, ι k) → Ω) (s : K �
     simp [mConeMap, mul_comm]
 
 theorem aeval_smul_of_isMultiHomog {Ω : Type} [Field Ω] (v : (Σ k, ι k) → Ω) (s : K → Ω) {f : MRing ι}
-    {d : K → ℕ} (hf : IsMultiHomog f d) :
+    {d : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f d) :
     aeval (fun p => s p.1 * v p) f = (∏ k, s k ^ d k) * aeval v f := by
   rw [← eval_mConeMap, ProjLine.mConeMap_eq_of_isMultiHomog v hf, map_mul, eval_C, map_prod]
   simp only [map_pow, eval_X]
@@ -154,7 +154,7 @@ theorem aeval_eq_zero_of_mem {Ω : Type} [Field Ω] {v : (Σ k, ι k) → Ω} {f
   simpa using h.symm
 
 theorem isMultiHomog_X [DecidableEq K] (k : K) (i : ι k) :
-    IsMultiHomog (X ⟨k, i⟩ : MRing ι) (blockDeg k 1) := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (X ⟨k, i⟩ : MRing ι) (blockDeg k 1) := by
   classical
   intro m hm k'
   rw [support_X, Finset.mem_singleton] at hm
@@ -315,7 +315,7 @@ theorem BlockGraphFibreRatio.proof : BlockGraphFibreRatio.Statement := by
     rw [hcdef, div_mul_eq_mul_div, eq_div_iff hzl, hcross a, mul_comm]
 
   let s : K → G.Φ' := fun k' => if k' = k₀ then c else 0
-  have hs : ∀ f : MRing ι, IsMultiHomog f (blockDeg k₀ n) →
+  have hs : ∀ f : MRing ι, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f (blockDeg k₀ n) →
       aeval (fun p => s p.1 * z p) f = c ^ n * aeval z f := by
     intro f hf
     rw [aeval_smul_of_isMultiHomog z s hf, Finset.prod_eq_single k₀]
@@ -383,14 +383,14 @@ theorem mInt_congr_of_locDens {e : ℕ} {X : Type*} [TopologicalSpace X] (A : Fi
 variable {D : ℕ} {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {Ω : Type} [Field Ω] [CharZero Ω]
 
-theorem ratio_smul {A₀ A₁ : HermLine ι} (hdeg : A₁.a = A₀.a) (c : K → ℂ) (hc : ∀ k, c k ≠ 0)
+theorem ratio_smul {A₀ A₁ : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hdeg : A₁.a = A₀.a) (c : K → ℂ) (hc : ∀ k, c k ≠ 0)
     (z : (Σ k, ι k) → ℂ) :
     A₁.h (fun p => c p.1 * z p) / A₀.h (fun p => c p.1 * z p) = A₁.h z / A₀.h z := by
   have hp : (∏ k, ‖c k‖ ^ A₀.a k) ≠ 0 :=
     Finset.prod_ne_zero_iff.mpr fun k _ => zpow_ne_zero _ (norm_ne_zero_iff.mpr (hc k))
   rw [A₁.smul c z hc, A₀.smul c z hc, hdeg, mul_div_mul_left _ _ hp]
 
-theorem smooth_logRatio (d : HSMBlockDatum D K ι Ω) {A₀ A₁ : HermLine ι} (hdeg : A₁.a = A₀.a)
+theorem smooth_logRatio (d : HSMBlockDatum D K ι Ω) {A₀ A₁ : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hdeg : A₁.a = A₀.a)
     (h₀ : IsSmoothHerm A₀) (h₁ : IsSmoothHerm A₁) (t : ℝ) :
     d.R.A.Smooth (fun x => t * Real.log (A₁.h (blockPt d x) / A₀.h (blockPt d x))) := fun j => by
   refine contDiffOn_of_locally_contDiffOn fun y hy => ?_
@@ -409,7 +409,7 @@ theorem smooth_logRatio (d : HSMBlockDatum D K ι Ω) {A₀ A₁ : HermLine ι} 
       Real.log (A₀.h (d.R.lift ((d.R.A.chart j).symm y) ((d.R.A.chart j).symm y'))))
   rw [hcy, ratio_smul hdeg c hc, Real.log_div (A₁.pos _ hz).ne' (A₀.pos _ hz).ne']
 
-theorem mInt_blockInterpPot_eq (d : HSMBlockDatum D K ι Ω) {A₀ A₁ : HermLine ι} (hdeg : A₁.a = A₀.a)
+theorem mInt_blockInterpPot_eq (d : HSMBlockDatum D K ι Ω) {A₀ A₁ : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hdeg : A₁.a = A₀.a)
     (t : ℝ) (g : d.R.X → ℝ) :
     mInt d.R.A (fun _ => blockInterpPot d A₀ A₁ t) g =
       mInt d.R.A (fun _ => AnResBridge.potOf d.R A₀ +
@@ -433,7 +433,7 @@ theorem mInt_blockInterpPot_eq (d : HSMBlockDatum D K ι Ω) {A₀ A₁ : HermLi
   rw [hcy, ratio_smul hdeg c hc, Real.log_div h₁.ne' h₀.ne']
   ring
 
-theorem mass_eq (d : HSMBlockDatum D K ι Ω) {A₀ A₁ : HermLine ι} (hdeg : A₁.a = A₀.a)
+theorem mass_eq (d : HSMBlockDatum D K ι Ω) {A₀ A₁ : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hdeg : A₁.a = A₀.a)
     (h₀ : IsSmoothHerm A₀) (h₁ : IsSmoothHerm A₁) (t : ℝ) :
     mInt d.R.A (fun _ => blockInterpPot d A₀ A₁ t) (fun _ => 1) =
       mInt d.R.A (fun _ => AnResBridge.potOf d.R A₀) (fun _ => 1) := by
@@ -442,13 +442,13 @@ theorem mass_eq (d : HSMBlockDatum D K ι Ω) {A₀ A₁ : HermLine ι} (hdeg : 
     (fun _ x => t * Real.log (A₁.h (blockPt d x) / A₀.h (blockPt d x)))
     (fun _ => AnResBridge.isPotential_potOf d.R h₀) (fun _ => smooth_logRatio d hdeg h₀ h₁ t)
 
-theorem mass_potOf (hGG : GenDegGeomDeg.Statement) (d : HSMBlockDatum D K ι Ω) {A₀ : HermLine ι}
-    (hdeg : A₀.a = unitDeg d.k₀) (h₀ : IsSmoothHerm A₀) :
+theorem mass_potOf (hGG : GenDegGeomDeg.Statement) (d : HSMBlockDatum D K ι Ω) {A₀ : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι}
+    (hdeg : A₀.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀) (h₀ : IsSmoothHerm A₀) :
     mInt d.R.A (fun _ => AnResBridge.potOf d.R A₀) (fun _ => 1) =
-      (genDeg (mCoordIdeal d.y) D (unitDeg d.k₀) : ℝ) := by
+      (genDeg (mCoordIdeal d.y) D (ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀) : ℝ) := by
   have hex : ∃ Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (D + 1) → ℂ), IsGoodProj (mCoordIdeal d.y) Ψ :=
     goodProjExists K ι (mCoordIdeal d.y) D d.arith
-  let B : HermLine ι := HermLine.ofWeight (fun _ => (-1 : ℝ)) (fun _ _ _ => rfl)
+  let B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := HermLine.ofWeight (fun _ => (-1 : ℝ)) (fun _ _ _ => rfl)
   have hB : IsSmoothHerm B := contDiffOn_const
   have hlog : logNorm B.inv 1 = fun _ => (1 : ℝ) := by
     funext z
