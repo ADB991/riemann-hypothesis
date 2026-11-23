@@ -169,7 +169,7 @@ variable {S : Type} [CommRing S] {K : Type} [Fintype K] {ι : K → Type} [∀ k
   {M : Type} [AddCommGroup M] [Module (MRingOver S ι) M] [Module S M] [IsScalarTower S (MRingOver S ι) M]
 
 theorem isMultiHomog_monomial (d : (Σ k, ι k) →₀ ℕ) (r : S) (a : K → ℕ)
-    (hd : ∀ k, ∑ i, d ⟨k, i⟩ = a k) : IsMultiHomog (monomial d r : MRingOver S ι) a := by
+    (hd : ∀ k, ∑ i, d ⟨k, i⟩ = a k) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (monomial d r : MRingOver S ι) a := by
   classical
   intro m hm k
   rw [Finset.mem_singleton.mp (MvPolynomial.support_monomial_subset hm)]
