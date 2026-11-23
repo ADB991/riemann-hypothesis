@@ -66,7 +66,7 @@ theorem differentiableOn_thetaPt (hbc : Out.SecBaseChangeSt) (htw : Out.SecTwist
     {r : ℕ} {M : ModelsOf F r} {k : Fin F.n} (T : ThetaData e F M k)
     (y : (Fin T.m → ℂ) → FrPt Xo c (CAt σ)) (hy : ∀ b ∈ T.co ⁻¹' (M.X k).dom, IsThetaPt T b 1 (y b))
     (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) (f : Rul Xo c) (hf : f ∈ sec Xo c a n) :
-    DifferentiableOn ℂ (fun b => toC (evR Xo c f (y b))) (T.co ⁻¹' (M.X k).dom) := by
+    DifferentiableOn ℂ (fun b => Formalism.L2.PjFree.toC (evR Xo c f (y b))) (T.co ⁻¹' (M.X k).dom) := by
   intro b₀ hb₀
   obtain ⟨p, y₀, B, ψ, hBo, hb₀B, hBd, hψu, hψd⟩ :=
     _root_.GlobalTheory.HolChart.exists_chart_holomorphic hbc E H Dw l Xo c σ g e F r M k T b₀ hb₀
@@ -112,9 +112,9 @@ theorem differentiableOn_rdU : Out.SecBaseChangeSt → Out.SecTwistSt → ∀ (E
   choose y hy using hy1
   have hth := differentiableOn_thetaPt hbc htw T y hy a n f hf
   have key : ∀ x (hx : x ∈ (M.X k).dom),
-      toC (evR Xo c f (un k ⟨x, hx⟩)) =
+      Formalism.L2.PjFree.toC (evR Xo c f (un k ⟨x, hx⟩)) =
         ((normConst (fun j => Formalism.L2.PjFree.relab c σ (e j).1) (M.X k).ξ0 : ℂ) * (T.h (T.co.symm x)).det) ^ m *
-          toC (evR Xo c f (y (T.co.symm x))) := by
+          Formalism.L2.PjFree.toC (evR Xo c f (y (T.co.symm x))) := by
     intro x hx
     have hb : T.co.symm x ∈ T.co ⁻¹' (M.X k).dom := by simpa using hx
     obtain ⟨κ, hκ2, hθ⟩ := hT ⟨x, hx⟩
@@ -127,8 +127,8 @@ theorem differentiableOn_rdU : Out.SecBaseChangeSt → Out.SecTwistSt → ∀ (E
       rw [← hκ2, h0]
       ring
     let t₀ : (CAt σ)ˣ := ⟨(κ : ℂ), (κ⁻¹ : ℂ), mul_inv_cancel₀ hκ, inv_mul_cancel₀ hκ⟩
-    have hθ' : IsThetaPt T (T.co.symm x) (toC (t₀ : CAt σ) * 1) (un k ⟨x, hx⟩) := by
-      have h1 : toC (t₀ : CAt σ) * 1 = κ := by
+    have hθ' : IsThetaPt T (T.co.symm x) (Formalism.L2.PjFree.toC (t₀ : CAt σ) * 1) (un k ⟨x, hx⟩) := by
+      have h1 : Formalism.L2.PjFree.toC (t₀ : CAt σ) * 1 = κ := by
         show κ * 1 = κ
         ring
       rw [h1]
@@ -140,11 +140,11 @@ theorem differentiableOn_rdU : Out.SecBaseChangeSt → Out.SecTwistSt → ∀ (E
       infer_instance
     have hev := (GlobalTheory.T.framedModuli_algebraicLaws_chart_weight_integrality hbc E H Dw l Xo c).2.2.2.2.2.2 (CAt σ) hred a n f hf _ _ _ hbor
     rw [hev, wchar_gen]
-    have e1 : toC ((t₀ : CAt σ) ^ n * evR Xo c f (y (T.co.symm x))) =
-        κ ^ n * toC (evR Xo c f (y (T.co.symm x))) := rfl
+    have e1 : Formalism.L2.PjFree.toC ((t₀ : CAt σ) ^ n * evR Xo c f (y (T.co.symm x))) =
+        κ ^ n * Formalism.L2.PjFree.toC (evR Xo c f (y (T.co.symm x))) := rfl
     rw [e1, hm, ← two_mul, pow_mul, hκ2]
   have hΦ : DifferentiableOn ℂ (fun b => ((normConst (fun j => Formalism.L2.PjFree.relab c σ (e j).1) (M.X k).ξ0 : ℂ) *
-      (T.h b).det) ^ m * toC (evR Xo c f (y b))) (T.co ⁻¹' (M.X k).dom) :=
+      (T.h b).det) ^ m * Formalism.L2.PjFree.toC (evR Xo c f (y b))) (T.co ⁻¹' (M.X k).dom) :=
     (((differentiableOn_const _).mul (differentiableOn_det fun i j => (T.hol i j).1)).pow m).mul hth
   have hcomp := hΦ.comp T.co.symm.differentiableOn (fun x hx => by simpa using hx)
   refine hcomp.congr fun x hx => ?_

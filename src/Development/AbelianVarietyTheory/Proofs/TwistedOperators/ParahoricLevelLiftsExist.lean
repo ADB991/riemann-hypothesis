@@ -559,7 +559,7 @@ theorem exists_lift_prod (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (L : Lev
 
 end Local
 
-theorem liftsExist : ∀ {D : D7} (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (L : LevDat D.host.E ℂ V.rank), ∀ (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)) (N : ℕ), IsBaseFrame V β Λ N → (∀ PP ∈ L.Pg, ∀ PP', PP' ∈ L.Pg ∨ PP' ∈ L.Q → ¬ IsConjPl PP PP') → Disjoint L.Pg L.Q → LiftsExist V β L := by
+theorem liftsExist : ∀ {D : D7} (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (L : LevDat D.host.E ℂ V.rank), ∀ (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)) (N : ℕ), IsBaseFrame V β Λ N → (∀ PP ∈ L.Pg, ∀ PP', PP' ∈ L.Pg ∨ PP' ∈ L.Q → ¬ Formalism.IndefR.Lev.IsConjPl PP PP') → Disjoint L.Pg L.Q → LiftsExist V β L := by
   intro D V β L Λ N hB hc hd g0
   obtain ⟨-, κ, -, h⟩ := exists_lift_prod V β L Λ N hB hc hd g0
   exact ⟨_, (h Finset.univ.toList (Finset.nodup_toList _) fun PP => Finset.mem_toList.2 (Finset.mem_univ PP)).1⟩

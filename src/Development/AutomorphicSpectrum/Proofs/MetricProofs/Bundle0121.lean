@@ -312,7 +312,7 @@ theorem cone_pow_mem {Q : Ideal (MRingOver ℂ ι)} {e m : ℕ} {σ : Fin m ≃ 
       homogeneousComponent_mul_of_isHomogeneous_right _ _ (isHomogeneous_linPoly A _), h1, if_true]
   have hmem : homogeneousComponent r f + ∑ j : Fin e, homogeneousComponent (r - 1) (Gx j.succ) * linPoly A j ∈
       leadIdeal J ⊔ linIdeal A :=
-    add_mem (Ideal.mem_sup_left (homogeneousComponent_mem_leadIdeal hfJ hdeg))
+    add_mem (Ideal.mem_sup_left (GroundTheory.Heights₂.Heights.GoodChartModel.homogeneousComponent_mem_leadIdeal hfJ hdeg))
       (Ideal.mem_sup_right (Ideal.sum_mem _ fun j _ => Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨j, rfl⟩)))
   rw [hcomp, sub_add_cancel] at hmem
   exact ⟨r, hmem⟩

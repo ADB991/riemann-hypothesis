@@ -24,7 +24,7 @@ open GlobalTheory.Mem.Chr.AntiExist GlobalTheory.ModelChar
 variable {L : Type} [Field L] [NumberField L]
 
 theorem continuous_of_level {v : HeightOneSpectrum (𝓞 L)} {θ : (v.adicCompletion L)ˣ →* ℂˣ}
-    (h : ∀ x, IsUnitAt v x → Valued.v ((x : v.adicCompletion L) - 1) ≤ WithZero.exp (-2 : ℤ) → θ x = 1) :
+    (h : ∀ x, Formalism.L2.Host.IsUnitAt v x → Valued.v ((x : v.adicCompletion L) - 1) ≤ WithZero.exp (-2 : ℤ) → θ x = 1) :
     Continuous θ := by
   refine continuous_of_continuousAt_one θ ?_
   have hc : Continuous fun x : (v.adicCompletion L)ˣ => (x : v.adicCompletion L) - 1 :=
@@ -58,9 +58,9 @@ theorem exists_hecke_level {F : Type} [Field F] [NumberField F] [Algebra F L] {c
       (∀ v, (∀ w ∈ S, v.under (𝓞 F) ≠ w.under (𝓞 F)) → χ.UnrAt v) ∧
       ∀ w ∈ S, ∀ v : HeightOneSpectrum (𝓞 L), v.under (𝓞 F) = w.under (𝓞 F) →
         ∃ σ : (v.adicCompletion L)ˣ → (w.adicCompletion L)ˣ,
-          (∀ k : Lˣ, ∃ x, σ x = atFin w k) ∧ (∀ x, IsUnitAt w (σ x) ↔ IsUnitAt v x) ∧
+          (∀ k : Lˣ, ∃ x, σ x = atFin w k) ∧ (∀ x, Formalism.L2.Host.IsUnitAt w (σ x) ↔ Formalism.L2.Host.IsUnitAt v x) ∧
           (∀ x, Valued.v ((σ x : w.adicCompletion L) - 1) = Valued.v ((x : v.adicCompletion L) - 1)) ∧
-          (∀ x (n : ℕ), x ^ n = 1 → σ x ^ n = 1) ∧ ∀ x, IsUnitAt v x → (χ.loc v x = 1 ↔ θ w (σ x) = 1) := by
+          (∀ x (n : ℕ), x ^ n = 1 → σ x ^ n = 1) ∧ ∀ x, Formalism.L2.Host.IsUnitAt v x → (χ.loc v x = 1 ↔ θ w (σ x) = 1) := by
   have hcc : ∀ x, c.toRingEquiv (c.toRingEquiv x) = x := conj_conj h
   obtain ⟨C, hC⟩ := exists_isConjI L c.toRingEquiv
   obtain ⟨ψ0, hψ0, hψ0u, hψ0i, -, hψ0N, hψ0d⟩ := exists_modelChar L I φ h.bij e ∅ (fun _ => 1) (by simp)
@@ -95,7 +95,7 @@ theorem exists_hecke_level {F : Type} [Field F] [NumberField F] [Algebra F L] {c
   obtain ⟨χ, hχu, hχ⟩ := exists_anti h hC ψ hψ hψu h1
   have hfix : ∀ z, C z = z → χ.1 z = 1 := fun z hz => by
     rw [hχ z (by rw [hz, div_self']; exact one_mem _), hz, div_self', map_one]
-  have hloc : ∀ v v' x x', C (localIdele L v x) = localIdele L v' x' → IsUnitAt v x → IsUnitAt v' x' →
+  have hloc : ∀ v v' x x', C (localIdele L v x) = localIdele L v' x' → Formalism.L2.Host.IsUnitAt v x → Formalism.L2.Host.IsUnitAt v' x' →
       χ.loc v x = ψ (localIdele L v x) / ψ (localIdele L v' x') := fun v v' x x' hx h1 h2 => by
     show χ.1 (localIdele L v x) = _
     rw [hχ _ (by rw [hx]; exact div_mem (loc_mem h1) (loc_mem h2)), hx, map_div]
@@ -128,7 +128,7 @@ theorem exists_hecke_level {F : Type} [Field F] [NumberField F] [Algebra F L] {c
       rfl
     · choose σ e1 e2 e3 using conj_loc hC (conjPl_symm hcc hw')
       refine ⟨σ, fun k => ⟨atFin v (Units.map (MonoidHomClass.toMonoidHom c.toRingEquiv) k), localIdele_inj w ?_⟩,
-        fun x => by unfold IsUnitAt; rw [e2], e3, fun x n hx => localIdele_inj w ?_, fun x hx => ?_⟩
+        fun x => by unfold Formalism.L2.Host.IsUnitAt; rw [e2], e3, fun x n hx => localIdele_inj w ?_, fun x hx => ?_⟩
       · rw [← e1, hC.loc v w (conjPl_symm hcc hw')]
         congr 2
         exact Units.ext (hcc k)
@@ -250,8 +250,8 @@ theorem pow_unitPart_mem (x : (v.adicCompletion L)ˣ) :
 
 theorem exists_wild {p : ℕ} (hp : p.Prime) (hv : (p : 𝓞 L) ∈ v.asIdeal) :
     ∃ θ : (v.adicCompletion L)ˣ →* ℂˣ, (∀ x, θ x ^ p = 1) ∧
-      (∀ x, IsUnitAt v x → Valued.v ((x : v.adicCompletion L) - 1) ≤ WithZero.exp (-2 : ℤ) → θ x = 1) ∧
-      ∃ k : Lˣ, IsUnitAt v (atFin v k) ∧
+      (∀ x, Formalism.L2.Host.IsUnitAt v x → Valued.v ((x : v.adicCompletion L) - 1) ≤ WithZero.exp (-2 : ℤ) → θ x = 1) ∧
+      ∃ k : Lˣ, Formalism.L2.Host.IsUnitAt v (atFin v k) ∧
         Valued.v (((atFin v k : (v.adicCompletion L)ˣ) : v.adicCompletion L) - 1) ≤ WithZero.exp (-1 : ℤ) ∧
         θ (atFin v k) ≠ 1 := by
   haveI : Finite (𝓞 L ⧸ v.asIdeal) := v.asIdeal.finiteQuotientOfFreeOfNeBot v.ne_bot
@@ -269,7 +269,7 @@ theorem exists_wild {p : ℕ} (hp : p.Prime) (hv : (p : 𝓞 L) ∈ v.asIdeal) :
   let f : (v.adicCompletion L)ˣ →* oneUnits v :=
     ((powMonoidHom m).comp (unitPart v)).codRestrict _ (pow_unitPart_mem v)
   have hf : ∀ x (hx : x ∈ oneUnits v), f x = ⟨x, hx⟩ ^ m := fun x hx => by
-    have hx1 : IsUnitAt v x := by
+    have hx1 : Formalism.L2.Host.IsUnitAt v x := by
       have := Valuation.map_one_add_of_lt (Valued.v : Valuation (v.adicCompletion L) _) hx
       rwa [add_sub_cancel] at this
     apply Subtype.ext
@@ -300,7 +300,7 @@ theorem exists_wild {p : ℕ} (hp : p.Prime) (hv : (p : 𝓞 L) ∈ v.asIdeal) :
       show Valued.v (((atFin v (Units.mk0 _ hk0) : (v.adicCompletion L)ˣ) : v.adicCompletion L) - 1) < 1
       rwa [ek, add_sub_cancel_left]
     refine ⟨Units.mk0 _ hk0, ?_, (lt_one_iff_le v _).1 hx', fun h => hψ ?_⟩
-    · unfold IsUnitAt
+    · unfold Formalism.L2.Host.IsUnitAt
       rw [ek]
       exact Valuation.map_one_add_of_lt _ hlt
     · have : logOne v ⟨_, hx'⟩ = Multiplicative.ofAdd 1 := by
@@ -313,7 +313,7 @@ theorem exists_wild {p : ℕ} (hp : p.Prime) (hv : (p : 𝓞 L) ∈ v.asIdeal) :
 theorem exists_tame {p : ℕ} (hp : p.Prime) (hw : Units.torsionOrder L + 1 < p) (hv : (p : 𝓞 L) ∈ v.asIdeal) (ε : Lˣ →* ℂˣ) :
     ∃ θ : (v.adicCompletion L)ˣ →* ℂˣ, TameLoc v θ ∧
       (∀ k : Lˣ, (∃ m : ℕ, 0 < m ∧ (k : L) ^ m = 1) → θ (atFin v k) = ε k) ∧
-      ∃ k : Lˣ, IsUnitAt v (atFin v k) ∧ θ (atFin v k) ≠ 1 := by
+      ∃ k : Lˣ, Formalism.L2.Host.IsUnitAt v (atFin v k) ∧ θ (atFin v k) ≠ 1 := by
   obtain ⟨θ0, hne, hext⟩ := UpperTheory.Mu.tame_ext_prime v hp hw hv (ε.comp (Units.map (algebraMap (𝓞 L) L).toMonoidHom))
   obtain ⟨b, hb⟩ : ∃ b, θ0 b ≠ 1 := by
     by_contra! hall
@@ -331,7 +331,7 @@ theorem exists_tame_par {p : ℕ} (hp : p.Prime) (hw : Units.torsionOrder L + 1 
     ∃ θ : (v.adicCompletion L)ˣ →* ℂˣ, TameLoc v θ ∧
       (∀ k : Lˣ, (∃ m : ℕ, 0 < m ∧ (k : L) ^ m = 1) →
         (∏ i, φ i (k : L) ^ e i) * ((θ (atFin v k) * ∏ w ∈ S, θ1 w (atFin w k) : ℂˣ) : ℂ) = 1) ∧
-      ∃ k : Lˣ, IsUnitAt v (atFin v k) ∧ θ (atFin v k) ≠ 1 := by
+      ∃ k : Lˣ, Formalism.L2.Host.IsUnitAt v (atFin v k) ∧ θ (atFin v k) ≠ 1 := by
   obtain ⟨θ, ht, hθ, hk⟩ := exists_tame v hp hw hv
     ((∏ i, (Units.map (φ i).toMonoidHom) ^ e i) * ∏ w ∈ S, (θ1 w).comp (atFin w))⁻¹
   refine ⟨θ, ht, fun k hk => ?_, hk⟩
@@ -395,8 +395,8 @@ theorem exists_one (D : D7) (T : Type) (L : LevCh D T) (P : Places L) (h0 : P.v0
   have hwild : ∀ w : HeightOneSpectrum (𝓞 D.host.E), ∃ θ : (w.adicCompletion D.host.E)ˣ →* ℂˣ,
       w.under (𝓞 D.host.F) ∈ S1 D → ∃ p : ℕ, p.Prime ∧ (p : 𝓞 D.host.F) ∈ (w.under (𝓞 D.host.F)).asIdeal ∧
         (∀ x, θ x ^ p = 1) ∧
-        (∀ x, IsUnitAt w x → Valued.v ((x : w.adicCompletion D.host.E) - 1) ≤ WithZero.exp (-2 : ℤ) → θ x = 1) ∧
-        ∃ k : D.host.Eˣ, IsUnitAt w (atFin w k) ∧
+        (∀ x, Formalism.L2.Host.IsUnitAt w x → Valued.v ((x : w.adicCompletion D.host.E) - 1) ≤ WithZero.exp (-2 : ℤ) → θ x = 1) ∧
+        ∃ k : D.host.Eˣ, Formalism.L2.Host.IsUnitAt w (atFin w k) ∧
           Valued.v (((atFin w k : (w.adicCompletion D.host.E)ˣ) : w.adicCompletion D.host.E) - 1) ≤
             WithZero.exp (-1 : ℤ) ∧ θ (atFin w k) ≠ 1 := fun w => by
     by_cases hw : w.under (𝓞 D.host.F) ∈ S1 D
@@ -460,7 +460,7 @@ theorem exists_one (D : D7) (T : Type) (L : LevCh D T) (P : Places L) (h0 : P.v0
       have hm : Nat.card (𝓞 D.host.E ⧸ Q.asIdeal) - 1 ≠ 0 := fun h => by
         rw [h, Nat.coprime_zero_left] at hco
         exact hp.one_lt.ne' hco
-      have hxu : IsUnitAt Q x := by
+      have hxu : Formalism.L2.Host.IsUnitAt Q x := by
         have := congrArg (fun y : (Q.adicCompletion D.host.E)ˣ => Valued.v (y : Q.adicCompletion D.host.E)) hx
         simp only [Units.val_pow_eq_pow_val, map_pow, Units.val_one, map_one] at this
         exact (pow_eq_one_iff_left hm).1 this
