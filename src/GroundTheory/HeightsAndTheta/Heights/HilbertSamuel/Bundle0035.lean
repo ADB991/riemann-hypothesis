@@ -40,7 +40,7 @@ noncomputable section
 
 def BlockComplexGramMetricChange.Statement : Prop :=
   ∀ (D : ℕ) (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A' : HermLine ι) (P0' : Ideal (MRing ι))
+    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (P0' : Ideal (MRing ι))
     (hdeg : A'.a = unitDeg d.k₀) (hc : IsConjInvariantH A') (hle : P0' ≤ mCoordIdeal d.y)
     (hp : IsSemipositiveRel P0' (mCoordIdeal d.y) A'),
     (fun n => blockCChi (d.withMetric A' P0' hdeg hc hle hp) n - blockCChi d n -
@@ -275,7 +275,7 @@ noncomputable section
 
 def BlockImageTop.Statement : Prop :=
   ∀ (D : ℕ) (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    [CharZero Ω] (κ : Type) [Fintype κ] (I : AllFam) (y : (Σ k, ι k) → Ω) (k₀ : K) (A : HermLine ι)
+    [CharZero Ω] (κ : Type) [Fintype κ] (I : AllFam) (y : (Σ k, ι k) → Ω) (k₀ : K) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι)
     (M : Matrix (Ix κ) (ι k₀) ℤ) (N : Matrix (ι k₀) (Ix κ) ℤ) (x : Ix κ → Ω)
     (m : ConeMetric (C := ℂ) (ι := Ix κ)),
     I.IsFamily → IsArithVar (mCoordIdeal y) (D + 1) → BlockBirational y k₀ →
@@ -320,7 +320,7 @@ noncomputable section
 
 def BlockResolutionDegree.Statement : Prop :=
   ∀ (D : ℕ) (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A₀ A₁ : HermLine ι),
+    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A₀ A₁ : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι),
     A₀.a = unitDeg d.k₀ → A₁.a = unitDeg d.k₀ → IsSmoothHerm A₀ → IsSmoothHerm A₁ →
     ∀ t ∈ Set.Icc (0 : ℝ) 1, ∃ C : ℝ, ∀ n : ℕ,
       |(Module.finrank ℤ (secM d.y (blockDeg d.k₀ n)) : ℝ) -

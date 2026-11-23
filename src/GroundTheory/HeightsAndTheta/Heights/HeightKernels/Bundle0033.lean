@@ -138,7 +138,7 @@ def DualStackedGraphFibre.Statement : Prop :=
     1 ≤ i → F'.lattice < F.lattice →
     (∀ N : Submodule (𝓞 K) (Fin i → K), F'.lattice ≤ N → N ≤ F.lattice → N = F'.lattice ∨ N = F.lattice) →
     (∀ t, (b t : Fin i → K) = a t • (b' t : Fin i → K)) →
-    ∀ (t : T) (L : Fin (i - 1) → HermLine (stackedBlocks T)),
+    ∀ (t : T) (L : Fin (i - 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine (stackedBlocks T)),
       (∀ j, (L j).a = degFirst ∨ (L j).a = degSecond) →
       ((∀ j, (L j).a = degSecond) →
         vertR (stackedGraph b' a) L (graphSecond t) - vertR (stackedGraph b' a) L (C (a t) * graphFirst t) =
