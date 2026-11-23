@@ -335,9 +335,12 @@ def IsTransform (P : Ideal (𝓞 E)) (p i : ℕ) (cq : c.F) (n : ℕ) (f g : Rul
 
 variable {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r)
 
+attribute [local instance 1100] Submodule.module
+
 def cuspIn (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) :
-    @Submodule ↥c.F ↥(sec Xo c a n) _ _ (Submodule.module (sec Xo c a n)) :=
-  (cusp Xo c U a n).comap (sec Xo c a n).subtype
+    @Submodule ↥c.F ↥(sec Xo c a n) _ _ (Submodule.module (sec Xo c a n)) := by
+  letI : Module ↥c.F ↥(sec Xo c a n) := Submodule.module (sec Xo c a n)
+  exact (cusp Xo c U a n).comap (sec Xo c a n).subtype
 
 def KeepsCusp (P : Ideal (𝓞 E)) (p i : ℕ) (cq : c.F) (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) : Prop :=
   ∀ (hE : HasTransform Xo c P p i cq a n) (hD : Detects Xo c a n) (hF : FinKer Xo c P p i),
