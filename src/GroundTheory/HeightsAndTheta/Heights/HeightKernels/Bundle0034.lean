@@ -286,7 +286,7 @@ theorem mem_chartLat_iff [Fintype T] {z : K'} :
     rw [hc']
     simpa [div_eq_mul_inv] using h (c ()) (hc ())
 
-theorem aeval_div_mem [Fintype T] {s : MRing (fun _ : Unit => T)} (hs : IsMultiHomog s (fun _ => 1))
+theorem aeval_div_mem [Fintype T] {s : MRing (fun _ : Unit => T)} (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s (fun _ => 1))
     (t : T) : aeval y s / y ⟨(), t⟩ ∈ chartRingZ y (fun _ => t) := by
   classical
   set_option synthInstance.maxHeartbeats 100000 in

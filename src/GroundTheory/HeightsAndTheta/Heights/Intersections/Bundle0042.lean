@@ -49,8 +49,8 @@ theorem mem_of_baseSubst_eq_zero (hv : IsBlockMap κ v) (G : GenFibre v P') {f :
   rw [← G.genericFibre_ker_target, RingHom.mem_ker, ← aeval_baseSubst hv, hf, map_zero]
 
 theorem baseSubst_mem_fibreIdeal (hv : IsBlockMap κ v) (G : GenFibre v P') (f : MRing ι') :
-    baseSubst κ G f ∈ fibreIdeal κ G ↔ f ∈ P' := by
-  rw [fibreIdeal, RingHom.mem_ker, aeval_baseSubst hv, ← RingHom.mem_ker, G.genericFibre_ker_target]
+    baseSubst κ G f ∈ ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G ↔ f ∈ P' := by
+  rw [ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal, RingHom.mem_ker, aeval_baseSubst hv, ← RingHom.mem_ker, G.genericFibre_ker_target]
 
 theorem exists_mul_eq_baseSubst (hv : IsBlockMap κ v) (G : GenFibre v P') (c : MRingOver G.Φ (fibreIdx ι' κ)) :
     ∃ (F : MRing ι') (g : MRing ι), aeval G.x g ≠ 0 ∧ c * C (aeval G.x g) = baseSubst κ G F := by
@@ -164,13 +164,13 @@ theorem PFFibreBij.proof : PFFibreBij.Statement := by
   classical
   have hPrel : IsRelevant (imageZ v P') := hP.2.1.2.2
   have hPhor : IsHorizontal (imageZ v P') := hP.2.2.1
-  have hfib : ∀ {W : Ideal (MRing ι')}, P' ≤ W → fibreIdeal κ G ≤ fibreOf κ G W := by
+  have hfib : ∀ {W : Ideal (MRing ι')}, P' ≤ W → ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G ≤ fibreOf κ G W := by
     intro W hW c hc
     obtain ⟨F, g, hg, e⟩ := exists_mul_eq_baseSubst hv G c
     refine mem_fibreOf_of_mul_eq G hg e (hW ?_)
     rw [← baseSubst_mem_fibreIdeal hv G, ← e]
     exact Ideal.mul_mem_right _ _ hc
-  have hle : ∀ {Q : Ideal (MRingOver G.Φ (fibreIdx ι' κ))}, fibreIdeal κ G ≤ Q → P' ≤ Q.comap (baseSubst κ G) :=
+  have hle : ∀ {Q : Ideal (MRingOver G.Φ (fibreIdx ι' κ))}, ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G ≤ Q → P' ≤ Q.comap (baseSubst κ G) :=
     fun hQ f hf => hQ ((baseSubst_mem_fibreIdeal hv G f).mpr hf)
   refine ⟨?_, ?_, ?_⟩
   · rintro W ⟨⟨⟨⟨hWp, hWle⟩, hWmin⟩, hWrel⟩, -, hWI⟩
