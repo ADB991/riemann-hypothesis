@@ -243,8 +243,8 @@ theorem good_single_of_base {ℓ : ℕ} (v : {v : HeightOneSpectrum (𝓞 K.1) /
   have : Finite (galUnramifiedOutside K.1 ℚ̄ S ⧸ U) := Subgroup.quotient_finite_of_isOpen U hU
   have := Fintype.ofFinite (galUnramifiedOutside K.1 ℚ̄ S ⧸ U)
   set Z := (gsDecomp K S ιs v).range with hZ
-  induction' hn : (Finset.univ.filter (fun q : galUnramifiedOutside K.1 ℚ̄ S ⧸ U =>
-    ∃ x : galUnramifiedOutside K.1 ℚ̄ S, (x : galUnramifiedOutside K.1 ℚ̄ S ⧸ U) = q ∧ φ x ≠ 0)).card
+  induction' hn : (@Finset.filter _ (fun q : galUnramifiedOutside K.1 ℚ̄ S ⧸ U =>
+    ∃ x : galUnramifiedOutside K.1 ℚ̄ S, (x : galUnramifiedOutside K.1 ℚ̄ S ⧸ U) = q ∧ φ x ≠ 0) (fun _ => Classical.propDecidable _) Finset.univ).card
     using Nat.strong_induction_on with n ih generalizing φ
   by_cases h0 : ∀ x, φ x = 0
   · have : φ = 0 := funext h0
