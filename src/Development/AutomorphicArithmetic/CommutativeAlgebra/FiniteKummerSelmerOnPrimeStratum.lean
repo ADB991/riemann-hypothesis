@@ -261,6 +261,7 @@ theorem UpperTheory.finite_kummerSelmer_on_prime_stratum :
     have h2 := hord b0 e' hPb
     have hdiv := hfS (Place.ofHeightOneSpectrum (B i) hk P)
     apply hnot
+    letI : IsDomain (L ⊗[k] B i) := hdedL.toIsDomain
     refine locPow_of_mul_inc_eq_of_dvd_exponent_sub q (Nat.pos_of_ne_zero (NeZero.ne q)) (B i) m hm.isPrime F a b π s t s' t'
       e e' hπ hs ht hs' ht' has hbs hbu hFab ?_
     have hfo : (Place.ofHeightOneSpectrum (B i) hk P).ord (f : K) = (e : ℤ) - e' := by
