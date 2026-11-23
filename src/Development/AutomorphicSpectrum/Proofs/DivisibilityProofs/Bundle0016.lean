@@ -116,10 +116,10 @@ noncomputable def ratEquivFractionZP (p : Nat.Primes) : ℚ ≃+* FractionRing (
   fractionRingRingEquiv (ZP p) ℚ
 
 theorem genFib_extTo_zp {K : Type} {ι : K → Type} (P : Ideal (MRing ι ℤ)) (p : Nat.Primes) :
-    genFib (extTo (ZP p) P) =
+    GroundTheory.Heights₂.Heights.NumbersDVR.genFib (extTo (ZP p) P) =
       (extTo ℚ P).map (MvPolynomial.map ((ratEquivFractionZP p : ℚ ≃+* FractionRing (ZP p)) :
         ℚ →+* FractionRing (ZP p))) := by
-  unfold genFib extTo
+  unfold GroundTheory.Heights₂.Heights.NumbersDVR.genFib extTo
   rw [Ideal.map_map, Ideal.map_map]
   congr 1
   refine RingHom.ext fun f => ?_
@@ -129,7 +129,7 @@ theorem genFib_extTo_zp {K : Type} {ι : K → Type} (P : Ideal (MRing ι ℤ)) 
 theorem genNum_zp_eq_rat (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (P : Ideal (MRing ι ℤ)) (p : Nat.Primes) (σ : Type) (cls : σ → K → ℤ) (H : MvPolynomial σ ℝ)
     (Q : List (K → ℤ)) :
-    genNum (FractionRing (ZP p)) (genFib (extTo (ZP p) P)) cls H Q = genNum ℚ (extTo ℚ P) cls H Q := by
+    genNum (FractionRing (ZP p)) (GroundTheory.Heights₂.Heights.NumbersDVR.genFib (extTo (ZP p) P)) cls H Q = genNum ℚ (extTo ℚ P) cls H Q := by
   unfold genNum
   refine Finset.sum_congr rfl fun μ _ => ?_
   rw [genFib_extTo_zp, _root_.GlobalTheory.CompanionTheory.Ar.Num.intNumL_map_ringEquiv K ι ℚ (FractionRing (ZP p)) (ratEquivFractionZP p)]
