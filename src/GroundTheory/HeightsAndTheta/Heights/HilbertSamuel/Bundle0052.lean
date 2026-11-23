@@ -274,7 +274,7 @@ theorem isCompact_chartPiece (c : ∀ k, ι k) : IsCompact (chartPiece c) := by
   rw [Set.ofPred_forall]
   exact isClosed_iInter fun k => isClosed_eq (continuous_apply _) continuous_const
 
-theorem exists_lower (A : HermLine ι) (hA : ContinuousOn A.h {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0}) (c : ∀ k, ι k) :
+theorem exists_lower (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hA : ContinuousOn A.h {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0}) (c : ∀ k, ι k) :
     ∃ M : ℝ, 0 ≤ M ∧ ∀ z : (Σ k, ι k) → ℂ, (∀ k i, ‖z ⟨k, i⟩‖ ≤ ‖z ⟨k, c k⟩‖) →
       (∀ k, z ⟨k, c k⟩ ≠ 0) → ∏ k, ‖z ⟨k, c k⟩‖ ^ A.a k ≤ M * A.h z := by
   have hsub : chartPiece c ⊆ {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := fun w hw k =>

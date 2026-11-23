@@ -26,9 +26,9 @@ noncomputable section
 namespace ProjFrameBasePtFree
 
 theorem linForm_projMat {κ : Type} [Fintype κ] {D : ℕ} (e : Fin (D + 1) → Ix κ) (k : Fin (D + 1)) :
-    linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e) ⟨(), k⟩ = X (e k) := by
+    ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e) ⟨(), k⟩ = X (e k) := by
   classical
-  simp only [linForm, projMat]
+  simp only [ReciprocityTheory.ChartRestriction.G.AI.I4.linForm, projMat]
   generalize e k = q
   obtain ⟨⟨⟩, j⟩ := q
   rw [Finset.sum_eq_single j]
@@ -110,7 +110,7 @@ theorem ProjFrameBasePtFree.proof : ProjFrameBasePtFree.Statement := by
   obtain ⟨N, hN⟩ := pow_mem D Ω κ x e hfr ⟨(), i ()⟩
   refine ⟨N, ?_⟩
   have hspan : (Set.range fun j : GlobalTheory (Fin (D + 1)) k₂ =>
-      linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e) ⟨k₂, j⟩) =
+      ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e) ⟨k₂, j⟩) =
       Set.range fun k => (X (e k) : MvPolynomial (Ix κ) ℤ) := by
     cases k₂
     ext
@@ -149,8 +149,8 @@ theorem blockWeight_apply (d : (Σ k, ι k) →₀ ℕ) (k : K) :
   simp [blockWeight, Pi.single_apply]
 
 theorem isMultiHomog_iff (p : MRingOver S ι) (a : K → ℕ) :
-    IsMultiHomog p a ↔ IsWeightedHomogeneous (blockWeight ι) p (fun k => (a k : ℤ)) := by
-  unfold IsMultiHomog
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p a ↔ IsWeightedHomogeneous (blockWeight ι) p (fun k => (a k : ℤ)) := by
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog
   constructor
   · intro h d hd
     funext k
@@ -170,7 +170,7 @@ theorem nonneg_of_isWeightedHomogeneous {p : MRingOver S ι} {c : K → ℤ}
   positivity
 
 theorem span_eq (c : K → ℤ) :
-    Submodule.span S {p : MRingOver S ι | (∀ k, 0 ≤ c k) ∧ IsMultiHomog p (fun k => (c k).toNat)} =
+    Submodule.span S {p : MRingOver S ι | (∀ k, 0 ≤ c k) ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p (fun k => (c k).toNat)} =
       weightedHomogeneousSubmodule S (blockWeight ι) c := by
   apply le_antisymm
   · rw [Submodule.span_le]

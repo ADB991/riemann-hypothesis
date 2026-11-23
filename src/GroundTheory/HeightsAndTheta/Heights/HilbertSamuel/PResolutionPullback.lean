@@ -100,12 +100,12 @@ theorem eval_torus {f : MRing ι} {k₀ : K} {n : ℕ} (hf : IsMultiHomog f (blo
   simp_rw [mul_pow, Finset.prod_mul_distrib, hc]
   ring
 
-theorem prod_norm_unitDeg (c : K → ℂ) (k₀ : K) : ∏ k, ‖c k‖ ^ unitDeg k₀ k = ‖c k₀‖ := by
-  rw [Fintype.prod_eq_single k₀ fun k hk => by simp [unitDeg, hk]]
-  simp [unitDeg]
+theorem prod_norm_unitDeg (c : K → ℂ) (k₀ : K) : ∏ k, ‖c k‖ ^ ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg k₀ k = ‖c k₀‖ := by
+  rw [Fintype.prod_eq_single k₀ fun k hk => by simp [ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg, hk]]
+  simp [ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg]
 
-theorem normRatio_torus {f : MRing ι} {k₀ : K} {n : ℕ} (hf : IsMultiHomog f (blockDeg k₀ n)) (A : HermLine ι)
-    (hA : A.a = unitDeg k₀) {z z' : (Σ k, ι k) → ℂ} (h : SameOrbit z z') :
+theorem normRatio_torus {f : MRing ι} {k₀ : K} {n : ℕ} (hf : IsMultiHomog f (blockDeg k₀ n)) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι)
+    (hA : A.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg k₀) {z z' : (Σ k, ι k) → ℂ} (h : SameOrbit z z') :
     ‖eval z (map (Int.castRingHom ℂ) f)‖ / A.h z ^ n = ‖eval z' (map (Int.castRingHom ℂ) f)‖ / A.h z' ^ n := by
   obtain ⟨c, hc, rfl⟩ := h
   rw [eval_torus hf, A.smul c z' hc, hA, prod_norm_unitDeg, norm_mul, norm_pow, mul_pow]

@@ -252,13 +252,13 @@ def GraphChangeOfModel.Statement : Prop :=
       (P : Ideal (MRing ι)) (d : ℕ) (g : (Σ k, ι₂ k) → MRing ι) (δ : K₂ → K → ℕ)
       (G : GenFibre inrV (graphIdeal P g))
       (J : IFamily G.Φ (fibreIdx (Sum.elim ι ι₂) (Sum.inr : K₂ → K ⊕ K₂)))
-      (L : Fin d → HermLine ι₂) (L₁ : Fin d → HermLine ι),
+      (L : Fin d → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι₂) (L₁ : Fin d → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι),
       IsArithVar P d → (∀ q, IsMultiHomog (g q) (δ q.1)) → IsBasePtFree P g →
       IsArithVar (imageZ inrV (graphIdeal P g)) d → IsFieldIntersection J →
       (∀ j, IsSmoothHerm (L j)) → (∀ j, IsSmoothHerm (L₁ j)) →
       (∀ j k, (L₁ j).a k = ∑ k₂, (L j).a k₂ * (δ k₂ k : ℤ)) →
       (∀ j, ∀ z ∈ mcPts P, (L₁ j).h z = (L j).h (formApply g z)) →
-      I K ι P d L₁ = (J (fibreIdeal Sum.inr G) 0 Fin.elim0 : ℝ) * I K₂ ι₂ (imageZ inrV (graphIdeal P g)) d L
+      I K ι P d L₁ = (J (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal Sum.inr G) 0 Fin.elim0 : ℝ) * I K₂ ι₂ (imageZ inrV (graphIdeal P g)) d L
 
 section Inhabitants
 
@@ -398,10 +398,10 @@ noncomputable section
 
 def PowerBlockMeasure.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    (y : (Σ k, ι k) → Ω) (A : HermLine ι) (m N D : ℕ) (v : Fin N → Ω) (B : HermLine (addIdx ι N))
+    (y : (Σ k, ι k) → Ω) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (m N D : ℕ) (v : Fin N → Ω) (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (addIdx ι N))
     (J : Ideal (MRing (addIdx ι N))) (R : AnRes (mCoordIdeal (addBlock y v)) J D) [MeasurableSpace R.X]
     [BorelSpace R.X] (dV : Measure R.X),
-    IsSmoothHerm A → IsSmoothHerm B → B.a = unitDeg (none : Option K) → IsSmoothVolume R.A dV →
+    IsSmoothHerm A → IsSmoothHerm B → B.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg (none : Option K) → IsSmoothVolume R.A dV →
     (∀ j, v j ∈ chartLat y A.a m) → KH.GeneratesOn y (fun k => (m : ℤ) * A.a k) v →
     (∀ z ∈ mcPts (mCoordIdeal (addBlock y v)), ∀ j : Fin N,
       secNormAt y A m (v j) (basePart₂ z) * B.h z = ‖z ⟨none, j⟩‖) →
@@ -437,11 +437,11 @@ noncomputable section
 
 def PowerBlockMetric.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    (y : (Σ k, ι k) → Ω) (A : HermLine ι) (P0 : Ideal (MRing ι)) (m N : ℕ) (v : Fin N → Ω),
+    (y : (Σ k, ι k) → Ω) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (P0 : Ideal (MRing ι)) (m N : ℕ) (v : Fin N → Ω),
     P0 ≤ mCoordIdeal y → IsSemipositiveRel P0 (mCoordIdeal y) A → IsConjInvariantH A →
     (∀ j, v j ∈ chartLat y A.a m) → KH.GeneratesOn y (fun k => (m : ℤ) * A.a k) v →
-    ∃ (B : HermLine (addIdx ι N)) (P0' : Ideal (MRing (addIdx ι N))),
-      B.a = unitDeg (none : Option K) ∧ IsConjInvariantH B ∧ P0' ≤ mCoordIdeal (addBlock y v) ∧
+    ∃ (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (addIdx ι N)) (P0' : Ideal (MRing (addIdx ι N))),
+      B.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg (none : Option K) ∧ IsConjInvariantH B ∧ P0' ≤ mCoordIdeal (addBlock y v) ∧
       IsSemipositiveRel P0' (mCoordIdeal (addBlock y v)) B ∧
       ∀ z ∈ mcPts (mCoordIdeal (addBlock y v)), ∀ j : Fin N,
         secNormAt y A m (v j) (basePart₂ z) * B.h z = ‖z ⟨none, j⟩‖
