@@ -433,10 +433,10 @@ theorem map_unique {O : Type} [CommRing O] {β : O →+* c.F} (Y : Model Xo c β
       proper := MorphismProperty.of_isPullback (P := @IsProper) ν.cart.1 hpr
       ample := hp.2.1 Y.oF.ample
       ktriv := hp.2.2 Y.oF.ktriv
-      eta := fun a => GlobalTheory.Cartier.secPull ν.cart (Y.oF.eta a)
+      eta := fun a => GlobalTheory.ObjPull.secPull ν.cart (Y.oF.eta a)
       eta_add := fun a c => by rw [Y.oF.eta_add, map_mul]
       eta_ker := fun a ha => by rw [Y.oF.eta_ker a ha, map_one]
-      etaA := fun a => GlobalTheory.Cartier.secPull ν.cart (Y.oF.etaA a)
+      etaA := fun a => GlobalTheory.ObjPull.secPull ν.cart (Y.oF.etaA a)
       etaA_add := fun a c => by rw [Y.oF.etaA_add, map_mul]
       etaA_ker := fun a => by rw [Y.oF.etaA_ker a, map_one]
       geom := fun k _ _ x β hx => by
@@ -455,7 +455,7 @@ theorem map_unique {O : Type} [CommRing O] {β : O →+* c.F} (Y : Model Xo c β
         · exact (MulEquiv.eq_symm_apply _).2 ((pushEquiv_secPull ν.cart _ _).trans (hM a ha)) }
   let n : ObjMap o Y.oF r := ⟨ν, fun _ => secPull_left ν.cart _, fun _ => secPull_left ν.cart _⟩
   have sec_eq {e : 𝟙_ (Over (Xo.XF c)) ⟶ Y.oF.t.G} {e' : 𝟙_ (Over S) ⟶ t.G}
-      (h : e'.left ≫ ν.φ = r ≫ e.left) : e' = GlobalTheory.Cartier.secPull ν.cart e := by
+      (h : e'.left ≫ ν.φ = r ≫ e.left) : e' = GlobalTheory.ObjPull.secPull ν.cart e := by
     apply Over.OverMorphism.ext
     apply ν.cart.1.hom_ext
     · exact h.trans (secPull_left ν.cart _).symm
