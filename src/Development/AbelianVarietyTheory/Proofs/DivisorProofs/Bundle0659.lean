@@ -224,9 +224,12 @@ theorem main : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u :
   · obtain ⟨b, hb⟩ := hk
     obtain ⟨b', hb'⟩ := hk'
     refine ⟨⟨b + b', fun z hz => ?_⟩, ⟨b - b', fun z hz => ?_⟩, ⟨b * b', fun z hz => ?_⟩⟩
-    · simp only [Pi.add_apply, val, GlobalTheory.valAt'_add, hb z hz, hb' z hz]
-    · simp only [Pi.sub_apply, val, GlobalTheory.valAt'_sub, hb z hz, hb' z hz]
-    · simp only [Pi.mul_apply, val, GlobalTheory.valAt'_mul, hb z hz, hb' z hz]
+    · rw [Pi.add_apply, hb z hz, hb' z hz]
+      exact (GlobalTheory.valAt'_add (u.ex z).left U b b').symm
+    · rw [Pi.sub_apply, hb z hz, hb' z hz]
+      exact (GlobalTheory.valAt'_sub (u.ex z).left U b b').symm
+    · rw [Pi.mul_apply, hb z hz, hb' z hz]
+      exact (GlobalTheory.valAt'_mul (u.ex z).left U b b').symm
   · obtain ⟨b, hb⟩ := hk
     exact ⟨b, fun z hz => (he z hz).trans (hb z hz)⟩
   · obtain ⟨b, hb⟩ := hk
@@ -238,7 +241,8 @@ theorem main : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u :
     exact (u.hol U b).2.congr fun z hz => hb z hz
   · choose b hb using hk
     refine ⟨∑ i, b i, fun z hz => ?_⟩
-    simp only [val, GlobalTheory.valAt'_sum]
+    change _ = GlobalTheory.valAt' (u.ex z).left U (∑ i, b i)
+    rw [GlobalTheory.valAt'_sum]
     exact Finset.sum_congr rfl fun i _ => hb i z hz
 
 end GlobalTheory.RegAlg
