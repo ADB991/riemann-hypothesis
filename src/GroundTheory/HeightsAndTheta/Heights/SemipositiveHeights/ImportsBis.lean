@@ -93,7 +93,7 @@ theorem Z2.proof (hMo : MoriwakiBigStatement) : SuccessiveMinimaUpperBound := by
     have hpos : 0 < arVolP (IsSmallH (mCoordIdeal y) y (A.tensor (constLine e'')))
         (chartLat y (A.tensor (constLine e'')).a) 1 D := by
       linarith
-    obtain ⟨τ, hτ, s, hsL, hs0, hsm⟩ := exists_small_section_of_arithmeticVolume_pos hpos
+    obtain ⟨τ, hτ, s, hsL, hs0, hsm⟩ := GroundTheory.Heights₂.Heights.HilbertSamuel.LatticeWithoutBigness.exists_small_section_of_arithmeticVolume_pos hpos
     obtain ⟨f, hfh, hfP, hfW⟩ := hS K ι Ω y D (A.tensor (constLine e'')) τ s II hII har hbir
       (isSmoothHerm_twist hA e'') hτ (SmallSectionPointHeight.chartLat_le_chartLatNm _ _ _ hsL) hs0 hsm
     obtain ⟨W, hWF, hfW'⟩ := hdense f hfh hfP

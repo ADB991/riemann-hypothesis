@@ -269,7 +269,7 @@ theorem PtsRegLimit.proof (hInt : PtsIntegrableStatement) (hAbs : PtsAbsIntegrab
   generalize hΨ.choose = Ψ at hgood ⊢
   unfold ptsIntegralAt
   obtain ⟨a, haE, hta⟩ := id ht
-  have hfin : ∀ y, (fibre Q Ψ y).Finite := fibreFinite K ι Q e Ψ hQ hgood
+  have hfin : ∀ y, (ReciprocityTheory.ChartRestriction.G.Geo.fibre Q Ψ y).Finite := fibreFinite K ι Q e Ψ hQ hgood
   have h1 : (1 : MRing ι) ∉ Q := fun h => hQ.2.1.1.ne_top ((Ideal.eq_top_iff_one Q).mpr h)
   have hone : ∀ ε, IsSectionOn Q (regLine E t ht ε) 1 := fun ε =>
     ⟨fun _ => 0, fun k => by rw [regLine_a]; simp, fun m hm k => by
@@ -277,14 +277,14 @@ theorem PtsRegLimit.proof (hInt : PtsIntegrableStatement) (hAbs : PtsAbsIntegrab
       subst hm
       simp, h1⟩
 
-  have hsdlog : ∀ (B : HermLine ι) y w, sheetDensity Q Ψ (pot M) (fun z => Real.log (B.h z)) y w =
+  have hsdlog : ∀ (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) y w, sheetDensity Q Ψ (pot M) (fun z => Real.log (B.h z)) y w =
       -sheetDensity Q Ψ (pot M) (logNorm B 1) y w := by
     intro B y w
     by_cases hγ : ∃ γ, IsSheet Q Ψ y w γ
     · simp only [sheetDensity, dif_pos hγ, logNorm, map_one, norm_one, one_div, Real.log_inv]
       ring
     · simp only [sheetDensity, dif_neg hγ, neg_zero]
-  have hFint : ∀ ε, 0 < ε → Integrable (fun y => ∑ᶠ w ∈ fibre Q Ψ y,
+  have hFint : ∀ ε, 0 < ε → Integrable (fun y => ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre Q Ψ y,
       sheetDensity Q Ψ (pot M) (fun z => Real.log ((regLine E t ht ε).h z)) y w) := by
     intro ε hε
     refine (hInt K ι Q e Ψ M (regLine E t ht ε) 1 hQ hgood hM (isSmoothHerm_regLine hE hε)
@@ -314,8 +314,8 @@ theorem PtsRegLimit.proof (hInt : PtsIntegrableStatement) (hAbs : PtsAbsIntegrab
   have hB1 : ∀ z, |Real.log ((regLine E t ht 1).h z)| = |Real.log (secNorm E t z ^ 2 + 1) / 2| := fun z => by
     rw [log_regLine_h]
   refine tendsto_integral_filter_of_dominated_convergence
-    (fun y => ∑ᶠ w ∈ fibre Q Ψ y, |sheetDensity Q Ψ (pot M) (logNorm E t) y w| +
-      ∑ᶠ w ∈ fibre Q Ψ y, |sheetDensity Q Ψ (pot M) (fun z => Real.log ((regLine E t ht 1).h z)) y w|)
+    (fun y => ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre Q Ψ y, |sheetDensity Q Ψ (pot M) (logNorm E t) y w| +
+      ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre Q Ψ y, |sheetDensity Q Ψ (pot M) (fun z => Real.log ((regLine E t ht 1).h z)) y w|)
     (eventually_mem_nhdsWithin.mono fun ε hε => (hFint ε hε).aestronglyMeasurable) ?_ ?_ ?_
   ·
     filter_upwards [Ioo_mem_nhdsGT one_pos] with ε hε

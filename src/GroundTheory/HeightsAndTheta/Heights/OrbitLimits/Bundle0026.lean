@@ -49,29 +49,29 @@ namespace ContractMixed
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {K' : Type} [Fintype K'] {ι' : K' → Type} [∀ k, Fintype (ι' k)]
 
-def PrefixPull (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (p : ℕ) {n : ℕ} (L' : Fin n → HermLine ι') :
+def PrefixPull (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (p : ℕ) {n : ℕ} (L' : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι') :
     Prop :=
-  ∃ (h : p ≤ n) (L : Fin p → HermLine ι), (∀ j, IsSmoothHerm (L j)) ∧
+  ∃ (h : p ≤ n) (L : Fin p → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι), (∀ j, IsSmoothHerm (L j)) ∧
     ∀ j, IsPullHerm κ v (L j) (L' (Fin.castLE h j))
 
 
 omit [∀ k, Fintype (ι' k)] in
-theorem PrefixPull.mono {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {p q n : ℕ} {L' : Fin n → HermLine ι'}
+theorem PrefixPull.mono {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {p q n : ℕ} {L' : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι'}
     (h : PrefixPull κ v p L') (hqp : q ≤ p) : PrefixPull κ v q L' := by
   obtain ⟨hpn, L, hL, hLL⟩ := h
   exact ⟨hqp.trans hpn, fun j => L (Fin.castLE hqp j), fun j => hL _, fun j => hLL (Fin.castLE hqp j)⟩
 
 
 omit [∀ k, Fintype (ι' k)] in
-theorem PrefixPull.init {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {p n : ℕ} {L' : Fin (n + 1) → HermLine ι'}
+theorem PrefixPull.init {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {p n : ℕ} {L' : Fin (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι'}
     (h : PrefixPull κ v p L') (hpn : p ≤ n) : PrefixPull κ v p (Fin.init L') := by
   obtain ⟨_, L, hL, hLL⟩ := h
   exact ⟨hpn, L, hL, fun j => hLL j⟩
 
 theorem arInt_eq_zero (hInt : PFIntZero.Statement) {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')}
     (hv : IsBlockMap κ v) {P' : Ideal (MRing ι')} {d₀ n : ℕ} (hP' : IsArithVar P' (n + 1))
-    (hQ : IsArithVar (imageZ v P') d₀) {L' : Fin n → HermLine ι'} (hpre : PrefixPull κ v d₀ L')
-    (A : HermLine ι') (s : MRing ι') : arInt P' s A L' = 0 := by
+    (hQ : IsArithVar (imageZ v P') d₀) {L' : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι'} (hpre : PrefixPull κ v d₀ L')
+    (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι') (s : MRing ι') : arInt P' s A L' = 0 := by
   obtain ⟨h, L, hL, hLL⟩ := hpre
   obtain ⟨m, rfl⟩ := Nat.exists_eq_add_of_le h
   rw [← Fin.append_castAdd_natAdd (f := L')]
@@ -79,8 +79,8 @@ theorem arInt_eq_zero (hInt : PFIntZero.Statement) {κ : K → K'} {v : (Σ k, �
 
 theorem geoNum_eq_zero (hVert : PFVert.Statement) {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')}
     (hv : IsBlockMap κ v) {P' : Ideal (MRing ι')} {d₀ n : ℕ} (hP' : IsArithVar P' (n + 1))
-    (hQ : IsArithVar (imageZ v P') d₀) {L' : Fin n → HermLine ι'} (hpre : PrefixPull κ v d₀ L')
-    {s : MRing ι'} {a : K' → ℕ} (hs : IsMultiHomog s a) (hsP : s ∉ P') {W : Ideal (MRing ι')}
+    (hQ : IsArithVar (imageZ v P') d₀) {L' : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι'} (hpre : PrefixPull κ v d₀ L')
+    {s : MRing ι'} {a : K' → ℕ} (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a) (hsP : s ∉ P') {W : Ideal (MRing ι')}
     (hW : W ∈ divSupp P' s) (hh : ¬ IsHorizontal W) : geoNum n W (fun j => (L' j).a) = 0 := by
   obtain ⟨h, L, -, hLL⟩ := hpre
   obtain ⟨m, rfl⟩ := Nat.exists_eq_add_of_le h
@@ -90,7 +90,7 @@ theorem geoNum_eq_zero (hVert : PFVert.Statement) {κ : K → K'} {v : (Σ k, ι
 theorem aux (hC : ContractStatement) (hIm : ImageArithStatement) (hInt : PFIntZero.Statement)
     (hVert : PFVert.Statement) (I : AllFam) (hI : I.IsFamily) {κ : K → K'}
     {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v) :
-    ∀ (n p : ℕ) (P' : Ideal (MRing ι')) (d₀ : ℕ) (L' : Fin n → HermLine ι'),
+    ∀ (n p : ℕ) (P' : Ideal (MRing ι')) (d₀ : ℕ) (L' : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι'),
       IsArithVar P' n → IsArithVar (imageZ v P') d₀ → d₀ < p → PrefixPull κ v p L' →
       (∀ j, IsSmoothHerm (L' j)) → I K' ι' P' n L' = 0 := by
   intro n
@@ -116,7 +116,7 @@ theorem aux (hC : ContractStatement) (hIm : ImageArithStatement) (hInt : PFIntZe
       have hPp : P'.IsPrime := hP'.2.1.1
       choose i hi using hP'.2.1.2.2
 
-      have key : ∀ B' : HermLine ι', IsSmoothHerm B' → (∀ k, 0 ≤ B'.a k) →
+      have key : ∀ B' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι', IsSmoothHerm B' → (∀ k, 0 ≤ B'.a k) →
           I K' ι' P' (n + 1) (Fin.snoc (Fin.init L') B') = 0 := by
         intro B' hB' hBa
         let b : K' → ℕ := fun k => (B'.a k).toNat
@@ -125,7 +125,7 @@ theorem aux (hC : ContractStatement) (hIm : ImageArithStatement) (hInt : PFIntZe
           intro h
           obtain ⟨k, -, hk⟩ := (Ideal.IsPrime.prod_mem_iff (hp := hPp)).1 h
           exact hi k (hPp.mem_of_pow_mem _ hk)
-        have hsm : IsMultiHomog s b := by
+        have hsm : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s b := by
           convert isMultiHomog_prod_X_pow (fun k => (⟨k, i k⟩ : Σ k, ι' k)) b using 1
           funext k
           simp [Finset.sum_filter]
@@ -152,11 +152,11 @@ theorem aux (hC : ContractStatement) (hIm : ImageArithStatement) (hInt : PFIntZe
         rw [h1, h2, sub_zero]
 
       let A' := L' (Fin.last n)
-      let M : HermLine ι' := HermLine.sqMetric fun k => (-(A'.a k)).toNat
+      let M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι' := HermLine.sqMetric fun k => (-(A'.a k)).toNat
       have hM : IsSmoothHerm M := isSmoothHerm_sqMetric _
       have hA' : IsSmoothHerm A' := hL' _
       have hadd := (hI K' ι').2.1 P' n (Fin.init L') A' M hP' hL0 hA' hM
-      have h3 := key (A'.tensor M) (isSmoothHerm_tensor hA' hM) fun k => by
+      have h3 := key (A'.tensor M) (ReciprocityTheory.ChartRestriction.G.Geo.isSmoothHerm_tensor hA' hM) fun k => by
         show 0 ≤ A'.a k + ((-(A'.a k)).toNat : ℤ)
         omega
       have h4 := key M hM fun k => by
@@ -228,7 +228,7 @@ def FibreMultiHomog.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (K' : Type) [Fintype K'] (ι' : K' → Type) [∀ k, Fintype (ι' k)]
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (G : GenFibre v P'),
-    IsBlockMap κ v → IsMultiHomogIdeal P' → IsMultiHomogIdeal (fibreIdeal κ G)
+    IsBlockMap κ v → IsMultiHomogIdeal P' → IsMultiHomogIdeal (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G)
 
 end GroundTheory.Heights₂.Heights.Targets
 end
@@ -386,7 +386,7 @@ theorem LelongChartLimit.proof (hInt : SegreChartIntegral.Statement) (hDim : Seg
   refine hlim.congr' (eventually_nhdsWithin_of_forall fun ε (hε : 0 < ε) => ?_)
 
   set M := (regLine A s ε ha hsa).tensor A
-  have hML : ∀ j, IsSmoothHerm ((Fin.cons M L : Fin (n + 1) → HermLine ι) j) :=
+  have hML : ∀ j, IsSmoothHerm ((Fin.cons M L : Fin (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) j) :=
     fun j => Fin.cases ((isSmoothHerm_regLine hA hε ha hsa).mul hA) (fun i => hL i) j
   have hcongr : ptsIntegral P
       (Fin.cons (fun z => Real.log (‖eval z (map (Int.castRingHom ℂ) s)‖ ^ 2 + ε * A.h z ^ 2) / 2)
