@@ -25,6 +25,7 @@ theorem translations_strongly_continuous :
         Continuous (fun y : G n => lT μ V y x) := by
   intro n _ _ μ _ V _ _ _ hU x
   have := (hU n μ).1
+  have : IsLocallyFiniteMeasure μ := isLocallyFiniteMeasure_of_isFiniteMeasureOnCompacts
   constructor
   · let g : G n → C(G n, G n) := fun h => ⟨fun y => y * h, continuous_id.mul continuous_const⟩
     have hg : Continuous g :=
