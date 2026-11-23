@@ -71,7 +71,7 @@ theorem sameOrbit_of_blockProportional {a b : (Σ k, ι k) → ℂ} (ha : ∀ k,
     rw [div_mul_eq_mul_div, eq_div_iff (hp k)]
     exact h k i (p k)
 
-theorem eval_eq_zero_iff_of_sameOrbit {G : MRing ι} {dG : K → ℕ} (hG : IsMultiHomog G dG)
+theorem eval_eq_zero_iff_of_sameOrbit {G : MRing ι} {dG : K → ℕ} (hG : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog G dG)
     {z z' : (Σ k, ι k) → ℂ} (h : SameOrbit z z') :
     eval z (map (Int.castRingHom ℂ) G) = 0 ↔ eval z' (map (Int.castRingHom ℂ) G) = 0 := by
   obtain ⟨c, hc, rfl⟩ := h
@@ -93,7 +93,7 @@ theorem continuousAt_lift (R : AnRes P J e) (x y : R.X) (hy : y ∈ R.U x) : Con
   filter_upwards [(R.A.chart j).open_source.mem_nhds hj] with y' hy'
   simp [(R.A.chart j).left_inv hy']
 
-theorem isAnalyticSubset (R : AnRes P J e) {G : MRing ι} {dG : K → ℕ} (hG : IsMultiHomog G dG) :
+theorem isAnalyticSubset (R : AnRes P J e) {G : MRing ι} {dG : K → ℕ} (hG : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog G dG) :
     R.A.IsAnalyticSubset {x | eval (R.lift x x) (map (Int.castRingHom ℂ) G) = 0} := by
   intro x
   refine ⟨R.U x, R.isOpen_U x, R.mem_U x, 1, fun _ y => eval (R.lift x y) (map (Int.castRingHom ℂ) G),
@@ -108,7 +108,7 @@ theorem isAnalyticSubset (R : AnRes P J e) {G : MRing ι} {dG : K → ℕ} (hG :
       exact ⟨(eval_eq_zero_iff_of_sameOrbit hG (R.compat x y y ⟨hy, R.mem_U y⟩)).1 (h0 0), hy⟩
 
 theorem interior_eq_empty (hND : NonvanishingDense.Statement) (R : AnRes P J e) (hP : IsArithVar P (e + 1))
-    {G : MRing ι} {dG : K → ℕ} (hG : IsMultiHomog G dG) (hGP : G ∉ P) :
+    {G : MRing ι} {dG : K → ℕ} (hG : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog G dG) (hGP : G ∉ P) :
     interior {x | eval (R.lift x x) (map (Int.castRingHom ℂ) G) = 0} = ∅ := by
   set S := {x | eval (R.lift x x) (map (Int.castRingHom ℂ) G) = 0} with hS
   by_contra hne
@@ -331,7 +331,7 @@ theorem aeval_mem (F : IntermediateField ℚ Ω) (w : (Σ k, ι k) → Ω) (hw :
 
 omit [Fintype K] [CharZero Ω] in
 theorem isMultiHomog_X_single [DecidableEq K] (p : Σ k, ι k) :
-    IsMultiHomog (X p : MRing ι) (fun k ↦ if k = p.1 then 1 else 0) := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (X p : MRing ι) (fun k ↦ if k = p.1 then 1 else 0) := by
   intro m hm k
   rw [support_X, Finset.mem_singleton] at hm
   subst hm
@@ -349,7 +349,7 @@ theorem isMultiHomog_X_single [DecidableEq K] (p : Σ k, ι k) :
 
 omit [CharZero Ω] in
 theorem aeval_mul_pow_of_block (y w : (Σ k, ι k) → Ω) (k₀ : K) (z : Ω)
-    (hw : ∀ i, w ⟨k₀, i⟩ * z = y ⟨k₀, i⟩) {f : MRing ι} {d : K → ℕ} (hf : IsMultiHomog f d)
+    (hw : ∀ i, w ⟨k₀, i⟩ * z = y ⟨k₀, i⟩) {f : MRing ι} {d : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f d)
     (hd : ∀ k, k ≠ k₀ → d k = 0) : aeval w f * z ^ d k₀ = aeval y f := by
   classical
   conv_rhs => rw [f.as_sum]

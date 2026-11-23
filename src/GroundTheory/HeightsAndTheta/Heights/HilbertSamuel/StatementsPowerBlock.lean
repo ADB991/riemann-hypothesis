@@ -36,7 +36,7 @@ end Objects
 
 def PowerBlockDatum.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] [CharZero Ω]
-    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : HermLine ι) (P0 : Ideal (MRing ι)),
+    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (P0 : Ideal (MRing ι)),
     1 ≤ D → IsArithVar (mCoordIdeal y) (D + 1) → Birational y →
     IsSmallGeneratedDatum P0 y D A → IsConjInvariantH A →
     ∃ (m N : ℕ) (v : Fin N → Ω) (d : HSMBlockDatum D (Option K) (addIdx ι N) Ω)
@@ -52,11 +52,11 @@ def PowerBlockDatum.Statement : Prop :=
 
 def PowerBlockTop.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] [CharZero Ω]
-    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : HermLine ι) (m N : ℕ) (v : Fin N → Ω) (B : HermLine (addIdx ι N))
+    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (m N : ℕ) (v : Fin N → Ω) (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (addIdx ι N))
     (I : AllFam),
     I.IsFamily → IsArithVar (mCoordIdeal y) (D + 1) → IsSmoothHerm A → 1 ≤ m →
     (∀ j, v j ∈ chartLat y A.a m) → KH.GeneratesOn y (fun k => (m : ℤ) * A.a k) v →
-    B.a = unitDeg (none : Option K) → IsSmoothHerm B →
+    B.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg (none : Option K) → IsSmoothHerm B →
     (∀ z ∈ mcPts (mCoordIdeal (addBlock y v)), ∀ j : Fin N,
       secNormAt y A m (v j) (basePart₂ z) * B.h z = ‖z ⟨none, j⟩‖) →
     I (Option K) (addIdx ι N) (mCoordIdeal (addBlock y v)) (D + 1) (fun _ => B) =

@@ -46,7 +46,7 @@ theorem mConeMap_monomial (y : (Σ κ, ι κ) → Ω) (μ : (Σ κ, ι κ) →�
     MvPolynomial.algebraMap_apply]
   ring
 
-theorem mConeMap_of_homog (y : (Σ κ, ι κ) → Ω) {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) :
+theorem mConeMap_of_homog (y : (Σ κ, ι κ) → Ω) {g : MRing ι} {d : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) :
     mConeMap y g = monomial (expo d) (aeval y g) := by
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
@@ -412,7 +412,7 @@ theorem integrable_piece (hInt : PtsIntegrableStatement) {P : Ideal (MRing ι)} 
     (hsm : ∀ i (t : K → ℂ) (z : (Σ k, ι k) → ℂ), (∀ k, t k ≠ 0) → z ∈ S i →
       (fun p => t p.1 * z p) ∈ S i)
     (huniq : ∀ z ∈ mcPts P, ∃! i, z ∈ S i) (i : J) :
-    Integrable (fun y => ∑ᶠ w ∈ fibre P Ψ y,
+    Integrable (fun y => ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y,
       sheetDensity P Ψ (pot L) ((S i).indicator fun _ => (1 : ℝ)) y w) := by
   obtain ⟨u, hus, hui, hu⟩ := exists_weight hP.2.1.2.1 hS hsm huniq i
   let B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := HermLine.ofWeight u hui
@@ -420,7 +420,7 @@ theorem integrable_piece (hInt : PtsIntegrableStatement) {P : Ideal (MRing ι)} 
   have hlog : ∀ z, logNorm B 1 z = u z := by
     intro z
     simp [logNorm, B, HermLine.ofWeight]
-  have hhom : IsMultiHomog (1 : MRing ι) 0 := by
+  have hhom : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (1 : MRing ι) 0 := by
     intro m hm k
     rw [MvPolynomial.support_one, Finset.mem_singleton] at hm
     subst hm
@@ -442,9 +442,9 @@ theorem PiecesAdditive.proof (hInt : PtsIntegrableStatement) : PiecesAdditive.St
   unfold ptsIntegral
   split_ifs with hΨ
   · unfold ptsIntegralAt
-    have hlin : ∀ y, (∑ᶠ w ∈ fibre P hΨ.choose y, sheetDensity P hΨ.choose (pot L)
+    have hlin : ∀ y, (∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P hΨ.choose y, sheetDensity P hΨ.choose (pot L)
         (fun z => ∑ i, c i * (S i).indicator (fun _ => (1 : ℝ)) z) y w) =
-        ∑ i, c i * ∑ᶠ w ∈ fibre P hΨ.choose y,
+        ∑ i, c i * ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P hΨ.choose y,
           sheetDensity P hΨ.choose (pot L) ((S i).indicator fun _ => (1 : ℝ)) y w := by
       intro y
       have hfin := fibreFinite K ι P e _ hP hΨ.choose_spec y

@@ -28,7 +28,7 @@ namespace NormalLocusRep
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
 theorem aeval_mul_zpow_mem (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) {d : K → ℕ} {g : MRing ι}
-    (hg : IsMultiHomog g d) : aeval y g * ∏ k, y ⟨k, c k⟩ ^ (-(d k : ℤ)) ∈ chartRingZ y c := by
+    (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) : aeval y g * ∏ k, y ⟨k, c k⟩ ^ (-(d k : ℤ)) ∈ chartRingZ y c := by
   rw [NmSectionsRationalProof.aeval_mul_prod_zpow y c hg, chartRingZ, Algebra.adjoin_range_eq_range_aeval]
   exact ⟨g, rfl⟩
 
@@ -106,7 +106,7 @@ theorem exists_conductor [CharZero Ω] (y : (Σ k, ι k) → Ω) (hbir : Biratio
 
 omit [Fintype K] in
 theorem isMultiHomog_prod {J : Type} (s : Finset J) (H : J → MRing ι) (N : J → K → ℕ)
-    (hH : ∀ j ∈ s, IsMultiHomog (H j) (N j)) : IsMultiHomog (∏ j ∈ s, H j) (∑ j ∈ s, N j) := by
+    (hH : ∀ j ∈ s, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (H j) (N j)) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (∏ j ∈ s, H j) (∑ j ∈ s, N j) := by
   classical
   induction s using Finset.induction_on with
   | empty => simpa using LocalRep.isMultiHomog_C (ι := ι) 1
@@ -115,7 +115,7 @@ theorem isMultiHomog_prod {J : Type} (s : Finset J) (H : J → MRing ι) (N : J 
     exact LocalRep.isMultiHomog_mul (hH j (Finset.mem_insert_self j s))
       (ih fun i hi => hH i (Finset.mem_insert_of_mem hi))
 
-theorem notMem_mCoordIdeal (y : (Σ k, ι k) → Ω) {f : MRing ι} {d : K → ℕ} (hf : IsMultiHomog f d)
+theorem notMem_mCoordIdeal (y : (Σ k, ι k) → Ω) {f : MRing ι} {d : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f d)
     (h0 : aeval y f ≠ 0) : f ∉ mCoordIdeal y := by
   intro hmem
   have h := (RingHom.mem_ker).mp hmem
@@ -132,7 +132,7 @@ theorem NormalLocusRep.proof : NormalLocusRep.Statement := by
   classical
   have := charZero_of_isHorizontal y hV.2.2.1
 
-  have hchart : ∀ c : ∀ k, ι k, ∃ (N : K → ℕ) (H : MRing ι), IsMultiHomog H N ∧ aeval y H ≠ 0 ∧
+  have hchart : ∀ c : ∀ k, ι k, ∃ (N : K → ℕ) (H : MRing ι), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog H N ∧ aeval y H ≠ 0 ∧
       ((∀ k, y ⟨k, c k⟩ ≠ 0) → ∀ t ∈ integralClosure (chartRingZ y c) Ω,
         (aeval y H * ∏ k, y ⟨k, c k⟩ ^ (-(N k : ℤ))) * t ∈ chartRingZ y c) := by
     intro c

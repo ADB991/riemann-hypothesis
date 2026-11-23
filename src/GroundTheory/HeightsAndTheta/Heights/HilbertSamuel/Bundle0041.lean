@@ -152,7 +152,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {P J : Ideal (MRing ι)} {e : ℕ}
 
 theorem brIntegrable_of (hLA : LogAbsLocIntStatement) (R : AnRes P J e)
-    (L : Fin e → HermLine ι) (A : HermLine ι) (s : MRing ι) (hL : ∀ j, IsSmoothHerm (L j))
+    (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) (hL : ∀ j, IsSmoothHerm (L j))
     (hA : IsSmoothHerm A) (hs : IsSectionOn P A s) :
     MIntegrable R.A (fun j => potOf R (L j)) (fun x => logNorm A s (R.lift x x)) := by
   intro j K hK hKc
@@ -233,7 +233,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {P J : Ideal (MRing ι)} {e : ℕ}
   (R : AnRes P J e) (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ))
 
-theorem exists_sheet_brW (L : Fin e → HermLine ι) (A : HermLine ι) (s : MRing ι)
+theorem exists_sheet_brW (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι)
     (hP : IsArithVar P (e + 1)) (hL : ∀ j, IsSmoothHerm (L j)) (hs : IsSectionOn P A s)
     (x : R.X) (hx : x ∉ brBad R Ψ) :
     ∃ γ : (Fin e → ℂ) → (Σ k, ι k) → ℂ, IsSheet P Ψ (brQ R Ψ x) (brW R Ψ x) γ ∧
@@ -457,7 +457,7 @@ noncomputable section
 
 def TensorPowerL2Degree.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] [CharZero Ω]
-    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : HermLine ι) (P0 : Ideal (MRing ι)) (II : IntersectionSystem),
+    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (P0 : Ideal (MRing ι)) (II : IntersectionSystem),
     1 ≤ D → IsIntersectionSystem II → IsArithVar (mCoordIdeal y) (D + 1) → Birational y →
     IsSmallGeneratedDatum P0 y D A → IsConjInvariantH A →
     ∃ (μ : Measure ((Σ k, ι k) → ℂ)) (m : ℕ),

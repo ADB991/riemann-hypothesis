@@ -29,7 +29,7 @@ section Objects
 
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
-def IsIsometricOn (P : Ideal (MRing ι)) (A B : HermLine ι) : Prop :=
+def IsIsometricOn (P : Ideal (MRing ι)) (A B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) : Prop :=
   ∃ (f g : MRing ι) (α β : K → ℕ), IsMultiHomog f α ∧ IsMultiHomog g β ∧ f ∉ P ∧ g ∉ P ∧
     (∀ k, (α k : ℤ) - β k = A.a k - B.a k) ∧ divCycle P f = divCycle P g ∧
     ∀ z ∈ mcPts P, ‖eval z (map (Int.castRingHom ℂ) f)‖ * B.h z = ‖eval z (map (Int.castRingHom ℂ) g)‖ * A.h z
@@ -38,15 +38,15 @@ end Objects
 
 def IsomInvariance.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)]
-    (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ), IsIntersectionFamily I →
-    ∀ (P : Ideal (MRing ι)) (n : ℕ) (L L' : Fin n → HermLine ι),
+    (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ), IsIntersectionFamily I →
+    ∀ (P : Ideal (MRing ι)) (n : ℕ) (L L' : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι),
       IsArithVar P n → (∀ j, IsSmoothHerm (L j)) → (∀ j, IsSmoothHerm (L' j)) →
       (∀ j, IsIsometricOn P (L j) (L' j)) → I P n L = I P n L'
 
 def GraphIsometric.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι ι₂ : K → Type) [∀ k, Fintype (ι k)] [∀ k, Fintype (ι₂ k)]
-    (P : Ideal (MRing ι)) (d : ℕ) (A : ∀ k, ι₂ k → ι k → ℤ) (B₁ : HermLine ι) (B : HermLine ι₂)
-    (B₁' B' : HermLine (Sum.elim ι ι₂)),
+    (P : Ideal (MRing ι)) (d : ℕ) (A : ∀ k, ι₂ k → ι k → ℤ) (B₁ : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι₂)
+    (B₁' B' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (Sum.elim ι ι₂)),
     IsArithVar P d → IsBasePtFree P (linForm A) → B₁.a = B.a →
     (∀ z ∈ mcPts P, B₁.h z = B.h (linApply A z)) →
     IsPullHerm Sum.inl inlV B₁ B₁' → IsPullHerm Sum.inr inrV B B' →
@@ -139,7 +139,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo
 
 def MixedSectionStep.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P P0 : Ideal (MRing ι)) (d : ℕ)
-    (M H : HermLine ι) (II : IntersectionSystem),
+    (M H : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (II : IntersectionSystem),
     IsIntersectionSystem II → 2 ≤ d → IsArithVar P d → P0 ≤ P →
     IsSemipositiveRel P0 P M → NefOnFibres P M.a → IsConjInvariantH M →
     (∀ W, IsArithVar W 1 → P ≤ W → 0 ≤ II K ι W 1 ![M]) →
@@ -164,7 +164,7 @@ noncomputable section
 def PieceDegree.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
     (F : Type) [Field F] [NumberField F] [Algebra F Ω]
-    (y : (Σ k, ι k) → Ω) (D : ℕ) (L : Fin D → HermLine ι) (sg sg' : F →+* ℂ),
+    (y : (Σ k, ι k) → Ω) (D : ℕ) (L : Fin D → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (sg sg' : F →+* ℂ),
     IsArithVar (mCoordIdeal y) (D + 1) → Birational y → (∀ j, IsSmoothHerm (L j)) →
     (∀ z ∈ mcPts (mCoordIdeal y), ∃! s : F →+* ℂ, LiesOver y s z) →
     ptsIntegral (mCoordIdeal y) (pot L) ({z | LiesOver y sg z}.indicator fun _ => (1 : ℝ)) =
