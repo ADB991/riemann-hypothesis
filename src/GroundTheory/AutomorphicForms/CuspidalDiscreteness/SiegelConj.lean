@@ -203,7 +203,7 @@ theorem exists_norm_archMat_conj_le {ω : Set (AdelicGLn.AdelicGL K n)} (hω : I
     (hr : 0 < r) (hrn : r < n) {𝒮 : Set (InfiniteAdeleRing K)} (h𝒮 : IsCompact 𝒮) :
     ∃ C : ℝ, ∀ b ∈ ω, ∀ (ρ : Fin n → ℝ) (hρ : ∀ i, 0 < ρ i),
       (∀ i j : Fin n, (j : ℕ) = i + 1 → t * ρ j ≤ ρ i) →
-      ∀ k ∈ (GroundTheory.Automorphic.maxCompact : Subgroup (AdelicGLn.AdelicGL K n)),
+      ∀ k ∈ (GroundTheory.Automorphic.Reduction.maxCompact : Subgroup (AdelicGLn.AdelicGL K n)),
       ∀ P : UPos n r → 𝔸[K], (∀ p, (P p).2 = 0) → (∀ p, (P p).1 ∈ 𝒮) →
         ‖archMat K n
             ((((b * diagUnits n (fun i => posIdele (ρ i) (hρ i)) * k)⁻¹ : AdelicGLn.AdelicGL K n) :
