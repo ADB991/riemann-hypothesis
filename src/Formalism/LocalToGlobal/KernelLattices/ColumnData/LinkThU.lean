@@ -45,7 +45,7 @@ theorem sigmaOf_galE (σ : D.host.E ≃ₐ[ℚ] D.host.E) :
   exact MulEquiv.symm_apply_apply _ σ
 
 theorem embT_K (τ : D.what₂.Tau) (x : D.host.E) (hx : x ∈ D.host.K) :
-    Formalism.MainNotions.TaylorLogMetric.embT D τ x = D.host.φ₀ x := by
+    embT D τ x = D.host.φ₀ x := by
   set σ := D.host.sigmaOf ((D.eTau τ : D.R.Psi) : D.R.GG)
   have hb : σ (D.host.sqd) = D.host.sqd := by
     rw [← D.host.galE_mem_Psi_iff]
@@ -64,14 +64,14 @@ theorem embT_K (τ : D.what₂.Tau) (x : D.host.E) (hx : x ∈ D.host.K) :
   rw [hfix]
 
 theorem emb_cases (φ : D.host.E →+* ℂ) :
-    ∃ τ : D.what₂.Tau, φ = Formalism.MainNotions.TaylorLogMetric.embT D τ ∨ φ = (starRingEnd ℂ).comp (Formalism.MainNotions.TaylorLogMetric.embT D τ) := by
+    ∃ τ : D.what₂.Tau, φ = embT D τ ∨ φ = (starRingEnd ℂ).comp (embT D τ) := by
   obtain ⟨ρ, hρ⟩ := (D.host.hostEmb D.host.φ₀).2 φ
   set g := D.host.galE ρ
   by_cases hg : g ∈ D.R.Psi
   · refine ⟨D.eTau.symm ⟨g, hg⟩, Or.inl ?_⟩
     rw [← hρ]
     ext x
-    simp only [Formalism.MainNotions.TaylorLogMetric.embT, Equiv.apply_symm_apply, Host.emb]
+    simp only [embT, Equiv.apply_symm_apply, Host.emb]
     rw [show g = D.host.galE ρ from rfl, sigmaOf_galE]
   · have hg' : g * D.R.cc ∈ D.R.Psi := by
       rw [Formalism.HC.Frame.mem_Psi_iff] at hg ⊢
@@ -87,7 +87,7 @@ theorem emb_cases (φ : D.host.E →+* ℂ) :
     refine ⟨D.eTau.symm ⟨g * D.R.cc, hg'⟩, Or.inr ?_⟩
     rw [← hρ]
     ext x
-    simp only [Formalism.MainNotions.TaylorLogMetric.embT, Equiv.apply_symm_apply, Host.emb, RingHom.comp_apply]
+    simp only [embT, Equiv.apply_symm_apply, Host.emb, RingHom.comp_apply]
     rw [hgc, sigmaOf_galE]
     have h1 := D.host.conjE_apply
       (D.host.φ₀.comp (ρ : D.host.E →+* D.host.E)) x
