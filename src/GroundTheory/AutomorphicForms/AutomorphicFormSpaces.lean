@@ -32,7 +32,7 @@ theorem archPart_infEmb (a : archGroup K n) : archPart (infEmb K n a) = a := by
 
 theorem archCompact_eq_image :
     (archCompact K n : Set (archGroup K n)) =
-      archPart '' (maxCompact (K := K) (n := n) : Set (AdelicGLn.AdelicGL K n)) := by
+      archPart '' (Reduction.maxCompact (K := K) (n := n) : Set (AdelicGLn.AdelicGL K n)) := by
   ext a
   constructor
   · intro ha
