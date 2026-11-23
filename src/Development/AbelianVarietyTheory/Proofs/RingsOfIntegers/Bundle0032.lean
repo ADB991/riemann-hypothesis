@@ -259,7 +259,7 @@ theorem cube_points {X0 : Scheme.{0}} (t : SAB H X0) {S : Type} [CommRing S] (x0
     funext i
     fin_cases i
     · show x m ≫ 𝟙 t.G = Formalism.L2.Pj.homAt x0 (sL m a) ≫ Formalism.L2.Pj.homAt x0 (jetCopy d m (0 : Fin 2)) ≫ x m
-      rw [Category.comp_id, ← Category.assoc, Formalism.MainNotions.ModuliIntegralCharts.H1.GermD.homAt_comp, sL_copy0, homAt_id, Category.id_comp]
+      rw [Category.comp_id, ← Category.assoc, Formalism.MainNotions.ModuliIntegralCharts.H1.GermD.homAt_comp, sL_copy0, Formalism.MainNotions.ModuliIntegralCharts.H1.GermD.homAt_id, Category.id_comp]
     · show x m ≫ t.act.act H.w0 =
         Formalism.L2.Pj.homAt x0 (sL m a) ≫ Formalism.L2.Pj.homAt x0 (jetCopy d m (1 : Fin 2)) ≫ x m
       rw [← Category.assoc, Formalism.MainNotions.ModuliIntegralCharts.H1.GermD.homAt_comp, sL_copy1, ha]
