@@ -362,15 +362,15 @@ theorem mem_lieU {P Q : ℕ} (X : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ
 
 def reImMap (P Q : ℕ) :
     (lieU P Q × lieU P Q) →ₗ[ℝ] ((Fin P ⊕ Fin Q) × (Fin P ⊕ Fin Q) → ℂ) where
-  toFun ab := entries ((ab.1 : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ) +
+  toFun ab := Formalism.BasicNotions.entries ((ab.1 : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ) +
         Complex.I • (ab.2 : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ))
   map_add' x y := by
     funext ij
-    simp [entries]
+    simp [Formalism.BasicNotions.entries]
     ring
   map_smul' c x := by
     funext ij
-    simp [entries]
+    simp [Formalism.BasicNotions.entries]
     ring
 
 theorem reImMap_injective (P Q : ℕ) : Function.Injective (reImMap P Q) := by
@@ -427,7 +427,7 @@ theorem reImMap_surjective (P Q : ℕ) : Function.Surjective (reImMap P Q) := by
         Complex.I • (-(Complex.I / 2)) • (Z + Formalism.UG.Jpq P Q * Zᴴ * Formalism.UG.Jpq P Q) = Z := by
       rw [smul_smul, h1]
       module
-    exact (congrArg entries h2).trans rfl
+    exact (congrArg Formalism.BasicNotions.entries h2).trans rfl
 
 theorem exists_isOmegaLeb : ∀ P Q : ℕ, ∃ lam : Measure (lieU P Q), IsOmegaLeb lam := by
   intro P Q
