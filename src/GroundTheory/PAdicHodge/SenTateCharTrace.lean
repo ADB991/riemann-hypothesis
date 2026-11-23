@@ -17,10 +17,10 @@ namespace SenTateChar
 
 open CyclNorms GroundTheory.LocalField ValuativeRel
 
-variable {p : ℕ} [hp : Fact p.Prime]
+-- Use the restricted valuation on intermediate fields throughout the trace estimates.
+attribute [local instance 1100] GroundTheory.LocalField.intermediateField_valuativeRel
 
-local instance (K : IntermediateField ℚ_[p] (PadicAlgCl p)) : ValuativeExtension K (PadicAlgCl p) :=
-  GroundTheory.LocalField.intermediateField_valuativeExtension_right K
+variable {p : ℕ} [hp : Fact p.Prime]
 
 instance charP_residueField_intermediateField (K : IntermediateField ℚ_[p] (PadicAlgCl p))
     [FiniteDimensional ℚ_[p] K] : CharP 𝓀[K] p :=
