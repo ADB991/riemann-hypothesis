@@ -214,7 +214,7 @@ theorem mem_UH' (h : GlobalTheory.DegVol.IsReal H k r σ Φ) {m : Matrix (Fin (2
     refine span_ind' h (fun u => ∀ w, herm (Hpk k r) (m *ᵥ u) (m *ᵥ w) = herm (Hpk k r) u w) (fun x => ?_)
       (fun u v hu hv w => by rw [mulVec_add, herm_add_left, herm_add_left, hu, hv])
       (fun c u hu w => by rw [mulVec_smul, herm_smul_left, herm_smul_left, hu]) u
-    exact span_ind' h _ (e x) (fun u v hu hv => by rw [mulVec_add, herm_add_right, herm_add_right, hu, hv])
+    exact span_ind' h _ (e x) (fun u v hu hv => by rw [mulVec_add, GlobalTheory.DegVol.RealMat.herm_add_right, GlobalTheory.DegVol.RealMat.herm_add_right, hu, hv])
       (fun c u hu => by rw [mulVec_smul, herm_smul_right, herm_smul_right, hu])
   ext i j
   exact (herm_bvec _ i j).symm.trans (by rw [← herm_mulVec, h1, herm_bvec])
@@ -375,7 +375,7 @@ theorem coord_eq_zero {g : Mat k r} (hg : g ∈ UH (Hpk k r))
   rw [← herm_esI u b, ← hxe, Matrix.mulVecLin_apply]
   exact hzero x hx
 
-theorem inWb_of_mem_Wn : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (H : HermSpace K V) (r : ℕ) (N : NF H r) (k : ℕ) (σ : K →+* ℂ) (ρ : ℝ) (β : Fin r → ℕ) (Φ : V → Fin (2 * r + k + 1) → ℂ) (z z' : Fin (2 * r + k + 1) → ℂ) (g : Mat k r), 0 < ρ → IsFrameOf N k σ ρ β Φ z z' g → ∀ w ∈ N.Wn, inWb k r (Φ w) := by
+theorem inWb_of_mem_Wn : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (H : Formalism.HermitianLatticeCounting.S6.HermSpace K V) (r : ℕ) (N : NF H r) (k : ℕ) (σ : K →+* ℂ) (ρ : ℝ) (β : Fin r → ℕ) (Φ : V → Fin (2 * r + k + 1) → ℂ) (z z' : Fin (2 * r + k + 1) → ℂ) (g : Mat k r), 0 < ρ → IsFrameOf N k σ ρ β Φ z z' g → ∀ w ∈ N.Wn, inWb k r (Φ w) := by
   intro K V _ _ _ _ _ _ _ _ H r N k σ ρ β Φ z z' g hρ hF w hw
   unfold IsFrameOf at hF
   obtain ⟨hR, -, -, -, ⟨c, hN⟩, he, hist, -, -⟩ := hF
