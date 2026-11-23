@@ -361,6 +361,8 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory.CharValue
 
+local notation "linPart" => _root_.ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart
+
 def ballIdeal {C : Type} [Field C] {v : Valuation C NNReal} {O : Type} [CommRing O] [Algebra O C]
     (hv : v.Integers O) (t : NNReal) (ht : 0 < t) : Ideal O where
   carrier := {y | v (algebraMap O C y) < t}
