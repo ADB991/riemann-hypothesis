@@ -29,7 +29,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 omit [Fintype K] in
 theorem isMultiHomog_prod_int {β : Type*} (s : Finset β) (f : β → MRing ι) (a : β → K → ℕ)
-    (h : ∀ b ∈ s, IsMultiHomog (f b) (a b)) : IsMultiHomog (∏ b ∈ s, f b) (∑ b ∈ s, a b) := by
+    (h : ∀ b ∈ s, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f b) (a b)) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (∏ b ∈ s, f b) (∑ b ∈ s, a b) := by
   classical
   induction s using Finset.induction_on with
   | empty =>
@@ -236,7 +236,7 @@ theorem ArithmeticIntersectionFibreMultiHomogeneous.proof : ArithmeticIntersecti
   rw [show (DirectSum.decompose (weightedHomogeneousSubmodule G'.Φ (cycBlockWt k)) f n : MvPolynomial _ G'.Φ) =
     weightedHomogeneousComponent (cycBlockWt k) n f from MvPolynomial.decompose'_apply _ _ f n]
   obtain ⟨b, hb, F, e⟩ := exists_clear G' f
-  rw [fibreIdeal, RingHom.mem_ker] at hf ⊢
+  rw [ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal, RingHom.mem_ker] at hf ⊢
   have hF : liftZ κ v F ∈ W' := by
     rw [← G'.genericFibre_ker_target, RingHom.mem_ker, aeval_liftZ, ← e, map_mul, aeval_C]
     simp [hf]
@@ -267,7 +267,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 omit [Fintype K] [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem imageZ_isRelevant {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
-    {y : Ideal (MRing ι')} (hy : IsRelevant y) : IsRelevant (imageZ v y) := by
+    {y : Ideal (MRing ι')} (hy : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant y) : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant (imageZ v y) := by
   intro k
   obtain ⟨i', hi'⟩ := hy (κ k)
   obtain ⟨⟨k0, i⟩, hp⟩ := hv.2.2.2 ⟨κ k, i'⟩ ⟨k, rfl⟩
@@ -299,7 +299,7 @@ theorem imageZ_le {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : I
   have hcy : rename v c ∈ y := by
     rw [hcdef, rename_component]
     exact LocRingPow.component_mem hyM.2.1 ha D
-  have hc : IsMultiHomog c (fun k => D (κ k)) :=
+  have hc : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog c (fun k => D (κ k)) :=
     isMultiHomog_of_pullWeight hv (weightedHomogeneousComponent_isWeightedHomogeneous _ _)
   obtain ⟨u, hu, huy⟩ := exists_form_notMem (imageZ_isRelevant hv hyM.2.2) (imageZ_isPrime_of_prime v y)
     (fun k => D (κ k))
@@ -355,7 +355,7 @@ theorem eq_of_imageZ_eq {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (
   obtain ⟨D, hD⟩ := LocRingPow.exists_component_not_mem hfP
   set g := weightedHomogeneousComponent (LocRingPow.multiDegWeight ι') D f
   have hgy : g ∈ y := LocRingPow.component_mem hy.2.1 hfy D
-  have hg : IsMultiHomog g D :=
+  have hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g D :=
     LocRingPow.isMultiHomog_iff.mpr (weightedHomogeneousComponent_isWeightedHomogeneous _ _)
   choose c hc using hy.2.2
   obtain ⟨r, a, ha0, hsum⟩ := exists_elim hv hP' hQ hg hD c (fun k' h => hc k' (hPy h))
@@ -382,7 +382,7 @@ def CentreOverW.Statement : Prop :=
     (K' : Type) [Fintype K'] (ι' : K' → Type) [∀ k, Fintype (ι' k)]
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (n : ℕ) (s : MRing ι) (α : K → ℕ)
     (W : Ideal (MRing ι)) (_hv : IsBlockMap κ v) (hP' : IsArithVar P' (n + 1)),
-    IsArithVar (imageZ v P') (n + 1) → IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
+    IsArithVar (imageZ v P') (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
     haveI := hP'.2.1.1
     ∀ R : ValuationSubring (FractionRing (MRing ι' ⧸ P')),
       (∀ a ∈ locRing (imageZ v P') W, fracMapZ v P' a ∈ R) →
@@ -451,7 +451,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.Cha
 
 theorem FibreDivSupp.proof (h : FibreIncomp.Statement) : FibreDivSupp.Statement := by
   intro K _ ι _ K' _ ι' _ κ v P' n s α W hv hP' hQ hs hsQ hW W'
-  have hmin : ∀ Q ∈ (P' ⊔ Ideal.span {rename v s}).minimalPrimes, IsRelevant Q → IsMultiProjPrime Q :=
+  have hmin : ∀ Q ∈ (P' ⊔ Ideal.span {rename v s}).minimalPrimes, ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant Q → IsMultiProjPrime Q :=
     fun Q hQm hQr => ⟨hQm.1.1, cyc_isMultiHomogIdeal_of_mem_minimalPrimes hP'.2.1.2.1
       (rename_isMultiHomog hv hs) hQm, hQr⟩
   have hmem : ∀ Q ∈ (P' ⊔ Ideal.span {rename v s}).minimalPrimes, P' ≤ Q ∧ rename v s ∈ Q :=
@@ -462,7 +462,7 @@ theorem FibreDivSupp.proof (h : FibreIncomp.Statement) : FibreDivSupp.Statement 
     have := hW'p.1
     obtain ⟨Q, hQm, hQW'⟩ := Ideal.exists_minimalPrimes_le
       (sup_le hPW' ((Ideal.span_singleton_le_iff_mem _).2 hsW'))
-    have hQr : IsRelevant Q := fun k => (hW'p.2.2 k).imp fun _ hi hq => hi (hQW' hq)
+    have hQr : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant Q := fun k => (hW'p.2.2 k).imp fun _ hi hq => hi (hQW' hq)
     obtain ⟨hPQ, hsQ'⟩ := hmem Q hQm
     have hQi : imageZ v Q = W := by
       have := hQm.1.1

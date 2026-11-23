@@ -61,16 +61,16 @@ theorem SemilocRank.proof (hDim : FibreDimStatement) (hAdj : SemilocRankAdjoin.S
   intro K _ ι _ K' _ ι' _ κ v P' n G J s α W hv hP' hZ hJ hs hsP hW
   have hrel : ∀ k', ∃ i, (X ⟨k', i⟩ : MRing ι') ∉ P' := hP'.2.1.2.2
   choose i' hi' using hrel
-  have hfib : IsProjVarF (fibreIdeal κ G) 0 := hDim K ι K' ι' κ v P' (n + 1) 0 G hv hP' hZ
+  have hfib : IsProjVarF (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G) 0 := hDim K ι K' ι' κ v P' (n + 1) 0 G hv hP' hZ
   have hz : ∀ k : FibreBlock κ, G.x' ⟨k.1, i' k.1⟩ ≠ 0 := by
     intro k h0
     apply hi' k.1
     rw [← G.genericFibre_ker_target, RingHom.mem_ker, aeval_X]
     exact h0
-  have hj : IsChart (fibreIdeal κ G) (fun k => i' k.1) := by
+  have hj : IsChart (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G) (fun k => i' k.1) := by
     intro k hk
     apply hz k
-    rw [fibreIdeal, RingHom.mem_ker, aeval_X] at hk
+    rw [ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal, RingHom.mem_ker, aeval_X] at hk
     exact hk
   rw [hJ.1 _ Fin.elim0 _ hfib hj, hAdj K ι K' ι' κ v P' n G s α W i' hv hP' hZ hs hsP hW hi']
   congr 1
@@ -143,7 +143,7 @@ theorem ValCentreZ.proof : ValCentreZ.Statement := by
       ValuationSubring.mem_nonunits_iff]
     exact Iff.rfl
 
-  have hform : ∀ (g : MRing ι) (a : K → ℕ), IsMultiHomog g a →
+  have hform : ∀ (g : MRing ι) (a : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a →
       (g ∈ RingHom.ker (RegularityFunctionFieldNumber.specMap ψE ∅) ↔ R.valuation (chartHom r g : L) < 1) := by
     intro g a hg
     rw [RingHom.mem_ker, RegularityFunctionFieldNumber.specMap_form ψE ∅ hg, ← hψE, mul_eq_zero, MvPolynomial.C_eq_zero]
@@ -226,7 +226,7 @@ def SemilocRankFrac.Statement : Prop :=
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (n : ℕ)
     (G : GenFibre v P') (s : MRing ι) (α : K → ℕ) (W : Ideal (MRing ι)) (i' : ∀ k', ι' k')
     (hv : IsBlockMap κ v) (hP' : IsArithVar P' (n + 1)) [Algebra ℚ G.Φ'],
-    IsArithVar (imageZ v P') (n + 1) → IsMultiHomog s α → s ∉ imageZ v P' →
+    IsArithVar (imageZ v P') (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s α → s ∉ imageZ v P' →
     W ∈ divSupp (imageZ v P') s → (∀ k', (X ⟨k', i' k'⟩ : MRing ι') ∉ P') →
     haveI := hP'.2.1.1
     letI := (locToSemiloc hv P' W).toAlgebra
@@ -254,32 +254,32 @@ namespace ThmIExists
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem hermLine_ext {A B : HermLine ι} (ha : A.a = B.a) (hh : A.h = B.h) : A = B := by
+theorem hermLine_ext {A B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (ha : A.a = B.a) (hh : A.h = B.h) : A = B := by
   cases A
   cases B
   cases ha
   cases hh
   rfl
 
-theorem tensor_right_comm (A B C : HermLine ι) :
+theorem tensor_right_comm (A B C : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) :
     (A.tensor B).tensor C = (A.tensor C).tensor B :=
   hermLine_ext (add_right_comm _ _ _) (funext fun _ => mul_right_comm _ _ _)
 
-theorem tensor_tensor_comm (A B C D : HermLine ι) :
+theorem tensor_tensor_comm (A B C D : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) :
     (A.tensor B).tensor (C.tensor D) = (A.tensor C).tensor (B.tensor D) :=
   hermLine_ext (add_add_add_comm _ _ _ _) (funext fun _ => mul_mul_mul_comm _ _ _ _)
 
-theorem smooth_tensor {A B : HermLine ι} (hA : IsSmoothHerm A) (hB : IsSmoothHerm B) :
+theorem smooth_tensor {A B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA : IsSmoothHerm A) (hB : IsSmoothHerm B) :
     IsSmoothHerm (A.tensor B) :=
   hA.mul hB
 
-def segreLine (m : ℕ) : HermLine ι :=
+def segreLine (m : ℕ) : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι :=
   HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) (fun _ => (m : ℤ))
 
-theorem segreLine_a (m : ℕ) : (segreLine m : HermLine ι).a = fun _ => (m : ℤ) := rfl
+theorem segreLine_a (m : ℕ) : (segreLine m : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι).a = fun _ => (m : ℤ) := rfl
 
-theorem isSmoothHerm_segreLine (m : ℕ) : IsSmoothHerm (segreLine m : HermLine ι) := by
-  have hfun : (segreLine m : HermLine ι).h =
+theorem isSmoothHerm_segreLine (m : ℕ) : IsSmoothHerm (segreLine m : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) := by
+  have hfun : (segreLine m : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι).h =
       fun z => ∏ k, Real.sqrt (∑ i : ι k, ‖z ⟨k, i⟩‖ ^ 2) ^ m := by
     funext z
     simp only [segreLine, HermLine.ofMetrics, fsMetric, zpow_natCast, EuclideanSpace.norm_eq]
@@ -293,7 +293,7 @@ theorem isSmoothHerm_segreLine (m : ℕ) : IsSmoothHerm (segreLine m : HermLine 
       ⟨i, Finset.mem_univ _, pow_pos (norm_pos_iff.mpr hi) 2⟩).ne'
 
 theorem exists_form {P : Ideal (MRing ι)} {d : ℕ} (hP : IsArithVar P d) (b : K → ℕ) :
-    ∃ s : MRing ι, IsMultiHomog s b ∧ s ∉ P := by
+    ∃ s : MRing ι, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s b ∧ s ∉ P := by
   classical
   have hrel := hP.2.1.2.2
   have hpr : P.IsPrime := hP.2.1.1
@@ -306,15 +306,15 @@ theorem exists_form {P : Ideal (MRing ι)} {d : ℕ} (hP : IsArithVar P d) (b : 
 
 open Classical in
 def secOf (P : Ideal (MRing ι)) (b : K → ℕ) : MRing ι :=
-  if h : ∃ s : MRing ι, IsMultiHomog s b ∧ s ∉ P then h.choose else 0
+  if h : ∃ s : MRing ι, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s b ∧ s ∉ P then h.choose else 0
 
 theorem secOf_spec {P : Ideal (MRing ι)} {d : ℕ} (hP : IsArithVar P d) (b : K → ℕ) :
-    IsMultiHomog (secOf P b) b ∧ secOf P b ∉ P := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (secOf P b) b ∧ secOf P b ∉ P := by
   have h := exists_form hP b
   rw [secOf, dite_eq_left h]
   exact h.choose_spec
 
-theorem sec_mul {P : Ideal (MRing ι)} (hpr : P.IsPrime) {A B : HermLine ι} {s t : MRing ι}
+theorem sec_mul {P : Ideal (MRing ι)} (hpr : P.IsPrime) {A B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {s t : MRing ι}
     (hs : IsSectionOn P A s) (ht : IsSectionOn P B t) : IsSectionOn P (A.tensor B) (s * t) := by
   obtain ⟨a, ha, has, hsP⟩ := hs
   obtain ⟨b, hb, hbt, htP⟩ := ht
@@ -323,14 +323,14 @@ theorem sec_mul {P : Ideal (MRing ι)} (hpr : P.IsPrime) {A B : HermLine ι} {s 
   · rcases hpr.mem_or_mem h with h | h
     exacts [hsP h, htP h]
 
-theorem sec_congr {P : Ideal (MRing ι)} {A B : HermLine ι} {s : MRing ι} (h : A = B)
+theorem sec_congr {P : Ideal (MRing ι)} {A B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {s : MRing ι} (h : A = B)
     (hs : IsSectionOn P A s) : IsSectionOn P B s := h ▸ hs
 
-def shift (A : HermLine ι) : ℕ := ∑ k, (A.a k).natAbs
+def shift (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) : ℕ := ∑ k, (A.a k).natAbs
 
-def upDeg (A : HermLine ι) : K → ℕ := fun k => (A.a k + shift A).toNat
+def upDeg (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) : K → ℕ := fun k => (A.a k + shift A).toNat
 
-theorem upDeg_cast (A : HermLine ι) (k : K) : ((upDeg A k : ℕ) : ℤ) = A.a k + shift A := by
+theorem upDeg_cast (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (k : K) : ((upDeg A k : ℕ) : ℤ) = A.a k + shift A := by
   rw [upDeg, Int.toNat_of_nonneg]
   have h1 : (A.a k).natAbs ≤ shift A :=
     Finset.single_le_sum (f := fun k => (A.a k).natAbs) (fun _ _ => Nat.zero_le _) (Finset.mem_univ k)
@@ -338,7 +338,7 @@ theorem upDeg_cast (A : HermLine ι) (k : K) : ((upDeg A k : ℕ) : ℤ) = A.a k
     rw [Int.natCast_natAbs]; exact neg_abs_le _
   omega
 
-theorem isSectionOn_up {P : Ideal (MRing ι)} {d : ℕ} (hP : IsArithVar P d) (A : HermLine ι) :
+theorem isSectionOn_up {P : Ideal (MRing ι)} {d : ℕ} (hP : IsArithVar P d) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) :
     IsSectionOn P (A.tensor (segreLine (shift A))) (secOf P (upDeg A)) :=
   ⟨upDeg A, fun _ => by simp [HermLine.tensor, segreLine_a, upDeg_cast], (secOf_spec hP _).1,
     (secOf_spec hP _).2⟩
@@ -347,49 +347,49 @@ theorem isSectionOn_segre {P : Ideal (MRing ι)} {d : ℕ} (hP : IsArithVar P d)
     IsSectionOn P (segreLine m) (secOf P fun _ => m) :=
   ⟨fun _ => m, fun _ => rfl, (secOf_spec hP _).1, (secOf_spec hP _).2⟩
 
-def lift {n : ℕ} (J : Ideal (MRing ι) → (Fin n → HermLine ι) → ℝ) :
-    Ideal (MRing ι) → (m : ℕ) → (Fin m → HermLine ι) → ℝ :=
+def lift {n : ℕ} (J : Ideal (MRing ι) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ) :
+    Ideal (MRing ι) → (m : ℕ) → (Fin m → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ :=
   fun W m L => if h : m = n then J W (L ∘ Fin.cast h.symm) else 0
 
-theorem lift_self {n : ℕ} (J : Ideal (MRing ι) → (Fin n → HermLine ι) → ℝ) (W : Ideal (MRing ι))
-    (L : Fin n → HermLine ι) : lift J W n L = J W L := by
+theorem lift_self {n : ℕ} (J : Ideal (MRing ι) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ) (W : Ideal (MRing ι))
+    (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) : lift J W n L = J W L := by
   simp only [lift]
   rfl
 
-theorem recR_congr {I J : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ} {n : ℕ}
-    (h : ∀ W L, I W n L = J W n L) (P : Ideal (MRing ι)) (L : Fin n → HermLine ι) (A : HermLine ι)
+theorem recR_congr {I J : Ideal (MRing ι) → (n : ℕ) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ} {n : ℕ}
+    (h : ∀ W L, I W n L = J W n L) (P : Ideal (MRing ι)) (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι)
     (s : MRing ι) : recR I P L A s = recR J P L A s := by
   unfold recR
   simp only [h]
 
-def step {n : ℕ} (J : Ideal (MRing ι) → (Fin n → HermLine ι) → ℝ) (P : Ideal (MRing ι))
-    (L : Fin n → HermLine ι) (A : HermLine ι) : ℝ :=
+def step {n : ℕ} (J : Ideal (MRing ι) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ) (P : Ideal (MRing ι))
+    (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) : ℝ :=
   recR (lift J) P L (A.tensor (segreLine (shift A))) (secOf P (upDeg A)) -
     recR (lift J) P L (segreLine (shift A)) (secOf P fun _ => shift A)
 
-def fam : (n : ℕ) → Ideal (MRing ι) → (Fin n → HermLine ι) → ℝ
+def fam : (n : ℕ) → Ideal (MRing ι) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ
   | 0 => fun _ _ => 0
   | n + 1 => fun P L => step (fam n) P (Fin.init L) (L (Fin.last n))
 
-def famI : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ := fun P n L => fam n P L
+def famI : Ideal (MRing ι) → (n : ℕ) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ := fun P n L => fam n P L
 
-theorem famI_snoc (P : Ideal (MRing ι)) {n : ℕ} (L : Fin n → HermLine ι) (A : HermLine ι) :
+theorem famI_snoc (P : Ideal (MRing ι)) {n : ℕ} (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) :
     famI P (n + 1) (Fin.snoc L A) =
       recR famI P L (A.tensor (segreLine (shift A))) (secOf P (upDeg A)) -
         recR famI P L (segreLine (shift A)) (secOf P fun _ => shift A) := by
-  have hc : ∀ (B : HermLine ι) (s : MRing ι), recR (lift (fam n)) P L B s = recR famI P L B s :=
+  have hc : ∀ (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι), recR (lift (fam n)) P L B s = recR famI P L B s :=
     fun B s => recR_congr (fun W L' => lift_self (fam n) W L') P L B s
   have hs : famI P (n + 1) (Fin.snoc L A) = step (fam n) P L A := by
     simp only [famI, fam, Fin.init_snoc, Fin.snoc_last]
   rw [hs, step, hc, hc]
 
-def LastAddAt (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) (n : ℕ) : Prop :=
-  ∀ (P : Ideal (MRing ι)) (L : Fin n → HermLine ι) (A B : HermLine ι),
+def LastAddAt (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ) (n : ℕ) : Prop :=
+  ∀ (P : Ideal (MRing ι)) (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι),
     IsArithVar P (n + 1) → (∀ j, IsSmoothHerm (L j)) → IsSmoothHerm A → IsSmoothHerm B →
     I P (n + 1) (Fin.snoc L (A.tensor B)) = I P (n + 1) (Fin.snoc L A) + I P (n + 1) (Fin.snoc L B)
 
-def WDAt (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) (n : ℕ) : Prop :=
-  ∀ (P : Ideal (MRing ι)) (L : Fin n → HermLine ι) (B : HermLine ι) (s t : MRing ι),
+def WDAt (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ) (n : ℕ) : Prop :=
+  ∀ (P : Ideal (MRing ι)) (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s t : MRing ι),
     IsArithVar P (n + 1) → (∀ j, IsSmoothHerm (L j)) → IsSmoothHerm B →
     IsSectionOn P B s → IsSectionOn P B t → recR I P L B s = recR I P L B t
 
@@ -398,12 +398,12 @@ section Steps
 variable (hMul : RMulStatement) {n : ℕ} (hwd : WDAt (famI (ι := ι)) n)
 include hMul hwd
 
-theorem famI_eq_diff {P : Ideal (MRing ι)} (hP : IsArithVar P (n + 1)) {L : Fin n → HermLine ι}
-    (hL : ∀ j, IsSmoothHerm (L j)) {A C : HermLine ι} (hA : IsSmoothHerm A) (hC : IsSmoothHerm C)
+theorem famI_eq_diff {P : Ideal (MRing ι)} (hP : IsArithVar P (n + 1)) {L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι}
+    (hL : ∀ j, IsSmoothHerm (L j)) {A C : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA : IsSmoothHerm A) (hC : IsSmoothHerm C)
     {t c : MRing ι} (ht : IsSectionOn P (A.tensor C) t) (hc : IsSectionOn P C c) :
     famI P (n + 1) (Fin.snoc L A) = recR famI P L (A.tensor C) t - recR famI P L C c := by
   have hpr : P.IsPrime := hP.2.1.1
-  set H : HermLine ι := segreLine (shift A)
+  set H : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := segreLine (shift A)
   have hH : IsSmoothHerm H := isSmoothHerm_segreLine _
   have hu := isSectionOn_segre hP (shift A)
   have ht0 := isSectionOn_up hP A
@@ -420,7 +420,7 @@ theorem famI_eq_diff {P : Ideal (MRing ι)} (hP : IsArithVar P (n + 1)) {L : Fin
 theorem hasRAt_famI : HasRAt (famI (ι := ι)) n := by
   intro P L A s hP hL hA hs
   have hpr : P.IsPrime := hP.2.1.1
-  have hH : IsSmoothHerm (segreLine (shift A) : HermLine ι) := isSmoothHerm_segreLine _
+  have hH : IsSmoothHerm (segreLine (shift A) : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) := isSmoothHerm_segreLine _
   have hu := isSectionOn_segre hP (shift A)
   rw [famI_eq_diff hMul hwd hP hL hA hH (sec_mul hpr hs hu) hu,
     hMul K ι famI P n L A _ s _ hP hL hA hH hs hu]
@@ -429,8 +429,8 @@ theorem hasRAt_famI : HasRAt (famI (ι := ι)) n := by
 theorem lastAddAt_famI : LastAddAt (famI (ι := ι)) n := by
   intro P L A B hP hL hA hB
   have hpr : P.IsPrime := hP.2.1.1
-  set Ha : HermLine ι := segreLine (shift A)
-  set Hb : HermLine ι := segreLine (shift B)
+  set Ha : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := segreLine (shift A)
+  set Hb : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := segreLine (shift B)
   have hHa : IsSmoothHerm Ha := isSmoothHerm_segreLine _
   have hHb : IsSmoothHerm Hb := isSmoothHerm_segreLine _
   have hua := isSectionOn_segre hP (shift A)

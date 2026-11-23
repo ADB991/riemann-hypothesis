@@ -34,9 +34,9 @@ theorem ProjFrameGraphDeg.proof
   intro D Ω _ _ κ _ x e hP hF
   have : (coordIdeal ℤ x).IsPrime := hP.2.1.1
   have := ProjFrameGraph.graphIdeal_isPrime (ι₂ := GlobalTheory (Fin (D + 1))) (coordIdeal ℤ x)
-    (linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e))
+    (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e))
   let G := Inter.genFibreOf (inrV (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))))
-    (graphIdeal (coordIdeal ℤ x) (linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e)))
+    (graphIdeal (coordIdeal ℤ x) (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e)))
   obtain ⟨J, hJ, -⟩ := hEU G.Φ (FibreBlock (Sum.inr : Unit → Unit ⊕ Unit))
     (fibreIdx (Sum.elim (GlobalTheory κ) (GlobalTheory (Fin (D + 1)))) Sum.inr)
   have hch := ProjFrameGraph.isChart_fibreChart G (e 0).2 (ProjFrameGraph.frame_ne_zero hF 0)
@@ -270,14 +270,14 @@ theorem ResolutionMixedBridge.proof : ResolutionMixedBridge.Statement := by
   have hex : ∃ Ψ : (((k : Unit) → GlobalTheory κ k) → ℂ) →ₗ[ℂ] (Fin (D + 1) → ℂ),
       IsGoodProj (coordIdeal ℤ d.x) Ψ :=
     goodProjExists Unit (GlobalTheory κ) (coordIdeal ℤ d.x) D d.arith
-  set B : HermLine (GlobalTheory κ) := (HermLine.ofCone m₁).tensor (HermLine.ofCone d.m).inv with hBdef
+  set B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (GlobalTheory κ) := (HermLine.ofCone m₁).tensor (HermLine.ofCone d.m).inv with hBdef
   have hB0 : B.a = 0 := by
     funext k
-    simp [B, HermLine.tensor, HermLine.inv, HermLine.ofCone]
+    simp [B, HermLine.tensor, ReciprocityTheory.ChartRestriction.G.Geo.HermLine.inv, HermLine.ofCone]
   have hgl : logRatio d.m m₁ = logNorm B.inv 1 := by
     funext z
     rw [logNorm_inv_one]
-    simp only [B, HermLine.tensor, HermLine.inv, HermLine.ofCone, logRatio, div_eq_mul_inv]
+    simp only [B, HermLine.tensor, ReciprocityTheory.ChartRestriction.G.Geo.HermLine.inv, HermLine.ofCone, logRatio, div_eq_mul_inv]
   have hBs : IsSmoothHerm B.inv :=
     isSmoothHerm_inv (isSmoothHerm_tensor (gbamix_smoothHerm_ofCone hm₁)
       (isSmoothHerm_inv (gbamix_smoothHerm_ofCone d.smooth)))
@@ -324,7 +324,7 @@ theorem SemiposTwist.proof : SemiposTwist.Statement := by
     exact (hL.1.pow q).mul (hH.pow p)
   refine ⟨hsm, fun z hz w hw => ?_⟩
   have hzU : z ∈ U := hz.1
-  have hlog : ∀ A : HermLine ι, IsSmoothHerm A → ContDiffAt ℝ 2 (fun y => Real.log (A.h y)) z :=
+  have hlog : ∀ A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι, IsSmoothHerm A → ContDiffAt ℝ 2 (fun y => Real.log (A.h y)) z :=
     fun A hA => ((hA.contDiffAt (hUo.mem_nhds hzU)).of_le (WithTop.coe_le_coe.2 le_top)).log
       (A.pos z hzU).ne'
   have h1 := hlog L hL.1
