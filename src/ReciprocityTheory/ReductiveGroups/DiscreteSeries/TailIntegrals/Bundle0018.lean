@@ -15,6 +15,7 @@ open scoped ENNReal
 
 namespace ReciprocityTheory.ChartRestriction.DS.Xi
 open Formalism.QuantumDeterminants Formalism.FourierDecayAlt.B Formalism.FourierDecayAlt.B2 BL
+attribute [-instance] Formalism.DoubleCosetMeasures.instMeasMat
 
 theorem bStepBase_of (hB2 : InductiveHeisenbergInputs) : BStepBase := by
   obtain ⟨-, -, -, -, hNB, -⟩ := hB2
