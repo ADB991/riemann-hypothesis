@@ -31,10 +31,10 @@ section Frames
 variable {r : ℕ} (X : Data E r)
 
 lemma perFr_smul (x : Frame X.Ψ r) (a : E) (v : Fin r → E) (τ : E →+* ℂ) (i : ℕ) :
-    perFr X x (a • v) τ i = τ a * perFr X x v τ i := by
+    Formalism.L2.PjFree.perFr X x (a • v) τ i = τ a * Formalism.L2.PjFree.perFr X x v τ i := by
   have hemb : ∀ ρ : E →+* ℂ, Data.emb ρ (a • v) = ρ a • Data.emb ρ v := fun ρ => by
     funext k; simp [Data.emb]
-  unfold perFr
+  unfold Formalism.L2.PjFree.perFr
   split_ifs
   · rw [hemb, Matrix.mulVec_smul]; rfl
   · simp
@@ -152,7 +152,7 @@ lemma exists_idx (hσ : GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) :
       (∀ j, relab c σ (Uw.e j).1 =
         if ((idx j).2 : ℕ) < Dw.q then ComplexEmbedding.conjugate (idx j).1.1 else (idx j).1.1) ∧
       (∀ j, ((idx j).2 : ℕ) < Dw.q → ((Uw.e j).2 : ℕ) < Dw.q) ∧
-      ∀ (x : Frame (U.X k).Ψ r) (v : Fin r → E) j, perFr (U.X k) x v (relab c σ (Uw.e j).1) (Uw.e j).2 =
+      ∀ (x : Frame (U.X k).Ψ r) (v : Fin r → E) j, Formalism.L2.PjFree.perFr (U.X k) x v (relab c σ (Uw.e j).1) (Uw.e j).2 =
         if ((idx j).2 : ℕ) < Dw.q then
           hermC (idx j).1.1 (U.X k).Gm (FD.col (mat x (idx j).1) (idx j).2) (Data.emb (idx j).1.1 v)
         else ((mat x (idx j).1)⁻¹ *ᵥ Data.emb (idx j).1.1 v) (idx j).2 := by
@@ -183,10 +183,10 @@ lemma exists_idx (hσ : GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) :
     rw [← hp0] at h ⊢
     rcases h with ⟨a, rfl, rfl⟩ | ⟨a, rfl, rfl, d⟩
     · rw [if_neg (by omega)]
-      unfold perFr
+      unfold Formalism.L2.PjFree.perFr
       rw [dite_eq_left a, dite_eq_left hn]
     · rw [if_pos (by omega)]
-      unfold perFr
+      unfold Formalism.L2.PjFree.perFr
       rw [dite_eq_right a, dite_eq_left (show conjEmb (relab c σ (Uw.e j).1) ∈ (U.X k).Ψ from hτ), dite_eq_left hn]
       rfl
 
@@ -227,7 +227,7 @@ lemma flow_period (hσ : GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) (hκ : (U.X k
     have := map_cc τ sE
     rw [hs] at this
     exact Complex.conj_eq_iff_re.1 this.symm
-  have key : ∀ v j, perFr (U.X k) ((U.X k).flow ξ' (fun τ => d * ((τ.1 sE).re : ℂ)) x.1)
+  have key : ∀ v j, Formalism.L2.PjFree.perFr (U.X k) ((U.X k).flow ξ' (fun τ => d * ((τ.1 sE).re : ℂ)) x.1)
       (Uw.φ k v : Fin r → E) (relab c σ (Uw.e j).1) (Uw.e j).2 = P v j := by
     intro v j
     rw [hPx, Pi.add_apply, Pi.smul_apply, Uw.Pm_eq, Uw.Pm_eq, hnn, perFr_smul, hty j]
@@ -236,8 +236,8 @@ lemma flow_period (hσ : GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) (hκ : (U.X k
         (idx j).1 (Uw.e j).2 (hp0 ▸ hlt j hj)
       have h2 : conjEmb (idx j).1.1 sE = (((idx j).1.1 sE).re : ℂ) := by
         rw [← hre (conjEmb (idx j).1.1)]; simp [conjEmb]
-      change perFr _ _ _ (conjEmb (idx j).1.1) _ = perFr _ _ _ (conjEmb (idx j).1.1) _ +
-        d • (conjEmb (idx j).1.1 _ * perFr _ _ _ (conjEmb (idx j).1.1) _)
+      change Formalism.L2.PjFree.perFr _ _ _ (conjEmb (idx j).1.1) _ = Formalism.L2.PjFree.perFr _ _ _ (conjEmb (idx j).1.1) _ +
+        d • (conjEmb (idx j).1.1 _ * Formalism.L2.PjFree.perFr _ _ _ (conjEmb (idx j).1.1) _)
       rw [h, mul_assoc sE, map_neg, map_mul _ sE, h2, smul_eq_mul]
       ring
     · rw [GlobalTheory.PerFlow.flow_mem (U.X k) hξ', mul_assoc sE, map_neg, map_mul _ sE, hre, smul_eq_mul]

@@ -451,7 +451,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.Cha
 def IsValCentre {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) [P.IsPrime]
     (R : ValuationSubring (FractionRing (MRing ι ⧸ P))) (y : Ideal (MRing ι)) : Prop :=
   IsMultiProjPrime y ∧ P ≤ y ∧
-    ∀ (b : K → ℕ) (f g : MRing ι), IsMultiHomog f b → IsMultiHomog g b → g ∉ y →
+    ∀ (b : K → ℕ) (f g : MRing ι), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f b → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g b → g ∉ y →
       algebraMap (MRing ι ⧸ P) (FractionRing (MRing ι ⧸ P)) (Ideal.Quotient.mk P f) /
           algebraMap (MRing ι ⧸ P) (FractionRing (MRing ι ⧸ P)) (Ideal.Quotient.mk P g) ∈ R ∧
         (f ∈ y ↔ algebraMap (MRing ι ⧸ P) (FractionRing (MRing ι ⧸ P)) (Ideal.Quotient.mk P f) /

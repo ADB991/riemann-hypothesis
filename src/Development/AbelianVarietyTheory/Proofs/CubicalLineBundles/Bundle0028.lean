@@ -368,7 +368,7 @@ theorem ellPull_prim {S S' : Scheme.{0}} {G : Over S} {G' : Over S'} [GrpObj G] 
     (h : LBIso L (cubeLB G ![𝟙 G, w] L)) : LBIso L' (cubeLB G' ![𝟙 G', w'] L') := by
   let U : Over.mk (G'.hom ≫ f) ⟶ G := Over.homMk g hg.1.w
   have H₁ : LBIso (L.pull g) (cubeLB G' ![𝟙 G', w'] (L.pull g)) := by
-    refine LBIso.chartPull (chartPullPull L g U.left rfl)
+    refine LBIso.chartPull (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull L g U.left rfl)
       (chartPullLinComb L g _ _ _ U.left fun I => lamBC_psum_push hg _ _ U (fun k => ?_) I.down) h
     fin_cases k
     · refine Over.OverMorphism.ext ?_
