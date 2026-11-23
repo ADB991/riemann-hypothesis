@@ -35,7 +35,7 @@ theorem aeval_mem (F : IntermediateField ℚ Ω) (w : (Σ k, ι k) → Ω) (hw :
 
 
 omit [CharZero Ω] in
-theorem aeval_scale {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) (y : (Σ k, ι k) → Ω) (t : K → Ω) :
+theorem aeval_scale {g : MRing ι} {d : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) (y : (Σ k, ι k) → Ω) (t : K → Ω) :
     aeval (fun p => y p * t p.1) g = aeval y g * ∏ k, t k ^ d k := by
   have h := congrArg (MvPolynomial.eval t) (ProjLine.mConeMap_eq_of_isMultiHomog y hg)
   rw [map_mul, eval_C, map_prod] at h
@@ -85,7 +85,7 @@ theorem trdeg_eq {y : (Σ k, ι k) → Ω} {D : ℕ} (hA : IsArithVar (mCoordIde
 
 omit [CharZero Ω] in
 theorem exists_ne_zero {y : (Σ k, ι k) → Ω} {D : ℕ} {e : K → ℕ} {L : Fin (D + 1) → MRing ι}
-    (hA : IsArithVar (mCoordIdeal y) (D + 1)) (hL : ∀ j, IsMultiHomog (L j) e)
+    (hA : IsArithVar (mCoordIdeal y) (D + 1)) (hL : ∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (L j) e)
     (hz : ∀ z ∈ mcPts (mCoordIdeal y), ∃ j, eval z (map (Int.castRingHom ℂ) (L j)) ≠ 0) :
     ∃ j, aeval y (L j) ≠ 0 := by
   have hne : ¬ (⊤ : Ideal (MRing ι)) ≤ mCoordIdeal y := fun h =>

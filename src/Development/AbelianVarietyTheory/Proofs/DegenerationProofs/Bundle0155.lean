@@ -72,8 +72,8 @@ theorem isUnit_sval_iff {X Y Z : Scheme.{0}} {L : LB X} {K : Type} [Fintype K] {
     IsUnit (sval s r z J) ↔ r z ∈ nonzeroLocus s := by
   have key : ∀ (U : Y.Opens) (_ : r z ∈ U) (f : Γ(Y, U)), IsUnit (gs r z U f) ↔ IsUnit (gs (𝟙 Y) (r z) U f) :=
     fun U h f => by rw [gs_stalkMap r z U h, isUnit_map_iff]
-  refine ⟨fun h => (mem_nonzeroLocus s _).2 ⟨_, hJ.mem φ r, (key _ (hJ.mem φ r) _).1 h⟩, fun h => ?_⟩
-  obtain ⟨j, hj, hu⟩ := (mem_nonzeroLocus s _).1 h
+  refine ⟨fun h => (ReciprocityTheory.ChartRestriction.G.Geo.Tor.mem_nonzeroLocus s _).2 ⟨_, hJ.mem φ r, (key _ (hJ.mem φ r) _).1 h⟩, fun h => ?_⟩
+  obtain ⟨j, hj, hu⟩ := (ReciprocityTheory.ChartRestriction.G.Geo.Tor.mem_nonzeroLocus s _).1 h
   rw [sval, sec_trans s r z (hJ.mem φ r) hj]
   exact (Units.isUnit _).mul ((key _ hj _).2 hu)
 

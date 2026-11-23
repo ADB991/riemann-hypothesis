@@ -50,9 +50,9 @@ theorem mem_divSupp_and_multAt_eq {P W : Ideal (MRing κ)} {f g u v : MRing κ} 
 theorem divCycle_eq_of_local {P : Ideal (MRing κ)} {f g : MRing κ}
     (h : ∀ W : Ideal (MRing κ), W.IsPrime → P ≤ W → IsRelevant W →
       ∃ u v, u ∉ W ∧ v ∉ W ∧ u * f - v * g ∈ P) :
-    divCycle P f = divCycle P g := by
+    ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f = ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g := by
   ext W
-  simp only [divCycle, Finsupp.ofSupportFinite_coe]
+  simp only [ReciprocityTheory.ChartRestriction.G.Geo.divCycle, Finsupp.ofSupportFinite_coe]
   by_cases hf : W ∈ divSupp P f
   · obtain ⟨u, v, hu, hv, huv⟩ := h W hf.1.1.1 (le_sup_left.trans hf.1.1.2) hf.2
     obtain ⟨hg, e⟩ := mem_divSupp_and_multAt_eq hf hu hv huv

@@ -196,7 +196,7 @@ theorem exists_cut (h₀ : RigIso Y.m0.toSABMap w₀) (h₁ : RigIso Y.m w₁)
             · simp [U]
             · exact (pa _ _).trans (by simp [U])
         · let U := pushPt h.1.w (𝟙 ((Over.pullback f).obj t.G))
-          refine LBIso.chartPull (chartPullPull t.PP.L _ _ rfl)
+          refine LBIso.chartPull (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull t.PP.L _ _ rfl)
             (chartPullLinComb t.PP.L _ _ _ _ U.left fun I => psum_push h _ _ U (fun i => ?_) I.down) t.prim
           fin_cases i
           · simp [U]

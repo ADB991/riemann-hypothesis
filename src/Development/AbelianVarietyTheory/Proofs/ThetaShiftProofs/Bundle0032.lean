@@ -211,10 +211,10 @@ theorem gen_unique (hT : Out.SecTwistSt) {σ' : KA l →+* ℂ} {g : ℕ} {ty : 
     (hf' : IsThetaFrameAt Xo.univ.t.PP (F.u k P) (fun w => (F.ex k P w).left) θ fr')
     (s s' : LB.Sec (PPx (F.u k P))) (hs : GlobalTheory.Frames.SecGen (F.u k P) s)
     (hv : ∀ j z (pt : Sp ℂ ⟶ Gx (F.u k P)), pt ≫ Formalism.L2.PjFree.gxFst (F.u k P) = (F.ex k P z).left →
-      pt ≫ gxSnd (F.u k P) = 𝟙 (Sp ℂ) → ⊤ ≤ (F.ex k P z).left ⁻¹ᵁ Xo.univ.t.PP.L.U j →
+      pt ≫ Formalism.L2.PjFree.gxSnd (F.u k P) = 𝟙 (Sp ℂ) → ⊤ ≤ (F.ex k P z).left ⁻¹ᵁ Xo.univ.t.PP.L.U j →
       valAt' pt ((PPx (F.u k P)).U (fun _ => j)) (s.f (fun _ => j)) = κ * θ z * fr j z)
     (hv' : ∀ j z (pt : Sp ℂ ⟶ Gx (F.u k P)), pt ≫ Formalism.L2.PjFree.gxFst (F.u k P) = (F.ex k P z).left →
-      pt ≫ gxSnd (F.u k P) = 𝟙 (Sp ℂ) → ⊤ ≤ (F.ex k P z).left ⁻¹ᵁ Xo.univ.t.PP.L.U j →
+      pt ≫ Formalism.L2.PjFree.gxSnd (F.u k P) = 𝟙 (Sp ℂ) → ⊤ ≤ (F.ex k P z).left ⁻¹ᵁ Xo.univ.t.PP.L.U j →
       valAt' pt ((PPx (F.u k P)).U (fun _ => j)) (s'.f (fun _ => j)) = κ * θ z * fr' j z) :
     ∀ i, s'.f i = s.f i := by
   obtain ⟨h1, -, h3⟩ := GlobalTheory.sec_values_complex_fibre hT E H Dw l Xo (F.u k P) s
@@ -232,7 +232,7 @@ theorem gen_unique (hT : Out.SecTwistSt) {σ' : KA l →+* ℂ} {g : ℕ} {ty : 
     let pt : Sp ℂ ⟶ Gx (F.u k P) :=
       pullback.lift (f := (Over.mk (F.u k P)).hom) (g := Xo.univ.t.G.hom) (𝟙 _) (F.ex k P z).left (hw z).symm
     have p1 : pt ≫ Formalism.L2.PjFree.gxFst (F.u k P) = (F.ex k P z).left := pullback.lift_snd _ _ _
-    have p2 : pt ≫ gxSnd (F.u k P) = 𝟙 (Sp ℂ) := pullback.lift_fst _ _ _
+    have p2 : pt ≫ Formalism.L2.PjFree.gxSnd (F.u k P) = 𝟙 (Sp ℂ) := pullback.lift_fst _ _ _
     have e' := (congrArg (valAt' pt ((PPx (F.u k P)).U (fun _ => j))) (ha (fun _ => j))).trans (h1 a _ pt p2)
     rw [hv j z pt p1 p2 hz, hv' j z pt p1 p2 hz] at e'
     refine mul_left_cancel₀ hκ ?_

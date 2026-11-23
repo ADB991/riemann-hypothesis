@@ -194,7 +194,7 @@ theorem GlobalTheory.isIsog_of_surjective_baseChange :
   · have hP : (lbPow o₁.t.PP.L (p ^ 2)).IsLB := LB.isLB_linComb o₁.t.PP.isLB _ _
     have hP' : (lbPow o₁'.t.PP.L (p ^ 2)).IsLB := LB.isLB_linComb o₁'.t.PP.isLB _ _
     have hQ := pull_isLB o₂.t.PP.isLB ψ.left
-    obtain ⟨c, hc⟩ := exists_gen_pow o₁.t.PP.L _ ((p ^ 2 : ℕ) : ℤ) o₁.t.PP.rig o₁.t.PP.rigGen
+    obtain ⟨c, hc⟩ := GlobalTheory.IsogDescent.exists_gen_pow o₁.t.PP.L _ ((p ^ 2 : ℕ) : ℤ) o₁.t.PP.rig o₁.t.PP.rigGen
     obtain ⟨c₁, hc₁⟩ := gen_chartPull (chartPullOut o₁.t.PP.L (K := PUnit) (fun _ => 𝟙 _) (fun _ => ((p ^ 2 : ℕ) : ℤ))
       (eSec o₁.t.G) (fun _ => eSec o₁.t.G) fun _ => (Category.comp_id _).symm) c hc
     obtain ⟨c₂, hc₂⟩ := gen_chartPull (chartPullOut o₂.t.PP.L (K := PUnit) (fun _ => ψ.left) (fun _ => 1)

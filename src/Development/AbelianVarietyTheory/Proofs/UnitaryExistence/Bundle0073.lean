@@ -101,7 +101,7 @@ theorem trace_herm_gmW (V : HSp D) {r : ℕ} (hr : V.rank = r) (x y : V.V) :
     Algebra.trace ℚ D.host.E (D.host.xi0 *
       herm (gmW V hr) (V.frame.equivFun x ∘ Fin.cast hr.symm) (V.frame.equivFun y ∘ Fin.cast hr.symm)) =
       Algebra.trace ℚ D.host.E (D.host.xi0 * V.hT x y) := by
-  rw [herm_gmW, ← trace_cc D (D.host.xi0 * V.hT x y), map_mul (IsCMField.complexConj D.host.E), conj_xi0_alt]
+  rw [herm_gmW, ← Formalism.L2.Pj.trace_cc D (D.host.xi0 * V.hT x y), map_mul (IsCMField.complexConj D.host.E), conj_xi0_alt]
   have h : IsCMField.complexConj D.host.E (V.hT x y) = V.hT y x := LinearMap.isSymm_def.1 V.herm x y
   rw [h, mul_neg, neg_mul]
 

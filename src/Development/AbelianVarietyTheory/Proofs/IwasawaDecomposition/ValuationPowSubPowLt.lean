@@ -76,7 +76,7 @@ def IsHeckeOf (art : GlobalTheory.Mem.Chr.Ideles E →* Gab E Ω) (r : G E Ω �
 def heckeOf (ha : IsGlobalArtin art) (r : G E Ω →* ℂˣ) (hr : IsOpen (r.ker : Set (G E Ω))) : HChar E :=
   ⟨(liftAb r (continuous_of_isOpen_ker' r hr)).comp art,
     (continuous_liftAb r (continuous_of_isOpen_ker' r hr)).comp ha.quot.continuous, fun k => by
-      have hk : diagUnits E k ∈ art.ker := by
+      have hk : Neutral.B1.diagUnits E k ∈ art.ker := by
         rw [ha.ker]
         exact Subgroup.le_topologicalClosure _ (Subgroup.mem_sup_left ⟨k, rfl⟩)
       rw [MonoidHom.comp_apply, MonoidHom.mem_ker.mp hk, map_one]⟩

@@ -224,7 +224,7 @@ namespace GroundTheory.Heights₂.Heights.HilbertSamuel
 open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
 
 theorem MixedKleimanLow.exists_monomial {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
-    (P : Ideal (MRing ι)) (hP : P.IsPrime) (hrel : IsRelevant P) (a : K → ℕ) :
+    (P : Ideal (MRing ι)) (hP : P.IsPrime) (hrel : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant P) (a : K → ℕ) :
     ∃ μ : (Σ k, ι k) →₀ ℕ, (∀ k, ∑ i, μ ⟨k, i⟩ = a k) ∧ (monomial μ 1 : MRing ι) ∉ P ∧
       ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (monomial μ 1 : MRing ι) a := by
   classical

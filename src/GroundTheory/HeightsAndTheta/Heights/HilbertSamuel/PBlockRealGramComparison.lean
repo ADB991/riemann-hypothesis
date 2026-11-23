@@ -27,16 +27,16 @@ variable {D : ℕ} {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀
   {Ω : Type} [Field Ω] [CharZero Ω]
 
 theorem conj_pairValH (A : HermLine ι) (n : ℕ) (b b' : MvPolynomial (Σ k, ι k) ℚ) (z : (Σ k, ι k) → ℂ) :
-    conj (pairValH A n b b' z) = pairValH A n b' b z := by
-  simp only [pairValH, map_div₀, map_mul, Complex.conj_conj, Complex.conj_ofReal]
+    conj (GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH A n b b' z) = GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH A n b' b z := by
+  simp only [GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH, map_div₀, map_mul, Complex.conj_conj, Complex.conj_ofReal]
   ring
 
 theorem pairValH_conjPt (A : HermLine ι) (hA : IsConjInvariantH A) (n : ℕ) (f f' : MRing ι)
     (z : (Σ k, ι k) → ℂ) :
-    pairValH A n (map (Int.castRingHom ℚ) f) (map (Int.castRingHom ℚ) f') (conjPt z) =
-      conj (pairValH A n (map (Int.castRingHom ℚ) f) (map (Int.castRingHom ℚ) f') z) := by
+    GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH A n (map (Int.castRingHom ℚ) f) (map (Int.castRingHom ℚ) f') (conjPt z) =
+      conj (GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH A n (map (Int.castRingHom ℚ) f) (map (Int.castRingHom ℚ) f') z) := by
   have hh : A.h (conjPt z) = A.h z := hA z
-  simp only [pairValH, SupBoundCount.eval_map_int_rat, SupBoundCount.eval_conjPt, hh, map_div₀, map_mul,
+  simp only [GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH, SupBoundCount.eval_map_int_rat, SupBoundCount.eval_conjPt, hh, map_div₀, map_mul,
     Complex.conj_ofReal]
 
 theorem blockGram_symm (d : HSMBlockDatum D K ι Ω) (n : ℕ) {r : ℕ} (b : Fin r → MvPolynomial (Σ k, ι k) ℚ)
@@ -66,32 +66,32 @@ theorem sum_quad {r : ℕ} (c w : Fin r → ℂ) (t : ℝ) :
 
 theorem quad_gram {X : Type*} [MeasurableSpace X] (μ : Measure X) (A : HermLine ι) (n : ℕ) {r : ℕ}
     (f : Fin r → MRing ι) (p : X → (Σ k, ι k) → ℂ) (M : Matrix (Fin r) (Fin r) ℂ)
-    (hM : ∀ k l, M k l = ∫ x, pairValH A n (map (Int.castRingHom ℚ) (f k)) (map (Int.castRingHom ℚ) (f l)) (p x) ∂μ)
+    (hM : ∀ k l, M k l = ∫ x, GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH A n (map (Int.castRingHom ℚ) (f k)) (map (Int.castRingHom ℚ) (f l)) (p x) ∂μ)
     (hi : ∀ k l, Integrable (fun x =>
-      pairValH A n (map (Int.castRingHom ℚ) (f k)) (map (Int.castRingHom ℚ) (f l)) (p x)) μ)
+      GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH A n (map (Int.castRingHom ℚ) (f k)) (map (Int.castRingHom ℚ) (f l)) (p x)) μ)
     (c : Fin r → ℂ) :
     star c ⬝ᵥ (M *ᵥ c) =
       ((∫ x, (‖∑ k, conj (c k) * eval (p x) (map (Int.castRingHom ℂ) (f k))‖ / A.h (p x) ^ n) ^ 2 ∂μ : ℝ) : ℂ) := by
   rw [← integral_complex_ofReal]
   calc star c ⬝ᵥ (M *ᵥ c)
-      = ∑ k, ∑ l, ∫ x, conj (c k) * pairValH A n (map (Int.castRingHom ℚ) (f k))
+      = ∑ k, ∑ l, ∫ x, conj (c k) * GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH A n (map (Int.castRingHom ℚ) (f k))
           (map (Int.castRingHom ℚ) (f l)) (p x) * c l ∂μ := by
         simp only [dotProduct, Matrix.mulVec, Finset.mul_sum, Pi.star_apply, Complex.star_def, hM]
         refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
         rw [integral_mul_const, integral_const_mul]
         ring
-    _ = ∫ x, ∑ k, ∑ l, conj (c k) * pairValH A n (map (Int.castRingHom ℚ) (f k))
+    _ = ∫ x, ∑ k, ∑ l, conj (c k) * GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH A n (map (Int.castRingHom ℚ) (f k))
           (map (Int.castRingHom ℚ) (f l)) (p x) * c l ∂μ := by
         rw [integral_finsetSum _ fun k _ => integrable_finsetSum _ fun l _ => ((hi k l).const_mul _).mul_const _]
         refine Finset.sum_congr rfl fun k _ => ?_
         rw [integral_finsetSum _ fun l _ => ((hi k l).const_mul _).mul_const _]
     _ = _ := by
         refine integral_congr_ae (Eventually.of_forall fun x => ?_)
-        have e : ∀ k l, pairValH A n (map (Int.castRingHom ℚ) (f k)) (map (Int.castRingHom ℚ) (f l)) (p x) =
+        have e : ∀ k l, GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH A n (map (Int.castRingHom ℚ) (f k)) (map (Int.castRingHom ℚ) (f l)) (p x) =
             eval (p x) (map (Int.castRingHom ℂ) (f k)) * conj (eval (p x) (map (Int.castRingHom ℂ) (f l))) /
               (((A.h (p x) ^ n) ^ 2 : ℝ) : ℂ) := by
           intro k l
-          simp only [pairValH, SupBoundCount.eval_map_int_rat]
+          simp only [GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH, SupBoundCount.eval_map_int_rat]
           rw [← pow_mul, mul_comm n 2]
         simp only [e]
         exact sum_quad c (fun k => eval (p x) (map (Int.castRingHom ℂ) (f k))) _
@@ -162,7 +162,7 @@ theorem abs_sub_le (hR : BlockResolutionSupBound.Statement) (d : HSMBlockDatum D
     (SupBoundCount.pairValH_torus d (hf k) (hf l))
   set G := blockCGram d n (fun j => map (Int.castRingHom ℚ) (f j)) with hG
   set H := blockGram d n (fun j => map (Int.castRingHom ℚ) (f j)) with hH
-  set G₁ : Matrix (Fin r) (Fin r) ℂ := Matrix.of fun k l => ∫ x, pairValH d.A n (map (Int.castRingHom ℚ) (f k))
+  set G₁ : Matrix (Fin r) (Fin r) ℂ := Matrix.of fun k l => ∫ x, GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH d.A n (map (Int.castRingHom ℚ) (f k))
     (map (Int.castRingHom ℚ) (f l)) (conjPt (blockPt d x)) ∂d.dV with hG₁
   set Hc : Matrix (Fin r) (Fin r) ℂ := H.map (fun t : ℝ => (t : ℂ)) with hHc
 

@@ -36,13 +36,13 @@ theorem integral_second_axis_points : ∀ k i, IntS V (((![0, pt C dd 1] : Fin 2
   · exact intS_X _
 
 theorem eval_outer_points_first (j : Fin dd) : ev (n := 2) ((![pt C dd 0, 0, pt C dd 1] : Fin 3 → Pt C 2 dd)) (pt C (n := 3) dd 0 j) = pt C dd 0 j := by
-  rw [show (pt C (n := 3) dd 0 j) = X ((0 : Fin 3), j) from rfl, ev_X constant_zero_outer_points]; rfl
+  rw [show (pt C (n := 3) dd 0 j) = X ((0 : Fin 3), j) from rfl, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_X constant_zero_outer_points]; rfl
 
 theorem eval_outer_points_middle (j : Fin dd) : ev (n := 2) ((![pt C dd 0, 0, pt C dd 1] : Fin 3 → Pt C 2 dd)) (pt C (n := 3) dd 1 j) = 0 := by
-  rw [show (pt C (n := 3) dd 1 j) = X ((1 : Fin 3), j) from rfl, ev_X constant_zero_outer_points]; rfl
+  rw [show (pt C (n := 3) dd 1 j) = X ((1 : Fin 3), j) from rfl, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_X constant_zero_outer_points]; rfl
 
 theorem eval_outer_points_last (j : Fin dd) : ev (n := 2) ((![pt C dd 0, 0, pt C dd 1] : Fin 3 → Pt C 2 dd)) (pt C (n := 3) dd 2 j) = pt C dd 1 j := by
-  rw [show (pt C (n := 3) dd 2 j) = X ((2 : Fin 3), j) from rfl, ev_X constant_zero_outer_points]; rfl
+  rw [show (pt C (n := 3) dd 2 j) = X ((2 : Fin 3), j) from rfl, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_X constant_zero_outer_points]; rfl
 
 theorem group_law_zero_right (Y : FBChart C V O dd) {n : ℕ} (P : Pt C n dd) (hP : ∀ j, constantCoeff (P j) = 0) (j : Fin dd) :
     ev (n := n) ![P, 0] (Y.B.G.F j) = P j := by
@@ -52,8 +52,8 @@ theorem group_law_zero_right (Y : FBChart C V O dd) {n : ℕ} (P : Pt C n dd) (h
   have e1 : (fun k i => ev (n := n) (![P, 0] : Fin 2 → Pt C n dd) ((![pt C dd 1, pt C dd 0] : Fin 2 → Pt C 2 dd) k i)) =
       ![0, P] := by
     funext k i; fin_cases k
-    · exact ev_X hA 1 i
-    · exact ev_X hA 0 i
+    · exact Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_X hA 1 i
+    · exact Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_X hA 0 i
   rw [e1]
   have hB : Z0 (![P] : Fin 1 → Pt C n dd) := z0_1 P hP
   have hU : Z0 (![0, pt C dd 0] : Fin 2 → Pt C 1 dd) := by
@@ -64,8 +64,8 @@ theorem group_law_zero_right (Y : FBChart C V O dd) {n : ℕ} (P : Pt C n dd) (h
       fun k i => ev (n := n) (![P] : Fin 1 → Pt C n dd) ((![0, pt C dd 0] : Fin 2 → Pt C 1 dd) k i) := by
     funext k i; fin_cases k
     · exact (ev_zero hB).symm
-    · exact (ev_X hB 0 i).symm
-  rw [e2, ← ev_ev hU hB, Y.B.G.unit j, ev_X hB]
+    · exact (Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_X hB 0 i).symm
+  rw [e2, ← ev_ev hU hB, Y.B.G.unit j, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_X hB]
   rfl
 
 theorem pderiv_ev_fst {n : ℕ} (A B : Pt C n dd) (hA : ∀ j, constantCoeff (A j) = 0) (hB : ∀ j, constantCoeff (B j) = 0)

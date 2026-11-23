@@ -27,7 +27,7 @@ theorem prod_X_pow_eq (d : K → ℕ) :
   rw [monomial_eq, C_1, one_mul, Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]
   simp
 
-theorem mConeMap_of_homog (y : (Σ k, ι k) → Ω) {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) :
+theorem mConeMap_of_homog (y : (Σ k, ι k) → Ω) {g : MRing ι} {d : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) :
     mConeMap y g = MvPolynomial.C (aeval y g) * monomial (Finsupp.equivFunOnFinite.symm d) 1 := by
   classical
   rw [← prod_X_pow_eq]
@@ -66,7 +66,7 @@ theorem aeval_i2comp_of_mem (y : (Σ k, ι k) → Ω) {p : MRing ι} (hp : p ∈
   rw [aeval_i2comp, show mConeMap y p = 0 from RingHom.mem_ker.mp hp]
   rfl
 
-theorem mem_mCoordIdeal_of_homog (y : (Σ k, ι k) → Ω) {f : MRing ι} {d : K → ℕ} (hf : IsMultiHomog f d)
+theorem mem_mCoordIdeal_of_homog (y : (Σ k, ι k) → Ω) {f : MRing ι} {d : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f d)
     (h0 : aeval y f = 0) : f ∈ mCoordIdeal y := by
   show f ∈ RingHom.ker (mConeMap y)
   rw [RingHom.mem_ker, mConeMap_of_homog y hf, h0, map_zero, zero_mul]
@@ -93,13 +93,13 @@ theorem pow_le_evPiece (y : (Σ k, ι k) → Ω) {L : Submodule ℤ Ω} {d : K �
     rw [pow_succ, succ_nsmul]
     exact (mul_le_mul' (pow_le_evPiece y h n) h).trans (evPiece_mul_le y _ _)
 
-theorem map_piece [DecidableEq K] (y : (Σ k, ι k) → Ω) {g : MRing ι} {e : K → ℕ} (hg : IsMultiHomog g e)
+theorem map_piece [DecidableEq K] (y : (Σ k, ι k) → Ω) {g : MRing ι} {e : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g e)
     (k : K) (m : K → ℕ) :
     ((mCoordIdeal y ⊔ Ideal.span (Set.range fun j : ι k => g * X ⟨k, j⟩)).restrictScalars ℤ ⊓
         mHom ι (m + (e + Pi.single k 1))).map (aeval y).toLinearMap =
       (Submodule.span ℤ (Set.range fun j : ι k => y ⟨k, j⟩) * evPiece y m).map
         (LinearMap.mulLeft ℤ (aeval y g)) := by
-  have hgX : ∀ j, IsMultiHomog (g * X ⟨k, j⟩) (e + Pi.single k 1) := fun j =>
+  have hgX : ∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (g * X ⟨k, j⟩) (e + Pi.single k 1) := fun j =>
     isMultiHomog_mul' hg (isMultiHomog_X' k j)
   apply le_antisymm
   · rintro _ ⟨f, ⟨hfJ, hfH⟩, rfl⟩

@@ -62,13 +62,13 @@ set_option maxHeartbeats 1000000 in
 theorem exists_adapted (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E)
     (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (g : ℕ)
     (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ))
-    (F : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) (fun j => relab c σ (e j).1))
+    (F : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) (fun j => Formalism.L2.Pj.relab c σ (e j).1))
     (y : FrPt Xo c (CAt σ)) (k : Fin F.n) (P : (F.Di k).La →+ (Fin g → ℂ))
-    (hP : IsPeriod (F.Di k) (fun j => relab c σ (e j).1) P) (hy : F.u k P = y.x) :
+    (hP : IsPeriod (F.Di k) (fun j => Formalism.L2.Pj.relab c σ (e j).1) P) (hy : F.u k P = y.x) :
     ∃ (w : Fin g → Fin g → ℂ) (V : Matrix (Fin g) (Fin g) ℂ) (P' : (F.Di k).La →+ (Fin g → ℂ)),
       (∀ j, IsDerivAt0 (fun z => (F.ex k P z).left) (w j) (y.u (e j).1 (e j).2)) ∧
       (∀ j, V *ᵥ w j = Pi.single j 1) ∧ (∀ a, P' a = V *ᵥ P a) ∧
-      IsPeriod (F.Di k) (fun j => relab c σ (e j).1) P' ∧ y.x = F.u k P' ∧
+      IsPeriod (F.Di k) (fun j => Formalism.L2.Pj.relab c σ (e j).1) P' ∧ y.x = F.u k P' ∧
       ∀ τ (i : Fin (Dw.mult τ)),
         IsDerivAt0 (fun z => (F.ex k P' z).left) (Pi.single (e.symm ⟨τ, i⟩) 1) (y.u τ i) := by
   classical
@@ -98,7 +98,7 @@ theorem exists_adapted (E : Type) [Field E] [NumberField E] [IsCMField E] (H : R
     exact (hT.2.2 d hdt).unique hc hd
   obtain ⟨V, hVdet, hVblk, hVw⟩ := GlobalTheory.CoverFrame.exists_inverse_block e (fun j => wp (e j)) hblk
   obtain ⟨P', hP', hP'V⟩ := GlobalTheory.PeriodLin.exists_period_mulVec _ _ _ _ _ P V hP hVdet
-    (fun j j' h => congrArg (relab c σ) (hVblk j j' h))
+    (fun j j' h => congrArg (Formalism.L2.Pj.relab c σ) (hVblk j j' h))
   have hS : ∀ (Y : Type) [AddCommGroup Y] [Module.Free ℤ Y] [Module.Finite ℤ Y] (s : Y ≃ₗ[ℤ] Y) (n M : ℕ),
       0 < n → s ^ n = 1 → 3 ≤ M → (∀ y, ∃ z, s y = y + M • z) → s = 1 := by
     intro Y _ _ _ s n M hn hs hM h
@@ -127,7 +127,7 @@ theorem exists_adapted (E : Type) [Field E] [NumberField E] [IsCMField E] (H : R
 
 
 set_option maxHeartbeats 1000000 in
-theorem exists_holPeriods_adapted : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (g : ℕ) (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ)) (F : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) (fun j => relab c σ (e j).1)) (A : Type) [CommRing A] [Algebra c.F A] (yA : FrPt Xo c A) (m : ℕ) (B : Set (Fin m → ℂ)) (φ : (Fin m → ℂ) → (A →ₐ[c.F] CAt σ)) (y : (Fin m → ℂ) → FrPt Xo c (CAt σ)), IsOpen B → (∀ a, DifferentiableOn ℂ (fun b => toC (φ b a)) B) → (∀ b ∈ B, FrMap (φ b) yA (y b)) → ∀ b₀ ∈ B, ∃ (B' : Set (Fin m → ℂ)) (k : Fin F.n) (P : (Fin m → ℂ) → ((F.Di k).La →+ (Fin g → ℂ))), IsOpen B' ∧ b₀ ∈ B' ∧ B' ⊆ B ∧ IsHolPeriods (F.Di k) (fun j => relab c σ (e j).1) B' P ∧ ∀ b ∈ B', (y b).x = F.u k (P b) ∧ ∀ τ (i : Fin (Dw.mult τ)), IsDerivAt0 (fun z => (F.ex k (P b) z).left) (Pi.single (e.symm ⟨τ, i⟩) 1) ((y b).u τ i) := by
+theorem exists_holPeriods_adapted : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (g : ℕ) (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ)) (F : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) (fun j => Formalism.L2.Pj.relab c σ (e j).1)) (A : Type) [CommRing A] [Algebra c.F A] (yA : FrPt Xo c A) (m : ℕ) (B : Set (Fin m → ℂ)) (φ : (Fin m → ℂ) → (A →ₐ[c.F] CAt σ)) (y : (Fin m → ℂ) → FrPt Xo c (CAt σ)), IsOpen B → (∀ a, DifferentiableOn ℂ (fun b => toC (φ b a)) B) → (∀ b ∈ B, FrMap (φ b) yA (y b)) → ∀ b₀ ∈ B, ∃ (B' : Set (Fin m → ℂ)) (k : Fin F.n) (P : (Fin m → ℂ) → ((F.Di k).La →+ (Fin g → ℂ))), IsOpen B' ∧ b₀ ∈ B' ∧ B' ⊆ B ∧ IsHolPeriods (F.Di k) (fun j => Formalism.L2.Pj.relab c σ (e j).1) B' P ∧ ∀ b ∈ B', (y b).x = F.u k (P b) ∧ ∀ τ (i : Fin (Dw.mult τ)), IsDerivAt0 (fun z => (F.ex k (P b) z).left) (Pi.single (e.symm ⟨τ, i⟩) 1) ((y b).u τ i) := by
   intro E _ _ _ H Dw l Xo c σ g e F A _ _ yA m B φ y hB hφ hmap b₀ hb₀
   have hpts : IsHolTo B (fun b => (y b).x) := by
     have h1 := GlobalTheory.ThetaValueCont.isHolTo_spMap hB (fun b => ((φ b).toRingHom : A →+* ℂ)) (fun a => hφ a)
