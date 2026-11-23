@@ -155,9 +155,9 @@ theorem isOpen_blocks : IsOpen {z : (Σ k, ι k) → ℂ | ∀ k, ∃ i, z ⟨k,
   exact isOpen_iInter_of_finite fun k => isOpen_iUnion fun i =>
     isOpen_ne_fun (continuous_apply _) continuous_const
 
-def logRatio (A A' : HermLine ι) (z : (Σ k, ι k) → ℂ) : ℝ := Real.log (A.h z) - Real.log (A'.h z)
+def logRatio (A A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (z : (Σ k, ι k) → ℂ) : ℝ := Real.log (A.h z) - Real.log (A'.h z)
 
-theorem continuousAt_logRatio {A A' : HermLine ι} (hA : IsSmoothHerm A) (hA' : IsSmoothHerm A')
+theorem continuousAt_logRatio {A A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA : IsSmoothHerm A) (hA' : IsSmoothHerm A')
     {z : (Σ k, ι k) → ℂ} (hz : ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) : ContinuousAt (logRatio A A') z := by
   have hn := isOpen_blocks.mem_nhds hz
   exact ((hA.continuousOn.continuousAt hn).log (A.pos z hz).ne').sub
@@ -165,7 +165,7 @@ theorem continuousAt_logRatio {A A' : HermLine ι} (hA : IsSmoothHerm A) (hA' : 
 
 
 omit [∀ k, Fintype (ι k)] in
-theorem logRatio_torusSmul {A A' : HermLine ι} (ha : A.a = A'.a) (c : K → ℂ) (hc : ∀ k, c k ≠ 0)
+theorem logRatio_torusSmul {A A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (ha : A.a = A'.a) (c : K → ℂ) (hc : ∀ k, c k ≠ 0)
     {z : (Σ k, ι k) → ℂ} (hz : ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) :
     logRatio A A' (torusSmul c z) = logRatio A A' z := by
   have hpos : 0 < ∏ k, ‖c k‖ ^ A.a k := Finset.prod_pos fun k _ => zpow_pos (norm_pos_iff.2 (hc k)) _
@@ -202,7 +202,7 @@ theorem continuousAt_of_holoOn {X : Type} [TopologicalSpace X] {A : FinHolAtlas 
   filter_upwards [(A.chart j).open_source.mem_nhds hj] with y hy
   simp [(A.chart j).left_inv hy]
 
-theorem continuous_descend (M : CxModel P d) {A A' : HermLine ι} (hA : IsSmoothHerm A)
+theorem continuous_descend (M : CxModel P d) {A A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA : IsSmoothHerm A)
     (hA' : IsSmoothHerm A') (ha : A.a = A'.a) : Continuous (descend M (logRatio A A')) := by
   have hv : ∀ c : K → ℂ, (∀ k, c k ≠ 0) → ∀ z ∈ mcPts P,
       logRatio A A' (torusSmul c z) = logRatio A A' z := fun c hc z hz => logRatio_torusSmul ha c hc hz.1
