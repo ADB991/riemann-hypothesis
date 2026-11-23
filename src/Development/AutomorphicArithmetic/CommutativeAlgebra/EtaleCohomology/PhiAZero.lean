@@ -162,6 +162,8 @@ private theorem phiA_fix (r : Res l K) (f : ℕ) (hf : ∀ x : r.k, x ^ l ^ f = 
 
 variable (r : Res l K) (M : Model l K) (n : ℕ)
 
+attribute [local instance 1100] Empty.instIsEmpty
+
 private def gObj (T : El (PQ M.p (gRes r))) : Thick (Wc.L l (B.schFn M.p) r.ρ n) where
   B := T.1.obj.Acr n
   i := iA r T.1.obj n
