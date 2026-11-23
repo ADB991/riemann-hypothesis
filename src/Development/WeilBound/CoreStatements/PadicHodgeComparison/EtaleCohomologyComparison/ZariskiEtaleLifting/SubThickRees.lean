@@ -17,6 +17,9 @@ open CategoryTheory AlgebraicGeometry GlobalTheory.LogCris DividedPowers
 
 namespace CrystallineSemistableComparison.B
 
+-- Prefer the canonical instance over the imported empty-column-chain instance.
+attribute [local instance 1100] Empty.instIsEmpty
+
 structure Fn (O : Type) [CommRing O] : Type 1 where
   Pt : CommRingCat.{0} ⥤ Type
   Ov : ∀ {B : CommRingCat.{0}}, Pt.obj B → (O →+* B) → Prop
@@ -67,8 +70,8 @@ def cr (b : Base) (ht : b.t = 1) (κ : O →+* b.R ⧸ b.I) : b.Fun where
   f_eq i := i.elim
   g_self i := i.elim
   g_comp i := i.elim
-  prod_f {_ _ y} _ := by simp only [Fintype.univ_empty, Finset.prod_empty, ht, map_one]
-  prod_g _ _ := by simp only [Fintype.univ_empty, Finset.prod_empty]
+  prod_f {_ _ y} _ := by simp [ht]
+  prod_g _ _ := by simp
 
 structure Sub (F : Fn O) where
   In : ∀ {B : CommRingCat.{0}}, F.Pt.obj B → Prop
