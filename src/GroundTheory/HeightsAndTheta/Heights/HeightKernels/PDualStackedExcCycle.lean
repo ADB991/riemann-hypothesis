@@ -86,14 +86,14 @@ section Divisor
 variable {K' : Type} [Fintype K'] {ι : K' → Type} [∀ k, Fintype (ι k)]
 
 theorem divCycle_of_mem {V W : Ideal (MRing ι)} {f : MRing ι} (hW : W ∈ divSupp V f) :
-    divCycle V f W = multAt (V ⊔ Ideal.span {f}) W := by
+    ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f W = multAt (V ⊔ Ideal.span {f}) W := by
   classical
-  simp [divCycle, Finsupp.ofSupportFinite_coe, hW]
+  simp [ReciprocityTheory.ChartRestriction.G.Geo.divCycle, Finsupp.ofSupportFinite_coe, hW]
 
 theorem divCycle_of_not_mem {V W : Ideal (MRing ι)} {f : MRing ι} (hW : W ∉ divSupp V f) :
-    divCycle V f W = 0 := by
+    ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f W = 0 := by
   classical
-  simp [divCycle, Finsupp.ofSupportFinite_coe, hW]
+  simp [ReciprocityTheory.ChartRestriction.G.Geo.divCycle, Finsupp.ofSupportFinite_coe, hW]
 
 end Divisor
 
@@ -153,6 +153,7 @@ end Graph
 end StackedExceptionalCycle
 
 
+attribute [-instance] GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Kleiman2.joinFintype in
 open StackedExceptionalCycle StackedGraphHorizontal in
 theorem DualStackedExcCycle.proof (hR : DualStackedExcReduced.Statement) : DualStackedExcCycle.Statement := by
   intro K _ _ i F F' T _ _ b b' a hi hlt hcov hab
@@ -220,7 +221,7 @@ theorem DualStackedExcCycle.proof (hR : DualStackedExcReduced.Statement) : DualS
       rfl
 
     have hLg : ReciprocityTheory.ChartRestriction.G.AI.locLen (MRing (stackedBlocks T) ⧸
-        (stackedGraph b' a ⊔ Ideal.span {graphSecond t})) ⟨E, hEp⟩ = (divCycle (stackedGraph b' a) (graphSecond t) E : ℕ∞) := by
+        (stackedGraph b' a ⊔ Ideal.span {graphSecond t})) ⟨E, hEp⟩ = (ReciprocityTheory.ChartRestriction.G.Geo.divCycle (stackedGraph b' a) (graphSecond t) E : ℕ∞) := by
       by_cases hgt : graphSecond (T := T) t ∈ E
       · have hs := hsupp _ hgt (second_not_mem b' (ha t))
         rw [divCycle_of_mem hs, multAt_eq_toNat, ENat.natCast_toNat (ReciprocityTheory.ChartRestriction.G.AI.I1.locLen_ne_top hs.1)]
