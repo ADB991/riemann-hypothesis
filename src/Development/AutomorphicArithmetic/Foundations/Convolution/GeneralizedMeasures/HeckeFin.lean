@@ -48,14 +48,18 @@ private theorem hf_ex (w : Pl K) (h : GL (Fin n) (w.adicCompletion K) → ℂ) (
     have hK : IsCompact ((fun q : GL (Fin n) (w.adicCompletion K) × AdelicGLn.FiniteAdelicGL K n =>
         AdelicGLn.localEmbedding w q.1 * q.2) '' (tsupport h ×ˢ tsupport e₀)) :=
       (hs.isCompact.prod e₀.hasCompactSupport.isCompact).image ((hl.comp continuous_fst).mul continuous_snd)
-    refine HasCompactSupport.intro hK fun x hx => ?_
-    by_contra hne
-    apply hx
-    refine ⟨(cf w x, AdelicGLn.localEmbedding w (cf w x)⁻¹ * x), ⟨subset_tsupport _ (right_ne_zero_of_mul hne),
-      subset_tsupport _ ?_⟩, ?_⟩
-    · have := left_ne_zero_of_mul hne
+    let Φ : AdelicGLn.FiniteAdelicGL K n → GL (Fin n) (w.adicCompletion K) × AdelicGLn.FiniteAdelicGL K n :=
+      fun x => (cf w x, AdelicGLn.localEmbedding w (cf w x)⁻¹ * x)
+    have hΦ : Continuous Φ := (hf_cont w).prodMk ((hl.comp (hf_cont w).inv).mul continuous_id)
+    have hcl : IsClosed (Φ ⁻¹' (tsupport h ×ˢ tsupport e₀)) :=
+      IsClosed.preimage hΦ ((isClosed_tsupport h).prod (isClosed_tsupport e₀))
+    refine IsCompact.of_isClosed_subset hK (isClosed_tsupport _) ((closure_minimal ?_ hcl).trans ?_)
+    · intro x hx
+      refine ⟨subset_tsupport _ (right_ne_zero_of_mul hx), subset_tsupport _ ?_⟩
+      have := left_ne_zero_of_mul hx
       rwa [key] at this
-    · simp only [map_inv, mul_inv_cancel_left]
+    · intro x hx
+      exact ⟨Φ x, hx, by simp only [Φ, map_inv, mul_inv_cancel_left]⟩
   exact ⟨⟨⟨_, h1⟩, h2⟩, fun _ => rfl⟩
 
 end SlopeTestRemainingChoices
