@@ -135,7 +135,7 @@ theorem isOmegaLeb_map (e : Fin P ⊕ Fin Q ≃ Fin P' ⊕ Fin Q') (h : AntiIso 
   refine ⟨(lieEquiv e h).isAddHaarMeasure_map lam, ?_⟩
   have hm : Measurable (lieEquiv e h) := (lieEquiv e h).continuous.measurable
   have hc : ∀ A B : ℕ, Continuous (fun ab : lieU A B × lieU A B =>
-      entries ((ab.1 : Matrix (Fin A ⊕ Fin B) (Fin A ⊕ Fin B) ℂ) +
+      Formalism.BasicNotions.entries ((ab.1 : Matrix (Fin A ⊕ Fin B) (Fin A ⊕ Fin B) ℂ) +
         Complex.I • (ab.2 : Matrix (Fin A ⊕ Fin B) (Fin A ⊕ Fin B) ℂ))) := by
     intro A B
     refine continuous_pi fun ij => ?_
@@ -149,7 +149,7 @@ theorem isOmegaLeb_map (e : Fin P ⊕ Fin Q ≃ Fin P' ⊕ Fin Q') (h : AntiIso 
   funext ab ij
   obtain ⟨ij, rfl⟩ := (e.prodCongr e).surjective ij
   simp only [Function.comp_apply, MeasurableEquiv.piCongrLeft_apply_apply]
-  simp [entries, coe_lieEquiv]
+  simp [Formalism.BasicNotions.entries, coe_lieEquiv]
 
 theorem omegaDensity_map (e : Fin P ⊕ Fin Q ≃ Fin P' ⊕ Fin Q') (h : AntiIso e)
     (μ : Measure (UpqT P Q)) (c : ENNReal) (hμ : OmegaDensity μ c) :

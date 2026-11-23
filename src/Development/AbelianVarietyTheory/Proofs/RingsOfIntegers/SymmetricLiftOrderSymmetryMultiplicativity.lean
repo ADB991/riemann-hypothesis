@@ -184,7 +184,7 @@ theorem liftLaws_of_symLift : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
   have hσ : ∀ i : T ⟶ T₀, i ≫ σ₀ = σ := fun i => Over.OverMorphism.ext
     ((Over.w i).trans ((Over.w σ).symm.trans (Category.comp_id _)))
   let r : (T ⟶ T₀) → (T.left ⟶ T₀.left) := fun i => i.left
-  let P : (T ⟶ T₀) → ((T₀ ⟶ t.G) →* (T ⟶ t.G)) := fun i => preHom i
+  let P : (T ⟶ T₀) → ((T₀ ⟶ t.G) →* (T ⟶ t.G)) := fun i => ReciprocityTheory.ChartRestriction.G.Geo.Tor.preHom i
   let b := fun x : T₀ ⟶ t.G => fs x.left
   let w₀ : (T₀ ⟶ t.G) →* (T₀ ⟶ t.G) := MonoidHom.mk' (· ≫ t.act.act H.w0) fun x y => MonObj.mul_comp x y _
   have hw₀ : ∀ i x, P i x ≫ t.act.act H.w0 = P i (w₀ x) := fun i x => Category.assoc _ _ _

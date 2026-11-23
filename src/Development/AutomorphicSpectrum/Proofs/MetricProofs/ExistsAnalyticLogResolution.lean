@@ -160,12 +160,12 @@ theorem exists_params_of_regular {m : ℕ} (I : Ideal (MvPolynomial (Fin m) ℂ)
     (hd : ringKrullDim (locRing I t) = e) :
     ∃ r : Fin e → MvPolynomial (Fin m) ℂ,
       Ideal.span (Set.range fun l => algebraMap _ (locRing I t) (r l)) =
-        Ideal.map (algebraMap _ (locRing I t)) (ptIdeal t) := by
+        Ideal.map (algebraMap _ (locRing I t)) (ReciprocityTheory.AnForm.R.ptIdeal t) := by
   classical
   have hK : I ≤ ptI t := fun h hh => mem_ptIdeal.mpr (hI h hh)
   haveI : IsLocalRing (locR I t) := hreg.toIsLocalRing
   have hmax : IsLocalRing.maximalIdeal (locRing I t) =
-      Ideal.map (algebraMap _ (locRing I t)) (ptIdeal t) := max_eq_map I hK
+      Ideal.map (algebraMap _ (locRing I t)) (ReciprocityTheory.AnForm.R.ptIdeal t) := max_eq_map I hK
   have hfg : (IsLocalRing.maximalIdeal (locRing I t)).FG := IsNoetherian.noetherian _
   obtain ⟨s, hcard, hspan⟩ := Submodule.FG.exists_span_finset_card_eq_spanFinrank hfg
   have hcard' : s.card = e := by
@@ -178,13 +178,13 @@ theorem exists_params_of_regular {m : ℕ} (I : Ideal (MvPolynomial (Fin m) ℂ)
       g * algebraMap _ (locRing I t) c = algebraMap _ (locRing I t) a := by
     intro g
     obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective g
-    obtain ⟨⟨a, c⟩, h⟩ := IsLocalization.surj (ptIdeal t).primeCompl x
+    obtain ⟨⟨a, c⟩, h⟩ := IsLocalization.surj (ReciprocityTheory.AnForm.R.ptIdeal t).primeCompl x
     refine ⟨a, c, fun h0 => c.2 (RingHom.mem_ker.2 h0), ?_⟩
     exact congrArg (Ideal.Quotient.mk _) h
   choose a c hc hac using fun l : Fin e => hex (E.symm l : s)
   have hu : ∀ l, IsUnit (algebraMap _ (locRing I t) (c l)) := fun l => by
     have := (IsLocalization.map_units (locPt t)
-      (⟨c l, fun h => hc l (RingHom.mem_ker.mp h)⟩ : (ptIdeal t).primeCompl)).map
+      (⟨c l, fun h => hc l (RingHom.mem_ker.mp h)⟩ : (ReciprocityTheory.AnForm.R.ptIdeal t).primeCompl)).map
       (algebraMap (locPt t) (locRing I t))
     rwa [← IsScalarTower.algebraMap_apply] at this
   refine ⟨a, ?_⟩

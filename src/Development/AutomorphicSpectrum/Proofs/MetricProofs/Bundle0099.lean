@@ -382,7 +382,7 @@ theorem exists_den_prod_params : ∀ (m e : ℕ) (I Dc : Ideal (MvPolynomial (Fi
   classical
   intro m e I Dc t r Jf hID hp hreg hdim hspan hprime
   haveI := hreg
-  haveI : IsDomain (locRing I t) := isDomain_of_isRegularLocalRing
+  haveI : IsDomain (locRing I t) := ReciprocityTheory.AnForm.R.isDomain_of_isRegularLocalRing
   set alg : MvPolynomial (Fin m) ℂ →+* locRing I t := algebraMap _ (locRing I t) with halg
   set R : Fin e → locRing I t := fun l => alg (r l) with hR
   have hspan' : Ideal.span (Set.range R) = IsLocalRing.maximalIdeal (locRing I t) := by

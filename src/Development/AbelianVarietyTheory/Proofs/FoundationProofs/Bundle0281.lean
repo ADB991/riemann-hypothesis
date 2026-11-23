@@ -268,19 +268,19 @@ theorem lam_ballU_le (p q : ℕ) (lam : Measure (lieU p q)) (h : IsOmegaLeb lam)
         (ab.2 : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) := continuous_subtype_val.comp continuous_snd
     h1.add (h2.const_smul Complex.I)
   have hΦ : Measurable fun ab : lieU p q × lieU p q =>
-      entries ((ab.1 : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) +
+      Formalism.BasicNotions.entries ((ab.1 : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) +
         Complex.I • (ab.2 : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ)) :=
     (continuous_pi fun ij : (Fin p ⊕ Fin q) × (Fin p ⊕ Fin q) => hc.matrix_elem ij.1 ij.2).measurable
   have hS : MeasurableSet {z : (Fin p ⊕ Fin q) × (Fin p ⊕ Fin q) → ℂ | ∑ i, ‖z i‖ < 2 * r} :=
     (isOpen_lt (continuous_finsetSum _ fun i _ => (continuous_apply i).norm)
       continuous_const).measurableSet
   have hsub : ballU p q r ×ˢ ballU p q r ⊆ (fun ab : lieU p q × lieU p q =>
-      entries ((ab.1 : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) +
+      Formalism.BasicNotions.entries ((ab.1 : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) +
         Complex.I • (ab.2 : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ))) ⁻¹'
       {z | ∑ i, ‖z i‖ < 2 * r} := by
     rintro ⟨X, Y⟩ ⟨hX, hY⟩
     simp only [ballU, Set.mem_ofPred_eq] at hX hY
-    simp only [Set.mem_preimage, Set.mem_ofPred_eq, entries, Fintype.sum_prod_type]
+    simp only [Set.mem_preimage, Set.mem_ofPred_eq, Formalism.BasicNotions.entries, Fintype.sum_prod_type]
     calc ∑ i, ∑ j, ‖((X : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) +
           Complex.I • (Y : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ)) i j‖
         ≤ ∑ i, ∑ j, (‖(X : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) i j‖ +
@@ -301,11 +301,11 @@ theorem lam_ballU_le (p q : ℕ) (lam : Measure (lieU p q)) (h : IsOmegaLeb lam)
     calc lam (ballU p q r) ^ 2 = (lam.prod lam) (ballU p q r ×ˢ ballU p q r) := by
           rw [Measure.prod_prod, sq]
       _ ≤ (lam.prod lam) ((fun ab : lieU p q × lieU p q =>
-            entries ((ab.1 : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) +
+            Formalism.BasicNotions.entries ((ab.1 : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) +
               Complex.I • (ab.2 : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ))) ⁻¹'
             {z | ∑ i, ‖z i‖ < 2 * r}) := measure_mono hsub
       _ = ((lam.prod lam).map (fun ab : lieU p q × lieU p q =>
-            entries ((ab.1 : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) +
+            Formalism.BasicNotions.entries ((ab.1 : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) +
               Complex.I • (ab.2 : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ))))
             {z | ∑ i, ‖z i‖ < 2 * r} := (Measure.map_apply hΦ hS).symm
       _ = volume {z : (Fin p ⊕ Fin q) × (Fin p ⊕ Fin q) → ℂ | ∑ i, ‖z i‖ < 2 * r} := by
