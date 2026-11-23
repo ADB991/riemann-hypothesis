@@ -27,23 +27,23 @@ theorem prod_pow_add (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (e f : K → �
   rw [← Finset.prod_mul_distrib]
   exact Finset.prod_congr rfl fun k _ => by rw [Pi.add_apply, pow_add]
 
-theorem form_add {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) (hg : IsMultiHomog g a) :
-    IsMultiHomog (f + g) a := by
+theorem form_add {f g : MRing ι} {a : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f + g) a := by
   classical
   intro m hm k
   rcases Finset.mem_union.mp (support_add hm) with h | h
   · exact hf m h k
   · exact hg m h k
 
-theorem form_sub {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) (hg : IsMultiHomog g a) :
-    IsMultiHomog (f - g) a := by
+theorem form_sub {f g : MRing ι} {a : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f - g) a := by
   rw [sub_eq_add_neg]
   refine form_add hf ?_
   intro m hm
   rw [support_neg] at hm
   exact hg m hm
 
-theorem form_C (n : ℤ) : IsMultiHomog (C n : MRing ι) 0 := by
+theorem form_C (n : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (C n : MRing ι) 0 := by
   classical
   intro m hm k
   rw [C_apply] at hm
@@ -52,7 +52,7 @@ theorem form_C (n : ℤ) : IsMultiHomog (C n : MRing ι) 0 := by
   simp
 
 theorem mem_of_aeval_eq (y : (Σ k, ι k) → Ω) {W : Ideal (MRing ι)} (hPW : mCoordIdeal y ≤ W)
-    {f g : MRing ι} {a a' : K → ℕ} (hf : IsMultiHomog f a) (hg : IsMultiHomog g a') (haa : a = a')
+    {f g : MRing ι} {a a' : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a') (haa : a = a')
     (he : aeval y f = aeval y g) (hfW : f ∈ W) : g ∈ W := by
   subst haa
   have h0 : f - g ∈ mCoordIdeal y :=
@@ -76,7 +76,7 @@ theorem mem_of_chartMono_mul {W : Ideal (MRing ι)} (hWp : W.IsPrime) {c : ∀ k
 
 theorem exists_rep (y : (Σ k, ι k) → Ω) {c : ∀ k, ι k} (hyc : ∀ k, y ⟨k, c k⟩ ≠ 0) {r : Ω}
     (hr : r ∈ chartRingZ y c) :
-    ∃ (e : K → ℕ) (k : MRing ι), IsMultiHomog k e ∧ r * ∏ k, y ⟨k, c k⟩ ^ e k = aeval y k := by
+    ∃ (e : K → ℕ) (k : MRing ι), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog k e ∧ r * ∏ k, y ⟨k, c k⟩ ^ e k = aeval y k := by
   obtain ⟨e, k, hk, he⟩ :=
     HilbertSamuel.SmallSectionsNonzero.exists_form_of_mem_chartRingZ y c hyc hr
   exact ⟨e, k, hk, he.symm⟩
@@ -86,11 +86,11 @@ theorem mem_chart (y : (Σ k, ι k) → Ω) {c : ∀ k, ι k} (hyc : ∀ k, y �
   mem_curveRing.mp b.2 c hyc
 
 def chartPrime (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (W : Ideal (MRing ι)) : Set Ω :=
-  {r | ∃ (e : K → ℕ) (g : MRing ι), IsMultiHomog g e ∧ g ∈ W ∧ r * ∏ k, y ⟨k, c k⟩ ^ e k = aeval y g}
+  {r | ∃ (e : K → ℕ) (g : MRing ι), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g e ∧ g ∈ W ∧ r * ∏ k, y ⟨k, c k⟩ ^ e k = aeval y g}
 
 theorem mem_chartPrime_iff (y : (Σ k, ι k) → Ω) {c : ∀ k, ι k} {W : Ideal (MRing ι)}
     (hPW : mCoordIdeal y ≤ W) (hWp : W.IsPrime) (hc : ∀ k, (X ⟨k, c k⟩ : MRing ι) ∉ W) {r : Ω}
-    {e : K → ℕ} {k : MRing ι} (hk : IsMultiHomog k e) (hr : r * ∏ k, y ⟨k, c k⟩ ^ e k = aeval y k) :
+    {e : K → ℕ} {k : MRing ι} (hk : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog k e) (hr : r * ∏ k, y ⟨k, c k⟩ ^ e k = aeval y k) :
     r ∈ chartPrime y c W ↔ k ∈ W := by
   constructor
   · rintro ⟨d, g, hg, hgW, hd⟩

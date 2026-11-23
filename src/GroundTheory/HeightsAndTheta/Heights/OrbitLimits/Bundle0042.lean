@@ -35,18 +35,18 @@ theorem ringHom_aeval {A A' : Type*} [CommRing A] [CommRing A'] [Algebra ℤ A] 
   | mul_X p n hp => simp [hp]
 
 theorem mem_mCoordIdeal_iff {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) {g : MRing ι} {d : K → ℕ}
-    (hg : IsMultiHomog g d) : g ∈ mCoordIdeal y ↔ aeval y g = 0 := by
+    (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) : g ∈ mCoordIdeal y ↔ aeval y g = 0 := by
   rw [mCoordIdeal, RingHom.mem_ker, mConeMap_homog y hg, mul_eq_zero, C_eq_zero]
   exact or_iff_left (Finset.prod_ne_zero_iff.mpr fun k _ => pow_ne_zero _ (X_ne_zero k))
 
 theorem sub_mem_mCoordIdeal {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) {f g : MRing ι} {d : K → ℕ}
-    (hf : IsMultiHomog f d) (hg : IsMultiHomog g d) (h : aeval y f = aeval y g) :
+    (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f d) (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) (h : aeval y f = aeval y g) :
     f - g ∈ mCoordIdeal y := by
   rw [mem_mCoordIdeal_iff y (homog_sub hf hg), map_sub, h, sub_self]
 
 
 omit [Fintype K] in
-theorem homogD {f : MRing ι} {a b : K → ℕ} (hf : IsMultiHomog f a) (h : a = b) : IsMultiHomog f b :=
+theorem homogD {f : MRing ι} {a b : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) (h : a = b) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f b :=
   h ▸ hf
 
 
@@ -67,12 +67,12 @@ theorem chartMon_notMem {Q : Ideal (MRing ι)} (hQ : Q.IsPrime) {c : ∀ k, ι k
 
 theorem exists_form {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0)
     (b : curveRing y) :
-    ∃ (e : K → ℕ) (g : MRing ι), IsMultiHomog g e ∧ aeval y g = (b : Ω) * ∏ k, y ⟨k, c k⟩ ^ e k :=
+    ∃ (e : K → ℕ) (g : MRing ι), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g e ∧ aeval y g = (b : Ω) * ∏ k, y ⟨k, c k⟩ ^ e k :=
   exists_form_of_mem_chartRingZ y c hc (mem_curveRing.mp b.2 c hc)
 
 def formSet {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (Q : Ideal (MRing ι)) :
     Set (curveRing y) :=
-  {b | ∃ (e : K → ℕ) (g : MRing ι), IsMultiHomog g e ∧
+  {b | ∃ (e : K → ℕ) (g : MRing ι), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g e ∧
     aeval y g = (b : Ω) * ∏ k, y ⟨k, c k⟩ ^ e k ∧ g ∈ Q}
 
 def formIdeal {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0)
@@ -98,7 +98,7 @@ def formIdeal {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k)
 
 theorem mem_formIdeal {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} {hc : ∀ k, y ⟨k, c k⟩ ≠ 0}
     {Q : Ideal (MRing ι)} {b : curveRing y} :
-    b ∈ formIdeal y c hc Q ↔ ∃ (e : K → ℕ) (g : MRing ι), IsMultiHomog g e ∧
+    b ∈ formIdeal y c hc Q ↔ ∃ (e : K → ℕ) (g : MRing ι), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g e ∧
       aeval y g = (b : Ω) * ∏ k, y ⟨k, c k⟩ ^ e k ∧ g ∈ Q :=
   Iff.rfl
 
@@ -106,16 +106,16 @@ theorem le_of_minimal {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (c : ∀ 
     (hfin : Module.Finite ℤ (curveRing y)) (m : Ideal (curveRing y)) (hm : m.IsMaximal)
     (W Q : Ideal (MRing ι)) (hQ : Q.IsPrime) (hPQ : mCoordIdeal y ≤ Q) (hQW : Q ≤ W)
     (hXc : ∀ k, (X ⟨k, c k⟩ : MRing ι) ∉ W)
-    (hWB : ∀ {g : MRing ι} {e : K → ℕ} (b : curveRing y), IsMultiHomog g e →
+    (hWB : ∀ {g : MRing ι} {e : K → ℕ} (b : curveRing y), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g e →
       aeval y g = (b : Ω) * ∏ k, y ⟨k, c k⟩ ^ e k → (g ∈ W ↔ b ∈ m))
-    (hWfrac : ∀ {f : MRing ι} {n : K → ℕ}, IsMultiHomog f n → f ∈ W →
+    (hWfrac : ∀ {f : MRing ι} {n : K → ℕ}, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f n → f ∈ W →
       ∃ a' b' : curveRing y, a' ∈ m ∧ b' ∉ m ∧ (b' : Ω) * aeval y f = (a' : Ω) * ∏ k, y ⟨k, c k⟩ ^ n k)
     (hWforms : IsMultiHomogIdeal W) {a b : curveRing y} (ha0 : a ≠ 0) {s : MRing ι} {d : K → ℕ}
-    (hs : IsMultiHomog s d) (hsQ : s ∈ Q) (hbx : (b : Ω) * aeval y s = (a : Ω) * ∏ k, y ⟨k, c k⟩ ^ d k) :
+    (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s d) (hsQ : s ∈ Q) (hbx : (b : Ω) * aeval y s = (a : Ω) * ∏ k, y ⟨k, c k⟩ ^ d k) :
     W ≤ Q := by
   classical
   have hmonQ : ∀ n, chartMon c n ∉ Q := chartMon_notMem hQ fun k h => hXc k (hQW h)
-  have htr : ∀ {f g : MRing ι} {n : K → ℕ}, IsMultiHomog f n → IsMultiHomog g n →
+  have htr : ∀ {f g : MRing ι} {n : K → ℕ}, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f n → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g n →
       aeval y f = aeval y g → g ∈ Q → f ∈ Q := by
     intro f g n hf hg he hgQ
     have h1 := Q.add_mem (hPQ (sub_mem_mCoordIdeal y hf hg he)) hgQ
@@ -418,7 +418,7 @@ theorem coord_ne_zero (y : (Σ k, ι k) → Ω) (p : Σ k, ι k)
   simp [mCoordIdeal, mConeMap, RingHom.mem_ker, h0]
 
 theorem isMultiHomogIdeal_of_mem_divSupp (y : (Σ k, ι k) → Ω) (s : MRing ι) (d : K → ℕ)
-    (hA : IsArithVar (mCoordIdeal y) 1) (hs : IsMultiHomog s d) {W : Ideal (MRing ι)}
+    (hA : IsArithVar (mCoordIdeal y) 1) (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s d) {W : Ideal (MRing ι)}
     (hW : W ∈ divSupp (mCoordIdeal y) s) : IsMultiHomogIdeal W := by
   classical
   have hP : NumbersDVR.IsMultiHomogIdeal (mCoordIdeal y) :=
