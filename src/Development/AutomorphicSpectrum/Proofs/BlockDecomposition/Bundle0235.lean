@@ -262,7 +262,7 @@ theorem firstCountable_gl : FirstCountableTopology (GL ι 𝔸[k]) := by
     (MulOpposite.opHomeomorph (M := Matrix ι ι 𝔸[k])).symm.isEmbedding.secondCountableTopology
   have h3 : SecondCountableTopology (GL ι 𝔸[k]) :=
     (Units.isEmbedding_embedProduct (M := Matrix ι ι 𝔸[k])).secondCountableTopology
-  infer_instance
+  exact @TopologicalSpace.SecondCountableTopology.to_firstCountableTopology _ _ h3
 
 theorem differentiableAt_globalZeta_of_majorant {F : 𝔸[k] → ℂ} (hFc : Continuous F)
     (χ : HeckeCharacter k) {s₀ : ℂ} {δ : ℝ} (hδ : 0 < δ) {f₀ f₁ f₂ : IdeleGroup k → ℝ}
