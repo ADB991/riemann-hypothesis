@@ -253,7 +253,7 @@ theorem UpperTheory.ConvolutionTheory.Loc.nearDown :
   have hq1 := valuation_natCast_le_one (E := E) (Module.finrank k E)
   have hr1 : r < 1 := hr.trans_le hq1
   refine ⟨r * valuation E (Module.finrank k E : E), mul_pos hr0 (hr0.trans hr), fun φ hφ hs => ?_⟩
-  set K := ballSub n r hr1 with hK
+  set K := UpperTheory.ConvolutionTheory.Loc.BallG.ballSub n r hr1 with hK
   have hKo : IsOpen (K : Set (GL (Fin n) E)) := isOpen_ball hr0.ne'
   have hKc : IsCompact (K : Set (GL (Fin n) E)) := isCompact_ball hr1
   set c : ℂ := (((μk (K.comap (incl : GL (Fin n) k →* GL (Fin n) E))).toReal⁻¹ : ℝ) : ℂ) with hcdef

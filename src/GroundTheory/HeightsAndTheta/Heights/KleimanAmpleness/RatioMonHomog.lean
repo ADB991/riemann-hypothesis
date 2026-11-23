@@ -25,7 +25,7 @@ def ResidueGen.ratioMon (β : K → ℤ) (c d : ∀ k, ι k) : MRingOver F ι :=
   ∏ k, (X ⟨k, d k⟩ ^ (β k).toNat * X ⟨k, c k⟩ ^ (-β k).toNat)
 
 theorem ResidueGen.ratioMon_homog (β : K → ℤ) :
-    ∃ a : K → ℕ, ∀ c d : ∀ k, ι k, IsMultiHomog (ResidueGen.ratioMon (F := F) β c d) a := by
+    ∃ a : K → ℕ, ∀ c d : ∀ k, ι k, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (ResidueGen.ratioMon (F := F) β c d) a := by
   classical
   refine ⟨_, fun c d => ReciprocityTheory.ChartRestriction.G.AI.I1.isMultiHomog_prod _ _ _ fun k _ =>
     ReciprocityTheory.ChartRestriction.G.AI.I1.isMultiHomog_mul

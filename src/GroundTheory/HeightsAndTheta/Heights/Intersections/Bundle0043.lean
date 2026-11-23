@@ -230,7 +230,7 @@ theorem not_flat_pull (hGen : BlockGenFinite.Statement) (hv : IsBlockMap κ v)
   have hSinf : ((R.A.chart j).symm '' (O' ∩ (pullQ R v Φ ∘ (R.A.chart j).symm) ⁻¹' {y})).Infinite :=
     Set.Infinite.image ((R.A.chart j).symm.injOn.mono fun u hu => hu.1.1.2.1) hy
   have hF := fibreFinite K ι (imageZ v P') n Φ hP hΦ y
-  choose! uw huw using fun w (hw : w ∈ fibre (imageZ v P') Φ y) => hw
+  choose! uw huw using fun w (hw : w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre (imageZ v P') Φ y) => hw
   choose T hT using fun w => hfin (uw w)
   refine hSinf ((hF.biUnion fun w _ => (T w).finite_toSet.biUnion fun t _ =>
     (orbit_subsingleton R t).finite).subset ?_)

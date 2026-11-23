@@ -349,9 +349,9 @@ theorem finEv_infDiag (v : HeightOneSpectrum (𝓞 L)) (k : Lˣ) : Units.map (fi
   rw [MonoidHom.finsetProd_apply, map_prod]
   exact Finset.prod_eq_one fun w _ => finEv_inf v w _
 
-theorem infEv_diag (w : InfinitePlace L) (k : Lˣ) : Units.map (infEv w) (diagUnits L k) = atInf w k := Units.ext rfl
+theorem infEv_diag (w : InfinitePlace L) (k : Lˣ) : Units.map (infEv w) (Neutral.B1.diagUnits L k) = atInf w k := Units.ext rfl
 
-theorem finEv_diag (v : HeightOneSpectrum (𝓞 L)) (k : Lˣ) : Units.map (finEv v) (diagUnits L k) = atFin v k :=
+theorem finEv_diag (v : HeightOneSpectrum (𝓞 L)) (k : Lˣ) : Units.map (finEv v) (Neutral.B1.diagUnits L k) = atFin v k :=
   Units.ext rfl
 
 theorem continuous_of_tameLoc {v : HeightOneSpectrum (𝓞 L)} {θ : (v.adicCompletion L)ˣ →* ℂˣ} (h : TameLoc v θ) :
@@ -376,10 +376,10 @@ theorem continuous_of_tameLoc {v : HeightOneSpectrum (𝓞 L)} {θ : (v.adicComp
 
 
 open Classical in
-theorem exists_modelChar : ∀ (L : Type) [Field L] [NumberField L] (I : Type) [Fintype I] (φ : I → L →+* ℂ), (Function.Bijective fun i => InfinitePlace.mk (φ i)) → ∀ (n : I → ℤ) (S : Finset (HeightOneSpectrum (𝓞 L))) (θ : ∀ v : HeightOneSpectrum (𝓞 L), (v.adicCompletion L)ˣ →* ℂˣ), (∀ v ∈ S, TameLoc v (θ v)) → ∃ ψ : Ideles L →* ℂˣ, Continuous ψ ∧ (∀ x, ‖((ψ x : ℂˣ) : ℂ)‖ = 1) ∧ (∀ i (k : Lˣ), ((ψ (ReciprocityTheory.Neutral.Bridge.HCFR.infIdele L (InfinitePlace.mk (φ i)) (atInf _ k)) : ℂˣ) : ℂ) = (φ i (k : L) / ((‖φ i (k : L)‖ : ℝ) : ℂ)) ^ n i) ∧ (∀ v ∈ S, ∀ x, ψ (Neutral.B1.localIdele L v x) = θ v x) ∧ (∀ v ∉ S, ∀ x, ψ (Neutral.B1.localIdele L v x) = 1) ∧ ∀ k : Lˣ, ψ (diagUnits L k) = ψ (infDiag k) * ∏ v ∈ S, θ v (atFin v k) := by
+theorem exists_modelChar : ∀ (L : Type) [Field L] [NumberField L] (I : Type) [Fintype I] (φ : I → L →+* ℂ), (Function.Bijective fun i => InfinitePlace.mk (φ i)) → ∀ (n : I → ℤ) (S : Finset (HeightOneSpectrum (𝓞 L))) (θ : ∀ v : HeightOneSpectrum (𝓞 L), (v.adicCompletion L)ˣ →* ℂˣ), (∀ v ∈ S, TameLoc v (θ v)) → ∃ ψ : Neutral.B1.Ideles L →* ℂˣ, Continuous ψ ∧ (∀ x, ‖((ψ x : ℂˣ) : ℂ)‖ = 1) ∧ (∀ i (k : Lˣ), ((ψ (ReciprocityTheory.Neutral.Bridge.HCFR.infIdele L (InfinitePlace.mk (φ i)) (atInf _ k)) : ℂˣ) : ℂ) = (φ i (k : L) / ((‖φ i (k : L)‖ : ℝ) : ℂ)) ^ n i) ∧ (∀ v ∈ S, ∀ x, ψ (Neutral.B1.localIdele L v x) = θ v x) ∧ (∀ v ∉ S, ∀ x, ψ (Neutral.B1.localIdele L v x) = 1) ∧ ∀ k : Lˣ, ψ (Neutral.B1.diagUnits L k) = ψ (infDiag k) * ∏ v ∈ S, θ v (atFin v k) := by
   intro L _ _ I _ φ hφ n S θ hθ
   choose e hec he using fun i => GlobalTheory.InfTypeLocal.exists_ext (φ i)
-  obtain ⟨ψ, hψ⟩ : ∃ ψ : Ideles L →* ℂˣ, ∀ a, ψ a =
+  obtain ⟨ψ, hψ⟩ : ∃ ψ : Neutral.B1.Ideles L →* ℂˣ, ∀ a, ψ a =
       (∏ i, argU (Units.map (e i).toMonoidHom (Units.map (infEv (InfinitePlace.mk (φ i))) a)) ^ n i) *
         ∏ v ∈ S, θ v (Units.map (finEv v) a) :=
     ⟨{ toFun := fun a =>
@@ -390,7 +390,7 @@ theorem exists_modelChar : ∀ (L : Type) [Field L] [NumberField L] (I : Type) [
         simp only [map_mul, mul_zpow, Finset.prod_mul_distrib]
         rw [mul_mul_mul_comm] }, fun _ => rfl⟩
   refine ⟨ψ, ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · rw [show (ψ : Ideles L → ℂˣ) = _ from funext hψ]
+  · rw [show (ψ : Neutral.B1.Ideles L → ℂˣ) = _ from funext hψ]
     refine Continuous.mul (continuous_finsetProd _ fun i _ => ?_) (continuous_finsetProd _ fun v hv => ?_)
     · exact (continuous_argU.comp ((Continuous.units_map _ (hec i)).comp
         (Continuous.units_map _ (continuous_infEv _)))).zpow _

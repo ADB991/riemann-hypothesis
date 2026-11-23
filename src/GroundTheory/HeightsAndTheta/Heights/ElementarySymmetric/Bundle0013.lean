@@ -246,19 +246,19 @@ theorem exists_cocycle {n : K → ℤ} {s : Ω} (hs : s ∈ secOver S y n) :
       s * ∏ k, y ⟨k, c k⟩ ^ (-n k) ∈ chartRingOver S y c := by
     intro c hc
     exact (Submodule.mem_iInf _).mp ((Submodule.mem_iInf _).mp hs c) hc
-  have hlift : ∀ I : Cell K ι 0, Good y I.1 → ∃ w ∈ locPart ι (quotPart S (mIdealOver S y)) (cellMon S I.1) n,
+  have hlift : ∀ I : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι 0, Good y I.1 → ∃ w ∈ locPart ι (quotPart S (mIdealOver S y)) (cellMon S I.1) n,
       evMap y I.1 w = s := fun I hI =>
     exists_lift hI (fun k => Finset.min'_mem _ (I.2.1 k)) n
       (hs' _ fun k => hI k _ (Finset.min'_mem _ (I.2.1 k)))
   classical
   let z : CechC S ι (MRingOver S ι ⧸ mIdealOver S y) 0 := fun I =>
     if hI : Good y I.1 then (hlift I hI).choose else 0
-  have hzC : ∀ I : Cell K ι 0, z I ∈ locPart ι (quotPart S (mIdealOver S y)) (cellMon S I.1) n := by
+  have hzC : ∀ I : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι 0, z I ∈ locPart ι (quotPart S (mIdealOver S y)) (cellMon S I.1) n := by
     intro I
     by_cases hI : Good y I.1
     · simp only [z, dif_pos hI]; exact (hlift I hI).choose_spec.1
     · simp only [z, dif_neg hI]; exact Submodule.zero_mem _
-  have hzv : ∀ I : Cell K ι 0, Good y I.1 → evMap y I.1 (z I) = s := by
+  have hzv : ∀ I : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι 0, Good y I.1 → evMap y I.1 (z I) = s := by
     intro I hI
     simp only [z, dif_pos hI]
     exact (hlift I hI).choose_spec.2

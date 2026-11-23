@@ -95,6 +95,8 @@ theorem map_mem_charTower (hη : Continuous η) {k : ℕ} (σ : Gal(PadicAlgCl p
 
 section CFT
 
+attribute [local instance 1100] GroundTheory.LocalField.intermediateField_valuativeRel
+
 local instance : ValuativeExtension ℚ_[p] (PadicAlgCl p) := by
   refine ⟨fun {a b} ↦ ?_⟩
   rw [vle_iff_norm_le, PadicAlgCl.norm_extends, PadicAlgCl.norm_extends,
@@ -149,8 +151,6 @@ theorem restrictNormalHom_mem_upperRamificationGroup_iff (hη : Continuous η) (
   set M := charTower η k
   set Lab := maximalAbelianExtension K (PadicAlgCl p)
   have hM := le_maximalAbelianExtension M
-  have : ValuativeExtension K (PadicAlgCl p) :=
-    GroundTheory.LocalField.intermediateField_valuativeExtension_right K
   rw [← map_unitFiltrationUnits_restrictAb_localArtinMap M n, Subgroup.mem_sup]
   constructor
   · rintro ⟨u, hu, huσ⟩

@@ -227,7 +227,7 @@ open Formalism.HermitianLatticeCounting.S6
 
 section EmbGen
 variable {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K V]
-  {H : HermSpace K V} {r : ℕ}
+  {H : Formalism.HermitianLatticeCounting.S6.HermSpace K V} {r : ℕ}
 
 def frPerp (F : FlagD H r) : Submodule K V where
   carrier := {v | ∀ a, H.B (F.e a) v = 0}
@@ -245,7 +245,7 @@ def frPerp (F : FlagD H r) : Submodule K V where
 
 theorem mem_frPerp (F : FlagD H r) (v : V) : v ∈ frPerp F ↔ ∀ a, H.B (F.e a) v = 0 := Iff.rfl
 
-theorem B_right_nondeg (H : HermSpace K V) (w : V) (h : ∀ v, H.B v w = 0) : w = 0 :=
+theorem B_right_nondeg (H : Formalism.HermitianLatticeCounting.S6.HermSpace K V) (w : V) (h : ∀ v, H.B v w = 0) : w = 0 :=
   H.nondeg w (fun y => by rw [← H.herm y w, h y, star_zero])
 
 theorem fr_indep (F : FlagD H r) : LinearIndependent K F.e := by
@@ -335,14 +335,14 @@ theorem finrank_X (F : FlagD H r) : Module.finrank K F.X = r := by
     simp
   rw [h, finrank_span_eq_card F.indep, Fintype.card_fin]
 
-def resH (H : HermSpace K V) (W : Submodule K V) (hnd : ∀ x : W, (∀ y : W, H.B x y = 0) → x = 0) :
-    HermSpace K W where
+def resH (H : Formalism.HermitianLatticeCounting.S6.HermSpace K V) (W : Submodule K V) (hnd : ∀ x : W, (∀ y : W, H.B x y = 0) → x = 0) :
+    Formalism.HermitianLatticeCounting.S6.HermSpace K W where
   B := (H.B.comp W.subtype).compl₂ W.subtype
   herm x y := H.herm x y
   nondeg x h := hnd x h
 
 theorem exists_emb [FiniteDimensional K V] (F : FlagD H r) (τ₀ : K →+* ℂ) (hP : ∀ σ : K →+* ℂ, F.PosDefAt σ) :
-    ∃ (W : Submodule K V) (HW : HermSpace K W), GlobalTheory.DegAsm.IsEmb F HW W.subtype ∧
+    ∃ (W : Submodule K V) (HW : Formalism.HermitianLatticeCounting.S6.HermSpace K W), GlobalTheory.DegAsm.IsEmb F HW W.subtype ∧
       Module.finrank K W + (2 * r + 1) = Module.finrank K V ∧ GlobalTheory.Mass.PD HW.B.flip := by
   obtain ⟨Y, hY⟩ := Submodule.exists_isCompl F.X
   set W := Y ⊓ frPerp F with hW
