@@ -29,6 +29,8 @@ theorem isNilpotent_of_mem_J (hp : b.p ≠ 0) {L : b.Fun} (T : Thick L) {x : T.B
   refine ⟨b.p * N, ?_⟩
   rw [pow_mul, ← T.δ.factorial_mul_dpow_eq_pow hx, hc, Nat.cast_mul, mul_assoc, mul_pow, hN, zero_mul]
 
+attribute [local instance 1100] Empty.instIsEmpty
+
 def push (T : Thick (F.cr b ht κ)) {B' : Type} [CommRing B'] (g : T.B →+* B') (δ' : DividedPowers (T.J.map g))
     (hg : IsDPMorphism T.δ δ' g) : Thick (F.cr b ht κ) where
   B := B'
