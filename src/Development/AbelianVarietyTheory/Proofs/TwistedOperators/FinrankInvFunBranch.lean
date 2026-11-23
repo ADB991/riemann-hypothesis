@@ -95,6 +95,7 @@ theorem finrank_invFun_outer {ι H : Type} [Fintype ι] [DecidableEq ι] [Monoid
       exact congrArg (PiTensorProduct.constantBaseRingEquiv ι ℂ) this
     | add a b ha hb => simp only [map_add (f := _), ha, hb]
   obtain ⟨z, hz⟩ := hs' 1
+  haveI : Module.Free ℂ ↥(invFun ((outer ρ).tprod (outer σ))) := Module.Free.of_divisionRing ℂ _
   refine finrank_eq_one_iff'.2 ⟨⟨ε, hε⟩, fun e => ?_, fun l => ⟨l.1 z, Subtype.ext (LinearMap.ext fun x => ?_)⟩⟩
   · have : ε = 0 := congrArg Subtype.val e
     rw [this] at hz
