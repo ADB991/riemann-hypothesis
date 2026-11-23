@@ -210,6 +210,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Au
 open GroundTheory.Automorphic.AutomorphicForm GroundTheory.Automorphic.CuspidalSpectrum UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C
 open scoped TensorProduct InnerProductSpace ComplexConjugate Pointwise
 
+attribute [-instance] GlobalTheory.SplitFlip.t2Space_general_linear_group GlobalTheory.SplitFlip.secondCountable_GL in
 theorem UpperTheory.ConvolutionTheory.Tf.innerOps :
     ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure],
       (∀ (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (β : TI K n), (∀ V : Submodule ℂ (LL μ), IsClosed (V : Set (LL μ)) → (rightRegularRep (rationalGLOne (K := K) (n := n)) μ).IsInvariant V → Oinf μ ν β ∘L prj V = prj V ∘L Oinf μ ν β)) ∧
