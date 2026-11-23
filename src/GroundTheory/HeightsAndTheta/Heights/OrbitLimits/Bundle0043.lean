@@ -26,7 +26,7 @@ namespace CurveVerticalPointLength
 theorem maximal_and_mult_eq (hCh : CurveVertPointChart.Statement) (hMC : CurveVertPointMultChart.Statement)
     (hSQ : CurveSectionQuotLocal.Statement) {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
     {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {s : MRing ι} {d : K → ℕ}
-    (hP : IsArithVar (mCoordIdeal y) 1) (hs : IsMultiHomog s d) (hsP : s ∉ mCoordIdeal y)
+    (hP : IsArithVar (mCoordIdeal y) 1) (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s d) (hsP : s ∉ mCoordIdeal y)
     {W : Ideal (MRing ι)} (hW : W ∈ divSupp (mCoordIdeal y) s) :
     (curvePtIdeal y W).IsMaximal ∧
       multAt (mCoordIdeal y ⊔ Ideal.span {s}) W =
@@ -93,7 +93,7 @@ theorem chartDens_le_chartAbsDens {n d : ℕ} (J : Ideal (MvPolynomial (Fin n) �
   split_ifs <;> simp
 
 theorem sheetDensity_nonneg {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {P : Ideal (MRing ι)}
-    {e : ℕ} {Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)} {N : Fin e → HermLine ι}
+    {e : ℕ} {Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)} {N : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι}
     (hNs : ∀ j, IsSmoothHerm (N j)) (hNp : ∀ j, Inter.IsSemiPosHerm (N j)) (y : Fin e → ℂ)
     (w : ((k : K) → ι k) → ℂ) : 0 ≤ sheetDensity P Ψ (pot N) (fun _ => 1) y w := by
   unfold sheetDensity
@@ -128,7 +128,7 @@ theorem PtsSemiPosMassFinite.proof (hI : PtsPosPartProjIndep.Statement) (hF : Pt
     filter_upwards [hfs] with y hy
     refine ENNReal.ofReal_le_ofReal ?_
     have hpos : ptsPosDens P Ψ' (pot N) (fun _ => 1) y =
-        ∑ᶠ w ∈ fibre P Ψ' y, sheetDensity P Ψ' (pot N) (fun _ => 1) y w := by
+        ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ' y, sheetDensity P Ψ' (pot N) (fun _ => 1) y w := by
       unfold ptsPosDens
       exact finsum_congr fun w => finsum_congr fun _ =>
         max_eq_left (PtsSemiPosMassFinite.sheetDensity_nonneg hNs hNp y w)
@@ -136,9 +136,9 @@ theorem PtsSemiPosMassFinite.proof (hI : PtsPosPartProjIndep.Statement) (hF : Pt
     exact Finset.sum_le_sum fun J _ => PtsSemiPosMassFinite.chartDens_le_chartAbsDens _ _ _ _ _
   · have h0 : ∀ y, ptsPosDens P Ψ (pot N) (fun _ => 1) y = 0 := by
       intro y
-      have hf : fibre P Ψ y = ∅ := by
+      have hf : ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y = ∅ := by
         ext w
-        simp only [fibre, Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
+        simp only [ReciprocityTheory.ChartRestriction.G.Geo.fibre, Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
         rintro ⟨z, hz, -⟩
         exact hZ ⟨z, hz⟩
       simp [ptsPosDens, hf]

@@ -74,12 +74,12 @@ theorem formCoord_mul_of_quadIdentity {φ₁ φ₂ φ₃ φ₄ : Fin i → K} (h
   simp only [formCoord, AddMonoidHom.mk'_apply, ← map_mul, hp]
 
 theorem graphMap_secondForm {F' : HermLattice K i} (b' : Module.Basis T ℤ (dualLattice F')) (a : T → ℤ) (d : T → ℤ) :
-    graphMap (dualIdeal b') (linForm (stackedDiag a)) (graphSecondForm d) =
+    graphMap (dualIdeal b') (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (stackedDiag a)) (graphSecondForm d) =
       C (Ideal.Quotient.mk (dualIdeal b') (linD fun t => d t * a t)) * X () := by
-  have h : ∀ t, linForm (stackedDiag a) ⟨(), t⟩ = (C (a t) * X ⟨(), t⟩ : MRing (dualBlocks T)) := by
+  have h : ∀ t, ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (stackedDiag a) ⟨(), t⟩ = (C (a t) * X ⟨(), t⟩ : MRing (dualBlocks T)) := by
     intro t
-    simp [linForm, stackedDiag]
-  have h2 : ∀ t, graphMap (dualIdeal b') (linForm (stackedDiag a)) (graphSecond t) =
+    simp [ReciprocityTheory.ChartRestriction.G.AI.I4.linForm, stackedDiag]
+  have h2 : ∀ t, graphMap (dualIdeal b') (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (stackedDiag a)) (graphSecond t) =
       C (Ideal.Quotient.mk (dualIdeal b') (C (a t) * X ⟨(), t⟩)) * X () := by
     intro t
     simp only [graphMap, graphSecond, coe_eval₂Hom, eval₂_X, h]
