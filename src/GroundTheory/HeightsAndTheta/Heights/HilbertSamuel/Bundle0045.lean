@@ -45,7 +45,7 @@ theorem leviForm_comp_clm {E F : Type} [Fintype E] [Fintype F] (L : (E → ℂ) 
   simp [hLr, hIw]
 
 theorem isSemipositiveRel_of_linear {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {F : Type}
-    [Fintype F] (A : HermLine ι) (L : ((Σ k, ι k) → ℂ) →L[ℂ] (F → ℂ))
+    [Fintype F] (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (L : ((Σ k, ι k) → ℂ) →L[ℂ] (F → ℂ))
     (hA : A.h = fun z => (fsMetric (ι := F)).ρ (L z)) (hL : ∀ z, (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → L z ≠ 0)
     (P0 P : Ideal (MRing ι)) : IsSemipositiveRel P0 P A := by
   have hsm : ∀ z, L z ≠ 0 → ContDiffAt ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fsMetric (ι := F)).ρ (L z) := fun z hz =>
@@ -92,7 +92,7 @@ theorem proof : BlockImageMetrics.Statement := by
     refine isSemipositiveRel_of_linear _ (blockCLM k₀) ?_ ?_ ⊥ P
     · funext z
       rw [blockCLM_apply]
-      simp only [HermLine.ofMetrics]
+      simp only [ReciprocityTheory.ChartRestriction.G.Geo.HermLine.ofMetrics]
       rw [Finset.prod_eq_single k₀ (fun k _ hk => by simp [unitDeg, hk]) (by simp)]
       simp [unitDeg]
     · intro z hz h0

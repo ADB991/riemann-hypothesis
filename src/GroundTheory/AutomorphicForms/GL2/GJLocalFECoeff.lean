@@ -114,9 +114,9 @@ theorem localMatrixFourier_mul_mul (ψ : AddChar F Circle) {a b : GL (Fin n) F}
   conv_rhs => rw [← hT.integral_comp hemb]
   congr 1
   funext X
-  have htr : trace ((a : Matrix (Fin n) (Fin n) F) * X * (b : Matrix (Fin n) (Fin n) F) *
+  have htr : Matrix.trace ((a : Matrix (Fin n) (Fin n) F) * X * (b : Matrix (Fin n) (Fin n) F) *
       (((b⁻¹ : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) * y *
-        ((a⁻¹ : GL (Fin n) F) : Matrix (Fin n) (Fin n) F))) = trace (X * y) := by
+        ((a⁻¹ : GL (Fin n) F) : Matrix (Fin n) (Fin n) F))) = Matrix.trace (X * y) := by
     simp only [Matrix.mul_assoc]
     rw [← Matrix.mul_assoc (b : Matrix (Fin n) (Fin n) F), Units.mul_inv, Matrix.one_mul,
       Matrix.trace_mul_comm, Matrix.mul_assoc, Matrix.mul_assoc, Units.inv_mul, Matrix.mul_one]

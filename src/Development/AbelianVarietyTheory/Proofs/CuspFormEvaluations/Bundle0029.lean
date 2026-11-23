@@ -104,9 +104,9 @@ theorem polyDeriv_prod_canFn_eq_mul (hs : IsSympl X bas) {x : Frame X.Ψ r} (hx 
     {a b a' b' : Fin n → Fin g → ℝ} {c : Fin n → ℂ}
     (h : ∀ k z, canFn X bas' idx (a' k) (b' k) x z = c k * canFn X bas idx (a k) (b k) x z)
     (P : Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)) :
-    polyDeriv P (letterDir X hr idx) (fun z => ∏ k, canFn X bas' idx (a' k) (b' k) x (z k)) 0 =
+    ReciprocityTheory.ChartRestriction.G.I2.polyDeriv P (letterDir X hr idx) (fun z => ∏ k, canFn X bas' idx (a' k) (b' k) x (z k)) 0 =
       (∏ k, c k) *
-        polyDeriv P (letterDir X hr idx) (fun z => ∏ k, canFn X bas idx (a k) (b k) x (z k)) 0 := by
+        ReciprocityTheory.ChartRestriction.G.I2.polyDeriv P (letterDir X hr idx) (fun z => ∏ k, canFn X bas idx (a k) (b k) x (z k)) 0 := by
   have hF : (fun z : Fin n → Fin g → ℂ => ∏ k, canFn X bas' idx (a' k) (b' k) x (z k)) =
       fun z => (∏ k, c k) * ∏ k, canFn X bas idx (a k) (b k) x (z k) := by
     funext z

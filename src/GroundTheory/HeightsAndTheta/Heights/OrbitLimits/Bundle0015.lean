@@ -39,8 +39,8 @@ def CoordFibreDeg.Statement : Prop :=
     (y : (Σ k', ι' k') → Ω) (d : ℕ) (G : GenFibre v (mCoordIdeal y))
     (i : ∀ k : FibreBlock κ, fibreIdx ι' κ k),
     IsBlockMap κ v → IsArithVar (mCoordIdeal y) d → IsArithVar (imageZ v (mCoordIdeal y)) d →
-    IsChart (fibreIdeal κ G) i →
-    ptDeg (fibreIdeal κ G) i = IntermediateField.relfinrank (blockFnField (y ∘ v)) (blockFnField y)
+    IsChart (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G) i →
+    ptDeg (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G) i = IntermediateField.relfinrank (blockFnField (y ∘ v)) (blockFnField y)
 
 end GroundTheory.Heights₂.Heights.Targets
 end

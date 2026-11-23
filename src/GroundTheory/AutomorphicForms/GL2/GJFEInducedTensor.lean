@@ -298,8 +298,8 @@ theorem localMatrixFourier_mul_right (Φ : Matrix (Fin n) (Fin n) F → ℂ) {y 
     (mulRightEquiv y).toHomeomorph.measurableEmbedding
   rw [localMatrixFourier, localMatrixFourier]
   have key : ∀ X : Matrix (Fin n) (Fin n) F,
-      Φ (X * (y : Matrix (Fin n) (Fin n) F)) * (ψ (trace (X * Z)) : ℂ) =
-        (fun W => Φ W * (ψ (trace (W * (((y⁻¹ : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) * Z))) :
+      Φ (X * (y : Matrix (Fin n) (Fin n) F)) * (ψ (Matrix.trace (X * Z)) : ℂ) =
+        (fun W => Φ W * (ψ (Matrix.trace (W * (((y⁻¹ : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) * Z))) :
           ℂ)) (mulRightEquiv y X) := by
     intro X
     simp only [mulRightEquiv_apply]
@@ -307,7 +307,7 @@ theorem localMatrixFourier_mul_right (Φ : Matrix (Fin n) (Fin n) F → ℂ) {y 
       mul_inv_cancel, Units.val_one, Matrix.one_mul]
   simp_rw [key]
   exact hm.integral_comp he (fun W => Φ W *
-    (ψ (trace (W * (((y⁻¹ : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) * Z))) : ℂ))
+    (ψ (Matrix.trace (W * (((y⁻¹ : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) * Z))) : ℂ))
 
 end Translate
 

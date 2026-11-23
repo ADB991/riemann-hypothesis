@@ -23,7 +23,7 @@ variable (K : Type*) [Field K] [NumberField K] (n : ℕ)
 
 variable {K n} in
 def matrixCoordEquiv {X : Type*} : Matrix (Fin n) (Fin n) X ≃ (Fin n × Fin n → X) where
-  toFun := matrixCoord
+  toFun := GroundTheory.Automorphic.GJMatrix.matrixCoord
   invFun z := Matrix.of fun i j ↦ z (i, j)
   left_inv _ := rfl
   right_inv _ := rfl
@@ -31,13 +31,13 @@ def matrixCoordEquiv {X : Type*} : Matrix (Fin n) (Fin n) X ≃ (Fin n × Fin n 
 
 variable {K n} in
 def matrixCoordTEquiv {X : Type*} : Matrix (Fin n) (Fin n) X ≃ (Fin n × Fin n → X) where
-  toFun := matrixCoordT
+  toFun := GroundTheory.Automorphic.GJMatrix.matrixCoordT
   invFun z := Matrix.of fun i j ↦ z (j, i)
   left_inv _ := rfl
   right_inv _ := rfl
 
 theorem trace_mul_eq_sum' {R : Type*} [CommRing R] (x y : Matrix (Fin n) (Fin n) R) :
-    trace (y * x) = ∑ p, matrixCoordT y p * matrixCoord x p := by
+    trace (y * x) = ∑ p, GroundTheory.Automorphic.GJMatrix.matrixCoordT y p * GroundTheory.Automorphic.GJMatrix.matrixCoord x p := by
   rw [trace_mul_comm, trace_mul_eq_sum]
   exact Finset.sum_congr rfl fun p _ ↦ mul_comm _ _
 
@@ -99,22 +99,22 @@ def coordFun (Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ) : (Fin n × Fin n →
   fun z ↦ Φ (Matrix.of fun i j ↦ z (i, j))
 
 theorem coordFun_matrixCoord (Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ)
-    (x : Matrix (Fin n) (Fin n) 𝔸[K]) : coordFun Φ (matrixCoord x) = Φ x := rfl
+    (x : Matrix (Fin n) (Fin n) 𝔸[K]) : coordFun Φ (GroundTheory.Automorphic.GJMatrix.matrixCoord x) = Φ x := rfl
 
 theorem integral_matrixCoord (g : (Fin n × Fin n → 𝔸[K]) → ℂ) :
-    ∫ x, g (matrixCoord x) ∂adelicMatrixMeasure K n = ∫ z, g z ∂adeleMeasurePi K :=
+    ∫ x, g (GroundTheory.Automorphic.GJMatrix.matrixCoord x) ∂adelicMatrixMeasure K n = ∫ z, g z ∂adeleMeasurePi K :=
   (measurePreserving_matrixCoord (n := Fin n) (adeleMeasure K)).integral_comp
     (MeasurableEquiv.curry (Fin n) (Fin n) 𝔸[K]).symm.measurableEmbedding g
 
 theorem integral_matrixCoordT (g : (Fin n × Fin n → 𝔸[K]) → ℂ) :
-    ∫ x, g (matrixCoordT x) ∂adelicMatrixMeasure K n = ∫ z, g z ∂adeleMeasurePi K := by
-  have hT : matrixCoordT (n := Fin n) (X := 𝔸[K]) =
+    ∫ x, g (GroundTheory.Automorphic.GJMatrix.matrixCoordT x) ∂adelicMatrixMeasure K n = ∫ z, g z ∂adeleMeasurePi K := by
+  have hT : GroundTheory.Automorphic.GJMatrix.matrixCoordT (n := Fin n) (X := 𝔸[K]) =
       ⇑(MeasurableEquiv.piCongrLeft (fun _ ↦ 𝔸[K]) (Equiv.prodComm (Fin n) (Fin n))) ∘
         ⇑(MeasurableEquiv.curry (Fin n) (Fin n) 𝔸[K]).symm := by
     funext x p
-    simp only [MeasurableEquiv.piCongrLeft, Equiv.piCongrLeft, MeasurableEquiv.coe_mk, matrixCoordT]
+    simp only [MeasurableEquiv.piCongrLeft, Equiv.piCongrLeft, MeasurableEquiv.coe_mk, GroundTheory.Automorphic.GJMatrix.matrixCoordT]
     rfl
-  have hemb : MeasurableEmbedding (matrixCoordT (n := Fin n) (X := 𝔸[K])) := by
+  have hemb : MeasurableEmbedding (GroundTheory.Automorphic.GJMatrix.matrixCoordT (n := Fin n) (X := 𝔸[K])) := by
     rw [hT]
     exact (MeasurableEquiv.piCongrLeft (fun _ ↦ 𝔸[K])
       (Equiv.prodComm (Fin n) (Fin n))).measurableEmbedding.comp
@@ -123,7 +123,7 @@ theorem integral_matrixCoordT (g : (Fin n × Fin n → 𝔸[K]) → ℂ) :
 
 theorem adelicMatrixFourier_eq (Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ)
     (y : Matrix (Fin n) (Fin n) 𝔸[K]) :
-    adelicMatrixFourier K Φ y = adelicFourierPi K (coordFun Φ) (matrixCoordT y) := by
+    adelicMatrixFourier K Φ y = adelicFourierPi K (coordFun Φ) (GroundTheory.Automorphic.GJMatrix.matrixCoordT y) := by
   rw [adelicMatrixFourier, adelicFourierPi, ← integral_matrixCoord]
   simp only [trace_mul_eq_sum, coordFun_matrixCoord]
 
@@ -146,9 +146,9 @@ theorem adelicMatrixFourier_adelicMatrixFourier {Φ : Matrix (Fin n) (Fin n) �
     (hΦ : Φ ∈ matrixSchwartzBruhat K n) :
     adelicMatrixFourier K (adelicMatrixFourier K Φ) = fun x ↦ Φ (-x) := by
   funext x
-  have h : adelicFourierPi K (adelicFourierPi K (coordFun Φ)) (matrixCoord x) =
-      coordFun Φ (-matrixCoord x) :=
-    congrFun (adelicFourierPi_adelicFourierPi (F := coordFun Φ) hΦ) (matrixCoord x)
+  have h : adelicFourierPi K (adelicFourierPi K (coordFun Φ)) (GroundTheory.Automorphic.GJMatrix.matrixCoord x) =
+      coordFun Φ (-GroundTheory.Automorphic.GJMatrix.matrixCoord x) :=
+    congrFun (adelicFourierPi_adelicFourierPi (F := coordFun Φ) hΦ) (GroundTheory.Automorphic.GJMatrix.matrixCoord x)
   rw [adelicMatrixFourier, ← coordFun_matrixCoord Φ (-x), matrixCoord_neg, ← h, adelicFourierPi,
     ← integral_matrixCoordT]
   refine integral_congr_ae (Filter.Eventually.of_forall fun y ↦ ?_)

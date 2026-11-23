@@ -131,20 +131,20 @@ variable {H : Host E} {Dw : Datum H} {l : Level H}
 theorem exists_idx {c : Coeff l} {σ : c.F →+* ℂ} (hσ : Formalism.L2.PjFree.GoodEmb c σ) {r g : ℕ} (hr : r = Dw.p + Dw.q)
     (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ)) (X : Data E r) (hp0 : X.p0 = Dw.q)
     (hty : ∀ τ : E →+* ℂ, τ ∈ X.Ψ ↔ τ (H.rt : E) = H.rt0) :
-    ∃ idx : Fin g ≃ X.Ψ × Fin r, (∀ j, relab c σ (e j).1 =
+    ∃ idx : Fin g ≃ X.Ψ × Fin r, (∀ j, Formalism.L2.PjFree.relab c σ (e j).1 =
       if ((idx j).2 : ℕ) < Dw.q then ComplexEmbedding.conjugate (idx j).1.1 else (idx j).1.1) ∧
-      ∀ (x : Frame X.Ψ r) (v : Fin r → E) j, perFr X x v (relab c σ (e j).1) (e j).2 =
+      ∀ (x : Frame X.Ψ r) (v : Fin r → E) j, perFr X x v (Formalism.L2.PjFree.relab c σ (e j).1) (e j).2 =
         if ((idx j).2 : ℕ) < Dw.q then hermC (idx j).1.1 X.Gm (col (mat x (idx j).1) (idx j).2) (Data.emb (idx j).1.1 v)
         else ((mat x (idx j).1)⁻¹ *ᵥ Data.emb (idx j).1.1 v) (idx j).2 := by
   obtain ⟨hbij, hrt, -, -⟩ := GlobalTheory.Relab.relab_good E H l c σ hσ
   have hcc : ∀ τ : E →+* ℂ, ComplexEmbedding.conjugate (ComplexEmbedding.conjugate τ) = τ := fun τ =>
     ComplexEmbedding.involutive_conjugate E τ
-  obtain ⟨f, hf⟩ := GlobalTheory.FrameUnif.exists_letter_equiv X.Ψ X.cmType Dw.p Dw.q r hr (relab c σ) hbij Dw.mult
+  obtain ⟨f, hf⟩ := GlobalTheory.FrameUnif.exists_letter_equiv X.Ψ X.cmType Dw.p Dw.q r hr (Formalism.L2.PjFree.relab c σ) hbij Dw.mult
     (fun τ h => by unfold Datum.mult; rw [if_pos ((hrt τ).1 ((hty _).1 h))])
     (fun τ h => by unfold Datum.mult; rw [if_neg (fun h' => h ((hty _).2 ((hrt τ).2 h')))])
   obtain ⟨idx, hi⟩ : ∃ idx : Fin g ≃ X.Ψ × Fin r, ∀ j,
-      (relab c σ (e j).1 ∈ X.Ψ ∧ (idx j).1.1 = relab c σ (e j).1 ∧ ((idx j).2 : ℕ) = Dw.q + (e j).2) ∨
-      (relab c σ (e j).1 ∉ X.Ψ ∧ (idx j).1.1 = ComplexEmbedding.conjugate (relab c σ (e j).1) ∧
+      (Formalism.L2.PjFree.relab c σ (e j).1 ∈ X.Ψ ∧ (idx j).1.1 = Formalism.L2.PjFree.relab c σ (e j).1 ∧ ((idx j).2 : ℕ) = Dw.q + (e j).2) ∨
+      (Formalism.L2.PjFree.relab c σ (e j).1 ∉ X.Ψ ∧ (idx j).1.1 = ComplexEmbedding.conjugate (Formalism.L2.PjFree.relab c σ (e j).1) ∧
         ((idx j).2 : ℕ) = Dw.q - 1 - (e j).2 ∧ ((e j).2 : ℕ) < Dw.q) := ⟨e.trans f, fun j => hf (e j)⟩
   refine ⟨idx, fun j => ?_, fun x v j => ?_⟩
   · rcases hi j with ⟨a, b, c'⟩ | ⟨a, b, c', d⟩
@@ -161,7 +161,7 @@ theorem exists_idx {c : Coeff l} {σ : c.F →+* ℂ} (hσ : Formalism.L2.PjFree
       rw [dite_eq_left a, dite_eq_left hn]
     · rw [if_pos (by omega)]
       unfold perFr
-      rw [dite_eq_right a, dite_eq_left (show conjEmb (relab c σ (e j).1) ∈ X.Ψ from hτ), dite_eq_left hn]
+      rw [dite_eq_right a, dite_eq_left (show conjEmb (Formalism.L2.PjFree.relab c σ (e j).1) ∈ X.Ψ from hτ), dite_eq_left hn]
       rfl
 
 theorem exists_frame {c : Coeff l} {σ : c.F →+* ℂ} (hσ : Formalism.L2.PjFree.GoodEmb c σ) {r g : ℕ} (h1 : 1 ≤ r)
@@ -170,10 +170,10 @@ theorem exists_frame {c : Coeff l} {σ : c.F →+* ℂ} (hσ : Formalism.L2.PjFr
     (φ : D.La ≃ₗ[𝓞 E] X.Λ)
     (hEF : ∀ a b, ((D.EF a b : ℤ) : ℚ) = Algebra.trace ℚ E (-X.ξ0 * herm X.Gm (φ a : Fin r → E) (φ b)))
     (x₀ : Frame X.Ψ r) (hx₀ : x₀ ∈ X.dom) (P₀ : D.La →+ (Fin g → ℂ))
-    (hP₀ : ∀ a j, P₀ a j = perFr X x₀ (φ a : Fin r → E) (relab c σ (e j).1) (e j).2)
-    (hper₀ : IsPeriod D (fun j => relab c σ (e j).1) P₀) (P : D.La →+ (Fin g → ℂ))
-    (hper : IsPeriod D (fun j => relab c σ (e j).1) P) :
-    ∃ x ∈ X.dom, ∀ a j, P a j = perFr X x (φ a : Fin r → E) (relab c σ (e j).1) (e j).2 := by
+    (hP₀ : ∀ a j, P₀ a j = perFr X x₀ (φ a : Fin r → E) (Formalism.L2.PjFree.relab c σ (e j).1) (e j).2)
+    (hper₀ : IsPeriod D (fun j => Formalism.L2.PjFree.relab c σ (e j).1) P₀) (P : D.La →+ (Fin g → ℂ))
+    (hper : IsPeriod D (fun j => Formalism.L2.PjFree.relab c σ (e j).1) P) :
+    ∃ x ∈ X.dom, ∀ a j, P a j = perFr X x (φ a : Fin r → E) (Formalism.L2.PjFree.relab c σ (e j).1) (e j).2 := by
   obtain ⟨idx, hi, hper'⟩ := exists_idx hσ hr e X hp0 hty
   have hξ : cc (-X.ξ0) = -(-X.ξ0) := by
     have h := X.ξ0_im

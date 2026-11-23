@@ -248,7 +248,7 @@ theorem span_classes (hP4 : LevelMapHodgeFiltration W) (hcrys : IsCrys PD T.ρ)
     have hN : (letE c : LetA O n) • b j ∈ W.N T := (W.N T).smul_mem _ (hbΔ j).1
     obtain ⟨e', he'⟩ := C.t_surj c ((letE c : LetA O n) • b j)
       (by rw [smul_smul, letE_mul_self])
-      (fun δ hδ => by rw [γD_smulA, γA_letE, (hbΔ j).2 δ hδ])
+      (fun δ hδ => by rw [Formalism.MainNotions.WachCoordinates.Br.γD_smulA, γA_letE, (hbΔ j).2 δ hδ])
     have he'N : e' ∈ (latOf C).N c := by
       show C.t c e' ∈ W.N T
       rw [he']
