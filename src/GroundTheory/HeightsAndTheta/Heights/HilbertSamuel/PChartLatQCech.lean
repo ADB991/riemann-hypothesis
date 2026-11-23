@@ -26,7 +26,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 def cmq (c : ∀ k, ι k) (e : K → ℕ) : MRingOver ℚ ι :=
   MvPolynomial.map (Int.castRingHom ℚ) (cmon c e)
 
-theorem homog_cmq (c : ∀ k, ι k) (e : K → ℕ) : IsMultiHomog (cmq c e) e :=
+theorem homog_cmq (c : ∀ k, ι k) (e : K → ℕ) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (cmq c e) e :=
   homog_map _ (homog_cmon c e)
 
 theorem cmq_add (c : ∀ k, ι k) (e f : K → ℕ) : cmq c (e + f) = cmq c e * cmq c f := by
@@ -71,7 +71,7 @@ theorem aeval_eq_zero_of_memQ {f : MRingOver ℚ ι} (hf : f ∈ idealOver y ℚ
 
 
 attribute [local instance] MvPolynomial.algebraMvPolynomial in
-theorem mem_idealOverQ {p : MRingOver ℚ ι} {d : K → ℕ} (hp : IsMultiHomog p d) (h0 : aeval y p = 0) :
+theorem mem_idealOverQ {p : MRingOver ℚ ι} {d : K → ℕ} (hp : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p d) (h0 : aeval y p = 0) :
     p ∈ idealOver y ℚ := by
   obtain ⟨⟨G, ⟨_, n, hn, rfl⟩⟩, hG⟩ :=
     IsLocalization.surj (S := MRingOver ℚ ι) (Submonoid.map (C : ℤ →+* MRing ι) (nonZeroDivisors ℤ)) p
@@ -80,7 +80,7 @@ theorem mem_idealOverQ {p : MRingOver ℚ ι} {d : K → ℕ} (hp : IsMultiHomog
   have hG' : (n : ℚ) • p = MvPolynomial.map (Int.castRingHom ℚ) G := by
     rw [← hG, mul_comm, C_mul']
   have hn0 : (n : ℚ) ≠ 0 := by exact_mod_cast nonZeroDivisors.ne_zero hn
-  have hGh : IsMultiHomog G d := by
+  have hGh : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog G d := by
     intro m hm
     apply hp m
     rw [MvPolynomial.mem_support_iff] at hm ⊢
@@ -223,7 +223,7 @@ section Chart
 
 variable {Ω : Type} [Field Ω] [CharZero Ω] {y : (Σ k, ι k) → Ω}
 
-theorem aeval_div_memQ (c : ∀ k, ι k) {g : MRingOver ℚ ι} {d : K → ℕ} (hg : IsMultiHomog g d) :
+theorem aeval_div_memQ (c : ∀ k, ι k) {g : MRingOver ℚ ι} {d : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) :
     aeval y g / ∏ k, y ⟨k, c k⟩ ^ d k ∈ chartRingQ y c := by
   classical
   set_option synthInstance.maxHeartbeats 100000 in
@@ -245,7 +245,7 @@ theorem aeval_div_memQ (c : ∀ k, ι k) {g : MRingOver ℚ ι} {d : K → ℕ} 
     (Algebra.subset_adjoin (Set.mem_range_self (f := fun p : Σ k, ι k => y p / y ⟨p.1, c p.1⟩) p)) _
 
 theorem exists_formQ (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {r : Ω} (hr : r ∈ chartRingQ y c) :
-    ∃ (e : K → ℕ) (F : MRingOver ℚ ι), IsMultiHomog F e ∧ aeval y F = r * ∏ k, y ⟨k, c k⟩ ^ e k := by
+    ∃ (e : K → ℕ) (F : MRingOver ℚ ι), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog F e ∧ aeval y F = r * ∏ k, y ⟨k, c k⟩ ^ e k := by
   classical
   induction hr using Algebra.adjoin_induction with
   | mem x hx =>
@@ -277,7 +277,7 @@ theorem exists_formQ (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {r : �
 
 theorem exists_fracQ (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {s : Ω} (b : K → ℤ)
     (hs : s * ∏ k, y ⟨k, c k⟩ ^ (-b k) ∈ chartRingQ y c) :
-    ∃ (e d : K → ℕ) (F : MRingOver ℚ ι), IsMultiHomog F d ∧ (∀ k, (d k : ℤ) = e k + b k) ∧
+    ∃ (e d : K → ℕ) (F : MRingOver ℚ ι), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog F d ∧ (∀ k, (d k : ℤ) = e k + b k) ∧
       aeval y F = s * ∏ k, y ⟨k, c k⟩ ^ e k := by
   obtain ⟨e, F, hF, hv⟩ := exists_formQ c hc hs
   refine ⟨e + fun k => (-b k).toNat, e + fun k => (b k).toNat, F * cmq c (fun k => (b k).toNat),

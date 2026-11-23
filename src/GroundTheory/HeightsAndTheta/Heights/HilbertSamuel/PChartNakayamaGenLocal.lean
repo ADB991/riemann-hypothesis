@@ -33,8 +33,8 @@ theorem mdeg_of_mem_support_comp {g : K → ℤ} {b : MRingOver S ι} {μ : (Σ 
   rw [Finset.mem_singleton.mp (MvPolynomial.support_monomial_subset hμν)]
   exact (Finset.mem_filter.mp hν).2
 
-theorem isMultiHomog_comp_mul {g : K → ℤ} {b w : MRingOver S ι} {ω a : K → ℕ} (hw : IsMultiHomog w ω)
-    (h : ∀ k, g k + ω k = a k) : IsMultiHomog (comp g b * w) a := by
+theorem isMultiHomog_comp_mul {g : K → ℤ} {b w : MRingOver S ι} {ω a : K → ℕ} (hw : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog w ω)
+    (h : ∀ k, g k + ω k = a k) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (comp g b * w) a := by
   intro m hm k
   obtain ⟨m₁, h₁, m₂, h₂, rfl⟩ := Finset.mem_add.mp (MvPolynomial.support_mul _ _ hm)
   have e₁ := congrFun (mdeg_of_mem_support_comp h₁) k
@@ -45,7 +45,7 @@ theorem isMultiHomog_comp_mul {g : K → ℤ} {b w : MRingOver S ι} {ω a : K �
   omega
 
 theorem isMultiHomog_comp {g : K → ℤ} {b : MRingOver S ι} {a : K → ℕ} (h : ∀ k, g k = a k) :
-    IsMultiHomog (comp g b) a := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (comp g b) a := by
   have := isMultiHomog_comp_mul (b := b) (isMultiHomog_one_zero (S := S) (ι := ι)) (g := g) (a := a)
     fun k => by simp [h k]
   rwa [mul_one] at this
@@ -162,10 +162,10 @@ theorem chart_nakayama {M : Type} [AddCommGroup M] [Module (MRingOver S ι) M] [
     (hP : P.IsPrime) (c : ∀ k, ι k) (hc : ∀ k, (X ⟨k, c k⟩ : MRingOver S ι) ∉ P)
     (hgen : ∀ x ∈ KH.locPart ι 𝓜 (KH.cellMon S (chart c).1) d, ∃ z ∈ KH.cechZc ι 𝓜 d 0,
       x - z (chart c) ∈ locIdealPart 𝓜 (KH.cellMon S (chart c).1) P d) :
-    ∃ (f₀ : MRingOver S ι) (δ₀ : K → ℕ), IsMultiHomog f₀ δ₀ ∧ f₀ ∉ P ∧
+    ∃ (f₀ : MRingOver S ι) (δ₀ : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f₀ δ₀ ∧ f₀ ∉ P ∧
       ∀ x ∈ KH.locPart ι 𝓜 (KH.cellMon S (chart c).1) d, ∃ (t : MRingOver S ι) (a : K → ℕ) (r : ℕ)
         (p : Fin r → MRingOver S ι) (z : Fin r → KH.CechC S ι M 0),
-        t ∈ KH.cellMon S (chart c).1 ∧ IsMultiHomog t a ∧ (∀ j, IsMultiHomog (p j) (a + δ₀)) ∧
+        t ∈ KH.cellMon S (chart c).1 ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog t a ∧ (∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (p j) (a + δ₀)) ∧
         (∀ j, z j ∈ KH.cechZc ι 𝓜 d 0) ∧ (f₀ * t) • x = ∑ j, p j • z j (chart c) := by
   have := hS
   have := hM
@@ -278,8 +278,8 @@ theorem chart_nakayama {M : Type} [AddCommGroup M] [Module (MRingOver S ι) M] [
 
   set u : MRingOver S ι := ∏ j, (ti j : MRingOver S ι) with hu
   have huT : u ∈ T := Submonoid.prod_mem _ fun j _ => (ti j).2
-  have hu_homog : IsMultiHomog u (∑ j, ai j) := isMultiHomog_prod _ _ _ fun j _ => hti j
-  have hui_homog : ∀ i, IsMultiHomog (∏ j ∈ Finset.univ.erase i, (ti j : MRingOver S ι))
+  have hu_homog : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog u (∑ j, ai j) := isMultiHomog_prod _ _ _ fun j _ => hti j
+  have hui_homog : ∀ i, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (∏ j ∈ Finset.univ.erase i, (ti j : MRingOver S ι))
       (∑ j ∈ Finset.univ.erase i, ai j) := fun i => isMultiHomog_prod _ _ _ fun j _ => hti j
   have hper : ∀ i, u • LocalizedModule.mk (mi i) (ti i) =
       LocalizedModule.mk ((∏ j ∈ Finset.univ.erase i, (ti j : MRingOver S ι)) • mi i) 1 := by
