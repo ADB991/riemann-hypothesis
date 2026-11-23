@@ -116,18 +116,18 @@ theorem autLz_finite (hN : Formalism.L2.SG.PoincareInHH.Cut.NeatKu X u' Y.hK) {�
   have e2 := Equiv.ofBijective _ (Formalism.L2.SG.Pf.Act.gamL_levi_bij (Y.cs u') Y.TR Y.hK hN q)
   exact Finite.of_equiv _ (e2.symm.trans e1)
 
-theorem fib_bij (hN : Formalism.L2.SG.PoincareInHH.Cut.NeatKu X u' Y.hK) (s₀ : TT Y u u') :
-    ∃ f : {s : TT Y u u' // s.toTerm = s₀.toTerm} → autLz D (X.Fu u') s₀.lam', Function.Bijective f := by
+theorem fib_bij (hN : Formalism.L2.SG.PoincareInHH.Cut.NeatKu X u' Y.hK) (s₀ : Formalism.L2.SG.PackageTie2.TT Y u u') :
+    ∃ f : {s : Formalism.L2.SG.PackageTie2.TT Y u u' // s.toTerm = s₀.toTerm} → autLz D (X.Fu u') s₀.lam', Function.Bijective f := by
   haveI := autLz_finite hN s₀.mem'
-  have hex : ∀ s : {s : TT Y u u' // s.toTerm = s₀.toTerm}, ∃ c : (VS D).V ≃ₗ[D.host.E] (VS D).V,
+  have hex : ∀ s : {s : Formalism.L2.SG.PackageTie2.TT Y u u' // s.toTerm = s₀.toTerm}, ∃ c : (VS D).V ≃ₗ[D.host.E] (VS D).V,
       c ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT ∧ Formalism.HermitianLatticesTheory.gmap c s₀.lam' = s₀.lam' ∧
       (∀ a, c ((X.Fu u').fvec a) = (X.Fu u').fvec a) ∧
       ∃ n ∈ NLam s₀.lam (lf D (X.Fu u)), ∃ ν ∈ NLam s₀.lam' (lf D (X.Fu u')),
-        (s : TT Y u u').lin = n * s₀.lin * ν * c :=
+        (s : Formalism.L2.SG.PackageTie2.TT Y u u').lin = n * s₀.lin * ν * c :=
     fun s => fib_c s.2.symm
-  let cf : {s : TT Y u u' // s.toTerm = s₀.toTerm} → (VS D).V ≃ₗ[D.host.E] (VS D).V := fun s => (hex s).choose
+  let cf : {s : Formalism.L2.SG.PackageTie2.TT Y u u' // s.toTerm = s₀.toTerm} → (VS D).V ≃ₗ[D.host.E] (VS D).V := fun s => (hex s).choose
   have hcf : ∀ s, _ := fun s => (hex s).choose_spec
-  let f : {s : TT Y u u' // s.toTerm = s₀.toTerm} → autLz D (X.Fu u') s₀.lam' := fun s =>
+  let f : {s : Formalism.L2.SG.PackageTie2.TT Y u u' // s.toTerm = s₀.toTerm} → autLz D (X.Fu u') s₀.lam' := fun s =>
     ⟨indQ (X.Fu u') (cf s) (hcf s).1 (hcf s).2.2.1, indQ_mem (X.Fu u') _ _ _ (hcf s).2.1⟩
   refine ⟨f, fun s s' hss => ?_, fun φ => ?_⟩
   · have hq := sub_mem_of_indQ (X.Fu u') (hcf s).1 (hcf s).2.2.1 (hcf s').1 (hcf s').2.2.1
@@ -192,15 +192,15 @@ theorem liftMassC_of (hN : Formalism.L2.SG.PoincareInHH.Cut.NeatKu X u' Y.hK) : 
   haveI := autLz_finite hN s₀.mem'
   obtain ⟨f, hf⟩ := fib_bij hN s₀
   let e := Equiv.ofBijective f hf
-  haveI : Finite {s : TT Y u u' // s.toTerm = s₀.toTerm} := Finite.of_equiv _ e.symm
-  haveI : Fintype {s : TT Y u u' // s.toTerm = s₀.toTerm} := Fintype.ofFinite _
-  have hw : ∀ s : {s : TT Y u u' // s.toTerm = s₀.toTerm},
+  haveI : Finite {s : Formalism.L2.SG.PackageTie2.TT Y u u' // s.toTerm = s₀.toTerm} := Finite.of_equiv _ e.symm
+  haveI : Fintype {s : Formalism.L2.SG.PackageTie2.TT Y u u' // s.toTerm = s₀.toTerm} := Fintype.ofFinite _
+  have hw : ∀ s : {s : Formalism.L2.SG.PackageTie2.TT Y u u' // s.toTerm = s₀.toTerm},
       Formalism.MainNotions.S.wRow D (X.Fu u') s.1.lam' = Formalism.MainNotions.S.wRow D (X.Fu u') s₀.lam' := fun s => by
     rw [lam'_eq s.2.symm]
   have hpos : 0 < Nat.card (autLz D (X.Fu u') s₀.lam') := by
     haveI : Nonempty (autLz D (X.Fu u') s₀.lam') := ⟨f ⟨s₀, rfl⟩⟩
     exact Nat.card_pos
-  show ∑' s : {s : TT Y u u' // s.toTerm = s₀.toTerm}, Formalism.MainNotions.S.wRow D (X.Fu u') s.1.lam' = 1
+  show ∑' s : {s : Formalism.L2.SG.PackageTie2.TT Y u u' // s.toTerm = s₀.toTerm}, Formalism.MainNotions.S.wRow D (X.Fu u') s.1.lam' = 1
   rw [tsum_fintype, Finset.sum_congr rfl (fun s _ => hw s), Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
   unfold Formalism.MainNotions.S.wRow
   rw [← Nat.card_eq_fintype_card, Nat.card_congr e]

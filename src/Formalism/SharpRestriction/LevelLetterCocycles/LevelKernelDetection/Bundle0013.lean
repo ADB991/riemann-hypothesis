@@ -281,7 +281,7 @@ theorem detect [IsFractionRing O LL] (hP4 : LevelMapHodgeFiltration W) (hSat : S
     rw [smul_smul, letE_mul_self]
   have hΔ : ∀ δ ∈ W.DelF, W.γD T δ ((letE c : LetA O n) • z') = (letE c : LetA O n) • z' := by
     intro δ hδ
-    rw [γD_smulA, γA_letE, hz'.2 δ hδ]
+    rw [Formalism.MainNotions.WachCoordinates.Br.γD_smulA, γA_letE, hz'.2 δ hδ]
   obtain ⟨y'', hy''⟩ := C.t_surj c _ hlet hΔ
   refine ⟨y'', ?_, ?_⟩
   · show C.t c y'' ∈ W.N T
