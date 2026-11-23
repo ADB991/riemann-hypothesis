@@ -213,7 +213,7 @@ theorem interior_iff_factor : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     haveI : NumberField c.F := {}
     haveI : IsReduced A.X := by
       have : ∀ x : A.X, _root_.IsReduced (A.X.presheaf.stalk x) := fun x => by
-        have := (A.normal x).1
+        have := A.normal.isDomain_stalk x
         infer_instance
       exact isReduced_of_isReduced_stalk A.X
     let g : Spec (A.X.presheaf.stalk (centre z)) ⟶ Sp O := A.X.fromSpecStalk (centre z) ≫ A.f ≫ Y.s
