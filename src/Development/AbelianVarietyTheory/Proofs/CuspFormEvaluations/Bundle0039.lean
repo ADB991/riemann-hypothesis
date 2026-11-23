@@ -133,7 +133,7 @@ theorem exists_idx {c : Coeff l} {σ : c.F →+* ℂ} (hσ : Formalism.L2.PjFree
     (hty : ∀ τ : E →+* ℂ, τ ∈ X.Ψ ↔ τ (H.rt : E) = H.rt0) :
     ∃ idx : Fin g ≃ X.Ψ × Fin r, (∀ j, Formalism.L2.PjFree.relab c σ (e j).1 =
       if ((idx j).2 : ℕ) < Dw.q then ComplexEmbedding.conjugate (idx j).1.1 else (idx j).1.1) ∧
-      ∀ (x : Frame X.Ψ r) (v : Fin r → E) j, perFr X x v (Formalism.L2.PjFree.relab c σ (e j).1) (e j).2 =
+      ∀ (x : Frame X.Ψ r) (v : Fin r → E) j, Formalism.L2.PjFree.perFr X x v (Formalism.L2.PjFree.relab c σ (e j).1) (e j).2 =
         if ((idx j).2 : ℕ) < Dw.q then hermC (idx j).1.1 X.Gm (col (mat x (idx j).1) (idx j).2) (Data.emb (idx j).1.1 v)
         else ((mat x (idx j).1)⁻¹ *ᵥ Data.emb (idx j).1.1 v) (idx j).2 := by
   obtain ⟨hbij, hrt, -, -⟩ := GlobalTheory.Relab.relab_good E H l c σ hσ
@@ -157,10 +157,10 @@ theorem exists_idx {c : Coeff l} {σ : c.F →+* ℂ} (hσ : Formalism.L2.PjFree
     rw [← hp0] at h ⊢
     rcases h with ⟨a, rfl, rfl⟩ | ⟨a, rfl, rfl, d⟩
     · rw [if_neg (by omega)]
-      unfold perFr
+      unfold Formalism.L2.PjFree.perFr
       rw [dite_eq_left a, dite_eq_left hn]
     · rw [if_pos (by omega)]
-      unfold perFr
+      unfold Formalism.L2.PjFree.perFr
       rw [dite_eq_right a, dite_eq_left (show conjEmb (Formalism.L2.PjFree.relab c σ (e j).1) ∈ X.Ψ from hτ), dite_eq_left hn]
       rfl
 
@@ -170,10 +170,10 @@ theorem exists_frame {c : Coeff l} {σ : c.F →+* ℂ} (hσ : Formalism.L2.PjFr
     (φ : D.La ≃ₗ[𝓞 E] X.Λ)
     (hEF : ∀ a b, ((D.EF a b : ℤ) : ℚ) = Algebra.trace ℚ E (-X.ξ0 * herm X.Gm (φ a : Fin r → E) (φ b)))
     (x₀ : Frame X.Ψ r) (hx₀ : x₀ ∈ X.dom) (P₀ : D.La →+ (Fin g → ℂ))
-    (hP₀ : ∀ a j, P₀ a j = perFr X x₀ (φ a : Fin r → E) (Formalism.L2.PjFree.relab c σ (e j).1) (e j).2)
+    (hP₀ : ∀ a j, P₀ a j = Formalism.L2.PjFree.perFr X x₀ (φ a : Fin r → E) (Formalism.L2.PjFree.relab c σ (e j).1) (e j).2)
     (hper₀ : IsPeriod D (fun j => Formalism.L2.PjFree.relab c σ (e j).1) P₀) (P : D.La →+ (Fin g → ℂ))
     (hper : IsPeriod D (fun j => Formalism.L2.PjFree.relab c σ (e j).1) P) :
-    ∃ x ∈ X.dom, ∀ a j, P a j = perFr X x (φ a : Fin r → E) (Formalism.L2.PjFree.relab c σ (e j).1) (e j).2 := by
+    ∃ x ∈ X.dom, ∀ a j, P a j = Formalism.L2.PjFree.perFr X x (φ a : Fin r → E) (Formalism.L2.PjFree.relab c σ (e j).1) (e j).2 := by
   obtain ⟨idx, hi, hper'⟩ := exists_idx hσ hr e X hp0 hty
   have hξ : cc (-X.ξ0) = -(-X.ξ0) := by
     have h := X.ξ0_im
