@@ -195,6 +195,7 @@ attribute [local instance] MvPolynomial.gradedAlgebra
 
 theorem isStandardSmooth_mvPolynomial (R σ : Type) [CommRing R] [Finite σ] :
     Algebra.IsStandardSmoothOfRelativeDimension (Nat.card σ) R (MvPolynomial σ R) := by
+  have : IsEmpty Empty := ⟨Empty.elim⟩
   let P₀ : Algebra.Presentation R (MvPolynomial σ R) σ Empty :=
     { __ := Algebra.Generators.mvPolynomial R σ
       relation := Empty.elim
