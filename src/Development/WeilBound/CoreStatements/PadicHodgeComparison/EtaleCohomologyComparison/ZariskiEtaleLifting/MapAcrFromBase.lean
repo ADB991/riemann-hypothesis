@@ -102,6 +102,8 @@ abbrev Hc (k : Bool) (n j : ℕ) : Type 1 := CH.H (Oc F κ k n) j
 
 def HcFil (k : Bool) (n r j : ℕ) : Submodule (Acris l) (Hc F κ k n j) := (pdS (Lc F κ k n) ((base l).cris n) r).img j
 
+attribute [local instance 1100] Empty.instIsEmpty
+
 def gObj (k : Bool) (n : ℕ) (T : (F.pt κ).Elements) : Thick (Lc F κ k n) where
   B := T.1.Acr n
   i := mapAcr T.1.fromBase n
