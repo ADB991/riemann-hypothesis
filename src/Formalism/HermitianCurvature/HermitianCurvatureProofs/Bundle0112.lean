@@ -279,7 +279,7 @@ theorem tprod_mem (L : R.LevelData (Pr (RadSp k r z z' π π')) r) (𝒜 : StarS
     intro i hi hS a b
     unfold tprod
     rw [dite_eq_left (by omega), Matrix.mul_apply]
-    refine sum_mem fun e _ => _root_.mul_mem (ih (i + 1) (by omega) (fun l hl => hS l (by omega)) a e) ?_
+    refine sum_mem fun e _ => MulMemClass.mul_mem (ih (i + 1) (by omega) (fun l hl => hS l (by omega)) a e) ?_
     obtain ⟨hp, hc, hci⟩ := hS ⟨i, by omega⟩ le_rfl
     have h00 : algebraMap ℂ _ Y + L.p ⟨i, by omega⟩ ∈ 𝒜 := add_mem (𝒜.algebraMap_mem Y) hp
     fin_cases e <;> fin_cases b <;> simp [Ts, Formalism.YangianSpanCharacter.T.Tm, site, h00, hc, hci]
@@ -292,9 +292,9 @@ theorem QQi_mem (L : R.LevelData (Pr (RadSp k r z z' π π')) r) (st : Fr.Start 
   intro Y hY a b
   unfold QQi
   rw [Matrix.mul_apply]
-  refine sum_mem fun e _ => _root_.mul_mem ?_ (tprod_mem L 𝒜 Y i.val hS e b)
+  refine sum_mem fun e _ => MulMemClass.mul_mem ?_ (tprod_mem L 𝒜 Y i.val hS e b)
   rw [Matrix.mul_apply]
-  refine sum_mem fun f _ => _root_.mul_mem ?_ (hQ Y hY f e)
+  refine sum_mem fun f _ => MulMemClass.mul_mem ?_ (hQ Y hY f e)
   rw [Matrix.conjTranspose_apply]
   exact star_mem (tprod_mem L 𝒜 (star Y) i.val hS f a)
 
