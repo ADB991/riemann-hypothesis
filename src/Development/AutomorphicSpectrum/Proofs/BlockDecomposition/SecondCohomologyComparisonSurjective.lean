@@ -338,10 +338,12 @@ variable {R : Type} [CommRing R] {C : Type} [Category.{0} C] {F : C ⥤ CommAlgC
 
 def q1 (h : ψ₂ ∘ₗ a₁ = d1 F ∘ₗ ψ₁) : LinearMap.ker a₁ →ₗ[R] Z1 F :=
   (ψ₁ ∘ₗ (LinearMap.ker a₁).subtype).codRestrict (Z1 F) fun y ↦ by
-    have h1 := LinearMap.congr_fun h y.1
     have h2 : a₁ y.1 = 0 := y.2
     rw [commAlgFunctorCocyclesOne_eq_ker, LinearMap.mem_ker]
-    simpa [h2] using h1.symm
+    change d1 F (ψ₁ y.1) = 0
+    exact (LinearMap.congr_fun h y.1).symm.trans (by
+      show ψ₂ (a₁ y.1) = 0
+      rw [h2, ψ₂.map_zero])
 
 def q2 (h : ψ₃ ∘ₗ a₂ = d2 F ∘ₗ ψ₂) : LinearMap.ker a₂ →ₗ[R] Z2 F :=
   (ψ₂ ∘ₗ (LinearMap.ker a₂).subtype).codRestrict (Z2 F) fun y ↦ by
