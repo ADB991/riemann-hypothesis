@@ -434,7 +434,7 @@ theorem exists_levTie : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
       w_int := H.w0.2
       w_tr := by
         have := congrArg (fun a : 𝓞 E => (a : E)) (PullbackSections.CVA.cmHostUnit_add_conj_eq_one H)
-        simpa [H.bar_eq, cc] using this }
+        simpa [H.bar_eq, cc, -GlobalTheory.HostModel.cmHost_bar_halfIntegerGenerator] using this }
   have hG : ∀ k : GL (Fin (Dw.p + Dw.q)) (𝓞 E ⧸ Mfr d.l₂), k ∈ G ↔ ∀ i j, ∃ a ∈ Mfr l,
       (k : Matrix (Fin (Dw.p + Dw.q)) (Fin (Dw.p + Dw.q)) (𝓞 E ⧸ Mfr d.l₂)) i j - (1 : Matrix (Fin (Dw.p + Dw.q)) (Fin (Dw.p + Dw.q)) (𝓞 E ⧸ Mfr d.l₂)) i j =
         Ideal.Quotient.mk (Mfr d.l₂) a := fun k => by
