@@ -212,7 +212,7 @@ namespace IsomInvariance
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem exists_ratSection {P : Ideal (MRing ι)} (hP : P.IsPrime) (hrel : IsRelevant P) (B : HermLine ι) :
+theorem exists_ratSection {P : Ideal (MRing ι)} (hP : P.IsPrime) (hrel : IsRelevant P) (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) :
     ∃ s t : MRing ι, ReciprocityTheory.ChartRestriction.G.AI.I2.IsRatSectionOn P B s t := by
   classical
   let c : ∀ k, ι k := fun k => (hrel k).choose
@@ -221,8 +221,8 @@ theorem exists_ratSection {P : Ideal (MRing ι)} (hP : P.IsPrime) (hrel : IsRele
     Inter.AvoidRing.isMultiHomog_coordProd c _, Inter.AvoidRing.coordProd_not_mem hP c hc _,
     Inter.AvoidRing.coordProd_not_mem hP c hc _, fun k => Int.toNat_sub_toNat_neg _⟩
 
-theorem snoc_eq (hR : RatRStatement) {I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ}
-    (hI : IsIntersectionFamily I) {P : Ideal (MRing ι)} {m : ℕ} (N : Fin m → HermLine ι) (A B : HermLine ι)
+theorem snoc_eq (hR : RatRStatement) {I : Ideal (MRing ι) → (n : ℕ) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ}
+    (hI : IsIntersectionFamily I) {P : Ideal (MRing ι)} {m : ℕ} (N : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι)
     (hP : IsArithVar P (m + 1)) (hN : ∀ j, IsSmoothHerm (N j)) (hA : IsSmoothHerm A) (hB : IsSmoothHerm B)
     (hAB : IsIsometricOn P A B) : I P (m + 1) (Fin.snoc N A) = I P (m + 1) (Fin.snoc N B) := by
   obtain ⟨f, g, α, β, hf, hg, hfP, hgP, hdeg, hdiv, hnorm⟩ := hAB
@@ -266,9 +266,9 @@ theorem snoc_eq (hR : RatRStatement) {I : Ideal (MRing ι) → (n : ℕ) → (Fi
     Inter.cycR_mul I hPp N hsP hgP, hint, hfg]
   ring
 
-theorem update_eq (hR : RatRStatement) {I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ}
-    (hI : IsIntersectionFamily I) {P : Ideal (MRing ι)} {n : ℕ} (L : Fin n → HermLine ι) (j : Fin n)
-    (B : HermLine ι) (hP : IsArithVar P n) (hL : ∀ i, IsSmoothHerm (L i)) (hB : IsSmoothHerm B)
+theorem update_eq (hR : RatRStatement) {I : Ideal (MRing ι) → (n : ℕ) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ}
+    (hI : IsIntersectionFamily I) {P : Ideal (MRing ι)} {n : ℕ} (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (j : Fin n)
+    (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hP : IsArithVar P n) (hL : ∀ i, IsSmoothHerm (L i)) (hB : IsSmoothHerm B)
     (hLB : IsIsometricOn P (L j) B) : I P n L = I P n (Function.update L j B) := by
   classical
   obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.pos_iff_ne_zero.mp (Nat.lt_of_le_of_lt (Nat.zero_le _) j.2))
@@ -277,7 +277,7 @@ theorem update_eq (hR : RatRStatement) {I : Ideal (MRing ι) → (n : ℕ) → (
     · subst hi; simpa using hB
     · simpa [Function.update_of_ne hi] using hL i
   let σ : Equiv.Perm (Fin (m + 1)) := Equiv.swap j (Fin.last m)
-  let N : Fin m → HermLine ι := fun i => L (σ i.castSucc)
+  let N : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := fun i => L (σ i.castSucc)
   have hne : ∀ i : Fin m, σ i.castSucc ≠ j := fun i h => by
     rw [Equiv.swap_apply_eq_iff, Equiv.swap_apply_left] at h
     exact Fin.castSucc_ne_last i h
@@ -299,7 +299,7 @@ end IsomInvariance
 theorem IsomInvariance.proof (hR : Inter.RatR.Statement) : IsomInvariance.Statement := by
   classical
   intro K _ ι _ I hI P n L L' hP hL hL' hiso
-  let M : Finset (Fin n) → Fin n → HermLine ι := fun S j => if j ∈ S then L' j else L j
+  let M : Finset (Fin n) → Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := fun S j => if j ∈ S then L' j else L j
   have hM : ∀ S j, IsSmoothHerm (M S j) := fun S j => by
     by_cases h : j ∈ S
     · simpa [M, h] using hL' j
