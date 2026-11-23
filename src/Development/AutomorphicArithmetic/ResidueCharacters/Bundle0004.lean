@@ -47,6 +47,7 @@ theorem caseB (P : LocPrime l) (H : LocHW l P) {K LL : FinExt l} {s : ℕ} (h : 
     rw [hK]
     exact x.2
   · have h1 := GlobalTheory.Cyc.finrank_Ks K s h.1
+    haveI : Module.Free ↥(K0 K) ↥K.1 := Module.Free.of_divisionRing _ _
     rw [hK, ← Module.finrank_mul_finrank ℚ_[l] ↥(K0 K) ↥K.1] at h1
     have : FiniteDimensional ℚ_[l] ↥K.1 := K.2
     have : FiniteDimensional ℚ_[l] ↥(K0 K) :=
