@@ -22,7 +22,7 @@ section Homog
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem aeval_eq_coordProd_mul {F : Type} [Field F] [Algebra ℤ F] {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d)
+theorem aeval_eq_coordProd_mul {F : Type} [Field F] [Algebra ℤ F] {g : MRing ι} {d : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d)
     (c : ∀ k, ι k) (y : (Σ k, ι k) → F) (hy : ∀ k, y ⟨k, c k⟩ ≠ 0) :
     aeval y g = (∏ k, y ⟨k, c k⟩ ^ d k) * aeval (fun p => y p / y ⟨p.1, c p.1⟩) g := by
   classical
@@ -53,7 +53,7 @@ variable {K' : Type} [Fintype K'] {ι' : K' → Type} [∀ k, Fintype (ι' k)]
 
 theorem isMultiHomog_of_pullWeight {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     {f : MRing ι} {D : K' → ℕ} (hf : IsWeightedHomogeneous (pullWeight v) f D) :
-    IsMultiHomog f (fun k => D (κ k)) := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f (fun k => D (κ k)) := by
   classical
   intro m hm k
   show ∑ i, m ⟨k, i⟩ = D (κ k)
@@ -84,7 +84,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem exists_elim {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {P' : Ideal (MRing ι')} {n : ℕ}
     (hv : IsBlockMap κ v) (hP' : IsArithVar P' (n + 1)) (hQ : IsArithVar (imageZ v P') (n + 1))
-    {g : MRing ι'} {d : K' → ℕ} (hg : IsMultiHomog g d) (hgP : g ∉ P')
+    {g : MRing ι'} {d : K' → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) (hgP : g ∉ P')
     (c : ∀ k', ι' k') (hc : ∀ k', (X ⟨k', c k'⟩ : MRing ι') ∉ P') :
     ∃ (r : ℕ) (a : ℕ → MRing ι), a 0 ∉ imageZ v P' ∧
       ∑ i ∈ Finset.range (r + 1),
@@ -193,7 +193,7 @@ theorem exists_elim {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {P' :
 
 theorem exists_elim_homog {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {P' : Ideal (MRing ι')} {n : ℕ}
     (hv : IsBlockMap κ v) (hP' : IsArithVar P' (n + 1)) (hQ : IsArithVar (imageZ v P') (n + 1))
-    {g : MRing ι'} {d : K' → ℕ} (hg : IsMultiHomog g d) (hgP : g ∉ P')
+    {g : MRing ι'} {d : K' → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) (hgP : g ∉ P')
     (c : ∀ k', ι' k') (hc : ∀ k', (X ⟨k', c k'⟩ : MRing ι') ∉ P') :
     ∃ (r : ℕ) (a : ℕ → MRing ι) (D : K' → ℕ), a 0 ∉ imageZ v P' ∧
       IsWeightedHomogeneous (pullWeight v) (a 0) D ∧
@@ -263,7 +263,7 @@ theorem PullbackEliminationOfVariable.proof : PullbackEliminationOfVariable.Stat
   have : P'.IsPrime := hP'.2.1.1
   have hQp : (imageZ v P').IsPrime := Ideal.IsPrime.comap _
   have key : ∀ c : (∀ k', ι' k'), (∀ k', (X ⟨k', c k'⟩ : MRing ι') ∉ P') →
-      ∃ (h : MRing ι) (a : K → ℕ), IsMultiHomog h a ∧ h ∉ imageZ v P' ∧
+      ∃ (h : MRing ι) (a : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h a ∧ h ∉ imageZ v P' ∧
         ∀ z' ∈ mcPts P', eval z' (map (Int.castRingHom ℂ) g) = 0 → (∀ k', z' ⟨k', c k'⟩ ≠ 0) →
           eval (fun p => z' (v p)) (map (Int.castRingHom ℂ) h) = 0 := by
     intro c hc

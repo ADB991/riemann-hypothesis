@@ -34,7 +34,7 @@ theorem aeval_eq_eval_map (z : (Σ k, ι k) → ℂ) (F : MRing ι) :
   rw [aeval_def, eval_map, algebraMap_int_eq]
 
 theorem mem_mCoordIdeal_iff_of_homog {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) {F : MRing ι}
-    {d : K → ℕ} (hF : IsMultiHomog F d) : F ∈ mCoordIdeal y ↔ aeval y F = 0 := by
+    {d : K → ℕ} (hF : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog F d) : F ∈ mCoordIdeal y ↔ aeval y F = 0 := by
   refine ⟨fun h => ?_, mem_mCoordIdeal_of_aeval_eq_zero y hF⟩
   have h' : mConeMap y F = 0 := RingHom.mem_ker.mp h
   rw [mConeMap_of_isMultiHomog y hF] at h'
@@ -72,7 +72,7 @@ theorem prod_X_pow_eq_monomial (d : K → ℕ) {R : Type} [CommRing R] :
   simp
 
 theorem isMultiHomog_chartForm [DecidableEq K] (c : (k : K) → ι k) (d : K → ℕ) :
-    IsMultiHomog (∏ k, (X ⟨k, c k⟩ : MRing ι) ^ d k) d := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (∏ k, (X ⟨k, c k⟩ : MRing ι) ^ d k) d := by
   apply HilbertSamuel.GenFibreHomog.isMultiHomog_of_weighted
   have := IsWeightedHomogeneous.prod Finset.univ (fun k => (X ⟨k, c k⟩ : MRing ι) ^ d k)
     (fun k => d k • NumbersDVR.blockWeight ι ⟨k, c k⟩)
@@ -89,7 +89,7 @@ theorem exists_value {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {z : (Σ k
   classical
   have hPW : mCoordIdeal y ≤ mCoordIdeal z := mCoordIdeal_le hz
   have hWp : (mCoordIdeal z).IsPrime := RingHom.ker_isPrime _
-  have hrel : IsRelevant (mCoordIdeal z) := fun k =>
+  have hrel : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant (mCoordIdeal z) := fun k =>
     ⟨c k, fun h => hc k ((X_mem_mCoordIdeal_iff z _).1 h)⟩
   have hpW : (C (p : ℤ) : MRing ι) ∉ mCoordIdeal z := by
     intro h
@@ -106,7 +106,7 @@ theorem exists_value {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {z : (Σ k
   obtain ⟨m, hm⟩ := MvPolynomial.ne_zero_iff.1 hu'
   set e : K → ℕ := ⇑m with he
   set ue := weightedHomogeneousComponent (NumbersDVR.blockWeight ι) e u with hue_def
-  have hue : IsMultiHomog ue e := HilbertSamuel.GenFibreHomog.isMultiHomog_of_weighted
+  have hue : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog ue e := HilbertSamuel.GenFibreHomog.isMultiHomog_of_weighted
     (weightedHomogeneousComponent_isWeightedHomogeneous e u)
   have huez : aeval z ue ≠ 0 := by
     rw [← Finsupp.equivFunOnFinite_symm_coe m, HilbertSamuel.GenFibreHomog.coeff_mConeMap] at hm
@@ -135,7 +135,7 @@ theorem exists_value {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {z : (Σ k
   rw [if_pos hle] at hcoef
   set d' : K → ℕ := ⇑(m + Finsupp.equivFunOnFinite.symm bf - Finsupp.equivFunOnFinite.symm bg) with hd'
   set a := weightedHomogeneousComponent (NumbersDVR.blockWeight ι) d' v with ha_def
-  have ha : IsMultiHomog a d' := HilbertSamuel.GenFibreHomog.isMultiHomog_of_weighted
+  have ha : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog a d' := HilbertSamuel.GenFibreHomog.isMultiHomog_of_weighted
     (weightedHomogeneousComponent_isWeightedHomogeneous d' v)
   have hcv : AddMonoidAlgebra.coeff (mConeMap y v)
       (m + Finsupp.equivFunOnFinite.symm bf - Finsupp.equivFunOnFinite.symm bg) = aeval y a := by
@@ -334,7 +334,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 def PtsMonoSemipos.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (e : ℕ)
-    (L : HermLine ι) (r : ℝ) (g₁ g₂ : ((Σ k, ι k) → ℂ) → ℝ) (N : Set ((Σ k, ι k) → ℂ)),
+    (L : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (r : ℝ) (g₁ g₂ : ((Σ k, ι k) → ℂ) → ℝ) (N : Set ((Σ k, ι k) → ℂ)),
     IsArithVar P (e + 1) → IsSemipositiveH P L → 0 < r → IsPtsNull P e N →
     (∀ z ∈ mcPts P, z ∉ N → g₁ z ≤ g₂ z) →
     IsPtsIntegrable P (fun (_ : Fin e) z => Real.log (L.h z) / r) g₁ →
@@ -367,14 +367,14 @@ def PushDown.Statement : Prop :=
     (D : ComponentData II Ψ K ι Ω E) (Pl : PlueckerData D) (H : HodgeData D) (B : AdaptedBasis H),
     (∀ (G : GenFibre Pl.xV (Pl.flagPrime B))
         (J : IFamily G.Φ (fibreIdx Pl.ιY (Sum.inl : K → K ⊕ (Ψ × Fin (D.N - 1)))))
-        (L : Fin (D.n + 1) → HermLine ι) (L' : Fin (D.n + 1) → HermLine Pl.ιY)
-        (N : Fin D.flagDim0 → HermLine Pl.ιY),
+        (L : Fin (D.n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (L' : Fin (D.n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine Pl.ιY)
+        (N : Fin D.flagDim0 → ReciprocityTheory.ChartRestriction.G.Geo.HermLine Pl.ιY),
         IsFieldIntersection J → (∀ j, IsSmoothHerm (L j)) → (∀ j, IsPullHerm Sum.inl Pl.xV (L j) (L' j)) →
         (∀ j, IsSmoothHerm (N j)) →
         II _ Pl.ιY (Pl.flagPrime B) (D.n + 1 + D.flagDim0) (Fin.append L' N) =
-          (J (fibreIdeal Sum.inl G) D.flagDim0 (fun j => fibreDeg Sum.inl (N j).a) : ℝ) *
+          (J (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal Sum.inl G) D.flagDim0 (fun j => fibreDeg Sum.inl (N j).a) : ℝ) *
             II K ι (mCoordIdeal D.y) (D.n + 1) L) ∧
-    (∀ (d r : ℕ) (L : Fin d → HermLine ι) (L' : Fin d → HermLine Pl.ιY) (N : Fin r → HermLine Pl.ιY),
+    (∀ (d r : ℕ) (L : Fin d → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (L' : Fin d → ReciprocityTheory.ChartRestriction.G.Geo.HermLine Pl.ιY) (N : Fin r → ReciprocityTheory.ChartRestriction.G.Geo.HermLine Pl.ιY),
         d + r = D.n + 1 + D.flagDim0 → D.n + 1 < d → (∀ j, IsSmoothHerm (L j)) →
         (∀ j, IsPullHerm Sum.inl Pl.xV (L j) (L' j)) → (∀ j, IsSmoothHerm (N j)) →
         II _ Pl.ιY (Pl.flagPrime B) (d + r) (Fin.append L' N) = 0)

@@ -126,7 +126,7 @@ theorem CoordFibreDeg.proof (hM : FibreMultiHomog.Statement) (hD : GenFibreChart
     rw [← G.ker_x, RingHom.mem_ker, aeval_X]
     exact h)
   have hi' : ∀ k : FibreBlock κ, G.x' ⟨k.1, i k⟩ ≠ 0 := fun k h => hi k (by
-    rw [fibreIdeal, RingHom.mem_ker, aeval_X]
+    rw [ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal, RingHom.mem_ker, aeval_X]
     exact h)
   have h1 := Inter.ChartRankAdjoin.proof (FibreBlock κ) (fibreIdx ι' κ) G.Φ G.Φ'
     (fun q : Σ k : FibreBlock κ, fibreIdx ι' κ k => G.x' ⟨q.1.1, q.2⟩) i hi'
