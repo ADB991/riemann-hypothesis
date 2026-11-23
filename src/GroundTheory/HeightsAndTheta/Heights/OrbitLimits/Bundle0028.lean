@@ -48,9 +48,9 @@ theorem sheetDensity_finset_sum {e : ℕ} (Q : Ideal (MRing ι))
 
 theorem integrable_fibreSum_degZero (hInt : PtsIntegrableStatement) {Q : Ideal (MRing ι)} {e : ℕ}
     (hQ : IsArithVar Q (e + 1)) {Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)} (hΨ : IsGoodProj Q Ψ)
-    {L : Fin e → HermLine ι} (hL : ∀ j, IsSmoothHerm (L j)) {u : ((Σ k, ι k) → ℂ) → ℝ}
+    {L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hL : ∀ j, IsSmoothHerm (L j)) {u : ((Σ k, ι k) → ℂ) → ℝ}
     (hu : IsDegZeroSmooth u) :
-    Integrable (fun y => ∑ᶠ w ∈ fibre Q Ψ y, sheetDensity Q Ψ (pot L) u y w) := by
+    Integrable (fun y => ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre Q Ψ y, sheetDensity Q Ψ (pot L) u y w) := by
   have hsm : IsSmoothHerm (HermLine.ofWeight u hu.2) :=
     Real.contDiff_exp.comp_contDiffOn hu.1.neg
   have h := hInt K ι Q e Ψ L (HermLine.ofWeight u hu.2) 1 hQ hΨ hL hsm
@@ -61,7 +61,7 @@ theorem integrable_fibreSum_degZero (hInt : PtsIntegrableStatement) {Q : Ideal (
   rwa [hlog] at h
 
 theorem ptsIntegral_finset_sum (hInt : PtsIntegrableStatement) {Q : Ideal (MRing ι)} {e : ℕ}
-    (hQ : IsArithVar Q (e + 1)) {L : Fin e → HermLine ι} (hL : ∀ j, IsSmoothHerm (L j)) {T : Type*}
+    (hQ : IsArithVar Q (e + 1)) {L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hL : ∀ j, IsSmoothHerm (L j)) {T : Type*}
     (S : Finset T) {u : T → ((Σ k, ι k) → ℂ) → ℝ} (hu : ∀ t, IsDegZeroSmooth (u t)) :
     ptsIntegral Q (pot L) (fun z => ∑ t ∈ S, u t z) = ∑ t ∈ S, ptsIntegral Q (pot L) (u t) := by
   classical
@@ -129,7 +129,7 @@ theorem LelongSectionLimit.proof (hInt : PtsIntegrableStatement) (hChart : Lelon
       exact (log_regLine_tensor A s hε ha hsa z hz.1).symm
     · intro z _
       simp only [Fin.cons_succ]
-  have hML : ∀ j, IsSmoothHerm ((Fin.cons M L : Fin (n + 1) → HermLine ι) j) :=
+  have hML : ∀ j, IsSmoothHerm ((Fin.cons M L : Fin (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) j) :=
     fun j => Fin.cases hM (fun i => hL i) j
   simp only [hcongr]
   rw [hvsum]
@@ -156,7 +156,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {e m :
 
 theorem mem_fibre_iff {P : Ideal (MRing ι)} (σ : Fin m ≃ ((k : K) → ι k))
     (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (y : Fin e → ℂ) (x : Fin m → ℂ) :
-    (fun i' => x (σ.symm i')) ∈ fibre P Ψ y ↔
+    (fun i' => x (σ.symm i')) ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y ↔
       x ∈ projChartSet P σ Ψ ∧ chartProjMatrix σ Ψ *ᵥ x = y := by
   constructor
   · rintro ⟨z, hz, hzw, hΨ⟩
@@ -209,7 +209,7 @@ theorem proof (hA : GoodChartModel.Statement) (hB : ComponentsGenericCount.State
     (fun J hJF => ⟨((hF J).1 hJF).1.1, hJ J ((hF J).1 hJF)⟩)
     (fun J hJF J' hJ'F hJJ' => le_antisymm hJJ' (((hF J').1 hJ'F).2 ((hF J).1 hJF).1 hJJ'))
 
-  have hfib : ∀ y, fibre P Ψ y = (fun x : Fin _ → ℂ => fun i' => x (σ.symm i')) ''
+  have hfib : ∀ y, ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y = (fun x : Fin _ → ℂ => fun i' => x (σ.symm i')) ''
       {x | (∃ J ∈ F, x ∈ zeroSet J) ∧ A *ᵥ x = y} := by
     intro y
     ext w
@@ -227,7 +227,7 @@ theorem proof (hA : GoodChartModel.Statement) (hB : ComponentsGenericCount.State
     intro x x' h
     funext a
     simpa using congrFun h (σ a)
-  have henc : ∀ y, (fibre P Ψ y).encard = {x | (∃ J ∈ F, x ∈ zeroSet J) ∧ A *ᵥ x = y}.encard :=
+  have henc : ∀ y, (ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y).encard = {x | (∃ J ∈ F, x ∈ zeroSet J) ∧ A *ᵥ x = y}.encard :=
     fun y => by rw [hfib y, hinj.injOn.encard_image]
   refine ⟨∑ J ∈ F, projDegree J A, fun y => (henc y).trans_le (hle y), ?_⟩
   refine measure_mono_null (fun y hy => ?_) (DiscriminantSheetCover.volume_zero_set Δ hΔ)
@@ -312,7 +312,7 @@ theorem PtsPosDensMeasurable.proof : PtsPosDensMeasurable.Statement := by
   have hfm : ∀ m, Measurable (f m) := fun m => (hdm m).indicator (hSm m)
   have key : AEStronglyMeasurable (ptsPosDens P Ψ (pot L) g) volume := by
     have hpp : ptsPosDens P Ψ (pot L) g =
-        fun y => ∑ᶠ w ∈ fibre P Ψ y, max (sheetDensity P Ψ (pot L) g y w) 0 := rfl
+        fun y => ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, max (sheetDensity P Ψ (pot L) g y w) 0 := rfl
     rw [hpp]
     refine aestronglyMeasurable_of_tendsto_ae atTop (f := fun N y => ∑ m ∈ Finset.range N, f m y)
       (fun N => (Finset.measurable_sum _ fun m _ => hfm m).aestronglyMeasurable) ?_
@@ -390,7 +390,7 @@ theorem PtsPosDensMeasurable.proof : PtsPosDensMeasurable.Statement := by
             simp only
             rw [Set.indicator_of_notMem hmS]
         · rfl
-    have hsum : ∑ᶠ w ∈ fibre P Ψ y, max (sheetDensity P Ψ (pot L) g y w) 0 =
+    have hsum : ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, max (sheetDensity P Ψ (pot L) g y w) 0 =
         ∑ w ∈ (hfin y).toFinset, max (sheetDensity P Ψ (pot L) g y w) 0 :=
       finsum_mem_eq_finite_toFinset_sum _ (hfin y)
     refine tendsto_const_nhds.congr' ?_

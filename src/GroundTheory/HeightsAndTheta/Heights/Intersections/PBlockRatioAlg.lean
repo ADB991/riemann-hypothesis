@@ -54,7 +54,7 @@ theorem algebraMap_int_injective (y : (Σ k, ι k) → Ω) (h : IsHorizontal (mC
 
 
 omit [Fintype K] in
-theorem isMultiHomog_C (a : ℤ) : IsMultiHomog (C a : MRing ι) 0 := by
+theorem isMultiHomog_C (a : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (C a : MRing ι) 0 := by
   classical
   intro m hm k
   rw [C_apply] at hm
@@ -67,7 +67,7 @@ def homogN (c : ∀ k, ι k) (N : ℕ) (f : MRing ι) : MRing ι :=
 
 theorem isMultiHomog_homogN [DecidableEq K] (c : ∀ k, ι k) (N : ℕ) (f : MRing ι)
     (hN : f.totalDegree ≤ N) :
-    IsMultiHomog (homogN c N f) (∑ p : Σ k, ι k, N • (Pi.single p.1 1 : K → ℕ)) := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (homogN c N f) (∑ p : Σ k, ι k, N • (Pi.single p.1 1 : K → ℕ)) := by
   refine AvoidRing.isMultiHomog_sum _ _ fun m hm ↦ ?_
   have hle : ∀ p, m p ≤ N := fun p ↦
     ((monomial_le_degreeOf p hm).trans (degreeOf_le_totalDegree f p)).trans hN
@@ -236,7 +236,7 @@ theorem BlockRatioAlg.proof : BlockRatioAlg.Statement := by
       (Polynomial.leadingCoeff_ne_zero.2 hp0) (Subtype.ext h)
     exact mul_ne_zero hD0 hlc h0
   ·
-    have hG : IsMultiHomog (∑ j : Fin (m + 1), rename v (homogN c0 N (F j)) * X q ^ (j : ℕ) *
+    have hG : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (∑ j : Fin (m + 1), rename v (homogN c0 N (F j)) * X q ^ (j : ℕ) *
         X c ^ (m - j : ℕ)) (Function.extend κ (∑ p : Σ k, ι k, N • (Pi.single p.1 1 : K → ℕ)) 0 +
           m • (Pi.single q.1 1 : K' → ℕ)) := by
       refine AvoidRing.isMultiHomog_sum _ _ fun j _ ↦ ?_
