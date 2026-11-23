@@ -420,7 +420,7 @@ theorem evR_eq_of_same_point {f : Rul Xo c} (hf : f ∈ sec Xo c 0 0) {y y' : Fr
 theorem evR_conj : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (σ : c.F →+* ℂ) (τ : ℂ ≃+* ℂ), ∀ f ∈ sec Xo c 0 0, ∀ (y : FrPt Xo c (CAt σ)) (y' : FrPt Xo c (CAt ((τ : ℂ →+* ℂ).comp σ))), y'.x = spMap (τ : ℂ →+* ℂ) ≫ y.x → Formalism.L2.PjFree.toC (evR Xo c f y') = τ (Formalism.L2.PjFree.toC (evR Xo c f y)) := by
   intro E _ _ _ H D l Xo c σ τ f hf y y' h
   let φ : CAt σ →ₐ[c.F] CAt ((τ : ℂ →+* ℂ).comp σ) := { (τ : ℂ →+* ℂ) with commutes' := fun _ => rfl }
-  obtain ⟨z, hz⟩ := FramedBaseChange.exists_frMap GlobalTheory.abelianSchemeLaws_all.1.secBaseChange E H D l Xo c _ _ φ y
+  obtain ⟨z, hz⟩ := _root_.GlobalTheory.Frames.FramedBaseChange.exists_frMap GlobalTheory.abelianSchemeLaws_all.1.secBaseChange E H D l Xo c _ _ φ y
   rw [evR_eq_of_same_point hf (h.trans hz.1.symm), evR_map hf φ hz]
   rfl
 
