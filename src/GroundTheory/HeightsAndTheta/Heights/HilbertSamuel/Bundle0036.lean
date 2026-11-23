@@ -21,7 +21,7 @@ noncomputable section
 
 def BlockResolutionDegreeIntegral.Statement : Prop :=
   ∀ (D : ℕ) (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A₀ A₁ : HermLine ι),
+    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A₀ A₁ : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι),
     A₀.a = unitDeg d.k₀ → A₁.a = unitDeg d.k₀ → IsSmoothHerm A₀ → IsSmoothHerm A₁ →
     ∀ t ∈ Set.Icc (0 : ℝ) 1,
       mInt d.R.A (fun _ => blockInterpPot d A₀ A₁ t) (fun _ => 1) =
@@ -66,7 +66,7 @@ noncomputable section
 
 def BlockResolutionInterpIntegral.Statement : Prop :=
   ∀ (D : ℕ) (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A' : HermLine ι), A'.a = unitDeg d.k₀ → IsSmoothHerm A' →
+    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι), A'.a = unitDeg d.k₀ → IsSmoothHerm A' →
     ((D : ℝ) + 1) * blockMetricInt d A' =
       ∑ i ∈ Finset.range (D + 1),
         mInt d.R.A
@@ -90,7 +90,7 @@ noncomputable section
 
 def BlockResolutionMetricPair.Statement : Prop :=
   ∀ (D : ℕ) (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A' : HermLine ι) (P0' : Ideal (MRing ι)),
+    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (P0' : Ideal (MRing ι)),
     A'.a = unitDeg d.k₀ → P0' ≤ mCoordIdeal d.y → IsSemipositiveRel P0' (mCoordIdeal d.y) A' →
     ∃ (A : FinHolAtlas D d.R.X) (L : HolLineBundle A) (W₀ W₁ : Weight L) (dV : SmoothVolume A)
       (σ : ℕ → MvPolynomial (Σ k, ι k) ℚ → Fin A.n → d.R.X → ℂ),
@@ -122,7 +122,7 @@ noncomputable section
 
 def BlockResolutionMixedBridge.Statement : Prop :=
   ∀ (D : ℕ) (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (L : Fin D → HermLine ι) (A₁ : HermLine ι),
+    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (L : Fin D → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A₁ : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι),
     (∀ j, IsSmoothHerm (L j)) → A₁.a = unitDeg d.k₀ → IsSmoothHerm A₁ →
     ptsIntegral (mCoordIdeal d.y) (fun j z => Real.log ((L j).h z)) (fun z => Real.log (A₁.h z / d.A.h z)) =
       mInt d.R.A (fun j => AnResBridge.potOf d.R (L j))
@@ -145,7 +145,7 @@ noncomputable section
 
 def BlockResolutionMixedIntegral.Statement : Prop :=
   ∀ (D : ℕ) (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A' : HermLine ι), A'.a = unitDeg d.k₀ → IsSmoothHerm A' →
+    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι), A'.a = unitDeg d.k₀ → IsSmoothHerm A' →
     ∑ i ∈ Finset.range (D + 1),
         ptsIntegral (mCoordIdeal d.y) (blockMixPot d.A A' D i) (fun z => Real.log (A'.h z / d.A.h z)) =
       ((D : ℝ) + 1) * blockMetricInt d A'
@@ -273,7 +273,7 @@ noncomputable section
 def EmbeddingPieces.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
     (F : Type) [Field F] [NumberField F] [Algebra F Ω]
-    (y : (Σ k, ι k) → Ω) (D : ℕ) (L : Fin D → HermLine ι) (c : (F →+* ℂ) → ℝ)
+    (y : (Σ k, ι k) → Ω) (D : ℕ) (L : Fin D → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (c : (F →+* ℂ) → ℝ)
     (w : ((Σ k, ι k) → ℂ) → ℝ),
     IsArithVar (mCoordIdeal y) (D + 1) → Birational y → (∀ j, IsSmoothHerm (L j)) →
     (∀ z ∈ mcPts (mCoordIdeal y), ∃! sg : F →+* ℂ, LiesOver y sg z) →
@@ -304,7 +304,7 @@ noncomputable section
 
 def EuclideanSectionsPower.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] [CharZero Ω]
-    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : HermLine ι) (P0 : Ideal (MRing ι)) (II : IntersectionSystem),
+    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (P0 : Ideal (MRing ι)) (II : IntersectionSystem),
     1 ≤ D → IsIntersectionSystem II → IsArithVar (mCoordIdeal y) (D + 1) → Birational y →
     IsSmallGeneratedDatum P0 y D A → IsConjInvariantH A →
     ∃ (r : ℕ → ℕ) (φ : ∀ n : ℕ, chartLat y A.a n →+ EuclideanSpace ℝ (Fin (r n))),
