@@ -37,7 +37,7 @@ namespace GlobalTheory.AlgJetsRat
 variable {D : D7} {N N' : ℕ}
 
 theorem jet_embV_mem (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (F : VC D N N' → ℂ) (hF : ContDiff ℂ ⊤ F)
-    (hT : ∀ α, taylor D F α ∈ Qbar) {m : ℕ} (A : Fin m → Matrix (Fin N') (Fin N) D.host.E) :
+    (hT : ∀ α, Formalism.MainNotions.TaylorLogMetric.taylor D F α ∈ Qbar) {m : ℕ} (A : Fin m → Matrix (Fin N') (Fin N) D.host.E) :
     iteratedFDeriv ℂ m F 0 (fun j => embV D (tor0 D cc δ) (A j)) ∈ Qbar := by
   rw [GlobalTheory.JetTransport.mlin_expand]
   refine IntermediateField.sum_mem _ fun f _ => IntermediateField.mul_mem _ ?_ ?_

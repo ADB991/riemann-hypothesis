@@ -185,7 +185,7 @@ theorem split_of_over_g (D : D7) (k : Fin 2) {w : PlE D.host} (hw : w ∈ places
   · rw [h]; exact GlobalTheory.FixedPlaceSplit.isSplitPl_plGw D k u
   · exact GlobalTheory.ConjugatePlaceSplitting.isSplitPl_of_isConjPl (GlobalTheory.FixedPlaceSplit.isSplitPl_plGw D k u) h
 
-theorem not_mem_bad (D : D7) (cf : CharFrame D) (C : NChoice D) (tp : TupTied D cf C)
+theorem not_mem_bad (D : D7) (cf : Formalism.L2.Host.CharFrame D) (C : NChoice D) (tp : TupTied D cf C)
     (hsp : ∀ v, v ∈ placesOver D.host.E D.host.pde ∨ v ∈ placesOver D.host.E D.host.pde' → IsSplitPl D.host v)
     (w0 : D.what₂.places.Pl) (j : Fin D.R.m) (w : PlE D.host) (v : HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E)))
     (hw : NG.OverPl w v) (hs : ¬ IsSplitPl D.host w) :

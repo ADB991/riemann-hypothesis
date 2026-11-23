@@ -45,28 +45,28 @@ theorem freeHom_eq_finprod {X G : Type} [CommGroup G] (g : X → G) (m : X →�
 variable {F L : Type} [Field F] [NumberField F] [Field L] [NumberField L] [Algebra F L]
 
 theorem valuation_eq_exp (P : HeightOneSpectrum (𝓞 L)) (k : Lˣ) :
-    P.valuation L (k : L) = WithZero.exp (-ordF P k) := by
-  unfold ordF
+    P.valuation L (k : L) = WithZero.exp (-Formalism.L2.Host.ordF P k) := by
+  unfold Formalism.L2.Host.ordF
   rw [neg_neg, WithZero.exp_log (by simp)]
 
-theorem ordF_mul (P : HeightOneSpectrum (𝓞 L)) (k k' : Lˣ) : ordF P (k * k') = ordF P k + ordF P k' := by
+theorem ordF_mul (P : HeightOneSpectrum (𝓞 L)) (k k' : Lˣ) : Formalism.L2.Host.ordF P (k * k') = Formalism.L2.Host.ordF P k + Formalism.L2.Host.ordF P k' := by
   have h := valuation_eq_exp P (k * k')
   rw [Units.val_mul, map_mul, valuation_eq_exp, valuation_eq_exp, ← WithZero.exp_add, WithZero.exp_inj] at h
   omega
 
 theorem valAt_diag (P : HeightOneSpectrum (𝓞 L)) (k : Lˣ) :
-    valAt P (Neutral.B1.diagUnits L k) = WithZero.exp (-ordF P k) := by
+    valAt P (Neutral.B1.diagUnits L k) = WithZero.exp (-Formalism.L2.Host.ordF P k) := by
   rw [← valuation_eq_exp]
   exact HeightOneSpectrum.valuedAdicCompletion_eq_valuation' P _
 
 theorem mem_aboveF (v : HeightOneSpectrum (𝓞 F)) (Q : HeightOneSpectrum (𝓞 L)) :
-    Q ∈ aboveF (L := L) F v ↔ Q.under (𝓞 F) = v := by
-  unfold aboveF; rw [Set.Finite.mem_toFinset]; rfl
+    Q ∈ Formalism.L2.Host.aboveF (L := L) F v ↔ Q.under (𝓞 F) = v := by
+  unfold Formalism.L2.Host.aboveF; rw [Set.Finite.mem_toFinset]; rfl
 
 open Classical in
-theorem valAt_locF (hord : ∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), ordF P (upF F k) = ordF (P.under (𝓞 F)) k)
+theorem valAt_locF (hord : ∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), Formalism.L2.Host.ordF P (Formalism.L2.Host.upF F k) = Formalism.L2.Host.ordF (P.under (𝓞 F)) k)
     (P : HeightOneSpectrum (𝓞 L)) (v : HeightOneSpectrum (𝓞 F)) (k : Fˣ) :
-    valAt P (GlobalTheory.Mem.Chr.locF F v k) = WithZero.exp (-(if P.under (𝓞 F) = v then ordF v k else 0)) := by
+    valAt P (GlobalTheory.Mem.Chr.locF F v k) = WithZero.exp (-(if P.under (𝓞 F) = v then Formalism.L2.Host.ordF v k else 0)) := by
   unfold GlobalTheory.Mem.Chr.locF
   rw [map_prod]
   split_ifs with hw
@@ -78,9 +78,9 @@ theorem valAt_locF (hord : ∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), ordF 
     rintro rfl
     exact hw ((mem_aboveF _ _).1 hQ)
 
-theorem valAt_free (hord : ∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), ordF P (upF F k) = ordF (P.under (𝓞 F)) k)
+theorem valAt_free (hord : ∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), Formalism.L2.Host.ordF P (Formalism.L2.Host.upF F k) = Formalism.L2.Host.ordF (P.under (𝓞 F)) k)
     (P : HeightOneSpectrum (𝓞 L)) (m : HeightOneSpectrum (𝓞 F) →₀ ℤ) :
-    valAt P (freeHom (fun v => GlobalTheory.Mem.Chr.locF (L := L) F v (unif v)) (Multiplicative.ofAdd m)) =
+    valAt P (freeHom (fun v => GlobalTheory.Mem.Chr.locF (L := L) F v (Formalism.L2.Host.unif v)) (Multiplicative.ofAdd m)) =
       WithZero.exp (-m (P.under (𝓞 F))) := by
   classical
   rw [freeHom_apply, map_prod, Finset.prod_eq_single (P.under (𝓞 F))]
@@ -124,20 +124,20 @@ theorem sign_zpow_odd {x : ℝ} (hx : x ≠ 0) {n : ℤ} (hn : Odd n) :
   · rw [abs_of_nonneg (not_lt.1 h), div_self hx', one_zpow]
 
 theorem etaInf_eq [IsTotallyReal F] (ψ : L →+* ℂ) {n : ℤ} (hn : Odd n) (k : Fˣ) :
-    ((etaInf F ((InfinitePlace.mk ψ).comap (algebraMap F L)) k : ℂˣ) : ℂ) =
-      (ψ (upF F k : Lˣ) / ((‖ψ (upF F k : Lˣ)‖ : ℝ) : ℂ)) ^ n := by
+    ((Formalism.L2.Host.etaInf F ((InfinitePlace.mk ψ).comap (algebraMap F L)) k : ℂˣ) : ℂ) =
+      (ψ (Formalism.L2.Host.upF F k : Lˣ) / ((‖ψ (Formalism.L2.Host.upF F k : Lˣ)‖ : ℝ) : ℂ)) ^ n := by
   have hr : ComplexEmbedding.IsReal (ψ.comp (algebraMap F L)) :=
     InfinitePlace.isReal_mk_iff.1 (IsTotallyReal.isReal _)
-  have e : ψ (upF F k : Lˣ) = ((hr.embedding (k : F) : ℝ) : ℂ) := (hr.coe_embedding_apply (k : F)).symm
-  unfold etaInf
+  have e : ψ (Formalism.L2.Host.upF F k : Lˣ) = ((hr.embedding (k : F) : ℝ) : ℂ) := (hr.coe_embedding_apply (k : F)).symm
+  unfold Formalism.L2.Host.etaInf
   rw [InfinitePlace.comap_mk, InfinitePlace.embedding_mk_eq_of_isReal hr, e, sign_zpow_odd (by simp) hn,
     ← hr.coe_embedding_apply, Complex.ofReal_re]
   split_ifs <;> simp
 
 theorem prod_etaInf {c : L ≃ₐ[F] L} {I : Type} [Fintype I] {φ : I → L →+* ℂ} (h : CMData F c φ) {n : I → ℤ}
     (hn : ∀ i, Odd (n i)) (k : Fˣ) :
-    ((∏ w : InfinitePlace F, etaInf F w k : ℂˣ) : ℂ) =
-      ∏ i, (φ i (upF F k : Lˣ) / ((‖φ i (upF F k : Lˣ)‖ : ℝ) : ℂ)) ^ n i := by
+    ((∏ w : InfinitePlace F, Formalism.L2.Host.etaInf F w k : ℂˣ) : ℂ) =
+      ∏ i, (φ i (Formalism.L2.Host.upF F k : Lˣ) / ((‖φ i (Formalism.L2.Host.upF F k : Lˣ)‖ : ℝ) : ℂ)) ^ n i := by
   have := h.real
   rw [Units.coe_prod]
   symm
@@ -151,7 +151,7 @@ theorem conj_conj {c : L ≃ₐ[F] L} {I : Type} [Fintype I] {φ : I → L →+*
   rw [h.embedding_conj, h.embedding_conj, Complex.conj_conj]
 
 theorem exists_upF {c : L ≃ₐ[F] L} {I : Type} [Fintype I] {φ : I → L →+* ℂ} (h : CMData F c φ) (k : Lˣ)
-    (hk : c (k : L) = k) : ∃ a : Fˣ, upF F a = k := by
+    (hk : c (k : L) = k) : ∃ a : Fˣ, Formalism.L2.Host.upF F a = k := by
   have : Algebra.IsQuadraticExtension F L := { finrank_eq_two' := h.rank }
   have hcard : Nat.card (L ≃ₐ[F] L) = 2 := by rw [IsGalois.card_aut_eq_finrank, h.rank]
   obtain ⟨y, -, hy⟩ := (Nat.card_eq_two_iff' (1 : L ≃ₐ[F] L)).1 hcard
@@ -165,7 +165,7 @@ theorem exists_upF {c : L ≃ₐ[F] L} {I : Type} [Fintype I] {φ : I → L →+
   exact ⟨Units.mk0 a ha0, Units.ext ha⟩
 
 theorem div_conj_isRoot {c : L ≃ₐ[F] L} {I : Type} [Fintype I] {φ : I → L →+* ℂ} (h : CMData F c φ) (k : Lˣ)
-    (m : HeightOneSpectrum (𝓞 F) → ℤ) (hk : ∀ P : HeightOneSpectrum (𝓞 L), ordF P k = m (P.under (𝓞 F))) :
+    (m : HeightOneSpectrum (𝓞 F) → ℤ) (hk : ∀ P : HeightOneSpectrum (𝓞 L), Formalism.L2.Host.ordF P k = m (P.under (𝓞 F))) :
     ∃ r : ℕ, 0 < r ∧ ((k : L) / c k) ^ r = 1 := by
   have hk0 : (k : L) ≠ 0 := k.ne_zero
   have hc0 : c (k : L) ≠ 0 := by simp
@@ -180,31 +180,31 @@ theorem div_conj_isRoot {c : L ≃ₐ[F] L} {I : Type} [Fintype I] {φ : I → L
   rwa [Units.val_mk0] at h1
 
 theorem etaFin_unif_zpow (v : HeightOneSpectrum (𝓞 F)) (k : Fˣ) :
-    etaFin (L := L) F v (unif v) ^ ordF v k = etaFin (L := L) F v k := by
-  unfold etaFin
+    Formalism.L2.Host.etaFin (L := L) F v (Formalism.L2.Host.unif v) ^ Formalism.L2.Host.ordF v k = Formalism.L2.Host.etaFin (L := L) F v k := by
+  unfold Formalism.L2.Host.etaFin
   split_ifs
   · rw [ordF_unif_self, zpow_one]
   · rw [one_zpow]
 
 theorem cmHeckeChar_ideleCompat_finprod {c : L ≃ₐ[F] L} {I : Type} [Fintype I] {φ : I → L →+* ℂ} (h : CMData F c φ)
-    (hord : ∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), ordF P (upF F k) = ordF (P.under (𝓞 F)) k)
-    (hprod : ∀ a : Fˣ, (∏ᶠ v : HeightOneSpectrum (𝓞 F), etaFin (L := L) F v a) *
-      ∏ w : InfinitePlace F, etaInf F w a = 1)
+    (hord : ∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), Formalism.L2.Host.ordF P (Formalism.L2.Host.upF F k) = Formalism.L2.Host.ordF (P.under (𝓞 F)) k)
+    (hprod : ∀ a : Fˣ, (∏ᶠ v : HeightOneSpectrum (𝓞 F), Formalism.L2.Host.etaFin (L := L) F v a) *
+      ∏ w : InfinitePlace F, Formalism.L2.Host.etaInf F w a = 1)
     {n : I → ℤ} (hn : ∀ i, Odd (n i)) (δ : Lˣ)
-    (hδ : ∀ P : HeightOneSpectrum (𝓞 L), (aboveF (L := L) F (P.under (𝓞 F))).card = 1 → Even (ordF P δ))
+    (hδ : ∀ P : HeightOneSpectrum (𝓞 L), (Formalism.L2.Host.aboveF (L := L) F (P.under (𝓞 F))).card = 1 → Even (Formalism.L2.Host.ordF P δ))
     (hδ' : ∏ i, (φ i (δ : L) / ((‖φ i (δ : L)‖ : ℝ) : ℂ)) ^ n i = 1) (a : Fˣ)
     (m : HeightOneSpectrum (𝓞 F) → ℤ)
-    (hk : ∀ P : HeightOneSpectrum (𝓞 L), ordF P (δ * upF F a) = -m (P.under (𝓞 F))) :
-    ((∏ᶠ v, etaFin (L := L) F v (unif v) ^ m v : ℂˣ) : ℂ) =
-      ∏ i, (φ i (δ * upF F a : Lˣ) / ((‖φ i (δ * upF F a : Lˣ)‖ : ℝ) : ℂ)) ^ n i := by
-  have e1 : ∀ v, etaFin (L := L) F v (unif v) ^ m v = (etaFin (L := L) F v a)⁻¹ := fun v => by
+    (hk : ∀ P : HeightOneSpectrum (𝓞 L), Formalism.L2.Host.ordF P (δ * Formalism.L2.Host.upF F a) = -m (P.under (𝓞 F))) :
+    ((∏ᶠ v, Formalism.L2.Host.etaFin (L := L) F v (Formalism.L2.Host.unif v) ^ m v : ℂˣ) : ℂ) =
+      ∏ i, (φ i (δ * Formalism.L2.Host.upF F a : Lˣ) / ((‖φ i (δ * Formalism.L2.Host.upF F a : Lˣ)‖ : ℝ) : ℂ)) ^ n i := by
+  have e1 : ∀ v, Formalism.L2.Host.etaFin (L := L) F v (Formalism.L2.Host.unif v) ^ m v = (Formalism.L2.Host.etaFin (L := L) F v a)⁻¹ := fun v => by
     obtain ⟨P, rfl⟩ := exists_under (L := L) v
     have h1 := hk P
     rw [ordF_mul, hord] at h1
-    unfold etaFin
+    unfold Formalism.L2.Host.etaFin
     split_ifs with hc
     · obtain ⟨r, hr⟩ := hδ P hc
-      have : m (P.under (𝓞 F)) = 2 * (-r) + -ordF (P.under (𝓞 F)) a := by omega
+      have : m (P.under (𝓞 F)) = 2 * (-r) + -Formalism.L2.Host.ordF (P.under (𝓞 F)) a := by omega
       rw [ordF_unif_self, zpow_one, this, zpow_add, zpow_neg, zpow_mul]
       simp [zpow_ofNat]
     · simp
@@ -217,16 +217,16 @@ theorem cmHeckeChar_ideleCompat_finprod {c : L ≃ₐ[F] L} {I : Type} [Fintype 
   rw [mul_div_mul_comm]
 
 theorem compat {c : L ≃ₐ[F] L} {I : Type} [Fintype I] {φ : I → L →+* ℂ} (h : CMData F c φ)
-    (hord : ∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), ordF P (upF F k) = ordF (P.under (𝓞 F)) k)
-    (hprod : ∀ a : Fˣ, (∏ᶠ v : HeightOneSpectrum (𝓞 F), etaFin (L := L) F v a) *
-      ∏ w : InfinitePlace F, etaInf F w a = 1)
+    (hord : ∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), Formalism.L2.Host.ordF P (Formalism.L2.Host.upF F k) = Formalism.L2.Host.ordF (P.under (𝓞 F)) k)
+    (hprod : ∀ a : Fˣ, (∏ᶠ v : HeightOneSpectrum (𝓞 F), Formalism.L2.Host.etaFin (L := L) F v a) *
+      ∏ w : InfinitePlace F, Formalism.L2.Host.etaInf F w a = 1)
     {n : I → ℤ} (hn : ∀ i, Odd (n i))
     (hroot : ∀ ζ : L, (∃ m : ℕ, 0 < m ∧ ζ ^ m = 1) → ∃ δ : Lˣ, (δ : L) = ζ * c (δ : L) ∧
-      (∀ P : HeightOneSpectrum (𝓞 L), (aboveF (L := L) F (P.under (𝓞 F))).card = 1 → Even (ordF P δ)) ∧
+      (∀ P : HeightOneSpectrum (𝓞 L), (Formalism.L2.Host.aboveF (L := L) F (P.under (𝓞 F))).card = 1 → Even (Formalism.L2.Host.ordF P δ)) ∧
       ∏ i, (φ i (δ : L) / ((‖φ i (δ : L)‖ : ℝ) : ℂ)) ^ n i = 1) (k : Lˣ)
     (m : HeightOneSpectrum (𝓞 F) → ℤ)
-    (hk : ∀ P : HeightOneSpectrum (𝓞 L), ordF P k = -m (P.under (𝓞 F))) :
-    ((∏ᶠ v, etaFin (L := L) F v (unif v) ^ m v : ℂˣ) : ℂ) =
+    (hk : ∀ P : HeightOneSpectrum (𝓞 L), Formalism.L2.Host.ordF P k = -m (P.under (𝓞 F))) :
+    ((∏ᶠ v, Formalism.L2.Host.etaFin (L := L) F v (Formalism.L2.Host.unif v) ^ m v : ℂˣ) : ℂ) =
       ∏ i, (φ i (k : L) / ((‖φ i (k : L)‖ : ℝ) : ℂ)) ^ n i := by
   obtain ⟨δ, hδe, hδ, hδ'⟩ := hroot _ (div_conj_isRoot h k (fun v => -m v) hk)
   have hk0 : (k : L) ≠ 0 := k.ne_zero
@@ -240,20 +240,20 @@ theorem compat {c : L ≃ₐ[F] L} {I : Type} [Fintype I] {φ : I → L →+* �
     rw [Units.val_mul, Units.val_inv_eq_inv_val, map_mul, map_inv₀]
     field_simp
     linear_combination e)
-  obtain rfl : k = δ * upF F a := by rw [ha, mul_inv_cancel_left]
+  obtain rfl : k = δ * Formalism.L2.Host.upF F a := by rw [ha, mul_inv_cancel_left]
   exact cmHeckeChar_ideleCompat_finprod h hord hprod hn δ hδ hδ' a m hk
 
 theorem infIdele_mem (w : InfinitePlace L) (y : (w.Completion)ˣ) : GlobalTheory.Mem.Chr.infIdele L w y ∈ unitIdl L := fun v => by
   show Valued.v (1 : v.adicCompletion L) = 1
   exact map_one _
 
-theorem infDiag_eq (k : Lˣ) : infDiag k = ∏ w, GlobalTheory.Mem.Chr.infIdele L w (atInf w k) := by
-  unfold infDiag
+theorem infDiag_eq (k : Lˣ) : Formalism.L2.Host.infDiag k = ∏ w, GlobalTheory.Mem.Chr.infIdele L w (Formalism.L2.Host.atInf w k) := by
+  unfold Formalism.L2.Host.infDiag
   rw [MonoidHom.finsetProd_apply]; rfl
 
 
 open Classical in
-theorem exists_unramified_resEta : ∀ (F L : Type) [Field F] [NumberField F] [Field L] [NumberField L] [Algebra F L] (c : L ≃ₐ[F] L) (I : Type) [Fintype I] (φ : I → L →+* ℂ), CMData F c φ → (∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), ordF P (upF F k) = ordF (P.under (𝓞 F)) k) → (∀ a : Fˣ, (∏ᶠ v : HeightOneSpectrum (𝓞 F), etaFin (L := L) F v a) * ∏ w : InfinitePlace F, etaInf F w a = 1) → ∀ (n : I → ℤ), (∀ i, Odd (n i)) → (∀ ζ : L, (∃ m : ℕ, 0 < m ∧ ζ ^ m = 1) → ∃ δ : Lˣ, (δ : L) = ζ * c (δ : L) ∧ (∀ P : HeightOneSpectrum (𝓞 L), (aboveF (L := L) F (P.under (𝓞 F))).card = 1 → Even (ordF P δ)) ∧ ∏ i, (φ i (δ : L) / ((‖φ i (δ : L)‖ : ℝ) : ℂ)) ^ n i = 1) → ∃ χ : HChar L, χ.IsUnitary ∧ (∀ v, χ.UnrAt v) ∧ χ.ResEta F ∧ χ.HasInf φ n := by
+theorem exists_unramified_resEta : ∀ (F L : Type) [Field F] [NumberField F] [Field L] [NumberField L] [Algebra F L] (c : L ≃ₐ[F] L) (I : Type) [Fintype I] (φ : I → L →+* ℂ), CMData F c φ → (∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), Formalism.L2.Host.ordF P (Formalism.L2.Host.upF F k) = Formalism.L2.Host.ordF (P.under (𝓞 F)) k) → (∀ a : Fˣ, (∏ᶠ v : HeightOneSpectrum (𝓞 F), Formalism.L2.Host.etaFin (L := L) F v a) * ∏ w : InfinitePlace F, Formalism.L2.Host.etaInf F w a = 1) → ∀ (n : I → ℤ), (∀ i, Odd (n i)) → (∀ ζ : L, (∃ m : ℕ, 0 < m ∧ ζ ^ m = 1) → ∃ δ : Lˣ, (δ : L) = ζ * c (δ : L) ∧ (∀ P : HeightOneSpectrum (𝓞 L), (Formalism.L2.Host.aboveF (L := L) F (P.under (𝓞 F))).card = 1 → Even (Formalism.L2.Host.ordF P δ)) ∧ ∏ i, (φ i (δ : L) / ((‖φ i (δ : L)‖ : ℝ) : ℂ)) ^ n i = 1) → ∃ χ : Formalism.L2.Host.HChar L, χ.IsUnitary ∧ (∀ v, χ.UnrAt v) ∧ χ.ResEta F ∧ χ.HasInf φ n := by
   intro F L _ _ _ _ _ c I _ φ h hord hprod n hn hroot
   have := h.real
   obtain ⟨ψ, hψc, hψu, hψi, -, hψl, hψd⟩ := GlobalTheory.ModelChar.exists_modelChar L I φ h.bij n ∅ (fun _ => 1) (by simp)
@@ -262,12 +262,12 @@ theorem exists_unramified_resEta : ∀ (F L : Type) [Field F] [NumberField F] [F
     unfold GlobalTheory.Mem.Chr.locF
     rw [map_prod]
     exact Finset.prod_eq_one fun Q _ => hψl' _ _
-  have hψinf : ∀ k : Lˣ, ((ψ (infDiag k) : ℂˣ) : ℂ) = ∏ i, (φ i (k : L) / ((‖φ i (k : L)‖ : ℝ) : ℂ)) ^ n i := fun k => by
+  have hψinf : ∀ k : Lˣ, ((ψ (Formalism.L2.Host.infDiag k) : ℂˣ) : ℂ) = ∏ i, (φ i (k : L) / ((‖φ i (k : L)‖ : ℝ) : ℂ)) ^ n i := fun k => by
     rw [infDiag_eq, map_prod, Units.coe_prod]
     symm
     exact Fintype.prod_bijective _ h.bij _ _ fun i => (hψi i k).symm
-  let β := freeHom fun v => GlobalTheory.Mem.Chr.locF (L := L) F v (unif v)
-  let b := freeHom fun v => etaFin (L := L) F v (unif v)
+  let β := freeHom fun v => GlobalTheory.Mem.Chr.locF (L := L) F v (Formalism.L2.Host.unif v)
+  let b := freeHom fun v => Formalism.L2.Host.etaFin (L := L) F v (Formalism.L2.Host.unif v)
   have hψβ : ∀ m, ψ (β m) = 1 := fun m => by
     show ψ (freeHom _ (Multiplicative.ofAdd (Multiplicative.toAdd m))) = 1
     rw [freeHom_apply, map_prod]
@@ -279,7 +279,7 @@ theorem exists_unramified_resEta : ∀ (F L : Type) [Field F] [NumberField F] [F
       show ‖((1 * freeHom _ (Multiplicative.ofAdd (Multiplicative.toAdd y.2)) : ℂˣ) : ℂ)‖ = 1
       rw [one_mul, freeHom_apply, Units.coe_prod, norm_prod]
       refine Finset.prod_eq_one fun v _ => ?_
-      unfold etaFin
+      unfold Formalism.L2.Host.etaFin
       split_ifs <;> simp)
     (fun y hy => by
       obtain ⟨k, m⟩ := y
@@ -300,13 +300,13 @@ theorem exists_unramified_resEta : ∀ (F L : Type) [Field F] [NumberField F] [F
     by_cases e : w = v
     · subst e; rw [valAt_localIdele_self]; exact hx
     · exact valAt_localIdele_ne e x
-  · have e : HChar.resFin ⟨χ, hχc, hχd⟩ v k = χ (GlobalTheory.Mem.Chr.locF F v k) := by
-      rw [HChar.resFin_apply]
+  · have e : Formalism.L2.Host.HChar.resFin ⟨χ, hχc, hχd⟩ v k = χ (GlobalTheory.Mem.Chr.locF F v k) := by
+      rw [Formalism.L2.Host.HChar.resFin_apply]
       unfold GlobalTheory.Mem.Chr.locF
       rw [map_prod]
       rfl
-    have h1 := hχβ (Multiplicative.ofAdd (Finsupp.single v (ordF v k)))
-    have h2 := hχU (GlobalTheory.Mem.Chr.locF F v k * (β (Multiplicative.ofAdd (Finsupp.single v (ordF v k))))⁻¹) fun P => by
+    have h1 := hχβ (Multiplicative.ofAdd (Finsupp.single v (Formalism.L2.Host.ordF v k)))
+    have h2 := hχU (GlobalTheory.Mem.Chr.locF F v k * (β (Multiplicative.ofAdd (Finsupp.single v (Formalism.L2.Host.ordF v k))))⁻¹) fun P => by
       show valAt P _ = 1
       rw [map_mul, map_inv, valAt_locF hord, valAt_free hord, Finsupp.single_apply]
       simp only [eq_comm (a := v)]
@@ -314,13 +314,13 @@ theorem exists_unramified_resEta : ∀ (F L : Type) [Field F] [NumberField F] [F
     rw [map_mul, map_mul, map_inv, map_inv, hψF, hψβ, inv_one, mul_one, mul_inv_eq_one, h1] at h2
     rw [e, h2, freeHom_single, etaFin_unif_zpow]
   · obtain ⟨i, rfl⟩ := ((comap_bijective h).comp h.bij).2 w
-    have e : aboveInf (L := L) F ((InfinitePlace.mk (φ i)).comap (algebraMap F L)) = {InfinitePlace.mk (φ i)} := by
+    have e : Formalism.L2.Host.aboveInf (L := L) F ((InfinitePlace.mk (φ i)).comap (algebraMap F L)) = {InfinitePlace.mk (φ i)} := by
       ext w'
-      simp only [aboveInf, Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_singleton]
+      simp only [Formalism.L2.Host.aboveInf, Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_singleton]
       exact (comap_bijective h).1.eq_iff
-    show HChar.resInf _ ((InfinitePlace.mk (φ i)).comap (algebraMap F L)) k =
-      etaInf F ((InfinitePlace.mk (φ i)).comap (algebraMap F L)) k
-    rw [HChar.resInf_apply, e, Finset.prod_singleton]
+    show Formalism.L2.Host.HChar.resInf _ ((InfinitePlace.mk (φ i)).comap (algebraMap F L)) k =
+      Formalism.L2.Host.etaInf F ((InfinitePlace.mk (φ i)).comap (algebraMap F L)) k
+    rw [Formalism.L2.Host.HChar.resInf_apply, e, Finset.prod_singleton]
     apply Units.ext
     rw [etaInf_eq (φ i) (hn i), ← hψi, ← hχU _ (infIdele_mem _ _)]
     rfl

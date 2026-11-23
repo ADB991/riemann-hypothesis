@@ -70,11 +70,11 @@ theorem cycField_le_map {n : ℕ} (hn : n ≠ 0) {Y : Fld} (hY : muFld n ≤ Y) 
 
 variable {E : Type} [Field E] [NumberField E]
 
-theorem valsOf_subset_qb {χ : HChar E} {s : ℝ} {N : IntermediateField ℚ ℂ} (h : valueField χ s ≤ N) :
+theorem valsOf_subset_qb {χ : Formalism.L2.Host.HChar E} {s : ℝ} {N : IntermediateField ℚ ℂ} (h : valueField χ s ≤ N) :
     valsOf ι s χ ⊆ qb ι N := fun _ ⟨v, hv, e⟩ =>
   mem_qb.2 (h (IntermediateField.subset_adjoin ℚ _ ⟨v, hv, e⟩))
 
-theorem valueField_le_map {χ : HChar E} {s : ℝ} {Y : Fld} (hY : valsOf ι s χ ⊆ Y)
+theorem valueField_le_map {χ : Formalism.L2.Host.HChar E} {s : ℝ} {Y : Fld} (hY : valsOf ι s χ ⊆ Y)
     (hz : ∀ z ∈ valueField χ s, ∃ x, ι x = z) : valueField χ s ≤ Y.map ι.toRatAlgHom := by
   rw [valueField, IntermediateField.adjoin_le_iff]
   rintro z ⟨v, hv, rfl⟩

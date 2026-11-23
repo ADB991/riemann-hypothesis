@@ -254,10 +254,10 @@ theorem exists_char_teich {F : Type} [Field F] [NumberField F] [Algebra F L] {c 
   have hne : ∀ w, O w → w ≠ w1 := fun w hw h => h1 (h ▸ hw)
   have hwild : ∀ w : HeightOneSpectrum (𝓞 L), ∃ θ : (w.adicCompletion L)ˣ →* ℂˣ,
       O w → ∃ p : ℕ, p.Prime ∧ (p : 𝓞 L) ∈ w.asIdeal ∧ (∀ x, θ x ^ p = 1) ∧
-        (∀ x, IsUnitAt w x → Valued.v ((x : w.adicCompletion L) - 1) ≤ WithZero.exp (-2 : ℤ) → θ x = 1) ∧
-        ∃ k : Lˣ, IsUnitAt w (atFin w k) ∧
-          Valued.v (((atFin w k : (w.adicCompletion L)ˣ) : w.adicCompletion L) - 1) ≤
-            WithZero.exp (-1 : ℤ) ∧ θ (atFin w k) ≠ 1 := fun w => by
+        (∀ x, Formalism.L2.Host.IsUnitAt w x → Valued.v ((x : w.adicCompletion L) - 1) ≤ WithZero.exp (-2 : ℤ) → θ x = 1) ∧
+        ∃ k : Lˣ, Formalism.L2.Host.IsUnitAt w (Formalism.L2.Host.atFin w k) ∧
+          Valued.v (((Formalism.L2.Host.atFin w k : (w.adicCompletion L)ˣ) : w.adicCompletion L) - 1) ≤
+            WithZero.exp (-1 : ℤ) ∧ θ (Formalism.L2.Host.atFin w k) ≠ 1 := fun w => by
     by_cases hw : O w
     · obtain ⟨p, hp, hp'⟩ := hpr w hw
       obtain ⟨θ, hθ⟩ := exists_wild w hp hp'
@@ -288,7 +288,7 @@ theorem exists_char_teich {F : Type} [Field F] [NumberField F] [Algebra F L] {c 
       rcases (hS w').1 hw with rfl | h
       exacts [Or.inr hu1, Or.inl h.1])
     (fun k hk => by
-      have ep : ∏ w ∈ S.erase w1, θ w (atFin w k) = ∏ w ∈ S.erase w1, θ1 w (atFin w k) :=
+      have ep : ∏ w ∈ S.erase w1, θ w (Formalism.L2.Host.atFin w k) = ∏ w ∈ S.erase w1, θ1 w (Formalism.L2.Host.atFin w k) :=
         Finset.prod_congr rfl fun w hw => by rw [e1 w (Finset.ne_of_mem_erase hw)]
       rw [← Finset.mul_prod_erase _ _ hw0, e0, ep]
       exact hθ0 k hk)

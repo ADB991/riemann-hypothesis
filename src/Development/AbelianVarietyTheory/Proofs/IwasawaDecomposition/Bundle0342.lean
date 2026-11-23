@@ -386,7 +386,7 @@ open Formalism.L2.Fam.NPC Formalism.L2.Fam.NPC.BaseC GlobalTheory.HeckeLocN
 
 namespace GlobalTheory.GenHypOut
 
-theorem not_mem_bad (D : D7) (cf : CharFrame D) (C : NChoice D) (tp : TupTied D cf C) (hQ : QOver C)
+theorem not_mem_bad (D : D7) (cf : Formalism.L2.Host.CharFrame D) (C : NChoice D) (tp : TupTied D cf C) (hQ : QOver C)
     (w : D.what₂.places.Pl) (j : Fin D.R.m) (v : PlE D.host) (k : ℕ) (s : SplitPlace D.host.E)
     (hv : GenAt D (D.what₂.places.resChar w) (C.Q w) v k) (hc : IsConjPl D.host v s.w) :
     s.v ∉ gPl D ∪ qPl D (tp.tup (D.what₂.muTw w) j) := by
@@ -417,12 +417,12 @@ theorem not_mem_bad (D : D7) (cf : CharFrame D) (C : NChoice D) (tp : TupTied D 
       have hnp : w' ∉ placesOver D.host.E
           (if D.what₂.places.resChar w = D.host.pde then D.host.pde' else D.host.pde) :=
         fun h => hp (GlobalTheory.LocLevel.mem_placesOver_of_overPl' hov hov' h)
-      unfold CharFrame.delAt
+      unfold Formalism.L2.Host.CharFrame.delAt
       split_ifs with h
       · exact cf.isDel'.unr w' fun h' => hnp (by rw [if_pos h]; exact h')
       · exact cf.isDel.unr w' fun h' => hnp (by rw [if_neg h]; exact h')
 
-theorem genHyp : ∀ (D : D7) (cf : CharFrame D) (M : MtFam D) (C : NChoice D) (tp : TupTied D cf C),
+theorem genHyp : ∀ (D : D7) (cf : Formalism.L2.Host.CharFrame D) (M : MtFam D) (C : NChoice D) (tp : TupTied D cf C),
     MtInput D M tp.tup C.Q → QOver C → GenHyp M C.Q := by
   intro D cf M C tp hM hQ w j h1 h2
   obtain ⟨j', rfl⟩ : ∃ j', j = j' + 1 := ⟨j - 1, by omega⟩

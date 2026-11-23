@@ -197,7 +197,7 @@ theorem norm_mem_Qbar {z : ℂ} (h : z ∈ Formalism.MainNotions.TaylorLogMetric
   rw [e]
   exact mul_mem h (conj_mem_Qbar h)
 
-theorem inf_mem_Qbar {L : Type} [Field L] [NumberField L] {χ : HChar L} {I : Type} [Fintype I] {φ : I → L →+* ℂ} {n : I → ℤ}
+theorem inf_mem_Qbar {L : Type} [Field L] [NumberField L] {χ : Formalism.L2.Host.HChar L} {I : Type} [Fintype I] {φ : I → L →+* ℂ} {n : I → ℤ}
     (h : χ.HasInf φ n) (k : Lˣ) : ((χ.inf k : ℂˣ) : ℂ) ∈ Formalism.MainNotions.TaylorLogMetric.Qbar := by
   rw [h k]
   exact prod_mem fun i _ => zpow_mem (div_mem (emb_mem_Qbar _ _) (norm_mem_Qbar (emb_mem_Qbar _ _))) _
@@ -210,8 +210,8 @@ theorem le_exp_neg_one {γ : WithZero (Multiplicative ℤ)} (h : γ < 1) : γ �
     rw [WithZero.exp_le_exp]
     omega
 
-theorem loc_pow_eq_one {L : Type} [Field L] [NumberField L] (χ : HChar L) (v : HeightOneSpectrum (𝓞 L)) (hv : χ.TameAt v)
-    (x : (v.adicCompletion L)ˣ) (hx : IsUnitAt v x) : ∃ n : ℕ, 0 < n ∧ χ.loc v x ^ n = 1 := by
+theorem loc_pow_eq_one {L : Type} [Field L] [NumberField L] (χ : Formalism.L2.Host.HChar L) (v : HeightOneSpectrum (𝓞 L)) (hv : χ.TameAt v)
+    (x : (v.adicCompletion L)ˣ) (hx : Formalism.L2.Host.IsUnitAt v x) : ∃ n : ℕ, 0 < n ∧ χ.loc v x ^ n = 1 := by
   have := Formalism.UG.P.glint_finite_residueField (F := L) v
   let _ := Fintype.ofFinite (IsLocalRing.ResidueField (v.adicCompletionIntegers L))
   set N := Fintype.card (IsLocalRing.ResidueField (v.adicCompletionIntegers L)) with hN
@@ -239,8 +239,8 @@ theorem loc_pow_eq_one {L : Type} [Field L] [NumberField L] (χ : HChar L) (v : 
     rw [e]
     exact le_exp_neg_one hlt
 
-theorem loc_mem_Qbar {L : Type} [Field L] [NumberField L] (χ : HChar L) (v : HeightOneSpectrum (𝓞 L)) (hv : χ.TameAt v)
-    (x : (v.adicCompletion L)ˣ) (hx : IsUnitAt v x) : ((χ.loc v x : ℂˣ) : ℂ) ∈ Formalism.MainNotions.TaylorLogMetric.Qbar := by
+theorem loc_mem_Qbar {L : Type} [Field L] [NumberField L] (χ : Formalism.L2.Host.HChar L) (v : HeightOneSpectrum (𝓞 L)) (hv : χ.TameAt v)
+    (x : (v.adicCompletion L)ˣ) (hx : Formalism.L2.Host.IsUnitAt v x) : ((χ.loc v x : ℂˣ) : ℂ) ∈ Formalism.MainNotions.TaylorLogMetric.Qbar := by
   obtain ⟨n, hn, h⟩ := loc_pow_eq_one χ v hv x hx
   refine mem_Qbar_of_pow hn ?_
   rw [← Units.val_pow_eq_pow_val, h, Units.val_one]
@@ -252,14 +252,14 @@ namespace GlobalTheory.TieAlgValues
 
 open PI.HeckeProdW
 
-theorem fin_mem_Qbar {L : Type} [Field L] [NumberField L] (χ : HChar L) (htame : ∀ v, χ.TameAt v)
-    (hinf : ∀ k : Lˣ, ((χ.inf k : ℂˣ) : ℂ) ∈ Formalism.MainNotions.TaylorLogMetric.Qbar) (b : Ideles L) (hb : IsFinIdele b) :
+theorem fin_mem_Qbar {L : Type} [Field L] [NumberField L] (χ : Formalism.L2.Host.HChar L) (htame : ∀ v, χ.TameAt v)
+    (hinf : ∀ k : Lˣ, ((χ.inf k : ℂˣ) : ℂ) ∈ Formalism.MainNotions.TaylorLogMetric.Qbar) (b : Neutral.B1.Ideles L) (hb : Formalism.L2.Host.IsFinIdele b) :
     ((χ.1 b : ℂˣ) : ℂ) ∈ Formalism.MainNotions.TaylorLogMetric.Qbar := by
   classical
   obtain ⟨h, hh, hx⟩ := CharEx.classExp L
   obtain ⟨k, hk⟩ := hx b
-  set u : Ideles L := b ^ h * diagUnits L k with hu
-  set w : Ideles L := (infDiag k)⁻¹ * u with hw
+  set u : Neutral.B1.Ideles L := b ^ h * Neutral.B1.diagUnits L k with hu
+  set w : Neutral.B1.Ideles L := (Formalism.L2.Host.infDiag k)⁻¹ * u with hw
   have hwInf : (w : AdeleRing (𝓞 L) L).1 = 1 := by
     funext pl
     show pw pl w = 1
@@ -292,7 +292,7 @@ theorem fin_mem_Qbar {L : Type} [Field L] [NumberField L] (χ : HChar L) (htame 
     refine loc_mem_Qbar χ v (htame v) _ ?_
     show Valued.v (((y v : v.adicCompletionIntegers L) : v.adicCompletion L)) = 1
     exact hwFin v
-  have hue : u = infDiag k * w := by rw [hw, mul_inv_cancel_left]
+  have hue : u = Formalism.L2.Host.infDiag k * w := by rw [hw, mul_inv_cancel_left]
   have hχu : χ.1 u = χ.1 b ^ h := by rw [hu, map_mul, χ.2.2 k, mul_one, map_pow]
   refine mem_Qbar_of_pow hh ?_
   rw [← Units.val_pow_eq_pow_val, ← hχu, hue, map_mul, Units.val_mul]
@@ -304,7 +304,7 @@ namespace GlobalTheory.TieAlgValues
 
 open Formalism.BasicNotions Formalism.MainNotions _root_.Formalism.L2.Col Formalism.L2.Ker Formalism.L2.DIV GlobalTheory.TwU GlobalTheory.TwV
 
-def finIdele {L : Type} [Field L] [NumberField L] (z : (FiniteAdeleRing (𝓞 L) L)ˣ) : Ideles L :=
+def finIdele {L : Type} [Field L] [NumberField L] (z : (FiniteAdeleRing (𝓞 L) L)ˣ) : Neutral.B1.Ideles L :=
   MulEquiv.prodUnits.symm (1, z)
 
 theorem mt_mem_Qbar : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a => ∀ i < D.R.m,
@@ -312,8 +312,8 @@ theorem mt_mem_Qbar : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a 
   intro D _ _ _ _ _ _ _ _ t u μ _ A dtU _ hP _ i hi y
   obtain ⟨x, hx⟩ := hP.q_read.1 (dtU y)
   obtain ⟨ι, hι⟩ := exists_isAdIso t.X.F t.X.E
-  set b : Ideles t.X.E := finIdele (Units.map ι.toRingHom.toMonoidHom x) with hbdef
-  have hb : IsFinIdele b := fun _ => rfl
+  set b : Neutral.B1.Ideles t.X.E := finIdele (Units.map ι.toRingHom.toMonoidHom x) with hbdef
+  have hb : Formalism.L2.Host.IsFinIdele b := fun _ => rfl
   have hbx : ι (x : AfE t.X.F t.X.E) = (b : AdeleRing (𝓞 t.X.E) t.X.E).2 := rfl
   have key : ((D.muTil (i + 1) (A.q x) : ℂˣ) : ℂ) ∈ TaylorLogMetric.Qbar := by
     rw [hP.muTil ι hι ⟨i, hi⟩ b x hb hbx]

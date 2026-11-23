@@ -211,11 +211,11 @@ theorem inInertia_restrict {K Ω : Type} [Field K] [NumberField K] [Field Ω] [A
     rw [← σ.restrictNormal_commutes L, ← map_sub] at this
     exact this
 
-theorem rayIdl_le {K : Type} [Field K] [NumberField K] (𝔪 : Ideal (𝓞 K)) {U : Subgroup (Ideles K)}
-    (ho : IsOpen (U : Set (Ideles K))) (hi : infConn K ≤ U)
-    (hu : ∀ v x, IsUnitAt v x → localIdele K v x ∈ U) : rayIdl 𝔪 ≤ U := by
+theorem rayIdl_le {K : Type} [Field K] [NumberField K] (𝔪 : Ideal (𝓞 K)) {U : Subgroup (Neutral.B1.Ideles K)}
+    (ho : IsOpen (U : Set (Neutral.B1.Ideles K))) (hi : infConn K ≤ U)
+    (hu : ∀ v x, Formalism.L2.Host.IsUnitAt v x → Neutral.B1.localIdele K v x ∈ U) : rayIdl 𝔪 ≤ U := by
   rintro b ⟨hb, -, hb'⟩
-  let c : Ideles K := Units.map (MonoidHom.inl (InfiniteAdeleRing K) (FiniteAdeleRing (𝓞 K) K)) (infPart b)
+  let c : Neutral.B1.Ideles K := Units.map (MonoidHom.inl (InfiniteAdeleRing K) (FiniteAdeleRing (𝓞 K) K)) (infPart b)
   have e : b = c * finPartI K b := Units.ext (Prod.ext (mul_one _).symm (one_mul _).symm)
   rw [e]
   refine mul_mem (hi ⟨_, hb', rfl⟩) ?_
@@ -244,10 +244,10 @@ theorem isModulus_top (H : GlobalTheory.Published.GlobalArtinReciprocity) (K M :
     ext x
     apply (algebraMap M Ω).injective
     exact (σ.restrictNormal_commutes M x).trans (hσ ⟨_, x, rfl⟩)
-  let θ : Ideles K →* (M ≃ₐ[K] M) := (liftAb φ hφ).comp art
+  let θ : Neutral.B1.Ideles K →* (M ≃ₐ[K] M) := (liftAb φ hφ).comp art
   have hθ : Continuous θ := (continuous_liftAb φ hφ).comp ha.quot.continuous
-  have ho : IsOpen (θ.ker : Set (Ideles K)) := (isOpen_discrete {1}).preimage hθ
-  have hk : (diagUnits K).range ⊔ infConn K ≤ θ.ker := fun x hx => by
+  have ho : IsOpen (θ.ker : Set (Neutral.B1.Ideles K)) := (isOpen_discrete {1}).preimage hθ
+  have hk : (Neutral.B1.diagUnits K).range ⊔ infConn K ≤ θ.ker := fun x hx => by
     have hk : x ∈ art.ker := by
       rw [ha.ker]
       exact Subgroup.le_topologicalClosure _ hx

@@ -249,8 +249,8 @@ lemma flow_coord (hσ : Formalism.L2.PjFree.GoodEmb c σ) (hU : IsUnf U) (k : U.
         ∀ j, Uw.Pm k x u j = -((tau j).1 sE * W v j) := by
   obtain ⟨idx, hty, hlt, -⟩ := GlobalTheory.ArcFlow.exists_idx Uw hσ hU k
   obtain ⟨hp0, -⟩ := hU.2.1 k
-  refine ⟨fun j => (idx j).1, fun v j => relab c σ (Uw.e j).1 ((U.X k).κ0 * herm (U.X k).Gm (Uw.φ k v : Fin r → E) ξ') *
-    perFr (U.X k) x.1 ξ' (relab c σ (Uw.e j).1) (Uw.e j).2, fun s hs v j => ?_, fun sE hs v u hu j => ?_⟩
+  refine ⟨fun j => (idx j).1, fun v j => Formalism.L2.PjFree.relab c σ (Uw.e j).1 ((U.X k).κ0 * herm (U.X k).Gm (Uw.φ k v : Fin r → E) ξ') *
+    perFr (U.X k) x.1 ξ' (Formalism.L2.PjFree.relab c σ (Uw.e j).1) (Uw.e j).2, fun s hs v j => ?_, fun sE hs v u hu j => ?_⟩
   · rw [Uw.Pm_eq, Uw.Pm_eq]
     dsimp only
     rw [hty j]
@@ -260,7 +260,7 @@ lemma flow_coord (hσ : Formalism.L2.PjFree.GoodEmb c σ) (hU : IsUnf U) (k : U.
       rw [← _root_.mul_assoc]
       exact h
     · rw [GlobalTheory.PerFlow.flow_mem (U.X k) hξ', _root_.mul_assoc]
-  · have h1 : relab c σ (Uw.e j).1 sE = (idx j).1.1 sE := by
+  · have h1 : Formalism.L2.PjFree.relab c σ (Uw.e j).1 sE = (idx j).1.1 sE := by
       rw [hty j]
       split_ifs
       · have := GlobalTheory.ArcFlow.map_cc (idx j).1.1 sE

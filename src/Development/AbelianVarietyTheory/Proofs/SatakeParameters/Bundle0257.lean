@@ -313,9 +313,9 @@ namespace GlobalTheory.Pdv.UnStd
 open Formalism.BasicNotions Formalism.MainNotions NumberField IsDedekindDomain Formalism.FrobeniusOrbits Neutral.B1 ReciprocityTheory.Neutral.Bridge.HCFR Formalism.L2.Host GlobalTheory.KerJ
 open GlobalTheory.Mem.Chr (finPartI finPartI_eq_self unitIdl)
 
-theorem mtType_of_frame_mul {D : D7} {C : CharFrame D} (Dt : DtTied D C) (ξ : HChar D.host.E) {n : ℕ} (hn : 0 < n)
+theorem mtType_of_frame_mul {D : D7} {C : CharFrame D} (Dt : Formalism.L2.Host.DtTied D C) (ξ : HChar D.host.E) {n : ℕ} (hn : 0 < n)
     (hord : ξ.OrderDvd n) (mt : ℕ → D.Dt →* ℂˣ)
-    (h : ∀ (j : Fin D.R.m) a, IsFinIdele a → mt (j.1 + 1) (Dt.eDt a) = (C.mu0 j * ξ).1 a) (u : D.what₂.Word) :
+    (h : ∀ (j : Fin D.R.m) a, Formalism.L2.Host.IsFinIdele a → mt (j.1 + 1) (Dt.eDt a) = (C.mu0 j * ξ).1 a) (u : D.what₂.Word) :
     MtType u mt := by
   letI := D.host.cmStar
   have hcm : IsCMField D.host.E := D.host.isCMField_hostE
@@ -339,8 +339,8 @@ theorem mtType_of_frame_mul {D : D7} {C : CharFrame D} (Dt : DtTied D C) (ξ : H
     refine Finset.prod_congr rfl fun τ _ => ?_
     have hme : m (D.eTau τ) = 2 * -e τ := by
       have h1 := hm (D.eTau τ)
-      have h2 : eExp D ⟨i, hi⟩ (D.eTau τ) = e τ := by
-        rw [← he τ, D.hcW_e]; simp [eExp]
+      have h2 : Formalism.L2.Host.eExp D ⟨i, hi⟩ (D.eTau τ) = e τ := by
+        rw [← he τ, D.hcW_e]; simp [Formalism.L2.Host.eExp]
       simp only [h2] at h1
       exact_mod_cast h1
     have h1 := congrArg (embPsi D.host (D.eTau τ)) hk

@@ -66,7 +66,7 @@ theorem ordSub_conj {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice 
   have h := CharValCompare.val_dual (P := P) ⟨hN, hu⟩ (hfr P) (hfr (conjPrime₂ P))
   rw [map_mul, valuation_star, CharValCompare.conjP_conjP] at h
   rw [ordSub_detSub_eq hfull (hfr P), ordSub_detSub_eq hfull (hfr (conjPrime₂ P))]
-  unfold ordF
+  unfold Formalism.L2.Host.ordF
   rw [eq_inv_of_mul_eq_one_right h, WithZero.log_inv]
 
 theorem ordSub_std (w : HeightOneSpectrum (𝓞 E)) : ordSub w (detSub (stdLat E n)) = 0 := by
@@ -89,7 +89,7 @@ theorem ordSub_std (w : HeightOneSpectrum (𝓞 E)) : ordSub w (detSub (stdLat E
     rw [← mul_smul, inv_mul_cancel₀ hs0, one_smul] at hm
     simpa only [Module.Basis.map_apply, Pi.basisFun_apply, SetLike.mem_coe] using hm
   rw [ordSub_detSub_eq (f := 1) hfull fun _ => Iff.rfl]
-  simp [ordF]
+  simp [Formalism.L2.Host.ordF]
 
 
 open Classical in
@@ -122,7 +122,7 @@ theorem ordI_detIdl (SB : Finset (HeightOneSpectrum (𝓞 E))) {N : Submodule (�
     rfl
   · simp
   · have h := ordF_unif_self w
-    unfold ordF at h
+    unfold Formalism.L2.Host.ordF at h
     rw [map_pow, valued_algebraMap, WithZero.log_pow, neg_eq_iff_eq_neg.1 h]
     simp
 
@@ -130,7 +130,7 @@ end General
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-theorem mk_mk_eq_of_ord {R : Ranks} (H : Formalism.BasicNotions.Host R) (SQ : Finset (HeightOneSpectrum (𝓞 H.E))) {a b : Ideles H.E}
+theorem mk_mk_eq_of_ord {R : Ranks} (H : Formalism.BasicNotions.Host R) (SQ : Finset (HeightOneSpectrum (𝓞 H.E))) {a b : Neutral.B1.Ideles H.E}
     (h : ∀ w, ordI w a - ordI (conjPrime₂ w) a = ordI w b - ordI (conjPrime₂ w) b) :
     (QuotientGroup.mk (QuotientGroup.mk a) : DtQ H SQ ⧸ UOQ H SQ) = QuotientGroup.mk (QuotientGroup.mk b) := by
   refine QuotientGroup.eq.2 ?_

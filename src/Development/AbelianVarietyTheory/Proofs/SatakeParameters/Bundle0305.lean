@@ -34,7 +34,7 @@ namespace GlobalTheory.InertEigSat
 
 
 open Formalism.IndefR Formalism.IndefR.Links in
-theorem real_cast {D : D7} {cf : CharFrame D} {nch : NChoice D} {tp : TupTied D cf nch}
+theorem real_cast {D : D7} {cf : Formalism.L2.Host.CharFrame D} {nch : NChoice D} {tp : TupTied D cf nch}
     {X : GlobalTheory.NJoin.RealAt D cf nch tp} {M : MtFam D} {rep : D.what₂.FT → NG.FinTyp D.host.E D.R.r}
     (A : GlobalTheory.NJoin.Agree X M rep) {μ : D.what₂.Tup} (hμ : Formalism.IndefR.RecTie.Used0 D μ) (j : Fin D.R.m) (k : ℕ)
     (hk : j.1 + 1 = k) (p1 : 1 ≤ k) (p2 : k ≤ D.R.m) :
@@ -77,7 +77,7 @@ theorem sum_ext {D : D7} {V : HSp D} (c : CoefA V) (hc : c.Is)
 
 open Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.L2.Theta GlobalTheory.Hk3 in
 set_option maxHeartbeats 1000000 in
-theorem sum_extV {D : D7} {cf : CharFrame D} {nch : NChoice D} {tp : TupTied D cf nch}
+theorem sum_extV {D : D7} {cf : Formalism.L2.Host.CharFrame D} {nch : NChoice D} {tp : TupTied D cf nch}
     (X : GlobalTheory.NJoin.RealAt D cf nch tp) (j : Fin D.R.m) (t : X.T) (h) (hh : IsOpsV X.R j t h)
     {w : HeightOneSpectrum (𝓞 D.host.E)} (hG : Good X.R t w) {d : List ℤ} {R : Finset (GA D (Vc D j))}
     (hR : SphOp (Vc D j) w d R) (y : (X.R.HV j t).H) (c : ℂ) (hy : h w (Finsupp.single d 1) y = c • y) (g) :

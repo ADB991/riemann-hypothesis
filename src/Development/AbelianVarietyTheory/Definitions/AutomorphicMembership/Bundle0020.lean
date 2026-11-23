@@ -115,7 +115,7 @@ abbrev Big (D : D7) : Type := ∀ (l : ℕ) [Fact l.Prime], (↥D.LL0 →+* Padi
 
 
 set_option synthInstance.maxHeartbeats 400000 in
-structure RingSpec (D : D7) (cf : CharFrame D) (b0 b1 : Big D) (Sx : Finset (PlE D.host)) (T : TwR D.LL0 D.nd) where
+structure RingSpec (D : D7) (cf : Formalism.L2.Host.CharFrame D) (b0 b1 : Big D) (Sx : Finset (PlE D.host)) (T : TwR D.LL0 D.nd) where
   eTw : T.Tw ≃ HeightOneSpectrum (𝓞 ↥D.LL0)
   pl_emb : ∀ i, ((T.l i : ℕ) : 𝓞 ↥D.LL0) ∈ (eTw i).asIdeal ∧
     ∀ x : 𝓞 ↥D.LL0, x ∈ (eTw i).asIdeal ↔ ∃ y ∈ IsLocalRing.maximalIdeal (T.O0 i),

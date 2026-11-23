@@ -365,9 +365,9 @@ theorem finite_quot (N : ℕ) (hN : 0 < N) : Finite (intFin L ⧸ Ideal.span {(N
     rw [h, add_sub_cancel_left, nsmul_eq_mul]
     simp
 
-theorem finUnit_pow (χ : HChar L) (hχ : χ.IsUnitary) :
-    ∃ m : ℕ, 0 < m ∧ ∀ u : Ideles L, IsFinIdele u → u ∈ unitIdl L → ((χ.1 u : ℂˣ) : ℂ) ^ m = 1 := by
-  let ψ : Ideles L →* Circle :=
+theorem finUnit_pow (χ : Formalism.L2.Host.HChar L) (hχ : χ.IsUnitary) :
+    ∃ m : ℕ, 0 < m ∧ ∀ u : Neutral.B1.Ideles L, Formalism.L2.Host.IsFinIdele u → u ∈ unitIdl L → ((χ.1 u : ℂˣ) : ℂ) ^ m = 1 := by
+  let ψ : Neutral.B1.Ideles L →* Circle :=
     { toFun := fun x => ⟨(χ.1 x : ℂˣ), by simpa [Submonoid.unitSphere] using hχ x⟩
       map_one' := by ext; simp
       map_mul' := fun x y => Subtype.ext (congrArg Units.val (map_mul χ.1 x y)) }
@@ -379,10 +379,10 @@ theorem finUnit_pow (χ : HChar L) (hχ : χ.IsUnitary) :
   have := h u ⟨funext h1, fun v => (h2 v).le, fun v => ((unitIdl L).inv_mem h2 v).le⟩
   exact congrArg (fun z : Circle => (z : ℂ)) this
 
-theorem infDiag_mul_finPartI (k : Lˣ) : infDiag k * finPartI L (diagUnits L k) = diagUnits L k := by
+theorem infDiag_mul_finPartI (k : Lˣ) : Formalism.L2.Host.infDiag k * finPartI L (Neutral.B1.diagUnits L k) = Neutral.B1.diagUnits L k := by
   classical
-  have h : ((infDiag k : Ideles L) : AdeleRing (𝓞 L) L) = (algebraMap L (InfiniteAdeleRing L) k, 1) := by
-    unfold infDiag
+  have h : ((Formalism.L2.Host.infDiag k : Neutral.B1.Ideles L) : AdeleRing (𝓞 L) L) = (algebraMap L (InfiniteAdeleRing L) k, 1) := by
+    unfold Formalism.L2.Host.infDiag
     rw [MonoidHom.finsetProd_apply, Units.coe_prod]
     let ι : (∀ w : InfinitePlace L, w.Completion) →* AdeleRing (𝓞 L) L :=
       MonoidHom.inl (InfiniteAdeleRing L) (FiniteAdeleRing (𝓞 L) L)
@@ -392,14 +392,14 @@ theorem infDiag_mul_finPartI (k : Lˣ) : infDiag k * finPartI L (diagUnits L k) 
   rw [Units.val_mul, h]
   exact Prod.ext (mul_one _) (one_mul _)
 
-theorem exists_pow_eq (x : Ideles L) (hx : IsFinIdele x) :
-    ∃ h : ℕ, 0 < h ∧ ∃ (u : Ideles L) (k : Lˣ), IsFinIdele u ∧ u ∈ unitIdl L ∧ x ^ h * infDiag k = u * diagUnits L k := by
+theorem exists_pow_eq (x : Neutral.B1.Ideles L) (hx : Formalism.L2.Host.IsFinIdele x) :
+    ∃ h : ℕ, 0 < h ∧ ∃ (u : Neutral.B1.Ideles L) (k : Lˣ), Formalism.L2.Host.IsFinIdele u ∧ u ∈ unitIdl L ∧ x ^ h * Formalism.L2.Host.infDiag k = u * Neutral.B1.diagUnits L k := by
   have := GlobalTheory.Mem.UnitIndex.finiteIndex_unitIdl_sup L
   refine ⟨_, Nat.pos_of_ne_zero this.index_ne_zero, ?_⟩
-  obtain ⟨u, hu, _, ⟨k, rfl⟩, e⟩ := Subgroup.mem_sup.1 ((unitIdl L ⊔ (diagUnits L).range).pow_index_mem x)
+  obtain ⟨u, hu, _, ⟨k, rfl⟩, e⟩ := Subgroup.mem_sup.1 ((unitIdl L ⊔ (Neutral.B1.diagUnits L).range).pow_index_mem x)
   have hf : finPartI L x = x := Units.ext (Prod.ext (funext hx).symm rfl)
   refine ⟨finPartI L u, k, fun _ => rfl, hu, ?_⟩
-  rw [← hf, ← map_pow, ← e, map_mul, mul_assoc, mul_comm _ (infDiag k), infDiag_mul_finPartI]
+  rw [← hf, ← map_pow, ← e, map_mul, mul_assoc, mul_comm _ (Formalism.L2.Host.infDiag k), infDiag_mul_finPartI]
 
 end GlobalTheory.UnUnitCmp.Val
 end

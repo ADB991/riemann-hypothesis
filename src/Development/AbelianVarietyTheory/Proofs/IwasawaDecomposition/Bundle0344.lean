@@ -107,7 +107,7 @@ theorem locLen_finite {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [M
     (A C : Submodule (𝓞 K) V) (hA : A.FG) :
     {w : HeightOneSpectrum (𝓞 K) | Formalism.HermitianLatticesTheory.locLen w.asIdeal A C ≠ 0}.Finite := by
   by_cases h : ∀ x ∈ A, ∃ s : 𝓞 K, s ≠ 0 ∧ s • x ∈ C
-  · obtain ⟨s, hs, hC⟩ := exists_unif A C hA h
+  · obtain ⟨s, hs, hC⟩ := Formalism.L2.Host.exists_unif A C hA h
     have hf := Ideal.finite_factors (I := Ideal.span {s}) (by simpa using hs)
     refine hf.subset fun w hw => ?_
     by_contra hn
@@ -476,7 +476,7 @@ end
 section
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX GlobalTheory.HeightCounting NumberField IsDedekindDomain Polynomial
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.splitPlace_outside_nonHyperspecial_of_localisation : ∀ (D : D7) (cf : CharFrame D) (C : NChoice D) (tp : TupTied D cf C) (Pl : PlSide D) (M : MtFam D) (big : D.what₂.places.Pl → Finset ℂ) (X : LocNd (lay0 D)) (T : LocTw X) (Sp : NdSpec Pl M C big X T) (i : X.nd.Loc) (w : PlE D.host) (s : SplitPlace D.host.E), SplitOut X.nd i w → IsConjPl D.host w s.w → s.v ∉ gPl D ∪ qPl D (tp.tup (D.what₂.muTw (X.nd.w i)) ⟨X.nd.j i - 1, by have := X.nd.j_range i; omega⟩) := by
+theorem _root_.GlobalTheory.T.splitPlace_outside_nonHyperspecial_of_localisation : ∀ (D : D7) (cf : Formalism.L2.Host.CharFrame D) (C : NChoice D) (tp : TupTied D cf C) (Pl : PlSide D) (M : MtFam D) (big : D.what₂.places.Pl → Finset ℂ) (X : LocNd (lay0 D)) (T : LocTw X) (Sp : NdSpec Pl M C big X T) (i : X.nd.Loc) (w : PlE D.host) (s : SplitPlace D.host.E), SplitOut X.nd i w → IsConjPl D.host w s.w → s.v ∉ gPl D ∪ qPl D (tp.tup (D.what₂.muTw (X.nd.w i)) ⟨X.nd.j i - 1, by have := X.nd.j_range i; omega⟩) := by
   first | exact @GlobalTheory.SplitOutPlace.not_mem_gPl_qPl | exact GlobalTheory.SplitOutPlace.not_mem_gPl_qPl | (intros; apply GlobalTheory.SplitOutPlace.not_mem_gPl_qPl <;> assumption)
 end
 

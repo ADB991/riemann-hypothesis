@@ -140,7 +140,7 @@ noncomputable section
 theorem quotPart_eq_gradedPiece {F : Type} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
     [∀ k, Fintype (ι k)] (V : Ideal (MvPolynomial (Σ k, ι k) F)) (m : K → ℤ) (hm : ∀ k, 0 ≤ m k) :
     quotPart F V m = NumbersDVR.gradedPiece V (fun k => (m k).toNat) := by
-  have hset : {p : MvPolynomial (Σ k, ι k) F | (∀ k, 0 ≤ m k) ∧ IsMultiHomog p (fun k => (m k).toNat)} =
+  have hset : {p : MvPolynomial (Σ k, ι k) F | (∀ k, 0 ≤ m k) ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p (fun k => (m k).toNat)} =
       (weightedHomogeneousSubmodule F (NumbersDVR.blockWeight ι) (fun k => (m k).toNat) : Set _) := by
     ext p
     simp only [Set.mem_ofPred_eq, SetLike.mem_coe, mem_weightedHomogeneousSubmodule, hm, implies_true, true_and]
@@ -150,7 +150,7 @@ theorem quotPart_eq_gradedPiece {F : Type} [Field F] {K : Type} [Fintype K] [Dec
   rfl
 
 theorem isMultiHomog_one {S : Type} [CommRing S] {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] :
-    IsMultiHomog (1 : MRingOver S ι) 0 := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (1 : MRingOver S ι) 0 := by
   intro d hd k
   classical
   rw [mem_support_iff, coeff_one] at hd

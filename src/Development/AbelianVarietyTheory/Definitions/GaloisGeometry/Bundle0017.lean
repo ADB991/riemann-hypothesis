@@ -94,7 +94,7 @@ theorem prod_inf_mul_finPart (a : Ideles L) :
   rw [Units.val_mul, h]
   exact Prod.ext (mul_one _) (one_mul _)
 
-theorem isFin_finPart (a : Ideles L) : IsFinIdele (finPartI L a) := fun _ => rfl
+theorem isFin_finPart (a : Ideles L) : Formalism.L2.Host.IsFinIdele (finPartI L a) := fun _ => rfl
 
 theorem isUnitary_of_orderDvd {χ : HChar L} {n : ℕ} (hn : 0 < n) (h : χ.OrderDvd n) : χ.IsUnitary := fun x => by
   have h1 : (χ ^ n).1 x = 1 := by rw [show χ ^ n = 1 from h]; rfl
@@ -105,7 +105,7 @@ theorem isUnitary_of_orderDvd {χ : HChar L} {n : ℕ} (hn : 0 < n) (h : χ.Orde
 
 end General
 
-variable {D : D7} {C : CharFrame D} (Dt : DtTied D C) {nch : NChoice D} (Tp : TupTied D C nch)
+variable {D : D7} {C : CharFrame D} (Dt : Formalism.L2.Host.DtTied D C) {nch : NChoice D} (Tp : TupTied D C nch)
 
 theorem eDt_finPart (a : Ideles D.host.E) : Dt.eDt (finPartI D.host.E a) = Dt.eDt a := by
   obtain ⟨y, hy⟩ := prod_inf_mul_finPart a

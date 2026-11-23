@@ -23,13 +23,13 @@ theorem heckeLAdicCharacterAbove_iff : HeckeLAdicCharacterAbove ↔
       ∀ (χ : HChar E) (n : (E →+* ℂ) → ℤ) (μ : G E Ω →* (Qbar l)ˣ),
       IsAlgPos χ n → Continuous μ → IsLAdicOf art ι χ n μ →
       ∀ (w : HeightOneSpectrum (𝓞 E)) (A : ValuationSubring Ω), IsPlaceOver A w →
-      ∀ (O : Type) [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l E Ω (Dec (F := E) A) O),
+      ∀ (O : Type) [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l E Ω (ReciprocityTheory.Gal.Dec (F := E) A) O),
         GlobalTheory.Pst.Induces Bw →
-        IsdRAt P Bw ((rk1 μ).comp (Dec (F := E) A).subtype) ∧
-        IsPotCrysAt P Bw ((rk1 μ).comp (Dec (F := E) A).subtype) ∧
-        (χ.UnrAt w → IsCrysAt P Bw ((rk1 μ).comp (Dec (F := E) A).subtype)) ∧
+        IsdRAt P Bw ((rk1 μ).comp (ReciprocityTheory.Gal.Dec (F := E) A).subtype) ∧
+        IsPotCrysAt P Bw ((rk1 μ).comp (ReciprocityTheory.Gal.Dec (F := E) A).subtype) ∧
+        (χ.UnrAt w → IsCrysAt P Bw ((rk1 μ).comp (ReciprocityTheory.Gal.Dec (F := E) A).subtype)) ∧
         ∀ (τ : E →+* Qbar l) (LL' : FinExt l) (τ' : ↥Bw.Kw.1 →ₐ[ℚ_[l]] ↥LL'.1), IsInduced Bw τ τ' →
-          IsJumpsAt P Bw ((rk1 μ).comp (Dec (F := E) A).subtype) τ {-n (ι.toRingHom.comp τ)} :=
+          IsJumpsAt P Bw ((rk1 μ).comp (ReciprocityTheory.Gal.Dec (F := E) A).subtype) τ {-n (ι.toRingHom.comp τ)} :=
   Iff.rfl
 
 end GlobalTheory.Published

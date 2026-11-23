@@ -160,7 +160,7 @@ variable {S : Type} [CommRing S] {K : Type} [Fintype K] {ι : K → Type} [∀ k
 noncomputable def chartMon (S : Type) [CommRing S] (c : ∀ k, ι k) : MRingOver S ι :=
   ∏ k, X ⟨k, c k⟩
 
-def chartCell (c : ∀ k, ι k) : Cell K ι 0 :=
+def chartCell (c : ∀ k, ι k) : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι 0 :=
   ⟨fun k => {c k}, fun _ => Finset.singleton_nonempty _, by simp⟩
 
 theorem dvd_pow_of_mem_cellMon (c : ∀ k, ι k) {t : MRingOver S ι} (ht : t ∈ cellMon S (chartCell c).1) :

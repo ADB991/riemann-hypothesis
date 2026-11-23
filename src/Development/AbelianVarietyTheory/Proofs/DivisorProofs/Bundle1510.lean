@@ -103,32 +103,32 @@ section SlopeTestRemainingChoices
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.FrobeniusOrbits Neutral.B1 ReciprocityTheory.Neutral.Bridge.HCFR Formalism.L2.Host GlobalTheory.Mem.Chr GlobalTheory.Mem.Chr.IdlFact GlobalTheory.Mem.Chr.KDVal
 open Formalism.MainNotions Formalism.MainNotions.TaylorLogMetric Formalism.MainNotions.StandardLatticesGL3 GlobalTheory.Mem.Col2.SplitChar
 
-theorem map_finPartI_locF {L F : Type} [Field L] [NumberField L] [Field F] [NumberField F] [Algebra F L] (χ : HChar L)
-    (v : HeightOneSpectrum (𝓞 F)) (k : Fˣ) : χ.1 (finPartI L (locF F v k)) = χ.resFin v k := by
-  unfold HChar.resFin
+theorem map_finPartI_locF {L F : Type} [Field L] [NumberField L] [Field F] [NumberField F] [Algebra F L] (χ : Formalism.L2.Host.HChar L)
+    (v : HeightOneSpectrum (𝓞 F)) (k : Fˣ) : χ.1 (finPartI L (GlobalTheory.Mem.Chr.locF F v k)) = χ.resFin v k := by
+  unfold Formalism.L2.Host.HChar.resFin
   rw [MonoidHom.finsetProd_apply]
-  unfold locF
+  unfold GlobalTheory.Mem.Chr.locF
   rw [map_prod, map_prod]
   exact Finset.prod_congr rfl fun Q _ => congrArg χ.1 (GlobalTheory.Mem.KerDet.finPartI_localIdele Q _)
 
-theorem eq_one (D : D7) (χ : HChar D.host.E) (hχ : IsEtaT D.host χ) (x : (AE D)ˣ) :
+theorem eq_one (D : D7) (χ : Formalism.L2.Host.HChar D.host.E) (hχ : Formalism.L2.Host.IsEtaT D.host χ) (x : (AE D)ˣ) :
     χ.1 (finIdl D (x * sgU D x)) = 1 := by
   classical
   obtain ⟨c, hc, hcm, hu, -⟩ := GlobalTheory.Mem.HostCM.host_cm D.R D.host
   have ec : c.toRingEquiv = D.host.conj.toRingEquiv := RingEquiv.ext hc
-  set a : Ideles D.host.E := finIdl D (x * sgU D x) with ha_def
+  set a : Neutral.B1.Ideles D.host.E := finIdl D (x * sgU D x) with ha_def
   have ha : a ∈ balanced (L := D.host.E) D.host.F := norm_balanced x
   let T : Finset (HeightOneSpectrum (𝓞 D.host.F)) :=
     (finite_valAt_ne_one a).toFinset.image fun w => w.under (𝓞 D.host.F)
   let m : HeightOneSpectrum (𝓞 D.host.F) → ℤ := fun v =>
     if h : ∃ w : HeightOneSpectrum (𝓞 D.host.E), w.under (𝓞 D.host.F) = v then -WithZero.log (valAt h.choose a) else 0
-  let b : Ideles D.host.E := ∏ v ∈ T, locF (L := D.host.E) D.host.F v (unif v) ^ m v
+  let b : Neutral.B1.Ideles D.host.E := ∏ v ∈ T, GlobalTheory.Mem.Chr.locF (L := D.host.E) D.host.F v (Formalism.L2.Host.unif v) ^ m v
   have hm : ∀ w : HeightOneSpectrum (𝓞 D.host.E), m (w.under (𝓞 D.host.F)) = -WithZero.log (valAt w a) := fun w => by
     have hex : ∃ w' : HeightOneSpectrum (𝓞 D.host.E), w'.under (𝓞 D.host.F) = w.under (𝓞 D.host.F) := ⟨w, rfl⟩
     simp only [m]
     rw [dite_eq_left hex, ha w hex.choose hex.choose_spec]
   have hval : ∀ w, valAt w b = valAt w a := fun w => by
-    have h1 : ∀ v, v ≠ w.under (𝓞 D.host.F) → valAt w (locF (L := D.host.E) D.host.F v (unif v) ^ m v) = 1 :=
+    have h1 : ∀ v, v ≠ w.under (𝓞 D.host.F) → valAt w (GlobalTheory.Mem.Chr.locF (L := D.host.E) D.host.F v (Formalism.L2.Host.unif v) ^ m v) = 1 :=
       fun v hv => by rw [map_zpow, valAt_locF, if_neg hv.symm, one_zpow]
     simp only [b]
     rw [map_prod]
@@ -147,7 +147,7 @@ theorem eq_one (D : D7) (χ : HChar D.host.E) (hχ : IsEtaT D.host χ) (x : (AE 
   have h1 : χ.1 (finPartI D.host.E (b⁻¹ * a)) = 1 :=
     GlobalTheory.Mem.LocTriv.eq_one_of_local _ χ.1 χ.2.1 _ (finPartI_mem_unitIdl.2 hu') (fun _ => rfl) fun v y hy =>
       hχ.unr v y (by
-        unfold IsUnitAt
+        unfold Formalism.L2.Host.IsUnitAt
         rw [hy]
         exact hu' v)
 
@@ -155,7 +155,7 @@ theorem eq_one (D : D7) (χ : HChar D.host.E) (hχ : IsEtaT D.host χ) (x : (AE 
     simp only [b]
     rw [map_prod, map_prod]
     refine Finset.prod_eq_one fun v hv => ?_
-    rw [map_zpow, map_zpow, map_finPartI_locF, hχ.res.1 v, etaFin]
+    rw [map_zpow, map_zpow, map_finPartI_locF, hχ.res.1 v, Formalism.L2.Host.etaFin]
     split_ifs with hcard
     · rw [ordF_unif_self, zpow_one]
       obtain ⟨w, -, rfl⟩ := Finset.mem_image.1 hv
@@ -164,8 +164,8 @@ theorem eq_one (D : D7) (χ : HChar D.host.E) (hχ : IsEtaT D.host χ) (x : (AE 
       have hund : w'.under (𝓞 D.host.F) = w.under (𝓞 D.host.F) :=
         (under_eq_iff_conjPl c hcm.rank hcm.ne w w').2 (Or.inr (by rw [ec]; exact hw'))
       have hmem : ∀ Q : HeightOneSpectrum (𝓞 D.host.E), Q.under (𝓞 D.host.F) = w.under (𝓞 D.host.F) →
-          Q ∈ aboveF (L := D.host.E) D.host.F (w.under (𝓞 D.host.F)) := fun Q hQ => by
-        simp [aboveF, hQ]
+          Q ∈ Formalism.L2.Host.aboveF (L := D.host.E) D.host.F (w.under (𝓞 D.host.F)) := fun Q hQ => by
+        simp [Formalism.L2.Host.aboveF, hQ]
       have hww : w' = w := Finset.card_le_one.1 hcard.le _ (hmem w' hund) _ (hmem w rfl)
       subst hww
       have e1 : valAt w' a = vl D w' (x : AE D) * vl D w' (x : AE D) := by
@@ -194,7 +194,7 @@ open Formalism.L2.Host (HChar)
 open GlobalTheory.ChiGrid GlobalTheory.LeafRestExamples GlobalTheory.FunObj.SqNum
 open GlobalTheory.Mem.Col2.SplitChar (finIdl)
 
-theorem GlobalTheory.EtaTildeNorm.map_finIdl_norm : ∀ (D : D7) (χ : HChar D.host.E), Formalism.L2.Host.IsEtaT D.host χ →
+theorem GlobalTheory.EtaTildeNorm.map_finIdl_norm : ∀ (D : D7) (χ : Formalism.L2.Host.HChar D.host.E), Formalism.L2.Host.IsEtaT D.host χ →
     ∀ x : (AE D)ˣ, χ.1 (finIdl D (x * sgU D x)) = 1 :=
   fun D χ hχ x => GlobalTheory.EtaTildeNorm.eq_one D χ hχ x
 end

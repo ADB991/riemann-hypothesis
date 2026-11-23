@@ -109,14 +109,14 @@ theorem val_le_of_le {K : Type} [Field K] [NumberField K] (w : HeightOneSpectrum
 
 theorem res_art_eq_art_norm : ∀ (E Ω : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
     (K : IntermediateField E Ω) [FiniteDimensional E K] [NumberField K] [IsAlgClosure K Ω]
-    (art : Ideles E →* Gab E Ω) (artK : Ideles K →* Gab K Ω), IsGlobalArtin art → IsGlobalArtin artK →
+    (art : Neutral.B1.Ideles E →* Gab E Ω) (artK : Neutral.B1.Ideles K →* Gab K Ω), IsGlobalArtin art → IsGlobalArtin artK →
     ∀ (v : HeightOneSpectrum (𝓞 E)) (W : HeightOneSpectrum (𝓞 K)),
       W.asIdeal.comap (algebraMap (𝓞 E) (𝓞 K)) = v.asIdeal →
       (∀ W' : HeightOneSpectrum (𝓞 K), W'.asIdeal.comap (algebraMap (𝓞 E) (𝓞 K)) = v.asIdeal → W' = W) →
       ∀ (y : Kˣ) (τ : G K Ω),
-        toAb K Ω τ = artK (localIdele K W (Units.map (algebraMap K (W.adicCompletion K)).toMonoidHom y)) →
+        toAb K Ω τ = artK (Neutral.B1.localIdele K W (Units.map (algebraMap K (W.adicCompletion K)).toMonoidHom y)) →
         toAb E Ω (τ.restrictScalars E) =
-          art (localIdele E v (Units.map (algebraMap E (v.adicCompletion E)).toMonoidHom
+          art (Neutral.B1.localIdele E v (Units.map (algebraMap E (v.adicCompletion E)).toMonoidHom
             (Units.map (Algebra.norm E (S := K)) y))) := by
   intro E Ω _ _ _ _ _ _ K _ _ _ art artK ha haK v W hW hWu y τ hτ
   classical
@@ -129,13 +129,13 @@ theorem res_art_eq_art_norm : ∀ (E Ω : Type) [Field E] [NumberField E] [_root
   have hρ : ∀ σ : G K Ω, ρ (toAb K Ω σ) = toAb E Ω (σ.restrictScalars E) := fun σ => rfl
   have hρc : Continuous ρ := continuous_liftAb r hr
   let NK : Kˣ →* Eˣ := Units.map (Algebra.norm E (S := K))
-  have hdE : ∀ k : Eˣ, art (diagUnits E k) = 1 := fun k => by
-    have hk : diagUnits E k ∈ art.ker := by
+  have hdE : ∀ k : Eˣ, art (Neutral.B1.diagUnits E k) = 1 := fun k => by
+    have hk : Neutral.B1.diagUnits E k ∈ art.ker := by
       rw [ha.ker]
       exact Subgroup.le_topologicalClosure _ (Subgroup.mem_sup_left ⟨k, rfl⟩)
     exact hk
-  have hdK : ∀ k : Kˣ, artK (diagUnits K k) = 1 := fun k => by
-    have hk : diagUnits K k ∈ artK.ker := by
+  have hdK : ∀ k : Kˣ, artK (Neutral.B1.diagUnits K k) = 1 := fun k => by
+    have hk : Neutral.B1.diagUnits K k ∈ artK.ker := by
       rw [haK.ker]
       exact Subgroup.le_topologicalClosure _ (Subgroup.mem_sup_left ⟨k, rfl⟩)
     exact hk
@@ -149,15 +149,15 @@ theorem res_art_eq_art_norm : ∀ (E Ω : Type) [Field E] [NumberField E] [_root
     have h2 : χ (ρ (artK (locUnit K W y)) / art (locUnit E v (NK y))) = 1 := by
       rw [map_div, h, div_self']
     exact (QuotientGroup.eq_one_iff _).mp h2
-  let ψ1 : Ideles K →* Gab E Ω ⧸ U := χ.comp (ρ.comp artK)
-  let ψ2 : Ideles E →* Gab E Ω ⧸ U := χ.comp art
-  have hker1 : (ψ1.ker : Set (Ideles K)) = (ρ.comp artK) ⁻¹' U := by
+  let ψ1 : Neutral.B1.Ideles K →* Gab E Ω ⧸ U := χ.comp (ρ.comp artK)
+  let ψ2 : Neutral.B1.Ideles E →* Gab E Ω ⧸ U := χ.comp art
+  have hker1 : (ψ1.ker : Set (Neutral.B1.Ideles K)) = (ρ.comp artK) ⁻¹' U := by
     ext x; simp [ψ1, χ, MonoidHom.mem_ker, QuotientGroup.eq_one_iff]
-  have hker2 : (ψ2.ker : Set (Ideles E)) = art ⁻¹' U := by
+  have hker2 : (ψ2.ker : Set (Neutral.B1.Ideles E)) = art ⁻¹' U := by
     ext x; simp [ψ2, χ, MonoidHom.mem_ker, QuotientGroup.eq_one_iff]
-  have ho1 : IsOpen (ψ1.ker : Set (Ideles K)) := by
+  have ho1 : IsOpen (ψ1.ker : Set (Neutral.B1.Ideles K)) := by
     rw [hker1]; exact hU.preimage (hρc.comp haK.quot.continuous)
-  have ho2 : IsOpen (ψ2.ker : Set (Ideles E)) := by
+  have ho2 : IsOpen (ψ2.ker : Set (Neutral.B1.Ideles E)) := by
     rw [hker2]; exact hU.preimage ha.quot.continuous
 
   obtain ⟨SE, ME, hvS, hSu, hSc⟩ := _root_.GlobalTheory.OpenIdeleCongr.open_subgroup_contains_congr E ψ2.ker ho2 {v}
@@ -215,7 +215,7 @@ theorem res_art_eq_art_norm : ∀ (E Ω : Type) [Field E] [NumberField E] [_root
       have : M' v' ≤ M'' := Finset.le_sup hv'
       push_cast; omega)
 
-  have hunitE : ∀ v' ∉ SE, ∀ x, IsUnitAt v' x → ψ2 (localIdele E v' x) = 1 := fun v' hv' x hx =>
+  have hunitE : ∀ v' ∉ SE, ∀ x, Formalism.L2.Host.IsUnitAt v' x → ψ2 (Neutral.B1.localIdele E v' x) = 1 := fun v' hv' x hx =>
     MonoidHom.mem_ker.mp (hSu v' hv' x hx)
   have hchi := fun (v' : HeightOneSpectrum (𝓞 E)) (hv' : v' ∉ SE) (w : HeightOneSpectrum (𝓞 K))
       (hw : w.asIdeal.comap (algebraMap (𝓞 E) (𝓞 K)) = v'.asIdeal) =>

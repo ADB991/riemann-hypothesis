@@ -261,7 +261,7 @@ theorem splitsC_pde : SplitsC B.host.E B.host.pde := B.splitsC_level B.host.pde_
 
 theorem splitsC_pde' : SplitsC B.host.E B.host.pde' := B.splitsC_level B.host.pde_level.2
 
-def EvenExp : Prop := ∀ j, UpperTheory.MUQ (embPsi B.host) (fun τ : B.R.Psi => (B.hc τ).e j)
+def EvenExp : Prop := ∀ j, UpperTheory.MUQ (Formalism.L2.Host.embPsi B.host) (fun τ : B.R.Psi => (B.hc τ).e j)
 
 theorem nonempty_hframe (h : B.EvenExp) : Nonempty (HFrame B.host fun j τ => (B.hc τ).e j) :=
   _root_.GlobalTheory.nonempty_hFrame B.R B.host _ B.splitsC_g B.splitsC_pde B.splitsC_pde' (fun j τ => (B.hc τ).e_int j) h

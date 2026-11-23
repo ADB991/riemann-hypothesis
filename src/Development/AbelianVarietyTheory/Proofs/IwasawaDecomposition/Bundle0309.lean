@@ -304,7 +304,7 @@ noncomputable section
 namespace GlobalTheory.EtaUnitArg
 
 theorem denseRange_atInf_single {L : Type} [Field L] [NumberField L] (w : InfinitePlace L) :
-    DenseRange (atInf w : Lˣ → (w.Completion)ˣ) := by
+    DenseRange (Formalism.L2.Host.atInf w : Lˣ → (w.Completion)ˣ) := by
   classical
   have hs : Function.Surjective (fun u : ∀ v : InfinitePlace L, (v.Completion)ˣ => u w) := fun z =>
     ⟨Function.update (1 : ∀ v : InfinitePlace L, (v.Completion)ˣ) w z, by simp⟩
@@ -312,17 +312,17 @@ theorem denseRange_atInf_single {L : Type} [Field L] [NumberField L] (w : Infini
 
 open Classical in
 theorem locInf_eq {L : Type} [Field L] [NumberField L] (w : InfinitePlace L) (z : (w.Completion)ˣ) :
-    Units.map (Formalism.L2.NC.locInf w) z = infIdele L w z := by
+    Units.map (Formalism.L2.NC.locInf w) z = ReciprocityTheory.Neutral.Bridge.HCFR.infIdele L w z := by
   apply Units.ext
   rfl
 
-theorem etaT_isUnitArg : ∀ {R : Ranks} (H : Host R) (χ : HChar H.E), IsEtaT H χ → ∀ (h : Formalism.L2.NC.HC H.E), h.χ = (χ : Ideles H.E →* ℂˣ) → ∀ (g : R.Psi), h.IsUnitArg (H.emb (g : R.GG)) := by
+theorem etaT_isUnitArg : ∀ {R : Ranks} (H : Host R) (χ : Formalism.L2.Host.HChar H.E), Formalism.L2.Host.IsEtaT H χ → ∀ (h : Formalism.L2.NC.HC H.E), h.χ = (χ : Neutral.B1.Ideles H.E →* ℂˣ) → ∀ (g : R.Psi), h.IsUnitArg (H.emb (g : R.GG)) := by
   intro R H χ hχ h hh g f hf hfE z
   obtain ⟨c, -, hcm, -⟩ := GlobalTheory.Mem.HostCM.host_cm R H
-  have hloc := (GlobalTheory.InfTypeLocal.infType_iff_local H.E (R.Psi) (embPsi H) hcm.bij χ.1 χ.2.1
+  have hloc := (GlobalTheory.InfTypeLocal.infType_iff_local H.E (R.Psi) (Formalism.L2.Host.embPsi H) hcm.bij χ.1 χ.2.1
     (fun _ => 1)).1 (fun k => hχ.inf k) g
   have key : (fun z : ((InfinitePlace.mk (H.emb (g : R.GG))).Completion)ˣ =>
-      ((χ.1 (infIdele H.E _ z) : ℂˣ) : ℂ)) =
+      ((χ.1 (ReciprocityTheory.Neutral.Bridge.HCFR.infIdele H.E _ z) : ℂˣ) : ℂ)) =
       fun z : ((InfinitePlace.mk (H.emb (g : R.GG))).Completion)ˣ =>
         f (z : (InfinitePlace.mk (H.emb (g : R.GG))).Completion) /
           ((‖f (z : (InfinitePlace.mk (H.emb (g : R.GG))).Completion)‖ : ℝ) : ℂ) := by
@@ -334,7 +334,7 @@ theorem etaT_isUnitArg : ∀ {R : Ranks} (H : Host R) (χ : HChar H.E), IsEtaT H
         (_root_.map_ne_zero _).2 u.ne_zero
       exact h1.div (Complex.continuous_ofReal.comp h1.norm) fun u => by exact_mod_cast norm_ne_zero_iff.2 (h2 u)
     · funext k
-      have e : f ((atInf _ k : ((InfinitePlace.mk (H.emb (g : R.GG))).Completion)ˣ) :
+      have e : f ((Formalism.L2.Host.atInf _ k : ((InfinitePlace.mk (H.emb (g : R.GG))).Completion)ˣ) :
           (InfinitePlace.mk (H.emb (g : R.GG))).Completion) = H.emb (g : R.GG) k := by
         change f (algebraMap H.E _ (k : H.E)) = H.emb (g : R.GG) k
         rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,

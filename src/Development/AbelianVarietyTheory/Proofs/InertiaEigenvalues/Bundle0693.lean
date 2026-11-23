@@ -415,7 +415,7 @@ attribute [local instance 10000] GlobalTheory.GalChar.isTorsionFree_field
 
 theorem exists_twL_full_teich (hA : GlobalTheory.Published.GlobalArtinReciprocity) (hR : RatioConj) (D : D7) (N : NData D.R D.host D.what₂)
     (hE : IsEmpty N.Loc) (T : TwR D.LL0 N) (Z : LamDat D) (hZ : Z.Ok)
-    (art : Ideles D.host.E →* Gab D.host.E N.Om) (ha : IsGlobalArtin art)
+    (art : Neutral.B1.Ideles D.host.E →* Gab D.host.E N.Om) (ha : IsGlobalArtin art)
     (κ : ∀ i, FractionRing (T.O0 i) →+* Qbar (T.l i)) (ι : ∀ i, Qbar (T.l i) ≃+* ℂ)
     (hκ : ∀ i (z : ℤ_[T.l i]), κ i (algebraMap (T.O0 i) _ (algebraMap ℤ_[T.l i] (T.O0 i) z)) =
       algebraMap ℚ_[T.l i] (Qbar (T.l i)) (z : ℚ_[T.l i]))

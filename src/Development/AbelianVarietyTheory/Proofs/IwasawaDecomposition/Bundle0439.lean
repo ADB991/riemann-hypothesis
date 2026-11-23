@@ -113,7 +113,7 @@ def coeffUnits (D : D7) : Subgroup ℂˣ where
     rintro a ⟨r, hr⟩
     exact ⟨r⁻¹, by rw [map_inv₀, hr, Units.val_inv_eq_inv_val]⟩
 
-theorem chiD_mem_of {D : D7} {C : CharFrame D} (T : DtTied D C) (hV : C.chiPsi.ValuesIn 0 D.what₂.embLL) :
+theorem chiD_mem_of {D : D7} {C : Formalism.L2.Host.CharFrame D} (T : Formalism.L2.Host.DtTied D C) (hV : C.chiPsi.ValuesIn 0 D.what₂.embLL) :
     ∀ z : D.Dt, ∃ r : D.what₂.LL, D.what₂.embLL r = ((D.chiD z : ℂˣ) : ℂ) := by
   intro z
   obtain ⟨a, rfl⟩ := T.surj z

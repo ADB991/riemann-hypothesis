@@ -233,7 +233,7 @@ theorem levOk_twists : ∀ (B : Base) (X : PreX B.toPre) (I : ColIn B X), I.Ok �
       rcases (under_eq_iff B.host _ w).1 (under_sel h _).symm with e | e
       · exact Or.inl (e ▸ hmem)
       · exact Or.inr ⟨_, hmem, (isConjPl_iff B.host _ _).2 e⟩
-    · have h1 : (I.xi a).1 x ^ n = 1 := congrArg (fun χ : HChar B.host.E => χ.1 x) ho
+    · have h1 : (I.xi a).1 x ^ n = 1 := congrArg (fun χ : Formalism.L2.Host.HChar B.host.E => χ.1 x) ho
       have h2 : ‖(((I.xi a).1 x : ℂˣ) : ℂ)‖ ^ n = 1 := by
         rw [← norm_pow, ← Units.val_pow_eq_pow_val, h1, Units.val_one, norm_one]
       exact (pow_eq_one_iff_of_nonneg (norm_nonneg _) hn.ne').1 h2

@@ -194,7 +194,7 @@ variable {R : Ranks} {H : Host R} {what₂ : Rows.Data R} (N : NData R H what₂
 variable {N A}
 end
 theorem tm_rankOne_alt (hL : _root_.UpperTheory.Zero.LLC.RecTExists) {D : D7} {T : GlobalTheory.RowTie.WDTie D.nd D.naut} (C : _root_.GlobalTheory.HeightCounting.CGTrueT hL D T)
-    {C₀ : CharFrame D} (S : CharSide D C₀) (π : D.naut.CG 1) (w : PlE D.host) (ht : (S.e1 π).1.TameAt w) :
+    {C₀ : Formalism.L2.Host.CharFrame D} (S : CharSide D C₀) (π : D.naut.CG 1) (w : PlE D.host) (ht : (S.e1 π).1.TameAt w) :
     Tm D.nd D.naut (D.naut.locG π w) := by
   haveI := host_isCMField D.host
   set χ' := (CGu.equivChar D.host.E (C.e 1 π)).1 with hχ'

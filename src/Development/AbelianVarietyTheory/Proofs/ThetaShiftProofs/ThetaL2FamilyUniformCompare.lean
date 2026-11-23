@@ -212,7 +212,7 @@ theorem sec_eq_of_secBC {x : Sp ℂ ⟶ Xo.X} {a : ℂ} {s s' : LB.Sec (PPx x)} 
 
 end Fibre
 
-theorem theta_l2_positive_and_scaling : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (g : ℕ) (ty : Fin g → (E →+* ℂ)) (Fu : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) ty) (i i' : Fin Fu.n) (Pm : (Fu.Di i).La →+ (Fin g → ℂ)) (Pm' : (Fu.Di i').La →+ (Fin g → ℂ)) (y y' : FrPt Xo c (CAt σ)) (G : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) (CAt σ)) (s : CAt σ) (v v' : ℝ), IsPeriod (Fu.Di i) ty Pm → IsPeriod (Fu.Di i') ty Pm' → y.x = Fu.u i Pm → y'.x = Fu.u i' Pm' → FrChg G s y y' → IsThetaL2NormSquared Fu i Pm y v → IsThetaL2NormSquared Fu i' Pm' y' v' → 0 < v ∧ v' = ‖toC s‖ ^ 2 * v := by
+theorem theta_l2_positive_and_scaling : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (g : ℕ) (ty : Fin g → (E →+* ℂ)) (Fu : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) ty) (i i' : Fin Fu.n) (Pm : (Fu.Di i).La →+ (Fin g → ℂ)) (Pm' : (Fu.Di i').La →+ (Fin g → ℂ)) (y y' : FrPt Xo c (CAt σ)) (G : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) (CAt σ)) (s : CAt σ) (v v' : ℝ), IsPeriod (Fu.Di i) ty Pm → IsPeriod (Fu.Di i') ty Pm' → y.x = Fu.u i Pm → y'.x = Fu.u i' Pm' → FrChg G s y y' → IsThetaL2NormSquared Fu i Pm y v → IsThetaL2NormSquared Fu i' Pm' y' v' → 0 < v ∧ v' = ‖Formalism.L2.PjFree.toC s‖ ^ 2 * v := by
   intro _ laws2 E _ _ _ H Dw l Xo c σ g ty Fu i i' Pm Pm' y y' G s v v' hP hP' hy hy' ⟨hx, _, hBC⟩
     ⟨Hm, χ, fr, θ, Fd, hH, _, him, d, n, cp, o, p, hθ, hF, hv⟩
     ⟨Hm', χ', fr', θ', Fd', hH', _, him', d', n', cp', o', p', hθ', hF', hv'⟩
@@ -276,10 +276,10 @@ theorem theta_l2_positive_and_scaling : Out.Laws → Out.Laws2 → ∀ (E : Type
   obtain ⟨hc, hper⟩ := density Pm hH U Uo Uc Up fr S θ d
     (fun j => (holp _ _).2.mono fun z hz => ⟨trivial, (chart_iff x' (pt z) j (fibLift_fst _ _ _)).2 hz⟩)
     n q (fun a j z => by simp only [S, pt, per]) hS
-  have hθθ : ∀ z, θ' (h z) = toC s * θ z := fun z => by
+  have hθθ : ∀ z, θ' (h z) = Formalism.L2.PjFree.toC s * θ z := fun z => by
     obtain ⟨j, hj⟩ := Uc z
     have h1 := hθ' j (h z) (pt z) ((fibLift_fst _ _ _).trans (hex z).symm) (fibLift_snd _ _ _) (U' j z hj)
-    have h2 := sv (toC s) (fun _ => j) (pt z) (fibLift_snd _ _ _)
+    have h2 := sv (Formalism.L2.PjFree.toC s) (fun _ => j) (pt z) (fibLift_snd _ _ _)
     rw [hfr j z hj] at h1
     refine mul_right_cancel₀ (n j z hj) ?_
     rw [← h1, _root_.mul_assoc, ← hS j z hj]

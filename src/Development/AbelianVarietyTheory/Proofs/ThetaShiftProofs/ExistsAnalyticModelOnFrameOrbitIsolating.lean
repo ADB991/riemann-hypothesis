@@ -252,7 +252,7 @@ theorem exists_anArc_onOrbit : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
     let P : (Uw.F.Di (Uw.ik k)).La →+ (Fin Uw.g → ℂ) :=
       h.symm.toLinearMap.toAddMonoidHom.comp ((A.Pw w).comp gam.toLinearMap.toAddMonoidHom)
     have hPe : ∀ v, P v = h.symm (A.Pw w (gam v)) := fun _ => rfl
-    have hPw := A.isPeriod (hT₀ w hw) (Uw.F.Di (Uw.ik k)) (fun j => relab c σ (Uw.e j).1) h.symm
+    have hPw := A.isPeriod (hT₀ w hw) (Uw.F.Di (Uw.ik k)) (fun j => Formalism.L2.PjFree.relab c σ (Uw.e j).1) h.symm
       (fun a v i => by
         have := hact a (h.symm v)
         rw [h.apply_symm_apply] at this

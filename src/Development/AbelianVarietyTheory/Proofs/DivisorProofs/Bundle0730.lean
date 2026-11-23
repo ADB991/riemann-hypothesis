@@ -390,8 +390,8 @@ namespace GlobalTheory.SplitCharGen
 
 variable {D : D7}
 
-def ofHChar (N : ℕ) (χ : HChar D.host.E) (n : D.what₂.Tau → ℤ) (hu : χ.IsUnitary)
-    (hi : χ.HasInf (embTau D) n) (hp : ∀ τ, Even (n τ - (N : ℤ)))
+def ofHChar (N : ℕ) (χ : Formalism.L2.Host.HChar D.host.E) (n : D.what₂.Tau → ℤ) (hu : χ.IsUnitary)
+    (hi : χ.HasInf (Formalism.L2.Host.embTau D) n) (hp : ∀ τ, Even (n τ - (N : ℤ)))
     (hc : ∃ m : ℕ, 0 < m ∧ ∀ u, IntU D u → (∃ s ∈ OhE D, (u : AE D) - 1 = (m : AE D) * s) → χ.1 (finIdl D u) = 1)
     (hn : ∀ x, χ.1 (finIdl D (x * sgU D x)) = 1)
     (hr : ∀ u, IntU D u → (∀ q : ℕ, q.Prime → ¬ InertQ D q → ZeroAt D q ((u : AE D) - 1)) → χ.1 (finIdl D u) = 1) :

@@ -98,12 +98,12 @@ theorem locK_pow (χ : Formalism.L2.Host.HChar L) (w : HeightOneSpectrum (𝓞 L
     intro z
     rw [← HeightOneSpectrum.valuation_of_algebraMap (K := L)]
     exact HeightOneSpectrum.valuedAdicCompletion_eq_valuation' w _
-  have hc : ((atFin w (uOf a ha ^ N) : (w.adicCompletion L)ˣ) : w.adicCompletion L) =
+  have hc : ((Formalism.L2.Host.atFin w (uOf a ha ^ N) : (w.adicCompletion L)ˣ) : w.adicCompletion L) =
       algebraMap L (w.adicCompletion L) (algebraMap (𝓞 L) L (a ^ N)) := by
     rw [map_pow, map_pow, map_pow, Units.val_pow_eq_pow_val]
     rfl
   refine hn _ ?_ ?_
-  · unfold IsUnitAt
+  · unfold Formalism.L2.Host.IsUnitAt
     rw [hc, hval, map_pow, HeightOneSpectrum.intValuation_eq_one_iff.2 hw, one_pow]
   · rw [hc, ← (algebraMap L (w.adicCompletion L)).map_one, ← map_sub, ← (algebraMap (𝓞 L) L).map_one, ← map_sub, hval]
     exact (w.intValuation_le_pow_iff_mem _ _).2 h1

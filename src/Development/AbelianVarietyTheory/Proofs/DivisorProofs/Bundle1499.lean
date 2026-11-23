@@ -291,7 +291,7 @@ theorem vl_norm_sub_one {N : ℕ} {z : (AE D)ˣ} {s : AE D} (hs : s ∈ OhE D) (
   rw [map_mul]
   exact (mul_le_of_le_one_right' (h2.trans (hN1 v))).trans (h1 v)
 
-theorem vl_pow_le {p m : ℕ} (hp : p ∣ m) {v : HeightOneSpectrum (𝓞 D.host.E)} (hv : OverP D.host p v) (k : ℕ) :
+theorem vl_pow_le {p m : ℕ} (hp : p ∣ m) {v : HeightOneSpectrum (𝓞 D.host.E)} (hv : Formalism.L2.Host.OverP D.host p v) (k : ℕ) :
     vl D v ((m ^ (k + 1) : ℕ) : AE D) ≤ WithZero.exp (-((k : ℤ) + 1)) := by
   have h1 : vl D v (m : AE D) ≤ WithZero.exp (-1) := by
     have := GlobalTheory.Mem.KerDet.le_exp_neg_one ((vl_le_of_dvd hp v).trans_lt (val_nat_lt hv))
@@ -303,10 +303,10 @@ theorem vl_pow_le {p m : ℕ} (hp : p ∣ m) {v : HeightOneSpectrum (𝓞 D.host
       congr 1
       simp
 
-theorem chi_norm_global (χ : HChar D.host.E) {n : D.what₂.Tau → ℤ} (hi : χ.HasInf (embT D) n) (a : D.host.Eˣ) :
+theorem chi_norm_global (χ : Formalism.L2.Host.HChar D.host.E) {n : D.what₂.Tau → ℤ} (hi : χ.HasInf (embT D) n) (a : D.host.Eˣ) :
     χ.1 (finIdl D (incU D a * sgU D (incU D a))) = 1 := by
   obtain ⟨k', hk⟩ := exists_real_norm a
-  have hu : ((upF D.host.F k' : D.host.Eˣ) : D.host.E) = (a : D.host.E) * D.host.conj a := by
+  have hu : ((Formalism.L2.Host.upF D.host.F k' : D.host.Eˣ) : D.host.E) = (a : D.host.E) * D.host.conj a := by
     haveI : Nontrivial (AE D) := by
       obtain ⟨v, -⟩ := GlobalTheory.exists_heightOneSpectrum_natCast_mem D.host.E Nat.prime_two
       refine ⟨⟨0, 1, fun h => ?_⟩⟩
@@ -317,29 +317,29 @@ theorem chi_norm_global (χ : HChar D.host.E) {n : D.what₂.Tau → ℤ} (hi : 
     have := congrArg Units.val hk
     change inc D a * sgA D (inc D a) = inc D _ at this
     rw [← this, sgA_inc, map_mul]
-  have hinf : χ.inf (upF D.host.F k') = 1 := by
+  have hinf : χ.inf (Formalism.L2.Host.upF D.host.F k') = 1 := by
     apply Units.ext
     rw [hi, Units.val_one]
     refine Finset.prod_eq_one fun τ _ => ?_
     have h0 : embT D τ (a : D.host.E) ≠ 0 := (map_ne_zero _).2 a.ne_zero
-    have h1 : embT D τ ((upF D.host.F k' : D.host.Eˣ) : D.host.E) = ((Complex.normSq (embT D τ (a : D.host.E)) : ℝ) : ℂ) := by
+    have h1 : embT D τ ((Formalism.L2.Host.upF D.host.F k' : D.host.Eˣ) : D.host.E) = ((Complex.normSq (embT D τ (a : D.host.E)) : ℝ) : ℂ) := by
       rw [hu, map_mul, emb_conj, Complex.mul_conj]
     have h2 : (0 : ℝ) < Complex.normSq (embT D τ (a : D.host.E)) := Complex.normSq_pos.2 h0
     rw [h1, Complex.norm_real, Real.norm_of_nonneg h2.le, div_self (by exact_mod_cast h2.ne'), one_zpow]
   rw [hk, finIdl_incU]
-  have h1 := χ.2.2 (upF D.host.F k')
+  have h1 := χ.2.2 (Formalism.L2.Host.upF D.host.F k')
   rw [← GlobalTheory.Mem.ChiLaws.infDiag_mul_finPart, map_mul] at h1
-  have h2 : χ.1 (infDiag (upF D.host.F k')) = 1 := hinf
+  have h2 : χ.1 (Formalism.L2.Host.infDiag (Formalism.L2.Host.upF D.host.F k')) = 1 := hinf
   rw [h2, one_mul] at h1
   exact h1
 
-theorem chi_norm_cong (χ : HChar D.host.E) (S : Finset ℕ) (k : ℕ) (ht : χ.TrivOn D.host.F)
+theorem chi_norm_cong (χ : Formalism.L2.Host.HChar D.host.E) (S : Finset ℕ) (k : ℕ) (ht : χ.TrivOn D.host.F)
     (hl : ∀ v, χ.UnrAt v ∨ ∃ q ∈ S, Formalism.L2.Host.OverP D.host q v ∧ χ.LevelLe v k) (z : (AE D)ˣ)
     (hz : ∀ q ∈ S, ∀ v, Formalism.L2.Host.OverP D.host q v →
       vl D v (((z * sgU D z : (AE D)ˣ) : AE D) - 1) ≤ WithZero.exp (-((k : ℤ) + 1))) :
     χ.1 (finIdl D (z * sgU D z)) = 1 := by
   obtain ⟨c, -, -, hu, -⟩ := GlobalTheory.Mem.HostCM.host_cm D.R D.host
-  have hG : ∀ v k', locF (L := D.host.E) D.host.F v k' ∈ (χ.1.comp (finPartI D.host.E)).ker := fun v k' => by
+  have hG : ∀ v k', GlobalTheory.Mem.Chr.locF (L := D.host.E) D.host.F v k' ∈ (χ.1.comp (finPartI D.host.E)).ker := fun v k' => by
     rw [MonoidHom.mem_ker]
     exact GlobalTheory.Mem.KerDet.map_finPartI_locF ht v k'
   obtain ⟨b, hb, hun, hc⟩ := exists_of_balanced hu _ hG _ (norm_balanced z)
@@ -347,9 +347,9 @@ theorem chi_norm_cong (χ : HChar D.host.E) (S : Finset ℕ) (k : ℕ) (ht : χ.
   rw [← finPartI_finIdl, ← mul_inv_cancel_left b (finIdl D (z * sgU D z)), map_mul, map_mul]
   rw [show χ.1 (finPartI D.host.E b) = 1 from hb, one_mul]
   refine GlobalTheory.Mem.LocTriv.eq_one_of_local D.host.E χ.1 χ.2.1 _ (finPartI_mem_unitIdl.2 hun) (fun _ => rfl) fun v y hy => ?_
-  have hy' : (y : v.adicCompletion D.host.E) = ((b⁻¹ * finIdl D (z * sgU D z) : Ideles D.host.E) : AdeleRing (𝓞 D.host.E) D.host.E).2 v := hy
-  have hyu : IsUnitAt v y := by
-    unfold IsUnitAt
+  have hy' : (y : v.adicCompletion D.host.E) = ((b⁻¹ * finIdl D (z * sgU D z) : Neutral.B1.Ideles D.host.E) : AdeleRing (𝓞 D.host.E) D.host.E).2 v := hy
+  have hyu : Formalism.L2.Host.IsUnitAt v y := by
+    unfold Formalism.L2.Host.IsUnitAt
     rw [hy']
     exact hun v
   change χ.loc v y = 1
@@ -369,8 +369,8 @@ theorem chi_norm_cong (χ : HChar D.host.E) (S : Finset ℕ) (k : ℕ) (ht : χ.
     have h4 := congrArg Units.val h3
     refine hL y hyu ?_
     rw [hy']
-    change Valued.v (((b⁻¹ * finIdl D (z * sgU D z) : Ideles D.host.E) : AdeleRing (𝓞 D.host.E) D.host.E).2 v - 1) ≤ _
-    have h4' : ((b⁻¹ * finIdl D (z * sgU D z) : Ideles D.host.E) : AdeleRing (𝓞 D.host.E) D.host.E).2 v =
+    change Valued.v (((b⁻¹ * finIdl D (z * sgU D z) : Neutral.B1.Ideles D.host.E) : AdeleRing (𝓞 D.host.E) D.host.E).2 v - 1) ≤ _
+    have h4' : ((b⁻¹ * finIdl D (z * sgU D z) : Neutral.B1.Ideles D.host.E) : AdeleRing (𝓞 D.host.E) D.host.E).2 v =
         (finIdl D (z * sgU D z) : AdeleRing (𝓞 D.host.E) D.host.E).2 v := h4
     rw [h4', vl_sub_one]
     refine (hz q hq v hov).trans ?_
@@ -380,7 +380,7 @@ theorem chi_norm_cong (χ : HChar D.host.E) (S : Finset ℕ) (k : ℕ) (ht : χ.
 theorem mul_eq_mul_mul_inv {G : Type} [CommGroup G] (x y u v : G) : x * y = (u * v) * ((u * x⁻¹) * (v * y⁻¹))⁻¹ := by
   simp [mul_inv_rev, mul_assoc, mul_left_comm, mul_comm]
 
-theorem chi_finIdl_norm_eq_one : ∀ (D : D7) (χ : HChar D.host.E) (n : D.what₂.Tau → ℤ) (S : Finset ℕ) (k : ℕ), χ.TrivOn D.host.F → χ.HasInf (embT D) n → (∀ q ∈ S, q.Prime) → (∀ v, χ.UnrAt v ∨ ∃ q ∈ S, Formalism.L2.Host.OverP D.host q v ∧ χ.LevelLe v k) → ∀ x : (AE D)ˣ, χ.1 (finIdl D (x * sgU D x)) = 1 := by
+theorem chi_finIdl_norm_eq_one : ∀ (D : D7) (χ : Formalism.L2.Host.HChar D.host.E) (n : D.what₂.Tau → ℤ) (S : Finset ℕ) (k : ℕ), χ.TrivOn D.host.F → χ.HasInf (embT D) n → (∀ q ∈ S, q.Prime) → (∀ v, χ.UnrAt v ∨ ∃ q ∈ S, Formalism.L2.Host.OverP D.host q v ∧ χ.LevelLe v k) → ∀ x : (AE D)ˣ, χ.1 (finIdl D (x * sgU D x)) = 1 := by
   intro D χ n S k ht hi hS hl x
   have hP : 0 < ∏ q ∈ S, q := Finset.prod_pos fun q hq => (hS q hq).pos
   have hm : 1 < (2 * ∏ q ∈ S, q) ^ (k + 1) := Nat.one_lt_pow (by omega) (by omega)
@@ -454,7 +454,7 @@ end GlobalTheory.FunObj.SqNum.UnrKill
 
 
 open GlobalTheory.FunObj.SqNum.UnrKill GlobalTheory.Mem.Col2.SplitChar in
-theorem GlobalTheory.FunObj.SqNum.hchar_finIdl_eq_one_of_zeroAt : ∀ (D : D7) (χ : HChar D.host.E) (S : Finset ℕ) (k : ℕ), (∀ q ∈ S, q.Prime ∧ ¬ InertQ D q) → (∀ v, χ.UnrAt v ∨ ∃ q ∈ S, Formalism.L2.Host.OverP D.host q v ∧ χ.LevelLe v k) → ∀ u, IntU D u → (∀ q : ℕ, q.Prime → ¬ InertQ D q → ZeroAt D q ((u : AE D) - 1)) → χ.1 (finIdl D u) = 1 := by
+theorem GlobalTheory.FunObj.SqNum.hchar_finIdl_eq_one_of_zeroAt : ∀ (D : D7) (χ : Formalism.L2.Host.HChar D.host.E) (S : Finset ℕ) (k : ℕ), (∀ q ∈ S, q.Prime ∧ ¬ InertQ D q) → (∀ v, χ.UnrAt v ∨ ∃ q ∈ S, Formalism.L2.Host.OverP D.host q v ∧ χ.LevelLe v k) → ∀ u, IntU D u → (∀ q : ℕ, q.Prime → ¬ InertQ D q → ZeroAt D q ((u : AE D) - 1)) → χ.1 (finIdl D u) = 1 := by
   intro D χ S k hS hχ u hu hz
   have hU := finIdl_unit hu
   refine GlobalTheory.Mem.LocTriv.eq_one_of_local D.host.E χ.1 χ.2.1 (finIdl D u) hU

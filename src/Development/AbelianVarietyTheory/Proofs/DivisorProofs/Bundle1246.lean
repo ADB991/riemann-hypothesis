@@ -168,11 +168,11 @@ theorem isConjPl_iff_conjPl {w w' : HeightOneSpectrum (𝓞 D.host.E)} :
     exact ⟨D.host.conj • c, h ▸ Ideal.smul_mem_pointwise_smul _ _ _ hc, (bridge_star_holds D.R D.host _).symm⟩
 
 theorem mem_aboveK {P : HeightOneSpectrum (𝓞 D.host.K)} {w : HeightOneSpectrum (𝓞 D.host.E)} :
-    w ∈ aboveF (L := D.host.E) D.host.K P ↔ w.under (𝓞 D.host.K) = P := by
-  simp [aboveF]
+    w ∈ Formalism.L2.Host.aboveF (L := D.host.E) D.host.K P ↔ w.under (𝓞 D.host.K) = P := by
+  simp [Formalism.L2.Host.aboveF]
 
 theorem overP_of_under {p : ℕ} {P : HeightOneSpectrum (𝓞 D.host.K)} (hP : ((p : ℕ) : 𝓞 D.host.K) ∈ P.asIdeal)
-    {w : HeightOneSpectrum (𝓞 D.host.E)} (h : w.under (𝓞 D.host.K) = P) : OverP D.host p w := by
+    {w : HeightOneSpectrum (𝓞 D.host.E)} (h : w.under (𝓞 D.host.K) = P) : Formalism.L2.Host.OverP D.host p w := by
   subst h
   have h2 : algebraMap (𝓞 D.host.K) (𝓞 D.host.E) ((p : ℕ) : 𝓞 D.host.K) ∈ w.asIdeal := hP
   rwa [map_natCast] at h2
@@ -183,8 +183,8 @@ variable {p : ℕ} (hp : p.Prime) (hs : SplitsC D.host.E p) {P : HeightOneSpectr
   (hP : ((p : ℕ) : 𝓞 D.host.K) ∈ P.asIdeal)
 include hp hs hP
 
-theorem overP_iff (w : HeightOneSpectrum (𝓞 D.host.E)) : OverP D.host p w ↔
-    w ∈ aboveF (L := D.host.E) D.host.K P ∨ ∃ w' ∈ aboveF (L := D.host.E) D.host.K P, Lev.IsConjPl w' w := by
+theorem overP_iff (w : HeightOneSpectrum (𝓞 D.host.E)) : Formalism.L2.Host.OverP D.host p w ↔
+    w ∈ Formalism.L2.Host.aboveF (L := D.host.E) D.host.K P ∨ ∃ w' ∈ Formalism.L2.Host.aboveF (L := D.host.E) D.host.K P, Lev.IsConjPl w' w := by
   constructor
   · intro hw
     by_cases h : w.under (𝓞 D.host.K) = P
@@ -194,7 +194,7 @@ theorem overP_iff (w : HeightOneSpectrum (𝓞 D.host.E)) : OverP D.host p w ↔
         have := hw' (D.host.conj.toRingEquiv x)
         rw [RingEquiv.symm_apply_apply] at this
         exact this.symm
-      have ho : OverP D.host p w' := ((conjPl_iff_mem _ w' w).1 hc _ _ (by simp)).2 hw
+      have ho : Formalism.L2.Host.OverP D.host p w' := ((conjPl_iff_mem _ w' w).1 hc _ _ (by simp)).2 hw
       exact Or.inr ⟨w', mem_aboveK.2 (((splitsC_main D.R D.host p hp hs w' ho).2.2.2 P hP w hc).2.2 h),
         isConjPl_iff_conjPl.2 hc⟩
   · rintro (h | ⟨w', h, hc⟩)

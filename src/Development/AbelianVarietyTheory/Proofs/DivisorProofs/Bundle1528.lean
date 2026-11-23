@@ -49,7 +49,7 @@ namespace GlobalTheory.FunObj.SqNum.NuCond
 
 open GlobalTheory.Mem.Col2.SplitChar GlobalTheory.Mem.Chr
 
-theorem levelLe_mono {K : Type} [Field K] [NumberField K] {χ : HChar K} {v : HeightOneSpectrum (𝓞 K)} {a b : ℕ}
+theorem levelLe_mono {K : Type} [Field K] [NumberField K] {χ : Formalism.L2.Host.HChar K} {v : HeightOneSpectrum (𝓞 K)} {a b : ℕ}
     (h : χ.LevelLe v a) (hab : a ≤ b) : χ.LevelLe v b :=
   fun x hx hle => h x hx (hle.trans (WithZero.exp_le_exp.2 (neg_le_neg (Nat.cast_le.2 hab))))
 

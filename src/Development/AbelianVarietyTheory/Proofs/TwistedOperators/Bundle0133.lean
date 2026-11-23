@@ -448,9 +448,9 @@ namespace GlobalTheory.HeckeUnitaryInf
 theorem isUnitary_of_hasInf : ∀ (L : Type) [Field L] [NumberField L] (χ : Formalism.L2.Host.HChar L) {I : Type} [Fintype I]
     (φ : I → L →+* ℂ) (n : I → ℤ), χ.HasInf φ n → χ.IsUnitary := by
   intro L _ _ χ I _ φ n h
-  have hinf : ∀ k : Lˣ, ‖((χ.1 (infDiag k) : ℂˣ) : ℂ)‖ = 1 := by
+  have hinf : ∀ k : Lˣ, ‖((χ.1 (Formalism.L2.Host.infDiag k) : ℂˣ) : ℂ)‖ = 1 := by
     intro k
-    have e : ((χ.1 (infDiag k) : ℂˣ) : ℂ) = _ := h k
+    have e : ((χ.1 (Formalism.L2.Host.infDiag k) : ℂˣ) : ℂ) = _ := h k
     rw [e, norm_prod]
     refine Finset.prod_eq_one fun i _ => ?_
     have h0 : φ i (k : L) ≠ 0 := (map_ne_zero _).2 k.ne_zero
@@ -464,7 +464,7 @@ theorem isUnitary_of_hasInf : ∀ (L : Type) [Field L] [NumberField L] (χ : For
         rw [← GlobalTheory.HeckeGal.infDiag_eq]
         exact hinf k)
     exact fun y => congrFun this y
-  have hF : ∀ x : Ideles L, IsFinIdele x → ‖((χ.1 x : ℂˣ) : ℂ)‖ = 1 := by
+  have hF : ∀ x : Neutral.B1.Ideles L, Formalism.L2.Host.IsFinIdele x → ‖((χ.1 x : ℂˣ) : ℂ)‖ = 1 := by
     intro x hx
     obtain ⟨m, hm, u, k, u1, u2, e⟩ := GlobalTheory.UnUnitCmp.Val.exists_pow_eq x hx
     have e1 := congrArg (fun a => ‖((χ.1 a : ℂˣ) : ℂ)‖) e

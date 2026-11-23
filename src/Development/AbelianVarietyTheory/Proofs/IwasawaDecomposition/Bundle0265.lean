@@ -351,7 +351,7 @@ theorem det_mul_conj_det {A B : Type} [CommRing A] [CommRing B] (σ : A →+* A)
   rw [mul_comm, RingHom.map_det]
   exact h2
 
-theorem exists_isDetLift : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (n : ℕ) (g : GL (Fin n) (AfE H.F H.E)), g ∈ Formalism.L2.Herm.UstdAf (host_cmData R H) n → ∃ a : Ideles H.E, IsDetLift (host_cmData R H) g a := by
+theorem exists_isDetLift : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (n : ℕ) (g : GL (Fin n) (AfE H.F H.E)), g ∈ Formalism.L2.Herm.UstdAf (host_cmData R H) n → ∃ a : Neutral.B1.Ideles H.E, IsDetLift (host_cmData R H) g a := by
   intro R H n g hg
   have hr := (DetClass.exists_detClass R H (host_cmData R H).sig (fun x => bridge_star_holds R H x) (afIso H.F H.E)
     (afIso_tmul_one H.F H.E) (mem_rInt_iff H.F H.E)).1

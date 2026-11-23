@@ -348,19 +348,19 @@ theorem SectionOrderAtPoint.proof : SectionOrderAtPoint.Statement := by
       (hQ.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self G))) hGW hQV).ge
   refine ⟨⟨hVG, fun k => ⟨c k, hc k⟩⟩, ?_⟩
   let pV : PrimeSpectrum (MRing ι) := ⟨V, hVp⟩
-  have hHfin : locLen (MRing ι ⧸ (W ⊔ Ideal.span {H})) pV ≠ ⊤ := locLen_ne_top hVmin
-  have hGfin : locLen (MRing ι ⧸ (W ⊔ Ideal.span {G})) pV ≠ ⊤ := locLen_ne_top hVG
-  have eA : locLen (MRing ι ⧸ (W ⊔ Ideal.span {A})) pV =
-      locLen (MRing ι ⧸ (W ⊔ Ideal.span {G})) pV := by
+  have hHfin : ReciprocityTheory.ChartRestriction.G.AI.locLen (MRing ι ⧸ (W ⊔ Ideal.span {H})) pV ≠ ⊤ := locLen_ne_top hVmin
+  have hGfin : ReciprocityTheory.ChartRestriction.G.AI.locLen (MRing ι ⧸ (W ⊔ Ideal.span {G})) pV ≠ ⊤ := locLen_ne_top hVG
+  have eA : ReciprocityTheory.ChartRestriction.G.AI.locLen (MRing ι ⧸ (W ⊔ Ideal.span {A})) pV =
+      ReciprocityTheory.ChartRestriction.G.AI.locLen (MRing ι ⧸ (W ⊔ Ideal.span {G})) pV := by
     rw [locLen_mul hWp (fun h => hmono em (hWV h)) G, locLen_quot_eq_zero pV (hmono em), add_zero]
-  have eB : locLen (MRing ι ⧸ (W ⊔ Ideal.span {B})) pV =
-      locLen (MRing ι ⧸ (W ⊔ Ideal.span {H})) pV := by
+  have eB : ReciprocityTheory.ChartRestriction.G.AI.locLen (MRing ι ⧸ (W ⊔ Ideal.span {B})) pV =
+      ReciprocityTheory.ChartRestriction.G.AI.locLen (MRing ι ⧸ (W ⊔ Ideal.span {H})) pV := by
     rw [locLen_mul hWp (fun h => hmono ep (hWV h)) H, locLen_quot_eq_zero pV (hmono ep), add_zero]
   have key := SectionOrderAtPoint.locLen_le_of_rel hWp hAW hBW pV hWV (hmono N) c' hQW
     (eB ▸ hHfin)
   rw [eA, eB] at key
   have := ENat.toNat_le_toNat key hGfin
-  simpa [multAt, hVp, locLen] using this
+  simpa [multAt, hVp, ReciprocityTheory.ChartRestriction.G.AI.locLen] using this
 
 end
 

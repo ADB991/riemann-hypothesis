@@ -304,32 +304,32 @@ section General
 
 variable {L : Type} [Field L] [NumberField L]
 
-def ordI (w : HeightOneSpectrum (𝓞 L)) (a : Ideles L) : ℤ := -WithZero.log (valAt w a)
+def ordI (w : HeightOneSpectrum (𝓞 L)) (a : Neutral.B1.Ideles L) : ℤ := -WithZero.log (valAt w a)
 
-theorem valAt_eq (w : HeightOneSpectrum (𝓞 L)) (a : Ideles L) : valAt w a = WithZero.exp (-ordI w a) := by
+theorem valAt_eq (w : HeightOneSpectrum (𝓞 L)) (a : Neutral.B1.Ideles L) : valAt w a = WithZero.exp (-ordI w a) := by
   rw [ordI, neg_neg, WithZero.exp_log (valAt_ne_zero w a)]
 
-theorem ordI_mul (w : HeightOneSpectrum (𝓞 L)) (a b : Ideles L) : ordI w (a * b) = ordI w a + ordI w b := by
+theorem ordI_mul (w : HeightOneSpectrum (𝓞 L)) (a b : Neutral.B1.Ideles L) : ordI w (a * b) = ordI w a + ordI w b := by
   unfold ordI
   rw [map_mul, WithZero.log_mul (valAt_ne_zero w a) (valAt_ne_zero w b)]
   ring
 
-theorem ordI_inv (w : HeightOneSpectrum (𝓞 L)) (a : Ideles L) : ordI w a⁻¹ = -ordI w a := by
+theorem ordI_inv (w : HeightOneSpectrum (𝓞 L)) (a : Neutral.B1.Ideles L) : ordI w a⁻¹ = -ordI w a := by
   unfold ordI
   rw [map_inv, WithZero.log_inv]
 
-theorem ordI_diag (w : HeightOneSpectrum (𝓞 L)) (k : Lˣ) : ordI w (diagUnits L k) = ordF w k := by
-  have h : valAt w (diagUnits L k) = w.valuation L (k : L) :=
+theorem ordI_diag (w : HeightOneSpectrum (𝓞 L)) (k : Lˣ) : ordI w (Neutral.B1.diagUnits L k) = Formalism.L2.Host.ordF w k := by
+  have h : valAt w (Neutral.B1.diagUnits L k) = w.valuation L (k : L) :=
     HeightOneSpectrum.valuedAdicCompletion_eq_valuation' w (k : L)
-  rw [ordI, h, ordF]
+  rw [ordI, h, Formalism.L2.Host.ordF]
 
-def powI (n : HeightOneSpectrum (𝓞 L) → ℕ) : Ideles L :=
-  ∏ᶠ w : HeightOneSpectrum (𝓞 L), localIdele L w (atFin w (unif w)) ^ n w
+def powI (n : HeightOneSpectrum (𝓞 L) → ℕ) : Neutral.B1.Ideles L :=
+  ∏ᶠ w : HeightOneSpectrum (𝓞 L), Neutral.B1.localIdele L w (Formalism.L2.Host.atFin w (Formalism.L2.Host.unif w)) ^ n w
 
 theorem ordI_powI (n : HeightOneSpectrum (𝓞 L) → ℕ) (hn : {w | n w ≠ 0}.Finite) (w : HeightOneSpectrum (𝓞 L)) :
     ordI w (powI n) = n w := by
   classical
-  have e : powI n = ∏ v ∈ hn.toFinset, localIdele L v (atFin v (unif v)) ^ (n v : ℤ) := by
+  have e : powI n = ∏ v ∈ hn.toFinset, Neutral.B1.localIdele L v (Formalism.L2.Host.atFin v (Formalism.L2.Host.unif v)) ^ (n v : ℤ) := by
     unfold powI
     rw [finprod_eq_prod_of_mulSupport_subset (s := hn.toFinset)]
     · simp only [zpow_natCast]
@@ -348,7 +348,7 @@ end General
 
 variable {R : Ranks} (H : Formalism.BasicNotions.Host R)
 
-theorem mk_mk_eq {a b : Ideles H.E}
+theorem mk_mk_eq {a b : Neutral.B1.Ideles H.E}
     (h : ∀ w w', IsConjPl H w w' → ordI w a - ordI w' a = ordI w b - ordI w' b) :
     (QuotientGroup.mk (QuotientGroup.mk a) : DtT H ⧸ UOT H) = QuotientGroup.mk (QuotientGroup.mk b) := by
   have h1 : a⁻¹ * b ∈ KD H ⊔ unitIdl H.E := by
@@ -363,7 +363,7 @@ theorem mk_mk_eq {a b : Ideles H.E}
   rw [← QuotientGroup.mk_inv, ← QuotientGroup.mk_mul, ← e, QuotientGroup.mk_mul, hk1, one_mul]
   rfl
 
-def repI (N : ℕ) (M M' : Submodule (𝓞 H.E) (Fin N → H.E)) : Ideles H.E :=
+def repI (N : ℕ) (M M' : Submodule (𝓞 H.E) (Fin N → H.E)) : Neutral.B1.Ideles H.E :=
   powI fun w => (ordSub w (detSub M') - ordSub w (detSub M)).toNat
 
 theorem relDetT_eq (N : ℕ) (M M' : Submodule (𝓞 H.E) (Fin N → H.E)) :
@@ -414,16 +414,16 @@ theorem relDetT_laws : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (N : 
     have hd : (γ : Matrix (Fin N) (Fin N) H.E).det ≠ 0 := fun h0 => k.ne_zero (by rw [← hk', h0, zero_mul])
     have hc : H.conj (k : H.E) ≠ 0 := fun h0 => k.ne_zero (by rw [← hk', h0, mul_zero])
     have e : k = Units.mk0 _ hd * Units.mk0 _ hc := Units.ext hk'.symm
-    have h1 : ordF w' k = ordF w' (Units.mk0 _ hd) + ordF w' (Units.mk0 _ hc) := by
+    have h1 : Formalism.L2.Host.ordF w' k = Formalism.L2.Host.ordF w' (Units.mk0 _ hd) + Formalism.L2.Host.ordF w' (Units.mk0 _ hc) := by
       rw [← DetOrd.ordF_mul', ← e]
-    have h2 : ordF w' (Units.mk0 _ hc) = ordF w k := by
+    have h2 : Formalism.L2.Host.ordF w' (Units.mk0 _ hc) = Formalism.L2.Host.ordF w k := by
       have := (conjPl_main.2.1 R H w w').1 hw (k : H.E)
-      unfold ordF
+      unfold Formalism.L2.Host.ordF
       rw [← this]
       rfl
     have h3 := (ordSub_detSub_lattice H.E N L.1 L.2.1 L.2.2.1).2.2 (γ : Matrix (Fin N) (Fin N) H.E)
       (Units.mk0 _ hd) rfl w'
-    have h4 : ordSub w' (detSub L'.1) = ordF w' (Units.mk0 _ hd) + ordSub w' (detSub L.1) := by
+    have h4 : ordSub w' (detSub L'.1) = Formalism.L2.Host.ordF w' (Units.mk0 _ hd) + ordSub w' (detSub L.1) := by
       rw [hγ]
       exact h3
     have h5 := GlobalTheory.Mem.Chr.ordSub_detSub_selfDual R H N L w w' hw

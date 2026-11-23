@@ -54,8 +54,8 @@ theorem exists_residue_char {L : Type} [Field L] [NumberField L] (w : HeightOneS
 
 variable {R : Ranks} {H : Formalism.BasicNotions.Host R}
 
-theorem eq_of_overP {k k' : Fin 2} {w : HeightOneSpectrum (𝓞 H.E)} (h : OverP H (H.g k) w)
-    (h' : OverP H (H.g k') w) : k = k' := by
+theorem eq_of_overP {k k' : Fin 2} {w : HeightOneSpectrum (𝓞 H.E)} (h : Formalism.L2.Host.OverP H (H.g k) w)
+    (h' : Formalism.L2.Host.OverP H (H.g k') w) : k = k' := by
   by_contra hne
   have hg : H.g k ≠ H.g k' := by
     fin_cases k <;> fin_cases k'
@@ -72,10 +72,10 @@ theorem eq_of_overP {k k' : Fin 2} {w : HeightOneSpectrum (𝓞 H.E)} (h : OverP
 
 
 open Classical in
-theorem exists_unitary_mu_zero_characters_of_split_type_primes : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (P : PiBar H) (W : Omg H) (e : R.Psi → ℚ) (j : ℕ), (∀ k, SplitsC H.E (H.g k)) → (∀ τ, ∃ z : ℤ, e τ = z) → UpperTheory.MUQ (embPsi H) e → Mu0Exists P W e j := by
+theorem exists_unitary_mu_zero_characters_of_split_type_primes : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (P : Formalism.L2.Host.PiBar H) (W : Formalism.L2.Host.Omg H) (e : R.Psi → ℚ) (j : ℕ), (∀ k, SplitsC H.E (H.g k)) → (∀ τ, ∃ z : ℤ, e τ = z) → UpperTheory.MUQ (Formalism.L2.Host.embPsi H) e → Formalism.L2.Host.Mu0Exists P W e j := by
   intro R H P W e j hs hint hev
   choose z hz using hint
-  have hmu : UpperTheory.MU (embPsi H) z := hev.mu hz
+  have hmu : UpperTheory.MU (Formalism.L2.Host.embPsi H) z := hev.mu hz
   haveI := H.galois
   haveI : IsGalois H.K H.E := IsGalois.tower_top_of_isGalois ℚ H.K H.E
   obtain ⟨c, hc, hcm, -⟩ := GlobalTheory.Mem.HostCM.host_cm R H
@@ -96,24 +96,24 @@ theorem exists_unitary_mu_zero_characters_of_split_type_primes : ∀ (R : Ranks)
         exact h2
     · exact ⟨1, rfl, fun k hk => absurd ⟨k, hk⟩ h⟩
   choose θ hθ1 hθ2 using hθ
-  let S : Finset (HeightOneSpectrum (𝓞 H.E)) := Finset.univ.biUnion fun k => aboveF (L := H.E) H.K (P.pb k)
+  let S : Finset (HeightOneSpectrum (𝓞 H.E)) := Finset.univ.biUnion fun k => Formalism.L2.Host.aboveF (L := H.E) H.K (P.pb k)
   have hS : ∀ w, w ∈ S ↔ ∃ k, P.Div k w := fun w => by
-    simp only [S, Finset.mem_biUnion, Finset.mem_univ, true_and, aboveF, Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
+    simp only [S, Finset.mem_biUnion, Finset.mem_univ, true_and, Formalism.L2.Host.aboveF, Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
     rfl
-  have hmem : ∀ k w, w ∈ aboveF (L := H.E) H.K (P.pb k) ↔ P.Div k w := fun k w => by
-    simp only [aboveF, Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
+  have hmem : ∀ k w, w ∈ Formalism.L2.Host.aboveF (L := H.E) H.K (P.pb k) ↔ P.Div k w := fun k w => by
+    simp only [Formalism.L2.Host.aboveF, Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
     rfl
   have hres : ∀ (k : Fin 2) (ζ : (𝓞 H.E)ˣ), (∃ m : ℕ, 0 < m ∧ ((ζ : 𝓞 H.E) : H.E) ^ m = 1) →
-      ∏ w ∈ aboveF (L := H.E) H.K (P.pb k), θ w (Units.map (Ideal.Quotient.mk w.asIdeal).toMonoidHom ζ) = 1 :=
+      ∏ w ∈ Formalism.L2.Host.aboveF (L := H.E) H.K (P.pb k), θ w (Units.map (Ideal.Quotient.mk w.asIdeal).toMonoidHom ζ) = 1 :=
     fun k ζ hζ => UpperTheory.prod_residue_char_norm_one_unit_eq_one H.K H.E (H.g k) (H.g_prime k) (P.pb k) _ (fun w => hmem k w)
       (fun w hw => ⟨(hsp k w (P.overP ((hmem k w).1 hw))).1, (hsp k w (P.overP ((hmem k w).1 hw))).2.1⟩)
       ((W.om k ^ (2 * (j + 1)))⁻¹) θ (fun w hw a ha => hθ2 w k ((hmem k w).1 hw) a ha) ζ (H.der.norm_mu _ hζ)
   have hdisj : (↑(Finset.univ : Finset (Fin 2)) : Set (Fin 2)).PairwiseDisjoint
-      (fun k => aboveF (L := H.E) H.K (P.pb k)) := by
+      (fun k => Formalism.L2.Host.aboveF (L := H.E) H.K (P.pb k)) := by
     intro k _ k' _ hkk'
     refine Finset.disjoint_left.2 fun w hw hw' => hkk' ?_
     exact eq_of_overP (P.overP ((hmem k w).1 hw)) (P.overP ((hmem k' w).1 hw'))
-  obtain ⟨χ, hu, ht, hi, htame, hunr, hloc, -⟩ := GlobalTheory.T.exists_heckeChar_trivOn_realSubfield_infinityType H.F H.E c (R.Psi) (embPsi H) hcm z S θ
+  obtain ⟨χ, hu, ht, hi, htame, hunr, hloc, -⟩ := GlobalTheory.T.exists_heckeChar_trivOn_realSubfield_infinityType H.F H.E c (R.Psi) (Formalism.L2.Host.embPsi H) hcm z S θ
     (by
       intro w hw w' hcj hw'
       obtain ⟨k, hk⟩ := (hS w).1 hw
@@ -124,7 +124,7 @@ theorem exists_unitary_mu_zero_characters_of_split_type_primes : ∀ (R : Ranks)
       exact hiff.1 hk hk')
     (by
       intro ζ hζ
-      have hinf : ∏ i, embPsi H i ((ζ : 𝓞 H.E) : H.E) ^ (-z i) = 1 := hmu.neg _ hζ
+      have hinf : ∏ i, Formalism.L2.Host.embPsi H i ((ζ : 𝓞 H.E) : H.E) ^ (-z i) = 1 := hmu.neg _ hζ
       have hfin : ∏ w ∈ S, θ w (Units.map (Ideal.Quotient.mk w.asIdeal).toMonoidHom ζ) = 1 := by
         rw [Finset.prod_biUnion hdisj]
         exact Finset.prod_eq_one fun k _ => hres k ζ hζ
@@ -214,7 +214,7 @@ private theorem exists_residue_read {L : Type} [Field L] [NumberField L] (w : He
 
 
 open Classical in
-theorem delta_exists : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (p : ℕ), p.Prime → p % 15 = 1 → SplitsC H.E p → DeltaExists (H := H) p := by
+theorem delta_exists : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (p : ℕ), p.Prime → p % 15 = 1 → SplitsC H.E p → Formalism.L2.Host.DeltaExists (H := H) p := by
   intro R H p hp h15 hs
   obtain ⟨c, hc, hcm, -⟩ := GlobalTheory.Mem.HostCM.host_cm R H
   have hce : c.toRingEquiv = H.conj.toRingEquiv := RingEquiv.ext hc
@@ -226,20 +226,20 @@ theorem delta_exists : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (p : 
   obtain ⟨ω, hω⟩ := exists_char_of_dvd (G := (ZMod p)ˣ) (m := 15) (by norm_num)
     (by rw [Nat.card_eq_fintype_card, ZMod.card_units_eq_totient, Nat.totient_prime hp]; omega)
   have hθ : ∀ w : HeightOneSpectrum (𝓞 H.E), ∃ θ : (𝓞 H.E ⧸ w.asIdeal)ˣ →* ℂˣ,
-      (OverP H p w → ∀ (a : ℕ) (ha : a.Coprime p) (b : (𝓞 H.E ⧸ w.asIdeal)ˣ),
+      (Formalism.L2.Host.OverP H p w → ∀ (a : ℕ) (ha : a.Coprime p) (b : (𝓞 H.E ⧸ w.asIdeal)ˣ),
         (b : 𝓞 H.E ⧸ w.asIdeal) = Ideal.Quotient.mk w.asIdeal (a : 𝓞 H.E) → θ b = ω (ZMod.unitOfCoprime a ha)) ∧
-      (OverP H p w → ∀ n : ℕ, θ ^ n = 1 ↔ 15 ∣ n) := by
+      (Formalism.L2.Host.OverP H p w → ∀ n : ℕ, θ ^ n = 1 ↔ 15 ∣ n) := by
     intro w
-    by_cases h : OverP H p w
+    by_cases h : Formalism.L2.Host.OverP H p w
     · obtain ⟨θ, h1, h2⟩ := exists_residue_read w hp (hsp w h).1 ω
       exact ⟨θ, fun _ => h1, fun _ n => (h2 n).trans (hω n)⟩
     · exact ⟨1, fun h' => absurd h' h, fun h' => absurd h' h⟩
   choose θ hθ1 hθ2 using hθ
-  let S : Finset (HeightOneSpectrum (𝓞 H.E)) := aboveF (L := H.E) H.K Q
+  let S : Finset (HeightOneSpectrum (𝓞 H.E)) := Formalism.L2.Host.aboveF (L := H.E) H.K Q
   have hS : ∀ w, w ∈ S ↔ w.under (𝓞 H.K) = Q := fun w => by
-    simp only [S, aboveF, Set.Finite.mem_toFinset]
+    simp only [S, Formalism.L2.Host.aboveF, Set.Finite.mem_toFinset]
     rfl
-  have hov : ∀ w ∈ S, OverP H p w := fun w hw => by
+  have hov : ∀ w ∈ S, Formalism.L2.Host.OverP H p w := fun w hw => by
     have h1 := hQ
     rw [← (hS w).1 hw] at h1
     have h2 : algebraMap (𝓞 H.K) (𝓞 H.E) ((p : ℕ) : 𝓞 H.K) ∈ w.asIdeal := h1
@@ -255,7 +255,7 @@ theorem delta_exists : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (p : 
         exact IsUnit.of_mul_eq_one_right _ h1
       exact ⟨hu.unit, hu.unit_spec, hθ1 w (hov w hw) a ha _ hu.unit_spec⟩)
   obtain ⟨χ, -, ht, hi, htame, hunr, -, hord⟩ :=
-    GlobalTheory.Mem.Chr.AntiExist.exists_hecke_trivOn H.F H.E c (R.Psi) (embPsi H) hcm (fun _ => 0) S θ
+    GlobalTheory.Mem.Chr.AntiExist.exists_hecke_trivOn H.F H.E c (R.Psi) (Formalism.L2.Host.embPsi H) hcm (fun _ => 0) S θ
     (by
       intro w hw w' hcj hw'
       rw [hce] at hcj
@@ -283,7 +283,7 @@ theorem delta_exists : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (p : 
         have := hw (c.toRingEquiv x)
         rw [RingEquiv.symm_apply_apply] at this
         exact this.symm
-      have hwo : OverP H p w := by
+      have hwo : Formalism.L2.Host.OverP H p w := by
         refine ((conjPl_iff_mem _ w v).1 hcj _ _ ?_).2 hv
         simp
       have hwS : w ∈ S := (hS w).2
@@ -301,12 +301,12 @@ namespace GlobalTheory.Mem.EtaT
 
 theorem card_above {F L : Type} [Field F] [NumberField F] [Field L] [NumberField L] [Algebra F L]
     (v : HeightOneSpectrum (𝓞 F)) :
-    (aboveF (L := L) F v).card = (Ideal.primesOver v.asIdeal (𝓞 L)).ncard := by
+    (Formalism.L2.Host.aboveF (L := L) F v).card = (Ideal.primesOver v.asIdeal (𝓞 L)).ncard := by
   rw [← Set.ncard_coe_finset, ← Set.ncard_image_of_injective _
     (f := HeightOneSpectrum.asIdeal) (fun _ _ h => HeightOneSpectrum.ext h)]
   congr 1
   ext Q
-  simp only [aboveF, Set.Finite.coe_toFinset, Set.mem_image, Set.mem_ofPred_eq]
+  simp only [Formalism.L2.Host.aboveF, Set.Finite.coe_toFinset, Set.mem_image, Set.mem_ofPred_eq]
   constructor
   · rintro ⟨P, rfl, rfl⟩
     exact ⟨P.isPrime, ⟨rfl⟩⟩
@@ -316,7 +316,7 @@ theorem card_above {F L : Type} [Field F] [NumberField F] [Field L] [NumberField
 
 private theorem card_above_of_prime {R : Ranks} (H : Formalism.BasicNotions.Host R) (l : ℕ) (hp : l.Prime) (hl : l ∣ H.condN)
     (P : HeightOneSpectrum (𝓞 H.E)) (hP : ((l : ℕ) : 𝓞 H.E) ∈ P.asIdeal) :
-    (aboveF (L := H.E) H.F (P.under (𝓞 H.F))).card = 2 := by
+    (Formalism.L2.Host.aboveF (L := H.E) H.F (P.under (𝓞 H.F))).card = 2 := by
   have : Fact l.Prime := ⟨hp⟩
   have hPp := P.isPrime
   have hPZ : P.asIdeal.LiesOver (Ideal.span {(l : ℤ)}) := by
@@ -346,10 +346,10 @@ private theorem exists_prime_mem {A : Type} [CommRing A] (P : Ideal A) (hP : P.I
 
 
 open Classical in
-theorem etaT_exists : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R), EtaTExists H := by
+theorem etaT_exists : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R), Formalism.L2.Host.EtaTExists H := by
   intro R H
   obtain ⟨c, hc, hcm, hunr, -, -⟩ := GlobalTheory.Mem.HostCM.host_cm R H
-  obtain ⟨χ, h1, h2, h3, h4⟩ := GlobalTheory.T.exists_unramified_resEta_alt H.F H.E c (R.Psi) (embPsi H) hcm hunr (GlobalTheory.T.quadraticChar_product_formula_CM_host R H)
+  obtain ⟨χ, h1, h2, h3, h4⟩ := GlobalTheory.T.exists_unramified_resEta_alt H.F H.E c (R.Psi) (Formalism.L2.Host.embPsi H) hcm hunr (GlobalTheory.T.quadraticChar_product_formula_CM_host R H)
     (fun _ => 1) (fun _ => odd_one) (fun ζ hζ => by
       obtain ⟨δ, hδ, hval, hprod⟩ := UpperTheory.exists_unit_eq_rootOfUnity_mul_conj_phase_one R H R.Psi (Equiv.refl _) ζ hζ
       refine ⟨δ, by rw [hc]; exact hδ, fun P hP => ?_, ?_⟩
@@ -357,7 +357,7 @@ theorem etaT_exists : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R), EtaTE
           obtain ⟨l, hl, hlN, hlP⟩ := exists_prime_mem P.asIdeal P.isPrime H.condN H.condN_ne_zero hm
           rw [card_above_of_prime H l hl hlN P hlP] at hP
           exact absurd hP (by decide)
-        have h0 : ordF P δ = 0 := by simp [ordF, hval P hn]
+        have h0 : Formalism.L2.Host.ordF P δ = 0 := by simp [Formalism.L2.Host.ordF, hval P hn]
         rw [h0]
         exact Even.zero
       · simp only [zpow_one]

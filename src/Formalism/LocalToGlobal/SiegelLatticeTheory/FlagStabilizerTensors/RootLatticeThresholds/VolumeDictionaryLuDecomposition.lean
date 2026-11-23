@@ -186,7 +186,7 @@ theorem tw_isom_st (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
     (F'' : FlagG (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) {w : Point D.host.E (D.R.rS + 1)} {L U : MatR D}
     (hL : IsLoUni L) (hU : IsUpUni U) (hZu : IsUnit (Zhat F0 F'').det)
     (hZ1 : Zhat F0 F'' * sgnM D.R.rS = L * ptMat w * U) (hGr : IsUnit (gramOf (gg F0 F'')).det) (β : StG w) :
-    tw F0 F'' L (hLu_of hL) hZu hGr (β : GLR D) ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT := by
+    Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw F0 F'' L (hLu_of hL) hZu hGr (β : GLR D) ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT := by
   have hβ : (β : GLR D) ∈ StSet (ptMat w) := β.2
   intro x y
   exact tw_isom hL (hLu_of hL) hZu hGr (β : GLR D) hβ.1 (P'm_up_st hL hU hZu hZ1 hβ) x y
@@ -198,20 +198,20 @@ def Phi (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
     StG w →* X.B.I.Ginf where
   toFun β := (rpt X _ (tw_isom_st F0 F'' hL hU hZu hZ1 hGr β⁻¹)).1
   map_one' := by
-    have h1 : tw F0 F'' L (hLu_of hL) hZu hGr ((1⁻¹ : StG w) : GLR D) = 1 := by
+    have h1 : Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw F0 F'' L (hLu_of hL) hZu hGr ((1⁻¹ : StG w) : GLR D) = 1 := by
       rw [inv_one, Subgroup.coe_one, tw_one]
-    have hx : RatLink X 1 (tw F0 F'' L (hLu_of hL) hZu hGr ((1⁻¹ : StG w) : GLR D)) := by
+    have hx : RatLink X 1 (Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw F0 F'' L (hLu_of hL) hZu hGr ((1⁻¹ : StG w) : GLR D)) := by
       rw [h1]; exact Formalism.L2.SG.TermOp.ratLink_one X
     show (rpt X _ _).1 = 1
     rw [rpt_eq X _ hx]; rfl
   map_mul' β γ := by
-    have h1 : tw F0 F'' L (hLu_of hL) hZu hGr (((β * γ)⁻¹ : StG w) : GLR D) =
-        tw F0 F'' L (hLu_of hL) hZu hGr ((β⁻¹ : StG w) : GLR D) *
-          tw F0 F'' L (hLu_of hL) hZu hGr ((γ⁻¹ : StG w) : GLR D) := by
+    have h1 : Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw F0 F'' L (hLu_of hL) hZu hGr (((β * γ)⁻¹ : StG w) : GLR D) =
+        Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw F0 F'' L (hLu_of hL) hZu hGr ((β⁻¹ : StG w) : GLR D) *
+          Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw F0 F'' L (hLu_of hL) hZu hGr ((γ⁻¹ : StG w) : GLR D) := by
       rw [_root_.mul_inv_rev, Subgroup.coe_mul, tw_mul]
     have hx : RatLink X (rpt X _ (tw_isom_st F0 F'' hL hU hZu hZ1 hGr β⁻¹) *
         rpt X _ (tw_isom_st F0 F'' hL hU hZu hZ1 hGr γ⁻¹))
-        (tw F0 F'' L (hLu_of hL) hZu hGr (((β * γ)⁻¹ : StG w) : GLR D)) := by
+        (Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw F0 F'' L (hLu_of hL) hZu hGr (((β * γ)⁻¹ : StG w) : GLR D)) := by
       rw [h1]
       exact Formalism.L2.SG.TermOp.Vanish.ratLink_mul X (rpt_spec X _ _) (rpt_spec X _ _)
     show (rpt X _ _).1 = (rpt X _ _).1 * (rpt X _ _).1
@@ -231,7 +231,7 @@ theorem Phi_inj (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
   rw [injective_iff_map_eq_one]
   intro β hβ
   rw [Phi_apply] at hβ
-  have h1 : tw F0 F'' L (hLu_of hL) hZu hGr ((β⁻¹ : StG w) : GLR D) = 1 :=
+  have h1 : Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw F0 F'' L (hLu_of hL) hZu hGr ((β⁻¹ : StG w) : GLR D) = 1 :=
     ratLink_inf_one X (rpt_spec X _ (tw_isom_st F0 F'' hL hU hZu hZ1 hGr β⁻¹)) hβ
   have h2 : ((β⁻¹ : StG w) : GLR D) = 1 := tw_inj hT (hLu_of hL) hZu hGr h1
   rw [← inv_eq_one]
@@ -256,8 +256,8 @@ theorem tw_nlam (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
     (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) {w : Point D.host.E (D.R.rS + 1)} {L U : MatR D}
     (hL : IsLoUni L) (hU : IsUpUni U) (hZu : IsUnit (Zhat F0 F'.fl).det)
     (hZ1 : Zhat F0 F'.fl * sgnM D.R.rS = L * ptMat w * U) (hGr : IsUnit (gramOf (gg F0 F'.fl)).det) (β : StG w) :
-    tw F0 F'.fl L (hLu_of hL) hZu hGr (β : GLR D) ∈ NLam ⊥ (lf D F0) ∧
-      tw F0 F'.fl L (hLu_of hL) hZu hGr (β : GLR D) ∈ NLam ⊥ F' := by
+    Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw F0 F'.fl L (hLu_of hL) hZu hGr (β : GLR D) ∈ NLam ⊥ (lf D F0) ∧
+      Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw F0 F'.fl L (hLu_of hL) hZu hGr (β : GLR D) ∈ NLam ⊥ F' := by
   set Z := Zhat F0 F'.fl
   set B : MatR D := ((β : GLR D) : MatR D) with hB
   have hβlo : IsLoUni B := β.2.1
@@ -266,7 +266,7 @@ theorem tw_nlam (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
   have hPu : IsUpUni (Pm L B) := Pm_up hL hβlo
   have hP'u : IsUpUni (P'm F0 F'.fl L B) := P'm_up_st hL hU hZu hZ1 β.2
   have hiso := tw_isom_st F0 F'.fl hL hU hZu hZ1 hGr β
-  have hAut : IsAutLam (VS D) ⊥ (tw F0 F'.fl L hLu hZu hGr (β : GLR D)) := ⟨hiso, gmap_bot _⟩
+  have hAut : IsAutLam (VS D) ⊥ (Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw F0 F'.fl L hLu hZu hGr (β : GLR D)) := ⟨hiso, gmap_bot _⟩
 
   have hPH : (Pm L B).conjTranspose = L * B * L⁻¹ := by rw [Pm, Matrix.conjTranspose_conjTranspose]
   have hPHinv : ((Pm L B).conjTranspose)⁻¹ = L * B⁻¹ * L⁻¹ := by
@@ -327,7 +327,7 @@ theorem gen_data (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
     {s : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hs1 : s ∈ NLam Λ (lf D F0)) (hs2 : s ∈ NLam Λ F')
     {uu : MatR D} (hu : ∀ b, s (frame (lf D F0) b) = ∑ c, uu c b • frame (lf D F0) c)
     (a : GLR D) (ha : (a : MatR D) = L⁻¹ * uu.conjTranspose * L) :
-    a ∈ StSet (ptMat w) ∧ tw F0 F'.fl L (hLu_of hL) hZu hGr a = s := by
+    a ∈ StSet (ptMat w) ∧ Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw F0 F'.fl L (hLu_of hL) hZu hGr a = s := by
   obtain ⟨⟨hiso, _⟩, hf1, hf2⟩ := hs1
   obtain ⟨⟨_, _⟩, hg1, hg2⟩ := hs2
   obtain ⟨uu0, huu0, hu0⟩ := tri_exists F0 s hf1 hf2
@@ -398,7 +398,7 @@ variable {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting D}
 theorem tw_inv_eq {u u' : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
     (F'' : FlagG (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) {L : MatR D} (hLu : IsUnit L.det)
     (hZu : IsUnit (Zhat F0 F'').det) (hGr : IsUnit (gramOf (gg F0 F'')).det) (a : GLR D) :
-    tw F0 F'' L hLu hZu hGr a⁻¹ = (tw F0 F'' L hLu hZu hGr a)⁻¹ := by
+    Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw F0 F'' L hLu hZu hGr a⁻¹ = (Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw F0 F'' L hLu hZu hGr a)⁻¹ := by
   rw [eq_inv_iff_mul_eq_one, ← tw_mul, mul_inv_cancel, tw_one]
 
 
@@ -464,7 +464,7 @@ theorem volume_dictionary_lu_decomposition (Y : Formalism.L2.SG.Full.Full X) {u 
 
   have hgen : ∀ a ∈ stabAutSet D u u' (X.Fu u) (Y.what₂ u) t.toTerm F' L,
       a ∈ StSet (ptMat w) ∧ ∃ s ∈ NLam t.lam (lf D (X.Fu u)) ∩ NLam t.lam F',
-        tw (X.Fu u) F'.fl L (hLu_of hL) hZu hGr a = s := by
+        Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw (X.Fu u) F'.fl L (hLu_of hL) hZu hGr a = s := by
     rintro a ⟨s, ⟨hs1, hs2⟩, uu, hu, ha⟩
     obtain ⟨h1, h2⟩ := gen_data (X.Fu u) F' hL hU hZu hZ1 hGr hT hs1 hs2 hu a ha
     exact ⟨h1, s, ⟨hs1, hs2⟩, h2⟩
@@ -474,7 +474,7 @@ theorem volume_dictionary_lu_decomposition (Y : Formalism.L2.SG.Full.Full X) {u 
     Phi_inj X (X.Fu u) F'.fl hL hU hZu hZ1 hGr hT, ?_, ?_⟩
   · intro β
     have hsβ := tw_nlam (X.Fu u) F' hL hU hZu hZ1 hGr β⁻¹
-    set sβ := tw (X.Fu u) F'.fl L (hLu_of hL) hZu hGr ((β⁻¹ : StG w) : GLR D) with hsβdef
+    set sβ := Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw (X.Fu u) F'.fl L (hLu_of hL) hZu hGr ((β⁻¹ : StG w) : GLR D) with hsβdef
     have hxs : RatLink X (rpt X sβ (tw_isom_st (X.Fu u) F'.fl hL hU hZu hZ1 hGr β⁻¹)) sβ := rpt_spec X _ _
     set y0 := xn⁻¹ * rpt X sβ (tw_isom_st (X.Fu u) F'.fl hL hU hZu hZ1 hGr β⁻¹) * xn with hy0
     have hy0L : RatLink X y0 (n0⁻¹ * sβ * n0) :=
@@ -515,7 +515,7 @@ theorem volume_dictionary_lu_decomposition (Y : Formalism.L2.SG.Full.Full X) {u 
         | mem a ha =>
           intro hst
           obtain ⟨-, s, ⟨hs1, hs2⟩, hts⟩ := hgen a ha
-          have hinv : tw (X.Fu u) F'.fl L (hLu_of hL) hZu hGr ((⟨a, hst⟩⁻¹ : StG w) : GLR D) = s⁻¹ := by
+          have hinv : Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw (X.Fu u) F'.fl L (hLu_of hL) hZu hGr ((⟨a, hst⟩⁻¹ : StG w) : GLR D) = s⁻¹ := by
             exact (tw_inv_eq (X.Fu u) F'.fl (hLu_of hL) hZu hGr a).trans (congrArg Inv.inv hts)
           have hxs : RatLink X (rpt X _ (tw_isom_st (X.Fu u) F'.fl hL hU hZu hZ1 hGr ⟨a, hst⟩⁻¹)) s⁻¹ := by
             rw [← hinv]; exact rpt_spec X _ _
@@ -555,9 +555,9 @@ theorem volume_dictionary_lu_decomposition (Y : Formalism.L2.SG.Full.Full X) {u 
         (Formalism.L2.SG.Pf.nlamPf_inv hn2') hu a haM
       refine ⟨⟨a, haS⟩, Subgroup.subset_closure ⟨n⁻¹, ⟨Formalism.L2.SG.Pf.nlamPf_inv hn1,
         Formalism.L2.SG.Pf.nlamPf_inv hn2'⟩, uu, hu, haM⟩, ?_⟩
-      have hinv : tw (X.Fu u) F'.fl L (hLu_of hL) hZu hGr ((⟨a, haS⟩⁻¹ : StG w) : GLR D) = n := by
+      have hinv : Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw (X.Fu u) F'.fl L (hLu_of hL) hZu hGr ((⟨a, haS⟩⁻¹ : StG w) : GLR D) = n := by
         exact (tw_inv_eq (X.Fu u) F'.fl (hLu_of hL) hZu hGr a).trans ((congrArg Inv.inv hta).trans (inv_inv n))
-      have hxL : RatLink X x (tw (X.Fu u) F'.fl L (hLu_of hL) hZu hGr ((⟨a, haS⟩⁻¹ : StG w) : GLR D)) := by
+      have hxL : RatLink X x (Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw (X.Fu u) F'.fl L (hLu_of hL) hZu hGr ((⟨a, haS⟩⁻¹ : StG w) : GLR D)) := by
         rw [hinv]; exact hx
       exact congrArg Prod.fst (rpt_eq X _ hxL)
 

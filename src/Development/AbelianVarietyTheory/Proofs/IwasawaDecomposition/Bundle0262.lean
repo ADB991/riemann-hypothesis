@@ -389,7 +389,7 @@ open scoped nonZeroDivisors
 
 namespace GlobalTheory.Mem.ChiVal
 
-theorem val_pow_classNumber {L : Type} [Field L] [NumberField L] (ξ : HChar L) (hu : ∀ v, ξ.UnrAt v) (hi : ∀ k, ξ.inf k = 1)
+theorem val_pow_classNumber {L : Type} [Field L] [NumberField L] (ξ : Formalism.L2.Host.HChar L) (hu : ∀ v, ξ.UnrAt v) (hi : ∀ k, ξ.inf k = 1)
     (v : HeightOneSpectrum (𝓞 L)) : ξ.val v ^ classNumber L = 1 := by
   obtain ⟨γ, h0, hγ⟩ := GlobalTheory.Mem.FieldsEx.exists_gen v.asIdeal v.ne_bot
   have h1 : (γ : L) ≠ 0 := by exact_mod_cast h0
@@ -405,7 +405,7 @@ theorem mem_of_pow_eq_one (M : Subfield ℂ) {n : ℕ} (hn : n ≠ 0)
   obtain ⟨i, -, rfl⟩ := (Complex.isPrimitiveRoot_exp n hn).eq_pow_of_pow_eq_one hx
   exact pow_mem hM i
 
-theorem val_sq_eq {L : Type} [Field L] [NumberField L] (η : HChar L) (v : HeightOneSpectrum (𝓞 L)) :
+theorem val_sq_eq {L : Type} [Field L] [NumberField L] (η : Formalism.L2.Host.HChar L) (v : HeightOneSpectrum (𝓞 L)) :
     ((η.val v : ℂˣ) : ℂ) * ((η.val v : ℂˣ) : ℂ) = η.valTw (1 / 2) v ^ 2 * ((Ideal.absNorm v.asIdeal : ℕ) : ℂ) := by
   have h0 : ((Ideal.absNorm v.asIdeal : ℕ) : ℂ) ≠ 0 := by
     rw [Nat.cast_ne_zero, Ne, Ideal.absNorm_eq_zero_iff]
@@ -413,10 +413,10 @@ theorem val_sq_eq {L : Type} [Field L] [NumberField L] (η : HChar L) (v : Heigh
   have h1 : (((Ideal.absNorm v.asIdeal : ℕ) : ℂ) ^ (-(((1 / 2 : ℝ)) : ℂ))) ^ 2 * ((Ideal.absNorm v.asIdeal : ℕ) : ℂ) = 1 := by
     rw [sq, ← Complex.cpow_add _ _ h0, show -(((1 / 2 : ℝ)) : ℂ) + -(((1 / 2 : ℝ)) : ℂ) = -1 by push_cast; ring,
       Complex.cpow_neg_one, inv_mul_cancel₀ h0]
-  unfold HChar.valTw
+  unfold Formalism.L2.Host.HChar.valTw
   rw [mul_pow, mul_assoc, h1, mul_one, sq]
 
-theorem chiId_mem {L : Type} [Field L] [NumberField L] (χ : HChar L) (M : Subfield ℂ)
+theorem chiId_mem {L : Type} [Field L] [NumberField L] (χ : Formalism.L2.Host.HChar L) (M : Subfield ℂ)
     (h : ∀ w, ((χ.val w : ℂˣ) : ℂ) ∈ M) (𝔞 : Submodule (𝓞 L) L) : chiId χ 𝔞 ∈ M := by
   unfold chiId
   refine finprod_induction (fun u : ℂˣ => (u : ℂ) ∈ M) (one_mem M) (fun a b ha hb => mul_mem ha hb) fun w => ?_
@@ -436,7 +436,7 @@ theorem chi_values : ∀ (B : Base) (X : PreX B.toPre) (I : ColIn B X), I.Ok →
         (by rw [← Units.val_pow_eq_pow_val, h1, Units.val_one])
     have h3 : I.C.eta.valTw (1 / 2) w ∈ B.embLL.fieldRange := ⟨_, h.ch_tied.etaVal w⟩
     have h4 : I.C.chiPsi.val w = (I.C.chiPsi * (I.C.eta * I.C.eta)⁻¹).val w * (I.C.eta.val w * I.C.eta.val w) := by
-      rw [HChar.val_mul, HChar.val_inv, HChar.val_mul, inv_mul_cancel_right]
+      rw [Formalism.L2.Host.HChar.val_mul, Formalism.L2.Host.HChar.val_inv, Formalism.L2.Host.HChar.val_mul, inv_mul_cancel_right]
     rw [h4, Units.val_mul, Units.val_mul (I.C.eta.val w), val_sq_eq]
     exact mul_mem h2 (mul_mem (pow_mem h3 2) (natCast_mem _ _))
   exact ⟨key, fun 𝔞 => chiId_mem _ _ key 𝔞⟩

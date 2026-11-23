@@ -344,9 +344,9 @@ theorem ordSub_detSub_stdL (N : ℕ) (w : HeightOneSpectrum (𝓞 H.E)) : ordSub
   have h := ordSub_span_singleton w (1 : H.Eˣ)
   rw [Units.val_one] at h
   rw [h]
-  simp [ordF]
+  simp [Formalism.L2.Host.ordF]
 
-theorem tildeD_eq_chiId : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (χ : HChar H.E), IsChiPsi H χ → ∀ (N : ℕ) (M : Submodule (𝓞 H.E) (Fin N → H.E)), Submodule.IsLattice H.E M → ∀ x : DtT H, (QuotientGroup.mk x : DtT H ⧸ UOT H) = relDetT H N (Th.stdL H N) M → ((tildeD H χ x : ℂˣ) : ℂ) = chiId χ (Th.detId H (Th.stdL H N) M) := by
+theorem tildeD_eq_chiId : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (χ : Formalism.L2.Host.HChar H.E), Formalism.L2.Host.IsChiPsi H χ → ∀ (N : ℕ) (M : Submodule (𝓞 H.E) (Fin N → H.E)), Submodule.IsLattice H.E M → ∀ x : DtT H, (QuotientGroup.mk x : DtT H ⧸ UOT H) = relDetT H N (Th.stdL H N) M → ((tildeD H χ x : ℂˣ) : ℂ) = chiId χ (Th.detId H (Th.stdL H N) M) := by
   intro R H χ hχ N M hM x hx
   have hK : KD H ≤ (χ.1.comp (finPartI H.E)).ker :=
     (KerDet.kernel_open_and_factor R H).2.2.2 χ hχ.triv (fun v y hy _ => hχ.unr v y hy) fun v _ => hχ.unr v
@@ -358,7 +358,7 @@ theorem tildeD_eq_chiId : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (�
     · have hz : ∀ w, ordSub w (detSub M) = 0 := by
         intro w
         unfold ordSub
-        have he : {n : ℤ | ∃ k : H.Eˣ, (k : H.E) ∈ detSub M ∧ ordF w k = n} = ∅ := by
+        have he : {n : ℤ | ∃ k : H.Eˣ, (k : H.E) ∈ detSub M ∧ Formalism.L2.Host.ordF w k = n} = ∅ := by
           ext n
           simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
           rintro ⟨k, hk, _⟩
@@ -374,7 +374,7 @@ theorem tildeD_eq_chiId : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (�
   congr 1
   simp only [ordSub_detSub_stdL, sub_zero]
   have h2 : Function.HasFiniteMulSupport fun w : HeightOneSpectrum (𝓞 H.E) =>
-      localIdele H.E w (atFin w (unif w)) ^ (ordSub w (detSub M)).toNat := by
+      Neutral.B1.localIdele H.E w (Formalism.L2.Host.atFin w (Formalism.L2.Host.unif w)) ^ (ordSub w (detSub M)).toNat := by
     refine hfin.subset fun w hw h0 => hw ?_
     simp only [h0, Int.toNat_zero, pow_zero]
   refine ((χ.1.comp (finPartI H.E)).map_finprod h2).trans (finprod_congr fun w => ?_)

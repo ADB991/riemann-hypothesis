@@ -323,8 +323,8 @@ theorem exists_move (hσ : Formalism.L2.PjFree.GoodEmb c σ) (hU : IsUnf U) (hpr
       simp
   have hy : lact gm x.1 ∈ (U.X k).dom := (AR.Up.PairUnfoldPf.lact_mem_dom_iff (U.X k) hΓ _).2 x.2
   obtain ⟨idx, -, -, hper⟩ := GlobalTheory.ArcFlow.exists_idx Uw hσ hU k
-  have key : ∀ w ∈ (U.X k).Λ, ∀ j, perFr (U.X k) x'.1 w (relab c σ (Uw.e j).1) (Uw.e j).2 =
-      perFr (U.X k) (lact gm x.1) w (relab c σ (Uw.e j).1) (Uw.e j).2 := fun w hw j => by
+  have key : ∀ w ∈ (U.X k).Λ, ∀ j, perFr (U.X k) x'.1 w (Formalism.L2.PjFree.relab c σ (Uw.e j).1) (Uw.e j).2 =
+      perFr (U.X k) (lact gm x.1) w (Formalism.L2.PjFree.relab c σ (Uw.e j).1) (Uw.e j).2 := fun w hw j => by
     obtain ⟨a, rfl⟩ := hs w hw
     obtain ⟨a, rfl⟩ := gam.surjective a
     rw [← Uw.Pm_eq, hP, hg, GlobalTheory.PerGam.perFr_lact _ gm hgm, Uw.Pm_eq]

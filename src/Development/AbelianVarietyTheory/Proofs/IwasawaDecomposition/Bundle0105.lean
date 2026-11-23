@@ -79,19 +79,19 @@ theorem rat_points : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R), IsRati
       rw [← bridge_star_holds R H]
       exact z.2.2
   have hwd : ∀ (z : H.E) (k k' : (H.E)ˣ), z * H.conj (k : H.E) = k → z * H.conj (k' : H.E) = k' →
-      (QuotientGroup.mk (diagUnits H.E k) : DtT H) = QuotientGroup.mk (diagUnits H.E k') := by
+      (QuotientGroup.mk (Neutral.B1.diagUnits H.E k) : DtT H) = QuotientGroup.mk (Neutral.B1.diagUnits H.E k') := by
     intro z k k' h h'
     have hfix := fixed_of_two (H.conj : H.E →+* H.E) z k k' h h'
     have hF : ((k⁻¹ * k' : (H.E)ˣ) : H.E) ∈ H.F :=
       (IsCMField.complexConj_eq_self_iff H.E _).1 ((hc _).trans hfix)
     have hne : (⟨_, hF⟩ : H.F) ≠ 0 := fun e => (k⁻¹ * k').ne_zero (congrArg Subtype.val e)
-    have e : upF H.F (Units.mk0 _ hne) = k⁻¹ * k' := Units.ext rfl
+    have e : Formalism.L2.Host.upF H.F (Units.mk0 _ hne) = k⁻¹ * k' := Units.ext rfl
     have := (_root_.GlobalTheory.Mem.KerDet.kernel_open_and_factor R H).2.2.1 (Units.mk0 _ hne)
     rw [e, map_mul, map_inv] at this
     exact QuotientGroup.eq.2 this
   refine ⟨isRationalUnitaryDeterminantMap_rationalUnitaryToDeterminants H ?_, h90⟩
   choose s hs using h90
-  refine ⟨MonoidHom.mk' (fun z => QuotientGroup.mk (diagUnits H.E (s z))) fun z z' => ?_,
+  refine ⟨MonoidHom.mk' (fun z => QuotientGroup.mk (Neutral.B1.diagUnits H.E (s z))) fun z z' => ?_,
     fun k z h => hwd z k (s z) h (hs z)⟩
   rw [← QuotientGroup.mk_mul, ← map_mul]
   refine hwd ((z * z' : unitary H.E) : H.E) _ _ (hs _) ?_
@@ -123,17 +123,17 @@ theorem exists_roots (n : ℕ) (hn : 0 < n) :
     fun x hx => IntermediateField.subset_adjoin _ _ hx⟩
   exact IsIntegral.of_pow hn (by rw [show x ^ n = 1 from hx]; exact isIntegral_one)
 
-theorem valuesIn_mono {L : Type} [Field L] [NumberField L] {χ : HChar L} {s : ℝ} {M N : IntermediateField ℚ ℂ}
+theorem valuesIn_mono {L : Type} [Field L] [NumberField L] {χ : Formalism.L2.Host.HChar L} {s : ℝ} {M N : IntermediateField ℚ ℂ}
     (h : χ.ValuesIn s M.val.toRingHom) (hMN : M ≤ N) : χ.ValuesIn s N.val.toRingHom := fun v hv => by
   obtain ⟨y, hy⟩ := h v hv
   exact ⟨⟨y, hMN y.2⟩, hy⟩
 
-theorem exists_of_order {L : Type} [Field L] [NumberField L] {χ : HChar L} (h : ∃ n : ℕ, 0 < n ∧ χ.OrderDvd n) :
+theorem exists_of_order {L : Type} [Field L] [NumberField L] {χ : Formalism.L2.Host.HChar L} (h : ∃ n : ℕ, 0 < n ∧ χ.OrderDvd n) :
     ∃ M : IntermediateField ℚ ℂ, FiniteDimensional ℚ M ∧ χ.ValuesIn 0 M.val.toRingHom := by
   obtain ⟨n, hn, ho⟩ := h
   obtain ⟨N, hN, hr⟩ := exists_roots n hn
-  refine ⟨N, hN, fun v _ => ⟨⟨(χ.val v : ℂ), hr _ ?_⟩, by simp [HChar.valTw]⟩⟩
-  have h1 : ∀ x, (χ.1 x) ^ n = 1 := fun x => congrArg (fun ξ : HChar L => ξ.1 x) ho
+  refine ⟨N, hN, fun v _ => ⟨⟨(χ.val v : ℂ), hr _ ?_⟩, by simp [Formalism.L2.Host.HChar.valTw]⟩⟩
+  have h1 : ∀ x, (χ.1 x) ^ n = 1 := fun x => congrArg (fun ξ : Formalism.L2.Host.HChar L => ξ.1 x) ho
   have h2 : χ.val v ^ n = 1 := h1 _
   rw [← Units.val_pow_eq_pow_val, h2, Units.val_one]
 
@@ -146,7 +146,7 @@ open Classical in
 theorem frame_values : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (e : Fin R.m → R.Psi → ℚ) (C : HFrame H e), (∀ j τ, ∃ z : ℤ, e j τ = z) → ∃ M : IntermediateField ℚ ℂ, FiniteDimensional ℚ M ∧ IsGalois ℚ M ∧ (∀ g x, H.emb g x ∈ M) ∧ (∀ j, (C.mu0 j).ValuesIn 0 M.val.toRingHom) ∧ C.eta.ValuesIn (1 / 2) M.val.toRingHom ∧ C.chiPsi.ValuesIn 0 M.val.toRingHom ∧ C.del.ValuesIn 0 M.val.toRingHom ∧ C.del'.ValuesIn 0 M.val.toRingHom ∧ ∀ k a, ((C.W.om k a : ℂˣ) : ℂ) ∈ M := by
   intro R H e C he
   obtain ⟨c, -, hcm, -⟩ := GlobalTheory.Mem.HostCM.host_cm R H
-  have alg := _root_.GlobalTheory.Mem.ValAlg.values_in_numberField H.F H.E c (R.Psi) (embPsi H) hcm
+  have alg := _root_.GlobalTheory.Mem.ValAlg.values_in_numberField H.F H.E c (R.Psi) (Formalism.L2.Host.embPsi H) hcm
   choose Me hMe hMe' using fun φ : H.E →+* ℂ => exists_of_emb φ
   have hmu : ∀ j, ∃ M : IntermediateField ℚ ℂ, FiniteDimensional ℚ M ∧ (C.mu0 j).ValuesIn 0 M.val.toRingHom := by
     intro j
@@ -180,7 +180,7 @@ end
 section
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.FrobeniusOrbits Neutral.B1 ReciprocityTheory.Neutral.Bridge.HCFR Formalism.L2.Host GlobalTheory.Mem.Chr Classical
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.exists_heckeChar_trivOn_realSubfield_infinityType : ∀ (F L : Type) [Field F] [NumberField F] [Field L] [NumberField L] [Algebra F L] (c : L ≃ₐ[F] L) (I : Type) [Fintype I] (φ : I → L →+* ℂ), CMData F c φ → ∀ (e : I → ℤ) (S : Finset (HeightOneSpectrum (𝓞 L))) (θ0 : ∀ v : HeightOneSpectrum (𝓞 L), (𝓞 L ⧸ v.asIdeal)ˣ →* ℂˣ), (∀ w ∈ S, ∀ w', ConjPl c.toRingEquiv w w' → w' ∉ S) → (∀ ζ : (𝓞 L)ˣ, (∃ m : ℕ, 0 < m ∧ ((ζ : 𝓞 L) : L) ^ m = 1) → (∏ i, φ i ((ζ : 𝓞 L) : L) ^ (-e i)) * ∏ w ∈ S, ((θ0 w (Units.map (Ideal.Quotient.mk w.asIdeal).toMonoidHom ζ) : ℂˣ) : ℂ) = 1) → ∃ χ : HChar L, χ.IsUnitary ∧ χ.TrivOn F ∧ χ.HasInf φ (fun i => -2 * e i) ∧ (∀ v, χ.TameAt v) ∧ (∀ v, v ∉ S → (∀ w ∈ S, ¬ ConjPl c.toRingEquiv w v) → χ.UnrAt v) ∧ (∀ w ∈ S, ∀ (k : Lˣ) (y : 𝓞 L) (b : (𝓞 L ⧸ w.asIdeal)ˣ), (k : L) = (y : L) → (b : 𝓞 L ⧸ w.asIdeal) = Ideal.Quotient.mk w.asIdeal y → χ.locK w k = θ0 w b) ∧ (∀ w ∈ S, ∀ n : ℕ, ((∀ x, IsUnitAt w x → χ.loc w x ^ n = 1) ↔ θ0 w ^ n = 1) ∧ ∀ w', ConjPl c.toRingEquiv w w' → ((∀ x, IsUnitAt w' x → χ.loc w' x ^ n = 1) ↔ θ0 w ^ n = 1)) := by
+theorem _root_.GlobalTheory.T.exists_heckeChar_trivOn_realSubfield_infinityType : ∀ (F L : Type) [Field F] [NumberField F] [Field L] [NumberField L] [Algebra F L] (c : L ≃ₐ[F] L) (I : Type) [Fintype I] (φ : I → L →+* ℂ), CMData F c φ → ∀ (e : I → ℤ) (S : Finset (HeightOneSpectrum (𝓞 L))) (θ0 : ∀ v : HeightOneSpectrum (𝓞 L), (𝓞 L ⧸ v.asIdeal)ˣ →* ℂˣ), (∀ w ∈ S, ∀ w', ConjPl c.toRingEquiv w w' → w' ∉ S) → (∀ ζ : (𝓞 L)ˣ, (∃ m : ℕ, 0 < m ∧ ((ζ : 𝓞 L) : L) ^ m = 1) → (∏ i, φ i ((ζ : 𝓞 L) : L) ^ (-e i)) * ∏ w ∈ S, ((θ0 w (Units.map (Ideal.Quotient.mk w.asIdeal).toMonoidHom ζ) : ℂˣ) : ℂ) = 1) → ∃ χ : Formalism.L2.Host.HChar L, χ.IsUnitary ∧ χ.TrivOn F ∧ χ.HasInf φ (fun i => -2 * e i) ∧ (∀ v, χ.TameAt v) ∧ (∀ v, v ∉ S → (∀ w ∈ S, ¬ ConjPl c.toRingEquiv w v) → χ.UnrAt v) ∧ (∀ w ∈ S, ∀ (k : Lˣ) (y : 𝓞 L) (b : (𝓞 L ⧸ w.asIdeal)ˣ), (k : L) = (y : L) → (b : 𝓞 L ⧸ w.asIdeal) = Ideal.Quotient.mk w.asIdeal y → χ.locK w k = θ0 w b) ∧ (∀ w ∈ S, ∀ n : ℕ, ((∀ x, Formalism.L2.Host.IsUnitAt w x → χ.loc w x ^ n = 1) ↔ θ0 w ^ n = 1) ∧ ∀ w', ConjPl c.toRingEquiv w w' → ((∀ x, Formalism.L2.Host.IsUnitAt w' x → χ.loc w' x ^ n = 1) ↔ θ0 w ^ n = 1)) := by
   first | exact @GlobalTheory.Mem.Chr.AntiExist.exists_hecke_trivOn | exact GlobalTheory.Mem.Chr.AntiExist.exists_hecke_trivOn | (intros; apply GlobalTheory.Mem.Chr.AntiExist.exists_hecke_trivOn <;> assumption)
 end
 
@@ -197,7 +197,7 @@ section General
 variable {L : Type} [Field L] [NumberField L]
 
 
-theorem trivOn_pow {F : Type} [Field F] [NumberField F] [Algebra F L] {χ : HChar L} (h : χ.TrivOn F) (n : ℕ) :
+theorem trivOn_pow {F : Type} [Field F] [NumberField F] [Algebra F L] {χ : Formalism.L2.Host.HChar L} (h : χ.TrivOn F) (n : ℕ) :
     (χ ^ n).TrivOn F := by
   induction n with
   | zero => rw [pow_zero, ← mul_inv_cancel χ]; exact h.mul h.inv
@@ -222,11 +222,11 @@ namespace GlobalTheory.Mem.ChiPsiExist
 
 
 open Classical in
-theorem exists_chiPsi : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R), ∃ χ : HChar H.E, IsChiPsi H χ := by
+theorem exists_chiPsi : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R), ∃ χ : Formalism.L2.Host.HChar H.E, Formalism.L2.Host.IsChiPsi H χ := by
   intro R H
   obtain ⟨c, -, hcm, -⟩ := GlobalTheory.Mem.HostCM.host_cm R H
   obtain ⟨χ, hu, ht, hi, -, hunr, -⟩ :=
-    GlobalTheory.Mem.Chr.AntiExist.exists_hecke_trivOn H.F H.E c (R.Psi) (embPsi H) hcm (fun _ => -1) ∅ (fun _ => 1)
+    GlobalTheory.Mem.Chr.AntiExist.exists_hecke_trivOn H.F H.E c (R.Psi) (Formalism.L2.Host.embPsi H) hcm (fun _ => -1) ∅ (fun _ => 1)
       (fun w hw => absurd hw (Finset.notMem_empty w))
       (by
         intro ζ hζ
@@ -241,7 +241,7 @@ end
 section
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.FrobeniusOrbits Neutral.B1 ReciprocityTheory.Neutral.Bridge.HCFR Formalism.L2.Host GlobalTheory.Mem.Chr Classical
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.exists_unramified_resEta_alt : ∀ (F L : Type) [Field F] [NumberField F] [Field L] [NumberField L] [Algebra F L] (c : L ≃ₐ[F] L) (I : Type) [Fintype I] (φ : I → L →+* ℂ), CMData F c φ → (∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), ordF P (upF F k) = ordF (P.under (𝓞 F)) k) → (∀ a : Fˣ, (∏ᶠ v : HeightOneSpectrum (𝓞 F), etaFin (L := L) F v a) * ∏ w : InfinitePlace F, etaInf F w a = 1) → ∀ (n : I → ℤ), (∀ i, Odd (n i)) → (∀ ζ : L, (∃ m : ℕ, 0 < m ∧ ζ ^ m = 1) → ∃ δ : Lˣ, (δ : L) = ζ * c (δ : L) ∧ (∀ P : HeightOneSpectrum (𝓞 L), (aboveF (L := L) F (P.under (𝓞 F))).card = 1 → Even (ordF P δ)) ∧ ∏ i, (φ i (δ : L) / ((‖φ i (δ : L)‖ : ℝ) : ℂ)) ^ n i = 1) → ∃ χ : HChar L, χ.IsUnitary ∧ (∀ v, χ.UnrAt v) ∧ χ.ResEta F ∧ χ.HasInf φ n := by
+theorem _root_.GlobalTheory.T.exists_unramified_resEta_alt : ∀ (F L : Type) [Field F] [NumberField F] [Field L] [NumberField L] [Algebra F L] (c : L ≃ₐ[F] L) (I : Type) [Fintype I] (φ : I → L →+* ℂ), CMData F c φ → (∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), Formalism.L2.Host.ordF P (Formalism.L2.Host.upF F k) = Formalism.L2.Host.ordF (P.under (𝓞 F)) k) → (∀ a : Fˣ, (∏ᶠ v : HeightOneSpectrum (𝓞 F), Formalism.L2.Host.etaFin (L := L) F v a) * ∏ w : InfinitePlace F, Formalism.L2.Host.etaInf F w a = 1) → ∀ (n : I → ℤ), (∀ i, Odd (n i)) → (∀ ζ : L, (∃ m : ℕ, 0 < m ∧ ζ ^ m = 1) → ∃ δ : Lˣ, (δ : L) = ζ * c (δ : L) ∧ (∀ P : HeightOneSpectrum (𝓞 L), (Formalism.L2.Host.aboveF (L := L) F (P.under (𝓞 F))).card = 1 → Even (Formalism.L2.Host.ordF P δ)) ∧ ∏ i, (φ i (δ : L) / ((‖φ i (δ : L)‖ : ℝ) : ℂ)) ^ n i = 1) → ∃ χ : Formalism.L2.Host.HChar L, χ.IsUnitary ∧ (∀ v, χ.UnrAt v) ∧ χ.ResEta F ∧ χ.HasInf φ n := by
   first | exact @GlobalTheory.Mem.EtaExt.exists_unramified_resEta | exact GlobalTheory.Mem.EtaExt.exists_unramified_resEta | (intros; apply GlobalTheory.Mem.EtaExt.exists_unramified_resEta <;> assumption)
 end
 
@@ -324,7 +324,7 @@ end
 section
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.FrobeniusOrbits Neutral.B1 ReciprocityTheory.Neutral.Bridge.HCFR Formalism.L2.Host GlobalTheory.Mem.Chr Classical
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.heckeChar_finiteOrder_of_trivial_at_infinity : ∀ (L : Type) [Field L] [NumberField L] (χ : HChar L), (∀ k, χ.inf k = 1) → ∃ n : ℕ, 0 < n ∧ χ.OrderDvd n := by
+theorem _root_.GlobalTheory.T.heckeChar_finiteOrder_of_trivial_at_infinity : ∀ (L : Type) [Field L] [NumberField L] (χ : Formalism.L2.Host.HChar L), (∀ k, χ.inf k = 1) → ∃ n : ℕ, 0 < n ∧ χ.OrderDvd n := by
   first | exact @GlobalTheory.Mem.FinOrder.finite_order_of_inf_eq_one | exact GlobalTheory.Mem.FinOrder.finite_order_of_inf_eq_one | (intros; apply GlobalTheory.Mem.FinOrder.finite_order_of_inf_eq_one <;> assumption)
 end
 
@@ -337,13 +337,13 @@ open NumberField IsDedekindDomain Neutral.B1 ReciprocityTheory.Neutral.Bridge.HC
 
 namespace GlobalTheory.ProdLocUnit
 
-theorem prod_locUnit_eq_one : ∀ (F : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] (B : Type) [CommGroup B] (ψ : Ideles F →* B), IsOpen (ψ.ker : Set (Ideles F)) → (∀ k : Fˣ, ψ (diagUnits F k) = 1) → ∀ (a : Fˣ) (T : Finset (HeightOneSpectrum (𝓞 F))), (∀ v ∉ T, ψ (locUnit F v a) = 1) → ∏ v ∈ T, ψ (locUnit F v a) = 1 := by
+theorem prod_locUnit_eq_one : ∀ (F : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] (B : Type) [CommGroup B] (ψ : Neutral.B1.Ideles F →* B), IsOpen (ψ.ker : Set (Neutral.B1.Ideles F)) → (∀ k : Fˣ, ψ (Neutral.B1.diagUnits F k) = 1) → ∀ (a : Fˣ) (T : Finset (HeightOneSpectrum (𝓞 F))), (∀ v ∉ T, ψ (locUnit F v a) = 1) → ∏ v ∈ T, ψ (locUnit F v a) = 1 := by
   intro F _ _ _ B _ ψ hker hd a T hT
   classical
   letI : TopologicalSpace B := ⊥
   haveI : DiscreteTopology B := ⟨rfl⟩
   have hψ : Continuous ψ := continuous_of_isOpen_ker' ψ hker
-  let ι : (InfiniteAdeleRing F)ˣ →* Ideles F :=
+  let ι : (InfiniteAdeleRing F)ˣ →* Neutral.B1.Ideles F :=
     Units.map (MonoidHom.inl (InfiniteAdeleRing F) (FiniteAdeleRing (𝓞 F) F))
   have hι : Continuous ι := Continuous.units_map _ (continuous_id.prodMk continuous_const)
   have hinf : ∀ u, ψ (ι u) = 1 := by
@@ -353,12 +353,12 @@ theorem prod_locUnit_eq_one : ∀ (F : Type) [Field F] [NumberField F] [_root_.N
       hψ.comp (hι.comp (GlobalTheory.HeckeInfTriv.continuous_infUnit F))
     have e := PreconnectedSpace.constant inferInstance hc (x := y) (y := 1)
     rw [e, map_one, map_one, map_one]
-  let P : Ideles F →* (InfiniteAdeleRing F)ˣ :=
+  let P : Neutral.B1.Ideles F →* (InfiniteAdeleRing F)ˣ :=
     Units.map (MonoidHom.fst (InfiniteAdeleRing F) (FiniteAdeleRing (𝓞 F) F))
-  let u : (InfiniteAdeleRing F)ˣ := P (diagUnits F a)
+  let u : (InfiniteAdeleRing F)ˣ := P (Neutral.B1.diagUnits F a)
   let av : ∀ v : HeightOneSpectrum (𝓞 F), (v.adicCompletion F)ˣ :=
     fun v => Units.map (algebraMap F (v.adicCompletion F)).toMonoidHom a
-  let z : Ideles F := diagUnits F a * (ι u)⁻¹ * (∏ v ∈ T, locUnit F v a)⁻¹
+  let z : Neutral.B1.Ideles F := Neutral.B1.diagUnits F a * (ι u)⁻¹ * (∏ v ∈ T, locUnit F v a)⁻¹
   have hPι : P (ι u) = u := Units.ext rfl
   have hPl : ∀ v, P (locUnit F v a) = 1 := fun v => Units.ext rfl
   have hz1 : (z : AdeleRing (𝓞 F) F).1 = 1 := by
@@ -366,7 +366,7 @@ theorem prod_locUnit_eq_one : ∀ (F : Type) [Field F] [NumberField F] [_root_.N
       simp only [z, map_mul, map_inv, map_prod, hPι, hPl, Finset.prod_const_one, inv_one, mul_one]
       exact mul_inv_cancel u
     exact congrArg Units.val h
-  have hev_d : ∀ v, Units.map (GlobalTheory.Mem.LocTriv.ev v) (diagUnits F a) = av v := fun v => Units.ext rfl
+  have hev_d : ∀ v, Units.map (GlobalTheory.Mem.LocTriv.ev v) (Neutral.B1.diagUnits F a) = av v := fun v => Units.ext rfl
   have hev_i : ∀ v, Units.map (GlobalTheory.Mem.LocTriv.ev v) (ι u) = 1 := fun v => Units.ext rfl
   have hev_l : ∀ v w, Units.map (GlobalTheory.Mem.LocTriv.ev v) (locUnit F w a) = if w = v then av v else 1 := by
     intro v w
@@ -375,7 +375,7 @@ theorem prod_locUnit_eq_one : ∀ (F : Type) [Field F] [NumberField F] [_root_.N
     · subst h
       exact GlobalTheory.Mem.LocTriv.ev_local_self w _
     · exact GlobalTheory.Mem.LocTriv.ev_local_ne (Ne.symm h) _
-  have hzl : ∀ v, ψ (localIdele F v (Units.map (GlobalTheory.Mem.LocTriv.ev v) z)) = 1 := by
+  have hzl : ∀ v, ψ (Neutral.B1.localIdele F v (Units.map (GlobalTheory.Mem.LocTriv.ev v) z)) = 1 := by
     intro v
     have e : Units.map (GlobalTheory.Mem.LocTriv.ev v) z = av v * (∏ w ∈ T, if w = v then av v else 1)⁻¹ := by
       simp only [z, map_mul, map_inv, map_prod, hev_d, hev_i, hev_l, inv_one, mul_one]

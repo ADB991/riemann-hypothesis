@@ -269,7 +269,7 @@ theorem eig_flat {V V' : Type} [CommRing V] [IsNoetherianRing V] [CommRing V'] [
 
 theorem univChart_iso {S : Type} [CommRing S] {G G' : Over (Spec (CommRingCat.of S))} [GrpObj G] [GrpObj G']
     (e : G' ≅ G) [IsMonHom e.hom] {n : ℕ}
-    {x : ∀ m : ℕ, sp (R₀ := S) (JetR S (Fin n) m) ⟶ G} (hx : IsUnivChart G n x) :
+    {x : ∀ m : ℕ, sp (R₀ := S) (ReciprocityTheory.ChartRestriction.G.Chart.JetR S (Fin n) m) ⟶ G} (hx : IsUnivChart G n x) :
     IsUnivChart G' n (fun m => x m ≫ e.inv) := by
   have one : ∀ T : Over (Spec (CommRingCat.of S)), (1 : T ⟶ G') ≫ e.hom = 1 := fun T =>
     map_one (IsMonHom.monoidHom e.hom T)
@@ -284,7 +284,7 @@ theorem univChart_iso {S : Type} [CommRing S] {G G' : Over (Spec (CommRingCat.of
 theorem exists_charts {R S : Type} [CommRing R] [IsLocalRing R] [CommRing S] {G₀ : Over (Sp R)} [GrpObj G₀]
     [Smooth G₀.hom] {G : Over (Sp S)} [GrpObj G] (f : R →+* S) {φ : G.left ⟶ G₀.left}
     (h : IsGrpPullback G G₀ (spMap f) φ) :
-    ∃ (n : ℕ) (x : ∀ m : ℕ, sp (R₀ := R) (JetR R (Fin n) m) ⟶ G₀) (x' : ∀ m : ℕ, sp (R₀ := S) (JetR S (Fin n) m) ⟶ G),
+    ∃ (n : ℕ) (x : ∀ m : ℕ, sp (R₀ := R) (ReciprocityTheory.ChartRestriction.G.Chart.JetR R (Fin n) m) ⟶ G₀) (x' : ∀ m : ℕ, sp (R₀ := S) (ReciprocityTheory.ChartRestriction.G.Chart.JetR S (Fin n) m) ⟶ G),
       IsUnivChart G₀ n x ∧ IsUnivChart G n x' ∧ ∀ c : Fin n → R,
         (tvec (x := x') (f ∘ c)).left ≫ φ = spMap (Formalism.L2.Pj.dualMap f) ≫ (tvec (x := x) c).left := by
   let _ := f.toAlgebra

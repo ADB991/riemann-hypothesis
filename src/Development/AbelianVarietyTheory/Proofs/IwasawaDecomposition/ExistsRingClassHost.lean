@@ -92,7 +92,7 @@ theorem tame {l : ℕ} (hl : l.Prime) (hB : ∀ x : B, ∃ n : ℕ, x ^ (l ^ n) 
   have := pow_gcd_eq_one.2 ⟨hn, hk'⟩
   rwa [(hc.pow n k).gcd_eq_one, pow_one] at this
 
-theorem map_finPartI [_root_.NumberField.IsTotallyComplex E] [Finite B] (ψ : Ideles E →* B) (a : Ideles E) :
+theorem map_finPartI [_root_.NumberField.IsTotallyComplex E] [Finite B] (ψ : Neutral.B1.Ideles E →* B) (a : Neutral.B1.Ideles E) :
     ψ (finPartI E a) = ψ a := by
   have hm : 0 < Nat.card B := Nat.card_pos
   have h2 : ∀ w : InfinitePlace E, ∃ y : w.Completion, y ^ Nat.card B = (a : AdeleRing (𝓞 E) E).1 w := fun w => by
@@ -110,9 +110,9 @@ theorem map_finPartI [_root_.NumberField.IsTotallyComplex E] [Finite B] (ψ : Id
   conv_rhs => rw [← e, map_mul, map_pow, pow_card_eq_one', one_mul]
 
 theorem map_congr_unit [_root_.NumberField.IsTotallyComplex E] [Finite B] {l : ℕ} (hl : l.Prime) (hB : ∀ x : B, ∃ n : ℕ, x ^ (l ^ n) = 1)
-    (Q : Finset (HeightOneSpectrum (𝓞 E))) (ψ : Ideles E →* B) (hψ : IsOpen (ψ.ker : Set (Ideles E)))
-    (hu : ∀ v, v ∉ Q ∨ v ∈ placesOver E l → ∀ x, IsUnitAt v x → ψ (localIdele E v x) = 1)
-    {a : Ideles E} (ha : a ∈ unitIdl E) (hQ : ∀ v ∈ Q, Valued.v ((a : AdeleRing (𝓞 E) E).2 v - 1) < 1) :
+    (Q : Finset (HeightOneSpectrum (𝓞 E))) (ψ : Neutral.B1.Ideles E →* B) (hψ : IsOpen (ψ.ker : Set (Neutral.B1.Ideles E)))
+    (hu : ∀ v, v ∉ Q ∨ v ∈ placesOver E l → ∀ x, Formalism.L2.Host.IsUnitAt v x → ψ (Neutral.B1.localIdele E v x) = 1)
+    {a : Neutral.B1.Ideles E} (ha : a ∈ unitIdl E) (hQ : ∀ v ∈ Q, Valued.v ((a : AdeleRing (𝓞 E) E).2 v - 1) < 1) :
     ψ a = 1 := by
   rw [← map_finPartI]
   refine (ψ.ker.isClosed_of_isOpen hψ).mem_of_tendsto
@@ -121,25 +121,25 @@ theorem map_congr_unit [_root_.NumberField.IsTotallyComplex E] [Finite B] {l : �
   by_cases h : v ∉ Q ∨ v ∈ placesOver E l
   · exact hu v h _ (ha v)
   · rw [not_or, not_not] at h
-    exact tame hl hB h.2 (ψ.comp (localIdele E v)) (hψ.preimage (Determ.continuous_localIdele v)) _ (hQ v h.1)
+    exact tame hl hB h.2 (ψ.comp (Neutral.B1.localIdele E v)) (hψ.preimage (Determ.continuous_localIdele v)) _ (hQ v h.1)
 
 def red (v : HeightOneSpectrum (𝓞 E)) : unitIdl E →* IsLocalRing.ResidueField (v.adicCompletionIntegers E) where
-  toFun a := IsLocalRing.residue _ ⟨((a : Ideles E) : AdeleRing (𝓞 E) E).2 v, (a.2 v).le⟩
+  toFun a := IsLocalRing.residue _ ⟨((a : Neutral.B1.Ideles E) : AdeleRing (𝓞 E) E).2 v, (a.2 v).le⟩
   map_one' := map_one (IsLocalRing.residue _)
   map_mul' a b := by
     rw [← map_mul]
     exact congrArg _ (Subtype.ext rfl)
 
 theorem red_eq_one {v : HeightOneSpectrum (𝓞 E)} {a : unitIdl E} (h : red v a = 1) :
-    Valued.v (((a : Ideles E) : AdeleRing (𝓞 E) E).2 v - 1) < 1 := by
+    Valued.v (((a : Neutral.B1.Ideles E) : AdeleRing (𝓞 E) E).2 v - 1) < 1 := by
   have h1 : IsLocalRing.residue (v.adicCompletionIntegers E)
-      (⟨((a : Ideles E) : AdeleRing (𝓞 E) E).2 v, (a.2 v).le⟩ - 1) = 0 := by
+      (⟨((a : Neutral.B1.Ideles E) : AdeleRing (𝓞 E) E).2 v, (a.2 v).le⟩ - 1) = 0 := by
     rw [map_sub, map_one, sub_eq_zero]; exact h
   rw [IsLocalRing.residue_eq_zero_iff] at h1
   exact (Valuation.mem_maximalIdeal_iff _ _).1 h1
 
-theorem finiteIndex_of_congr (Q : Finset (HeightOneSpectrum (𝓞 E))) (K : Subgroup (Ideles E))
-    (hD : ∀ k, diagUnits E k ∈ K)
+theorem finiteIndex_of_congr (Q : Finset (HeightOneSpectrum (𝓞 E))) (K : Subgroup (Neutral.B1.Ideles E))
+    (hD : ∀ k, Neutral.B1.diagUnits E k ∈ K)
     (hU : ∀ a ∈ unitIdl E, (∀ v ∈ Q, Valued.v ((a : AdeleRing (𝓞 E) E).2 v - 1) < 1) → a ∈ K) :
     K.FiniteIndex := by
   have := fun v : Q => Formalism.UG.P.glint_finite_residueField (F := E) v.1
@@ -150,7 +150,7 @@ theorem finiteIndex_of_congr (Q : Finset (HeightOneSpectrum (𝓞 E))) (K : Subg
     exact congrFun (congrArg Units.val (MonoidHom.mem_ker.1 ha)) ⟨v, hv⟩
   have := GlobalTheory.Mem.UnitIndex.finiteIndex_unitIdl_sup E
   have h3 : (unitIdl E ⊔ K).FiniteIndex :=
-    Subgroup.finiteIndex_of_le (H := unitIdl E ⊔ (diagUnits E).range)
+    Subgroup.finiteIndex_of_le (H := unitIdl E ⊔ (Neutral.B1.diagUnits E).range)
       (sup_le_sup_left (by rintro _ ⟨k, rfl⟩; exact hD k) _)
   refine ⟨?_⟩
   rw [← Subgroup.relIndex_mul_index (le_sup_right : K ≤ unitIdl E ⊔ K), Subgroup.relIndex_sup_right]
@@ -264,7 +264,7 @@ theorem isRingKer_ringKer [(ringKer c l Q).FiniteIndex] : IsRingKer c l Q (ringK
     le_antisymm (sInf_le hK) (le_sInf fun K' hK' => (hmin (hK.inf hK') inf_le_left).trans inf_le_right)
   rwa [e]
 
-theorem finiteIndex_ringKer [_root_.NumberField.IsTotallyComplex E] {a : Ideles E →* Gab E Ω} (ha : IsGlobalArtin a) (hl : l.Prime) :
+theorem finiteIndex_ringKer [_root_.NumberField.IsTotallyComplex E] {a : Neutral.B1.Ideles E →* Gab E Ω} (ha : IsGlobalArtin a) (hl : l.Prime) :
     (ringKer c l Q).FiniteIndex := by
   have hc : (commutator (G E Ω)).topologicalClosure ≤ (art c l Q).ker := by
     rw [ker_art]
@@ -279,7 +279,7 @@ theorem finiteIndex_ringKer [_root_.NumberField.IsTotallyComplex E] {a : Ideles 
     exact ⟨y, by rw [MonoidHom.comp_apply, hy, hπ]⟩
   have hi : (π.comp a).ker.FiniteIndex := by
     refine finiteIndex_of_congr Q _ (fun k => ?_) fun x hx hQ => ?_
-    · have hk : diagUnits E k ∈ a.ker := by
+    · have hk : Neutral.B1.diagUnits E k ∈ a.ker := by
         rw [ha.ker]
         exact Subgroup.le_topologicalClosure _ (Subgroup.mem_sup_left ⟨k, rfl⟩)
       rw [MonoidHom.mem_ker, MonoidHom.comp_apply, MonoidHom.mem_ker.1 hk, map_one]
