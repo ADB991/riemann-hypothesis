@@ -14,6 +14,8 @@ open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalC
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.CM
 open scoped CategoryTheory.Obj
 
+attribute [-instance] Formalism.MainNotions.ModuliIntegralCharts.H1.ExpUniqBC.instGrpObjGS
+
 noncomputable section
 namespace GlobalTheory.TorsionKill
 
@@ -120,6 +122,7 @@ theorem ptOf_injective {S : Scheme.{0}} (t : Sp ℂ ⟶ S) {A : Over S} :
     have hy' : y'.left ≫ pullback.snd A.hom t = 𝟙 _ := by simpa using Over.w y'
     rw [hy, hy']
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem ptOf_one {S : Scheme.{0}} (t : Sp ℂ ⟶ S) {A : Over S} [GrpObj A] :
     ptOf t (1 : Over.mk (𝟙 (Sp ℂ)) ⟶ (Over.pullback t).obj A) = 1 := by
   have e : (1 : Over.mk (𝟙 (Sp ℂ)) ⟶ (Over.pullback t).obj A) =
