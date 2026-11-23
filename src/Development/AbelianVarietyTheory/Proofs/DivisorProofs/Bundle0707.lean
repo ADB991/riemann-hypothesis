@@ -129,7 +129,9 @@ theorem _root_.GlobalTheory.AnPer.perClD_relation_unique : ∀ {g : ℕ} {Λ : T
       calc Gf (F₀.shift l p) =
           Gf ((F₀.shift l p).1, (F₀.shift l p).2) := rfl
         _ = Gf ((F₀.shift l p).1, 0) := hc _ (hV _) _
-        _ = Gf (p.1, 0) := by rw [Subsingleton.elim (F₀.shift l p).1 p.1]
+        _ = Gf (p.1, 0) := by
+          haveI : Subsingleton (Empty → ℂ) := ⟨fun _ _ ↦ funext fun e ↦ nomatch e⟩
+          rw [Subsingleton.elim (F₀.shift l p).1 p.1]
         _ = Gf p := rfl
     have hfn : (algebraMap ℂ (_root_.GlobalTheory.AnPer.Hol F₀.V)
         (-(φ (q'' l)))).fn p.1 = -(φ (q'' l)) := by
