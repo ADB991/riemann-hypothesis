@@ -17,6 +17,8 @@ namespace SenTateChar
 
 open CyclNorms GroundTheory.LocalField ValuativeRel Polynomial Module
 
+attribute [local instance 1100] GroundTheory.LocalField.intermediateField_valuativeRel
+
 theorem sum_range_X_add_one_pow (n : ℕ) :
     ∑ j ∈ Finset.range n, ((X : ℤ[X]) + 1) ^ j =
       ∑ i ∈ Finset.range n, (n.choose (i + 1) : ℤ[X]) * X ^ i := by
