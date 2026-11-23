@@ -225,7 +225,7 @@ variable {m n : ℕ} {ε : Fin m → Bool} {c t : ℝ} {p q : ℕ} {e : ℤ} {sL
 
 theorem sL_bound (hI : Iwa) (hM : Mult) (hD : CayleyBlocksInvertible) (hL : LocData ε c t p q e sL ρ) (Q : PX m n) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ y : GR n, ‖sL Q y‖ ≤ C * ‖F0 p q e y‖ := by
-  have hK := isCompact_KR (n := n)
+  have hK := PositivityTheory.Rg.Sw.AbsSt.Far.isCompact_KR (n := n)
   obtain ⟨B, hB⟩ := hK.exists_bound_of_continuousOn (hL.cont Q).continuousOn
   have hne : ((KR n : Subgroup (GR n)) : Set (GR n)).Nonempty := ⟨1, (KR n).one_mem⟩
   obtain ⟨k0, -, hmin⟩ := hK.exists_isMinOn hne (continuous_weight_factor (n := n) hD p q e).norm.continuousOn
