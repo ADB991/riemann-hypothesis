@@ -18,6 +18,8 @@ public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.
 
 open Matrix IsLocalRing ReciprocityTheory.Gal UpperTheory.V.HV UpperTheory.V.U3 UpperTheory.V.Alg UpperTheory.V.UnitaryThreeInertia
 
+attribute [-instance] UpperTheory.V.Pr.IsCD.toIsDiscreteValuationRing
+
 section SlopeTestRemainingChoices
 
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual Formalism.GaloisCohomology UpperTheory.V UpperTheory.V.Base
