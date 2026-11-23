@@ -373,13 +373,14 @@ theorem kernel_freeA : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F 
     GlobalTheory.EtaleExact.DD_exact D HW F
       (GlobalTheory.Decompl.fontaine_and_decompletion D HW F) l K s LL h T₀ T₁ T₂ ι π hses
   obtain ⟨hinj, hex, -⟩ := hexact
-  obtain ⟨_, -, hl⟩ := GlobalTheory.FinExtIntegers.dvr_complete LL
+  obtain ⟨hDVR, -, hl⟩ := GlobalTheory.FinExtIntegers.dvr_complete LL
   haveI := ((D.loc l).PD K).finK₀
   haveI : NeZero (Module.finrank ℚ_[l] ↥(K0 K)) := ⟨Module.finrank_pos.ne'⟩
   have hproj := (HW l).W_proj K s LL h T₁
   set N₀ := (W.N T₁).comap ((W.map ι).restrictScalars (AA K LL)) with hN₀
   haveI : Module.Free W.EE (W.DD T₀) := (W.DD_free T₀).1
-  haveI : IsNoetherianRing ↥(OL LL) := inferInstance
+  haveI : IsNoetherianRing ↥(OL LL) :=
+    @PrincipalIdealRing.isNoetherianRing _ _ hDVR.toIsPrincipalIdealRing
   haveI : IsNoetherianRing (PowerSeries ↥(OL LL)) := inferInstance
   haveI : IsNoetherianRing (AA K LL) :=
     inferInstanceAs (IsNoetherianRing (ZMod (Module.finrank ℚ_[l] ↥(K0 K)) → PowerSeries ↥(OL LL)))
