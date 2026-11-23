@@ -263,6 +263,7 @@ theorem finrank_twInv [FiniteDimensional Qp LL] (ν : Representation LL G (Fin 1
     have := LinearEquiv.finrank_map_eq e ((DdR PD ν).restrictScalars Qp)
     rw [hm] at this
     exact this
+  letI : Module.Free LL ↥(DdR PD ν) := Module.Free.of_divisionRing LL _
   rw [← Module.finrank_mul_finrank Qp K ↥(twInv PD χ), ← Module.finrank_mul_finrank Qp LL ↥(DdR PD ν), h,
     finrank_fintype_fun_eq_card, Fintype.card_fin, mul_one, mul_comm (finrank Qp LL)] at h1
   exact Nat.eq_of_mul_eq_mul_left finrank_pos h1
