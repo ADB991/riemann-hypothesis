@@ -111,7 +111,7 @@ theorem mem_orth_iff {U : Submodule D.host.E (VS D).V} {x : (VS D).V} : x ∈ or
     | (constructor <;> intro h <;> exact h)
 
 theorem act_of_dec (hN : Formalism.L2.SG.PoincareInHH.Cut.NeatKu X u' Y.hK) (q : {Λ // Λ ∈ Y.what₂ u'})
-    {s s' : TT Y u u'} (hq : s.lam' = q.1) (hl : s.lam = s'.lam) (hl' : s.lam' = s'.lam')
+    {s s' : Formalism.L2.SG.PackageTie2.TT Y u u'} (hq : s.lam' = q.1) (hl : s.lam = s'.lam) (hl' : s.lam' = s'.lam')
     {n ν c : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hn : n ∈ NLam s.lam (lf D (X.Fu u)))
     (hν : ν ∈ NLam s.lam' (lf D (X.Fu u'))) (hc : c ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT)
     (hg : Formalism.HermitianLatticesTheory.gmap c s.lam' = s.lam') (hfix : ∀ a, c ((X.Fu u').fvec a) = (X.Fu u').fvec a)
@@ -174,19 +174,19 @@ theorem act_of_dec (hN : Formalism.L2.SG.PoincareInHH.Cut.NeatKu X u' Y.hK) (q :
   rcases s' with ⟨k, hk, k', hk', q'⟩
   simp only at hl hl' he
   subst hl hl'
-  show (⟨s.lam, hk, s.lam', hk', q'⟩ : TT Y u u') =
+  show (⟨s.lam, hk, s.lam', hk', q'⟩ : Formalism.L2.SG.PackageTie2.TT Y u u') =
     ⟨s.lam, s.mem, s.lam', s.mem', (Formalism.L2.SG.Pf.SatGramActR.tmap (γ.1 : X.B.I.GA) (Formalism.L2.SG.Pf.Act.isoG γ.1)
       Formalism.L2.SG.Pf.SatGramActR.autFConjN_holds (isoG_lift Y ⟨s.lam', hΛ'⟩ γ).1 s).cls⟩
   rw [hcls]
   congr 1
   rw [← Quot.out_eq q']
   refine (Quot.sound ⟨n, hn, (G⁻¹ * ν * G⁻¹⁻¹) * (c⁻¹ * G)⁻¹, hν3, ?_⟩).symm
-  show GTerm.lin (⟨s.lam, hk, s.lam', hk', q'⟩ : TT Y u u') =
+  show GTerm.lin (⟨s.lam, hk, s.lam', hk', q'⟩ : Formalism.L2.SG.PackageTie2.TT Y u u') =
     n * (GTerm.lin s * (Formalism.L2.SG.Pf.Act.isoG γ.1)⁻¹) * ((G⁻¹ * ν * G⁻¹⁻¹) * (c⁻¹ * G)⁻¹)
   rw [he, hiso]
   group
 
-theorem nlam_frame (s : TT Y u u') {m : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hm : m ∈ NLam s.lam s.frame) :
+theorem nlam_frame (s : Formalism.L2.SG.PackageTie2.TT Y u u') {m : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hm : m ∈ NLam s.lam s.frame) :
     s.lin⁻¹ * m * s.lin ∈ NLam s.lam' (lf D (X.Fu u')) := by
   have hm' : m ∈ NLam (Formalism.HermitianLatticesTheory.gmap s.lin s.lam')
       (Formalism.L2.SG.Saturated.mapL s.lin (Formalism.L2.SG.Pf.FibreCounting.lin_isom s) (lf D (X.Fu u'))) := by
@@ -204,7 +204,7 @@ theorem fix_of_ez {c : (VS D).V ≃ₗ[D.host.E] (VS D).V} (he : ∀ a, c ((X.Fu
     exact he i
 
 theorem iotaKer_core (hN : Formalism.L2.SG.PoincareInHH.Cut.NeatKu X u' Y.hK) (hIR : Formalism.L2.SG.Pf.SatGramRep.IotaRepC)
-    (s₁ s₂ t₁ t₂ : TT Y u u') (n₁ n₂ m₁ m₂ c₁ c₂ : (VS D).V ≃ₗ[D.host.E] (VS D).V)
+    (s₁ s₂ t₁ t₂ : Formalism.L2.SG.PackageTie2.TT Y u u') (n₁ n₂ m₁ m₂ c₁ c₂ : (VS D).V ≃ₗ[D.host.E] (VS D).V)
     (hs2 : s₂.lam = s₁.lam) (ht1 : t₁.lam = s₁.lam) (ht2 : t₂.lam = s₁.lam)
     (hs2' : s₂.lam' = s₁.lam') (ht1' : t₁.lam' = s₁.lam') (ht2' : t₂.lam' = s₁.lam')
     (hn₁ : n₁ ∈ NLam s₁.lam (lf D (X.Fu u))) (hn₂ : n₂ ∈ NLam s₁.lam (lf D (X.Fu u)))
