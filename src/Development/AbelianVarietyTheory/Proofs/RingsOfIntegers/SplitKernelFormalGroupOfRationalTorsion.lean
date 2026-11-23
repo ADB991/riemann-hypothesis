@@ -463,7 +463,7 @@ theorem splitKer_of_allRat : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     have hN : IsUnit ((k * M' : ℕ) : T.V) := isUnit_natCast_of_coprime
       (Nat.Coprime.mul_left hk ((Nat.Prime.coprime_iff_not_dvd hℓ).2 hM').symm) hu
     have hx : ∀ b i, MvPowerSeries.constantCoeff ((fun j => cpt (n := 0) (α j)) b i) ∈ maximalIdeal T.V :=
-      fun b i => by simpa [cpt] using hα.1 b i
+      fun b i => by simpa [GlobalTheory.PlaceInt.cpt] using hα.1 b i
     obtain ⟨⟨χ, c1, c2⟩, -⟩ := evC_spec T.V (Fin n × Fin (chD C.ch)) (Fin 0 × Fin (chD C.ch)) Unit
       (fun s => cpt (n := 0) (α s.1) s.2) (fun s => hx s.1 s.2)
     obtain ⟨ψ, hψ, hψ', hkill⟩ := kills_of_matV B mu mu' (k * M') (ℓ ^ j) hN
