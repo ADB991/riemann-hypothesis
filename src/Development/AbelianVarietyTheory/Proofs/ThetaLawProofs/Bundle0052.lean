@@ -223,7 +223,7 @@ theorem exists_kaVal_of_split :
   obtain ⟨rfl, t, ht⟩ := GlobalTheory.KeyKa.KoszulEx.exists_kosVal laws R x n l d s b z ch (by omega) hl (fun j hj => (hb j hj).1) hz
   obtain ⟨-, t', ht'⟩ := GlobalTheory.KeyKa.KoszulEx.exists_kosVal laws R x n l' _ s b' z ch (by omega) (hl.trans hl')
     (fun j hj => (hb' j hj).1) hz
-  have hJ : IsUnit (∏ a, jac x s (z a) (ch a)) := IsUnit.prod_univ_iff.2 hz.2.2.1
+  have hJ : IsUnit (∏ a, GlobalTheory.KeyKa.jac x s (z a) (ch a)) := IsUnit.prod_univ_iff.2 hz.2.2.1
   exact ⟨_, z, ch, b, b', t, t', hJ.unit, lam, lam', hz, hJ.unit_spec, hb, hb', ht, ht', rfl⟩
 
 end GlobalTheory

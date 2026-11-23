@@ -547,7 +547,7 @@ theorem genIndex_tor (hE : EigenLatDifferent.Statement)
     (hv : IsOFamily ρ I v) (hst : ∀ a, ∀ x ∈ I, ρ a x ∈ I)
     (hI : ∃ (n : ℕ) (e : Fin n → V), LinearIndependent L e ∧ AddSubgroup.closure (Set.range e) = I)
     (t : E →+* L) :
-    genIndex (Submodule.span (𝓞 L) (I : Set V) ⊓ (HT.eigSp ρ t).restrictScalars (𝓞 L)).toAddSubgroup
+    GroundTheory.Heights₂.Heights.NineStatements.genIndex (Submodule.span (𝓞 L) (I : Set V) ⊓ (HT.eigSp ρ t).restrictScalars (𝓞 L)).toAddSubgroup
       (Submodule.span (𝓞 L) (Set.range fun a => HT.eigProj ρ t (v a))).toAddSubgroup =
       ((((oSpan ρ v).relIndex I : ℕ) : ℝ) / |(discr E : ℝ)| ^ r) ^
         ((Module.finrank ℚ L : ℝ) / Module.finrank ℚ E) := by
@@ -559,7 +559,7 @@ theorem genIndex_tor (hE : EigenLatDifferent.Statement)
     exact DifferentLatIndex.proof Em K N J m w hw s
   have hT := hT E L ι (exists_split (V := V) hcard ι) r (lat ρ v I hst) r _ hnz t
   rw [hidx] at hT
-  rw [← hT, ← map_eigenLat hcard ρ hv hst hI, ← map_familyLat hcard ρ v t, genIndex, genIndex,
+  rw [← hT, ← map_eigenLat hcard ρ hv hst hI, ← map_familyLat hcard ρ v t, GroundTheory.Heights₂.Heights.NineStatements.genIndex, GroundTheory.Heights₂.Heights.NineStatements.genIndex,
     map_toAddSubgroup, map_toAddSubgroup]
   have hinj : Function.Injective (phi ρ v t).toAddMonoidHom := phi_injective hcard ρ hv hst hI t
   rw [AddSubgroup.relIndex_map_map_of_injective _ _ hinj,

@@ -218,7 +218,7 @@ theorem lbIso_cancel {X Y Z : Scheme.{0}} {L : LB X} {L₁ : LB Y} {L₂ : LB Z}
     (c : LBIso L₂ (L.pull ψ)) : LBIso L₂ (L₁.pull φ) :=
   c.trans h₂ (LB.isLB_pull hL _) (LB.isLB_pull h₁ _) (LBIso.chartPull
     (chartPullSame L (fun _ : PUnit => ψ) (fun _ => ψ₁) (fun _ => 1) φ fun _ => e.symm)
-    (chartPullPull L₁ φ φ rfl) a.symm)
+    (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull L₁ φ φ rfl) a.symm)
 
 end GlobalTheory.LevelCover
 

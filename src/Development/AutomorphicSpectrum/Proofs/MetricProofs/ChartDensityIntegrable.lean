@@ -33,7 +33,7 @@ open GroundTheory.Heights₂.Heights (chartLift chartProjMatrix_mulVec chartWeig
   chartLift_segre_apply IsSheetAt sheetSum)
 open GroundTheory.Heights₂.Heights.ComplexSets (zeroSet IsFiniteProjection)
 open GroundTheory.Heights₂.Heights.PtsSegreChartFibreSum (isClosed_zeroSet exists_minimalPrime_of_mem_zeroSet
-  exists_poly_of_not_mem logNorm_ofWeight_one isSectionOn_ofWeight_one)
+  exists_poly_of_not_mem GroundTheory.Heights₂.Heights.PtsSegreChartFibreSum.logNorm_ofWeight_one isSectionOn_ofWeight_one)
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
@@ -220,7 +220,7 @@ theorem term_eq {e m : ℕ} {Q : Ideal (MRingOver ℂ ι)} {σ : Fin m ≃ ((k :
   have hy0 : ∀ k, ∃ j, γ y ⟨k, j⟩ ≠ 0 := hγ.2.self_of_nhds.2.1.1
   have hde := density_eq hL (isSectionOn_ofWeight_one (P := (⊥ : Ideal (MRing ι))) Ideal.isPrime_bot g hg)
     hγan hγ'an hy0 hseg
-  rw [logNorm_ofWeight_one, logNorm_ofWeight_one] at hde
+  rw [GroundTheory.Heights₂.Heights.PtsSegreChartFibreSum.logNorm_ofWeight_one, GroundTheory.Heights₂.Heights.PtsSegreChartFibreSum.logNorm_ofWeight_one] at hde
   rw [hde, chartWeight_of_coord g hx1, hsx]
   rfl
 

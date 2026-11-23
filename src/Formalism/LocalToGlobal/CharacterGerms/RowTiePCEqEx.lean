@@ -42,7 +42,7 @@ theorem ev_zero_pt {n : ℕ} (f : PS C 1 dd) : ev (n := n) (![0] : Fin 1 → Pt 
     intro k i; fin_cases k; simp
   have h1 : f = MvPowerSeries.C (constantCoeff f) + (f - MvPowerSeries.C (constantCoeff f)) := by ring
   conv_lhs => rw [h1]
-  rw [ev_add hZ, ev_C]
+  rw [ev_add hZ, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_C]
   have h2 : ev (n := n) (![0] : Fin 1 → Pt C n dd) (f - MvPowerSeries.C (constantCoeff f)) = 0 := by
     unfold ev
     have e : (fun p : Fin 1 × Fin dd => (![0] : Fin 1 → Pt C n dd) p.1 p.2) = fun _ => 0 := by

@@ -22,7 +22,7 @@ def IsPt (y : (Σ k, ι k) → Φ) (z : (Σ k, ι k) → L) : Prop :=
   (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) ∧ ∀ f ∈ mCoordIdeal y, aeval z f = 0
 
 def HasVal (y : (Σ k, ι k) → Φ) (z : (Σ k, ι k) → L) (s : Φ) (v : L) : Prop :=
-  ∃ (d : K → ℕ) (g h : MRing ι), IsMultiHomog g d ∧ IsMultiHomog h d ∧ aeval z h ≠ 0 ∧
+  ∃ (d : K → ℕ) (g h : MRing ι), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h d ∧ aeval z h ≠ 0 ∧
     aeval y g = s * aeval y h ∧ aeval z g = v * aeval z h
 
 def penCo (y : (Σ k, ι k) → Φ) (k₀ : K) (A B : ι k₀ → Φ) (t : RatFunc Φ) :
@@ -67,12 +67,12 @@ theorem aeval_eq_zero_of_mem {y : (Σ k, ι k) → Φ} {f : MRing ι} (hf : f �
   simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, h0, map_zero] at this
   exact this.symm
 
-theorem mem_iff_of_homog {y : (Σ k, ι k) → Φ} {f : MRing ι} {d : K → ℕ} (hf : IsMultiHomog f d) :
+theorem mem_iff_of_homog {y : (Σ k, ι k) → Φ} {f : MRing ι} {d : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f d) :
     f ∈ mCoordIdeal y ↔ aeval y f = 0 :=
   ⟨aeval_eq_zero_of_mem, mem_mCoordIdeal_of_aeval_eq_zero y hf⟩
 
 theorem mCoordIdeal_le_of_homog {y : (Σ k, ι k) → Φ} {J : Ideal (MRing ι)}
-    (h : ∀ f d, IsMultiHomog f d → aeval y f = 0 → f ∈ J) : mCoordIdeal y ≤ J := by
+    (h : ∀ f d, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f d → aeval y f = 0 → f ∈ J) : mCoordIdeal y ≤ J := by
   obtain ⟨S, hS, e⟩ := CoordinateConeArithVar.isMultiHomogIdeal y
   have hS' : ∀ f ∈ S, f ∈ mCoordIdeal y := fun f hf => by rw [e]; exact Ideal.subset_span hf
   rw [e, Ideal.span_le]
@@ -84,7 +84,7 @@ theorem IsPt.le {y : (Σ k, ι k) → Φ} {z : (Σ k, ι k) → L} (hz : IsPt y 
   mCoordIdeal_le_of_homog fun f _ hf h0 => (mem_iff_of_homog hf).2 (hz.2 f ((mem_iff_of_homog hf).2 h0))
 
 theorem isPt_of_homog {y : (Σ k, ι k) → Φ} {z : (Σ k, ι k) → L} (h0 : ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0)
-    (h : ∀ (f : MRing ι) d, IsMultiHomog f d → aeval y f = 0 → aeval z f = 0) : IsPt y z :=
+    (h : ∀ (f : MRing ι) d, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f d → aeval y f = 0 → aeval z f = 0) : IsPt y z :=
   ⟨h0, fun _ hf => (RingHom.mem_ker).1 (mCoordIdeal_le_of_homog
     (J := RingHom.ker (aeval z : MRing ι →ₐ[ℤ] L)) (fun f d hd h1 => (RingHom.mem_ker).2 (h f d hd h1)) hf)⟩
 
@@ -92,9 +92,9 @@ theorem isPt_self {y : (Σ k, ι k) → Φ} (h0 : ∀ k, ∃ i, y ⟨k, i⟩ ≠
   ⟨h0, fun _ hf => aeval_eq_zero_of_mem hf⟩
 
 theorem IsPt.aeval_ne {y : (Σ k, ι k) → Φ} {z : (Σ k, ι k) → L} (hz : IsPt y z) {h : MRing ι} {d : K → ℕ}
-    (hh : IsMultiHomog h d) (h0 : aeval z h ≠ 0) : aeval y h ≠ 0 := fun e => h0 (hz.2 h ((mem_iff_of_homog hh).2 e))
+    (hh : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h d) (h0 : aeval z h ≠ 0) : aeval y h ≠ 0 := fun e => h0 (hz.2 h ((mem_iff_of_homog hh).2 e))
 
-theorem isMultiHomog_X (p : Σ k, ι k) : IsMultiHomog (X p : MRing ι) (fun k => if k = p.1 then 1 else 0) :=
+theorem isMultiHomog_X (p : Σ k, ι k) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (X p : MRing ι) (fun k => if k = p.1 then 1 else 0) :=
   isMultiHomog_X_single p
 
 theorem IsPt.coord_ne {y : (Σ k, ι k) → Φ} {z : (Σ k, ι k) → L} (hz : IsPt y z) {q : Σ k, ι k} (h : z q ≠ 0) :
@@ -107,7 +107,7 @@ variable {y : (Σ k, ι k) → Φ} {z : (Σ k, ι k) → L}
 theorem HasVal.unique (hz : IsPt y z) {s : Φ} {v w : L} (hv : HasVal y z s v) (hw : HasVal y z s w) : v = w := by
   obtain ⟨d, g, h, hg, hh, h0, e, ev⟩ := hv
   obtain ⟨d', g', h', hg', hh', h0', e', ev'⟩ := hw
-  have hsub : IsMultiHomog (g * h' - g' * h) (d + d') := by
+  have hsub : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (g * h' - g' * h) (d + d') := by
     refine isMultiHomog_sub (isMultiHomog_mul hg hh') ?_
     rw [add_comm]
     exact isMultiHomog_mul hg' hh
@@ -180,7 +180,7 @@ theorem HasVal.zpow (hz : IsPt y z) {s : Φ} {v : L} (hv : HasVal y z s v) (h0 :
   | ofNat n => simpa using hv.pow n
   | negSucc n => simpa using (hv.pow (n + 1)).inv hz (pow_ne_zero _ h0)
 
-theorem hasVal_form (hz : IsPt y z) {g h : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) (hh : IsMultiHomog h d)
+theorem hasVal_form (hz : IsPt y z) {g h : MRing ι} {d : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) (hh : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h d)
     (h0 : aeval z h ≠ 0) : HasVal y z (aeval y g / aeval y h) (aeval z g / aeval z h) :=
   ⟨d, g, h, hg, hh, h0, (div_mul_cancel₀ _ (hz.aeval_ne hh h0)).symm, (div_mul_cancel₀ _ h0).symm⟩
 

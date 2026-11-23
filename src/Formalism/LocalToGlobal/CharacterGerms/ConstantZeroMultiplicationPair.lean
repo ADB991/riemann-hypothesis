@@ -174,7 +174,7 @@ theorem eval_pderiv_first_unit_series (Y : FBChart C V O dd) (j : Fin dd) :
   have hEh : ev (n := 1) (![pt C dd 0, 0] : Fin 2 → Pt C 1 dd) Y.h = 0 := Y.gauge.ax1
   have hEH : ev (n := 1) (![pt C dd 0, 0] : Fin 2 → Pt C 1 dd) (ev (n := 2) ![M2 Y, pt C dd 1] Y.h - (V.l : C) • Y.h) = 0 := by
     rw [ev_sub ZeroPointGroupLaw.constant_zero_first_then_zero, eval_multiplication_pair_zero, eval_point_zero_factor _ (FirstUnitSeriesIntegrality.multiplication_constantCoeff_zero Y.B.G V.l), hEh, ev_zero (z0_1 _ (FirstUnitSeriesIntegrality.multiplication_constantCoeff_zero Y.B.G V.l)),
-      MvPowerSeries.smul_eq_C_mul, ev_mul ZeroPointGroupLaw.constant_zero_first_then_zero, ev_C, hEh, mul_zero, sub_zero]
+      MvPowerSeries.smul_eq_C_mul, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul ZeroPointGroupLaw.constant_zero_first_then_zero, ev_C, hEh, mul_zero, sub_zero]
   have hD : MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) (ev (n := 2) ![M2 Y, pt C dd 1] Y.h) =
       ev (n := 2) ![M2 Y, pt C dd 1] (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) Y.h) := by
     have pderiv_eval_pair {n : ℕ} {a : Fin 2 → Pt C n dd} (ha : Z0 a) (f : PS C 2 dd) (q : Fin n × Fin dd) :
@@ -200,8 +200,8 @@ theorem eval_pderiv_first_unit_series (Y : FBChart C V O dd) (j : Fin dd) :
       MvPowerSeries.pderiv (R := C) q (FB.expS C g) = FB.expS C g * MvPowerSeries.pderiv (R := C) q g := by
     unfold FB.expS
     rw [Formalism.G.LogCR.pderiv_psubst hg, PowerSeries.derivative_exp]
-  rw [hu, pderiv_expS hH0, ev_mul ZeroPointGroupLaw.constant_zero_first_then_zero, FirstUnitSeriesIntegrality.expS_eq, FirstUnitSeriesIntegrality.ev_ex ZeroPointGroupLaw.constant_zero_first_then_zero _ hH0, hEH, FirstUnitSeriesIntegrality.ex_zero,
-    one_mul, map_sub, hD, Derivation.map_smul, ev_sub ZeroPointGroupLaw.constant_zero_first_then_zero, eval_multiplication_pair_zero, MvPowerSeries.smul_eq_C_mul, ev_mul ZeroPointGroupLaw.constant_zero_first_then_zero, ev_C,
+  rw [hu, pderiv_expS hH0, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul ZeroPointGroupLaw.constant_zero_first_then_zero, FirstUnitSeriesIntegrality.expS_eq, FirstUnitSeriesIntegrality.ev_ex ZeroPointGroupLaw.constant_zero_first_then_zero _ hH0, hEH, FirstUnitSeriesIntegrality.ex_zero,
+    one_mul, map_sub, hD, Derivation.map_smul, ev_sub ZeroPointGroupLaw.constant_zero_first_then_zero, eval_multiplication_pair_zero, MvPowerSeries.smul_eq_C_mul, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul ZeroPointGroupLaw.constant_zero_first_then_zero, ev_C,
     ← MvPowerSeries.smul_eq_C_mul]
 
 theorem Sv_eq (Y : FBChart C V O dd) (v : Fin dd → C) :
@@ -214,7 +214,7 @@ theorem Sv_eq (Y : FBChart C V O dd) (v : Fin dd → C) :
     rw [ev_neg hZ, ev_sum hZ]
     congr 1
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [ev_mul hZ, ev_C, ev_ev hZ' hZ]
+    rw [Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul hZ, ev_C, ev_ev hZ' hZ]
     congr 2
     funext k j
     fin_cases k

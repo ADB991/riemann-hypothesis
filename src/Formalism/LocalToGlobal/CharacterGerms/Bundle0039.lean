@@ -49,7 +49,7 @@ theorem link (Y : FBChart C V O dd) (u : Fin dd → C) (W : Pt C 2 dd) (hW : ∀
   have hz2 := constant_zero_two_points (p3 0) (z0p3 0) hW0
   rw [aOf_eq, ev_sum hz1]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [ev_mul hz1, ev_C, map_sum, coeff_C_mul]
+    simp only [ev_mul hz1, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_C, map_sum, coeff_C_mul]
   unfold Phi
   refine Finset.sum_congr rfl fun i _ => ?_
   have e1 : ev ![W] (ev (rz 1) ((pderiv (R := C) ((0 : Fin 2), i))^[V.l] Y.u1)) =

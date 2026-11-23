@@ -243,7 +243,7 @@ theorem fderiv_old_eq_zero {y : (Σ k, ι k) → Ω} {N : ℕ} {v : Fin N → Ω
   exact h
 
 theorem cross_mem {y : (Σ k, ι k) → Ω} {N : ℕ} {v : Fin N → Ω} {e : K → ℕ} {G G' : MRing ι}
-    (hG : IsMultiHomog G e) (hG' : IsMultiHomog G' e) (j j' : Fin N)
+    (hG : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog G e) (hG' : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog G' e) (j j' : Fin N)
     (hy : v j * aeval y G' = v j' * aeval y G) :
     X ⟨none, j⟩ * rename (oldEmb ι N) G' - X ⟨none, j'⟩ * rename (oldEmb ι N) G ∈ mCoordIdeal (addBlock y v) := by
   show _ ∈ RingHom.ker (mConeMap (addBlock y v))
