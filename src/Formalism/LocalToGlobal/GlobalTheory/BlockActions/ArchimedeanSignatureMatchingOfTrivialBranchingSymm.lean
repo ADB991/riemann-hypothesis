@@ -76,31 +76,31 @@ def trEvS (Tf : FormsTiedSym D u Ch chOf) (c : (D.fm u).clsP) :
     ((D.mem u).C.Y D.R.m → ℂ) →ₗ[ℂ] (Fr D D.R.m le_rfl → ℂ) :=
   ((((Tf.cls D.R.m le_rfl (Or.inr rfl)).lev.chi (Tf.tilAd.ka c))⁻¹ : ℂˣ) : ℂ) •
     LinearMap.funLeft ℂ ℂ (fun y : Fr D D.R.m le_rfl => (Tf.val D.R.m le_rfl (Or.inr rfl)).eY.symm
-      (y.tr (atInf (embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E))
-        (isUnit_det_atInf (embT D) ((Tf.til.ga c).1)⁻¹)))
+      (y.tr (atInf (Forms.embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E))
+        (isUnit_det_atInf (Forms.embT D) ((Tf.til.ga c).1)⁻¹)))
 
 def coMTS (Tf : FormsTiedSym D u Ch chOf) (B : D.what₂.places.Pl → (D.fm u).clsP → Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) D.host.E)
     (w : D.what₂.places.Pl) (c : (D.fm u).clsP) :
     ((D.mem u).C.Y D.R.m → ℂ) →ₗ[ℂ] MvPolynomial (D.what₂.Tau × Fin (D.R.N D.R.m) × Fin (D.R.N D.R.m)) ℂ :=
-  fnInv (gramC (gramN D D.R.m le_rfl) (embT D)) (shiftOf (lamT u D.R.m))
-    (atInf (embT D) (bZg u Tf.til.z0 (B w c))⁻¹) ∘ₗ trEvS Tf c
+  fnInv (gramC (gramN D D.R.m le_rfl) (Forms.embT D)) (shiftOf (lamT u D.R.m))
+    (atInf (Forms.embT D) (bZg u Tf.til.z0 (B w c))⁻¹) ∘ₗ trEvS Tf c
 
 def coPTS (Tf : FormsTiedSym D u Ch chOf) (B : D.what₂.places.Pl → (D.fm u).clsP → Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) D.host.E)
     (w : D.what₂.places.Pl) :
     (D.mem u).P.Wrow →ₗ[ℂ] ((D.fm u).clsP → MvPolynomial (D.what₂.Tau × Fin (D.R.N D.R.m - 1) × Fin (D.R.N D.R.m - 1)) ℂ) :=
-  LinearMap.pi fun c => fnInv (gramC (gramP D) (embT D)) (shiftOf (sgT u)) (atInf (embT D) (B w c)⁻¹) ∘ₗ
+  LinearMap.pi fun c => fnInv (gramC (gramP D) (Forms.embT D)) (shiftOf (sgT u)) (atInf (Forms.embT D) (B w c)⁻¹) ∘ₗ
     (LinearMap.proj c ∘ₗ Tf.valP.eW.toLinearMap)
 
 theorem trEv_eqS (Tf : FormsTiedSym D u Ch chOf) (φ : Fn D u D.R.m) (c : (D.fm u).clsP) (y : Fr D D.R.m le_rfl) :
     trEvS Tf c (φ ((D.fm u).til c)) y = Tf.eWz ((D.mem u).P.evz φ) c ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY.symm y) := by
   rw [Tf.evz φ c _ ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY.symm
-      (y.tr (atInf (embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E))
-        (isUnit_det_atInf (embT D) ((Tf.til.ga c).1)⁻¹)))]
+      (y.tr (atInf (Forms.embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E))
+        (isUnit_det_atInf (Forms.embT D) ((Tf.til.ga c).1)⁻¹)))]
   · rfl
   · intro τ
     simp only [Equiv.apply_symm_apply]
-    show y.1 τ = atInf (embT D) (Tf.til.ga c).1.1 τ *
-      (atInf (embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ * y.1 τ)
+    show y.1 τ = atInf (Forms.embT D) (Tf.til.ga c).1.1 τ *
+      (atInf (Forms.embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ * y.1 τ)
     rw [← Matrix.mul_assoc, atInf_mul_inv, Matrix.one_mul]
 
 
@@ -124,16 +124,16 @@ theorem val_repS (Tf : FormsTiedSym D u Ch chOf) (φ : Formalism.MainNotions.pro
     rw [← this, hfn]
     rfl
   set ginv : GL (Fin (D.R.N D.R.m)) D.host.E := ((Tf.til.ga c).1)⁻¹
-  set M' : D.what₂.Tau → Matrix (Fin (D.R.N D.R.m)) (Fin (D.R.N D.R.m)) ℂ := atInf (embT D) (ginv : Matrix _ _ D.host.E)
+  set M' : D.what₂.Tau → Matrix (Fin (D.R.N D.R.m)) (Fin (D.R.N D.R.m)) ℂ := atInf (Forms.embT D) (ginv : Matrix _ _ D.host.E)
   have hB := mZ_isUnit (bZ_isUnitS Tf)
   obtain ⟨P, hP, hPy⟩ := exists_rep ((D.fm u).lam D.R.m) _ (shiftOf (lamT u D.R.m)) (mZ u Tf.til.z0) M' hB
-    (isUnit_det_atInf (embT D) ginv) P0 hP0' ((((Tf.cls D.R.m le_rfl (Or.inr rfl)).lev.chi (Tf.tilAd.ka c))⁻¹ : ℂˣ) : ℂ)
+    (isUnit_det_atInf (Forms.embT D) ginv) P0 hP0' ((((Tf.cls D.R.m le_rfl (Or.inr rfl)).lev.chi (Tf.tilAd.ka c))⁻¹ : ℂˣ) : ℂ)
   refine ⟨P, hP, fun s => ?_⟩
-  rw [Tf.evz φ c s ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY.symm (((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s).tr M' (isUnit_det_atInf (embT D) ginv)))]
+  rw [Tf.evz φ c s ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY.symm (((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s).tr M' (isUnit_det_atInf (Forms.embT D) ginv)))]
   · rw [hφv]; exact hPy _
   · intro τ
     simp only [Equiv.apply_symm_apply]
-    show ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s).1 τ = atInf (embT D) (Tf.til.ga c).1.1 τ * (M' τ * ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s).1 τ)
+    show ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s).1 τ = atInf (Forms.embT D) (Tf.til.ga c).1.1 τ * (M' τ * ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s).1 τ)
     rw [← Matrix.mul_assoc, atInf_mul_inv, Matrix.one_mul]
 
 end Formalism.L2.GlobalTheoryTheory.Br
