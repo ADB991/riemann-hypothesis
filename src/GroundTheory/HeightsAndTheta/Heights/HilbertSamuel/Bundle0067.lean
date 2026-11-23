@@ -403,7 +403,7 @@ theorem proof (hPc : EmbeddingPieces.Statement) (hDG : GroundTheory.Heights₂.H
     filter_upwards [hloc z hz sg hsg, hopen.mem_nhds hz.1] with u hu hu'
     show Real.log (A.h u * B.h u) = _
     rw [hu, Real.log_mul (A.pos u hu').ne' (hΛ sg).ne']
-  let L : Finset (Fin (D + 1)) → Fin (D + 1) → HermLine ι := fun S i => if i ∈ S then A.tensor B else A
+  let L : Finset (Fin (D + 1)) → Fin (D + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := fun S i => if i ∈ S then A.tensor B else A
   have hLs : ∀ S i, IsSmoothHerm (L S i) := by
     intro S i
     dsimp only [L]
@@ -421,7 +421,7 @@ theorem proof (hPc : EmbeddingPieces.Statement) (hDG : GroundTheory.Heights₂.H
         -ptsIntegral (mCoordIdeal y) (pot fun _ : Fin D => A) (logNorm B 1) := by
     intro S j hj
     set σ : Equiv.Perm (Fin (D + 1)) := Equiv.swap j (Fin.last D) with hσ
-    set M : Fin D → HermLine ι := Fin.init (L S ∘ σ) with hMdef
+    set M : Fin D → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := Fin.init (L S ∘ σ) with hMdef
     have hσl : σ (Fin.last D) = j := Equiv.swap_apply_right _ _
     have hne : ∀ i : Fin D, σ (Fin.castSucc i) ≠ j := by
       intro i h'
