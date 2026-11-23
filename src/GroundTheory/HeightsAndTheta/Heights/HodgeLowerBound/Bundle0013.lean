@@ -216,8 +216,8 @@ theorem yFl_eq (q : FlBlock Ψ N) (A : FlIdx Ψ N q) :
 
 def leadIdx (q : FlBlock Ψ N) : FlIdx Ψ N q := ⟨Fin.castLE (step_le q.2), Fin.strictMono_castLE _⟩
 
-theorem yFl_lead (q : FlBlock Ψ N) : yFl Ψ N ⟨q, leadIdx Ψ N q⟩ = leadMinor (genMatFr ℚ Ψ N q.1) q.2 := by
-  rw [yFl_eq, leadMinor, pivotMinor]
+theorem yFl_lead (q : FlBlock Ψ N) : yFl Ψ N ⟨q, leadIdx Ψ N q⟩ = GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (genMatFr ℚ Ψ N q.1) q.2 := by
+  rw [yFl_eq, GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor, pivotMinor]
   congr 2
   funext c
   apply Fin.ext
@@ -244,11 +244,11 @@ theorem coneRatios_eq : coneRatios (yFl Ψ N) (leadIdx Ψ N) = Set.range (flagMi
   · rintro ⟨⟨q, A⟩, rfl⟩
     refine ⟨(q.1, ⟨q.2, ⟨Finset.univ.image A.1,
       by rw [Finset.card_image_of_injective _ A.2.injective, Finset.card_fin]⟩⟩), ?_⟩
-    show flagMinor _ _ _ / leadMinor _ _ = yFl Ψ N ⟨q, A⟩ / yFl Ψ N ⟨q, leadIdx Ψ N q⟩
+    show flagMinor _ _ _ / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor _ _ = yFl Ψ N ⟨q, A⟩ / yFl Ψ N ⟨q, leadIdx Ψ N q⟩
     rw [yFl_lead, yFl_eq_flagMinor]
   · rintro ⟨⟨τ, i, S⟩, rfl⟩
     refine ⟨⟨(τ, i), ⟨S.1.orderEmbOfFin S.2, (S.1.orderEmbOfFin S.2).strictMono⟩⟩, ?_⟩
-    show yFl Ψ N _ / yFl Ψ N ⟨(τ, i), leadIdx Ψ N (τ, i)⟩ = flagMinor _ _ _ / leadMinor _ _
+    show yFl Ψ N _ / yFl Ψ N ⟨(τ, i), leadIdx Ψ N (τ, i)⟩ = flagMinor _ _ _ / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor _ _
     rw [yFl_lead, flagMinor_eq_yFl]
 
 theorem toSubfield_adjoin_rat {E : Type} [Field E] [Algebra ℚ E] (s : Set E) :

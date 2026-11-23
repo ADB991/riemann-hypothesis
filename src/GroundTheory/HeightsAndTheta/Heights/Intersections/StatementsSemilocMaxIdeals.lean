@@ -49,7 +49,7 @@ def SemilocMaxIdeals.Statement : Prop :=
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (n : ℕ) (s : MRing ι) (α : K → ℕ)
     (W : Ideal (MRing ι)),
     IsBlockMap κ v → IsArithVar P' (n + 1) →
-    IsArithVar (imageZ v P') (n + 1) → IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
+    IsArithVar (imageZ v P') (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
     (∀ (W' : Ideal (MRing ι')) (hW' : W' ∈ fibreOver v P' W) [IsLocalRing (locRing P' W')],
       (semiMaxIdeal P' (fibreOver v P' W) W' hW').IsMaximal ∧
       letI := (semiToLoc P' (fibreOver v P' W) W' hW').toAlgebra
