@@ -101,33 +101,33 @@ theorem countable_HFinIn [Countable E] (R : Type) [CommRing R] [Algebra F R] (σ
 variable [NumberField F]
 
 theorem mulVec_fv {M : ℕ} (m : Matrix (Fin M) (Fin M) E) (x : Fin M → E) :
-    (m.map (inclR (F := F) (Af F))).mulVec (GlobalTheory.AdLat.fv F x) = GlobalTheory.AdLat.fv F (m.mulVec x) := by
+    (m.map (inclR (F := F) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F))).mulVec (GlobalTheory.AdLat.fv F x) = GlobalTheory.AdLat.fv F (m.mulVec x) := by
   ext i
-  exact (RingHom.map_mulVec (inclR (F := F) (Af F)) m x i).symm
+  exact (RingHom.map_mulVec (inclR (F := F) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F)) m x i).symm
 
 theorem mulVec_mem_hat_of_rat {M : ℕ} (m : Matrix (Fin M) (Fin M) E) (Λ : Submodule (𝓞 E) (Fin M → E))
-    (h : ∀ x ∈ Λ, m.mulVec x ∈ Λ) {z : Fin M → Af F ⊗[F] E} (hz : z ∈ GlobalTheory.AdLat.hat F (Λ : Set (Fin M → E))) :
-    (m.map (inclR (F := F) (Af F))).mulVec z ∈ GlobalTheory.AdLat.hat F (Λ : Set (Fin M → E)) := by
+    (h : ∀ x ∈ Λ, m.mulVec x ∈ Λ) {z : Fin M → Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F ⊗[F] E} (hz : z ∈ GlobalTheory.AdLat.hat F (Λ : Set (Fin M → E))) :
+    (m.map (inclR (F := F) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F))).mulVec z ∈ GlobalTheory.AdLat.hat F (Λ : Set (Fin M → E)) := by
   refine GlobalTheory.AdLat.Translate.mulVec_mem_hat (fun x hx => ?_) hz
   rw [SetLike.mem_coe, GlobalTheory.AdLat.Translate.mem_pre, mulVec_fv]
   exact GlobalTheory.AdLat.Translate.fv_mem_hat (h x hx)
 
 theorem stabHat_conj {M : ℕ} (δ : GL (Fin M) E) (L Λ : Submodule (𝓞 E) (Fin M → E))
-    (s : GL (Fin M) (Af F ⊗[F] E))
-    (hΛ : (GlobalTheory.AdLat.hat F (Λ : Set (Fin M → E)) : Set (Fin M → Af F ⊗[F] E)) =
-      (s : Matrix (Fin M) (Fin M) (Af F ⊗[F] E)).mulVec '' (GlobalTheory.AdLat.hat F (L : Set (Fin M → E))))
+    (s : GL (Fin M) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F ⊗[F] E))
+    (hΛ : (GlobalTheory.AdLat.hat F (Λ : Set (Fin M → E)) : Set (Fin M → Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F ⊗[F] E)) =
+      (s : Matrix (Fin M) (Fin M) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F ⊗[F] E)).mulVec '' (GlobalTheory.AdLat.hat F (L : Set (Fin M → E))))
     (h : ∀ x, x ∈ Λ ↔ (δ : Matrix (Fin M) (Fin M) E).mulVec x ∈ Λ) :
     StabHat F (L : Set (Fin M → E))
-      ((s⁻¹ * Formalism.UG.bc (inclR (F := F) (Af F)) δ * s : GL (Fin M) (Af F ⊗[F] E)) :
-        Matrix (Fin M) (Fin M) (Af F ⊗[F] E)) := by
+      ((s⁻¹ * Formalism.UG.bc (inclR (F := F) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F)) δ * s : GL (Fin M) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F ⊗[F] E)) :
+        Matrix (Fin M) (Fin M) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F ⊗[F] E)) := by
   have him : ∀ y, y ∈ latHat F E (L : Set (Fin M → E)) ↔
-      (s : Matrix (Fin M) (Fin M) (Af F ⊗[F] E)).mulVec y ∈ GlobalTheory.AdLat.hat F (Λ : Set (Fin M → E)) := by
+      (s : Matrix (Fin M) (Fin M) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F ⊗[F] E)).mulVec y ∈ GlobalTheory.AdLat.hat F (Λ : Set (Fin M → E)) := by
     intro y
     rw [← SetLike.mem_coe (p := GlobalTheory.AdLat.hat F (Λ : Set (Fin M → E))), hΛ]
     constructor
     · exact fun hy => ⟨y, hy, rfl⟩
     · rintro ⟨u, hu, huy⟩
-      have := congrArg ((s⁻¹ : GL (Fin M) (Af F ⊗[F] E)) : Matrix (Fin M) (Fin M) (Af F ⊗[F] E)).mulVec huy
+      have := congrArg ((s⁻¹ : GL (Fin M) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F ⊗[F] E)) : Matrix (Fin M) (Fin M) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F ⊗[F] E)).mulVec huy
       rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, Units.inv_mul, Matrix.one_mulVec, Matrix.one_mulVec] at this
       exact this ▸ hu
   intro y
@@ -136,8 +136,8 @@ theorem stabHat_conj {M : ℕ} (δ : GL (Fin M) E) (L Λ : Submodule (𝓞 E) (F
   refine ⟨mulVec_mem_hat_of_rat _ Λ fun x hx => (h x).1 hx, fun hz => ?_⟩
   have := mulVec_mem_hat_of_rat ((δ⁻¹ : GL (Fin M) E) : Matrix (Fin M) (Fin M) E) Λ (fun x hx => by
     rw [h, Matrix.mulVec_mulVec, Units.mul_inv, Matrix.one_mulVec]; exact hx) hz
-  change ((Formalism.UG.bc (inclR (F := F) (Af F)) δ⁻¹ : GL (Fin M) (Af F ⊗[F] E)) :
-    Matrix (Fin M) (Fin M) (Af F ⊗[F] E)).mulVec _ ∈ _ at this
+  change ((Formalism.UG.bc (inclR (F := F) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F)) δ⁻¹ : GL (Fin M) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F ⊗[F] E)) :
+    Matrix (Fin M) (Fin M) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F ⊗[F] E)).mulVec _ ∈ _ at this
   rwa [Matrix.mulVec_mulVec, ← Units.val_mul, ← map_mul, inv_mul_cancel, map_one, Units.val_one,
     Matrix.one_mulVec] at this
 
@@ -148,29 +148,29 @@ theorem finVol : FiniteVolume₂ := by
   classical
   haveI := topGroup_HA (AF F) σ J
   haveI := topGroup_HA (Ainf F) σ J
-  haveI := topGroup_HA (Af F) σ J
+  haveI := topGroup_HA (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J
   haveI : BorelSpace (HA (AF F) σ J) := ⟨rfl⟩
   haveI : BorelSpace (HA (Ainf F) σ J) := ⟨rfl⟩
-  haveI : BorelSpace (HA (Af F) σ J) := ⟨rfl⟩
+  haveI : BorelSpace (HA (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J) := ⟨rfl⟩
   haveI := GlobalTheory.AdelicUnitaryTop.locallyCompact_finiteAdele F
   haveI := GlobalTheory.AdelicUnitaryTop.secondCountable_finiteAdele F
   haveI := GlobalTheory.AdelicUnitaryTop.t2Space_finiteAdeleRing_of_numberField F
   haveI := GlobalTheory.AdelicUnitaryTop.secondCountable_infiniteAdele F
   haveI := GlobalTheory.AdelicUnitaryTop.t2Space_infiniteAdeleRing_of_numberField_field F
   obtain ⟨_, _, -⟩ := GlobalTheory.AdelicUnitaryTop.lcsc_HA (Ainf F) σ M J
-  obtain ⟨_, _, -⟩ := GlobalTheory.AdelicUnitaryTop.lcsc_HA (Af F) σ M J
+  obtain ⟨_, _, -⟩ := GlobalTheory.AdelicUnitaryTop.lcsc_HA (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ M J
   haveI : Countable E := (Module.finBasis ℚ E).equivFun.injective.countable
   let Γ : Subgroup (HA (AF F) σ J) := HFinIn (AF F) σ J
   haveI : Countable Γ := countable_HFinIn (AF F) σ J
   obtain ⟨e, he⟩ := GlobalTheory.Mem.VolSplit.exists_adelic_split F E σ M J
-  have herat : ∀ γ, e (ratPt (AF F) σ J γ) = (ratPt (Ainf F) σ J γ, ratPt (Af F) σ J γ) := by
+  have herat : ∀ γ, e (ratPt (AF F) σ J γ) = (ratPt (Ainf F) σ J γ, ratPt (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J γ) := by
     intro γ
     refine Prod.ext (Subtype.ext (Units.ext ((he _).2.trans ?_))) (Subtype.ext (Units.ext ((he _).1.trans ?_)))
     · ext i j
       change Algebra.TensorProduct.map (fstA F) (AlgHom.id F E) (inclR (F := F) (AF F) _) = inclR (F := F) (Ainf F) _
       simp [inclR]
     · ext i j
-      change Algebra.TensorProduct.map (sndA F) (AlgHom.id F E) (inclR (F := F) (AF F) _) = inclR (F := F) (Af F) _
+      change Algebra.TensorProduct.map (sndA F) (AlgHom.id F E) (inclR (F := F) (AF F) _) = inclR (F := F) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) _
       simp [inclR]
   let b := Pi.basisFun E (Fin M)
   let L : Submodule (𝓞 E) (Fin M → E) := Submodule.span (𝓞 E) (Set.range b)
@@ -180,19 +180,19 @@ theorem finVol : FiniteVolume₂ := by
     exact Submodule.span_mono Submodule.subset_span
   obtain ⟨K, hK, hKo, hKc⟩ := _root_.GlobalTheory.Mem.Vol.StabGroup.exists_compact_open_stab F E σ M J L hL hLs
   obtain ⟨S, hS⟩ := _root_.GlobalTheory.Mem.ClassFinite.exists_finset_classes F E σ hCM M J hJ K hKo
-  choose Λ _ hΛ1 hΛ2 hΛ3 using fun s : HA (Af F) σ J =>
-    GlobalTheory.AdLat.exists_lattice_latOf F E M L (HA.mat (Af F) σ J s) hL hLs
-  choose Ω _ hΩ1 hΩ2 using fun s : HA (Af F) σ J =>
+  choose Λ _ hΛ1 hΛ2 hΛ3 using fun s : HA (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J =>
+    GlobalTheory.AdLat.exists_lattice_latOf F E M L (HA.mat (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J s) hL hLs
+  choose Ω _ hΩ1 hΩ2 using fun s : HA (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J =>
     GlobalTheory.T.finite_covolume_latticeStabiliser_unitaryRealPoints F E σ hCM M J hJ (Λ s) (hΛ1 s) (hΛ2 s) Measure.haar inferInstance
   refine measure_lt_top_of_cover e Γ μ S K hKc Ω hΩ1 (fun g => ?_) 𝓕 h𝓕
   obtain ⟨⟨γ', γ, hγ, hγγ⟩, s, hs, k, hk, hg⟩ := hS (e g).2
-  have hg2 : (e g).2 = ratPt (Af F) σ J ⟨γ, hγ⟩ * (s * k) := by
+  have hg2 : (e g).2 = ratPt (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J ⟨γ, hγ⟩ * (s * k) := by
     rw [hg]
-    exact congrArg (· * (s * k)) (Subtype.ext hγγ.symm : (γ' : HA (Af F) σ J) = ratPt (Af F) σ J ⟨γ, hγ⟩)
+    exact congrArg (· * (s * k)) (Subtype.ext hγγ.symm : (γ' : HA (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J) = ratPt (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J ⟨γ, hγ⟩)
   obtain ⟨δ, hδ, hδΛ, w, hw, hwe⟩ := hΩ2 s ((ratPt (Ainf F) σ J ⟨γ, hγ⟩)⁻¹ * (e g).1)
   have hw1 : (ratPt (Ainf F) σ J ⟨γ, hγ⟩)⁻¹ * (e g).1 = ratPt (Ainf F) σ J ⟨δ, hδ⟩ * w := Subtype.ext hwe
-  have hkδ : s⁻¹ * ratPt (Af F) σ J ⟨δ, hδ⟩ * s ∈ K :=
-    (hK _).2 (stabHat_conj δ L (Λ s) (HA.mat (Af F) σ J s) (hΛ3 s) hδΛ)
+  have hkδ : s⁻¹ * ratPt (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J ⟨δ, hδ⟩ * s ∈ K :=
+    (hK _).2 (stabHat_conj δ L (Λ s) (HA.mat (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J s) (hΛ3 s) hδΛ)
   let η : Formalism.UG.UJ (σ : E →+* E) J := (⟨δ, hδ⟩ : Formalism.UG.UJ (σ : E →+* E) J)⁻¹ * (⟨γ, hγ⟩ : Formalism.UG.UJ (σ : E →+* E) J)⁻¹
   refine ⟨⟨ratPt (AF F) σ J η, η.1, η.2, rfl⟩, s, hs, ?_, ?_⟩
   · change (e (ratPt (AF F) σ J η * g)).1 ∈ _

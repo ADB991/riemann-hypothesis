@@ -101,7 +101,7 @@ theorem gaga_rat_C : GagaSections → ∀ (X : Scheme.{0}) (s : X ⟶ Sp ℂ) (�
     obtain ⟨d, B, Y, b₁, hC, hb₁, e₁, hin, hd⟩ := chart dens X s Ω ξ W N x hs hgen hW hx hc hN
     have gm : ∀ (q : X) (hq : genPt ξ ⤳ q) (h : q ∈ N),
         genMap ξ ⟨q, hq⟩ (X.presheaf.germ N q h v) = t / T p := fun q hq h => by
-      rw [genMap_germ N hq h (genPt_mem hc hN), ← genMap_germ N hc hN (genPt_mem hc hN), ev]
+      rw [GlobalTheory.CompanionTheory.Ar.Flat.GagaC.genMap_germ N hq h (genPt_mem hc hN), ← GlobalTheory.CompanionTheory.Ar.Flat.GagaC.genMap_germ N hc hN (genPt_mem hc hN), ev]
     subst e₁
     obtain ⟨B₂, H, m₂, hH⟩ := hch X s Ω ξ W (Uc p) N F (T p) t v d B Y b₁ hgen hC hb₁ hin lN hd uv gm
       (gen p p (memU p)).1 he
@@ -176,7 +176,7 @@ theorem gaga_rat_C : GagaSections → ∀ (X : Scheme.{0}) (s : X ⟶ Sp ℂ) (�
       (map_mul (genV ξ (Uc p ⊓ Uc p') gI) _ _)
     have e₁ := genV_res (ξ := ξ) (inf_le_left : Uc p ⊓ Uc p' ≤ Uc p) gI (gU p) (σ.f (some p))
     have e₂ := genV_res (ξ := ξ) (inf_le_right : Uc p ⊓ Uc p' ≤ Uc p') gI (gU p') (σ.f (some p'))
-    have e₃ := (genMap_germ (ξ := ξ) (Uc p ⊓ Uc p') specializes_rfl gI gI (g (some p) (some p')).val).symm.trans
+    have e₃ := (GlobalTheory.CompanionTheory.Ar.Flat.GagaC.genMap_germ (ξ := ξ) (Uc p ⊓ Uc p') specializes_rfl gI gI (g (some p) (some p')).val).symm.trans
       (hg p p' _ specializes_rfl gI)
     have e₄ : c p = T p' / T p * c p' := by
       show genV ξ (Uc p) (gU p) (σ.f (some p)) = _ * genV ξ (Uc p') (gU p') (σ.f (some p'))
@@ -196,7 +196,7 @@ theorem gaga_rat_C : GagaSections → ∀ (X : Scheme.{0}) (s : X ⟶ Sp ℂ) (�
     have hy' : y ≫ s = 𝟙 _ := by rw [hy, spid]
     obtain ⟨r, -, hr⟩ := ValAt.exists_ne_zero hgen hc (hunitW p _ hc mU hyW)
     have v1 : ValAt ξ y (c p) (valAt' y (Uc p) (σ.f (some p))) :=
-      ValAt.of_section mU hc (genMap_germ _ hc mU (gU p) _)
+      ValAt.of_section mU hc (GlobalTheory.CompanionTheory.Ar.Flat.GagaC.genMap_germ _ hc mU (gU p) _)
     have v2 := ValAt.mul v1 hr
     rw [show valAt' y (Uc p) (σ.f (some p)) = h0 p y from hσ (some p) y hy' ((top_le_iff_centre _ _).2 mU)] at v2
     obtain ⟨cc, hcc⟩ := relEx p y hy' mU

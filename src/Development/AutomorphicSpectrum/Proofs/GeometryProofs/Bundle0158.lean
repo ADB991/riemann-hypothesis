@@ -103,7 +103,7 @@ theorem descend {ξ : Sp Ω ⟶ X} (hξ : IsCptGen ξ) (zL : Sp L ⟶ X) (e : L 
   obtain ⟨h', s, hs, -⟩ := h
   have h'' : genPt ξ ⤳ centre zL := hc ▸ h'
   have hv : ValAt ξ zL a (Scheme.stalkClosedPointTo zL |>.hom (X.presheaf.stalkSpecializes (specializes_of_eq hc) s)) :=
-    ⟨h'', _, (genMap_stalkSpecializes ξ hc h' h'' s).trans hs, rfl⟩
+    ⟨h'', _, (GlobalTheory.CompanionTheory.Ar.RootHt.PullVal.genMap_stalkSpecializes ξ hc h' h'' s).trans hs, rfl⟩
   exact ⟨_, hv, ValAt.unique hξ (valAt_of_field_map ξ zL _ e rfl hv) h0⟩
 
 theorem coords_map (ξ : Sp Ω ⟶ X) {K : Type} {J : K → Type} {y : (Σ k, J k) → Ω} {zL : Sp L ⟶ X}
