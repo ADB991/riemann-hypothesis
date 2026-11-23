@@ -318,7 +318,7 @@ theorem LevelTowerAlt.exists_potential_charts : ∀ (K : Type) [Fintype K] (J : 
     rw [hκ]
     rcases ix j with ⟨p, _ | _⟩
     · rfl
-    · exact (cj_cj _).symm
+    · exact (LevelTowerAlt.Charts.cj_cj _).symm
   have hκκ : ∀ j, κ (κ j) = j := fun j => by
     have : ∀ x, fl (fl x) = x := fun x => by simp [fl, Equiv.boolNot, Prod.map]
     simp only [κ, Equiv.trans_apply, Equiv.apply_symm_apply, this, Equiv.symm_apply_apply]
