@@ -38,7 +38,7 @@ namespace GlobalTheory.TypeAsm.StabRat
 open Formalism.HermitianLatticeCounting.S6
 
 section Conj
-variable {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K V] {H : HermSpace K V} {r : ℕ}
+variable {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K V] {H : Formalism.HermitianLatticeCounting.S6.HermSpace K V} {r : ℕ}
 
 theorem xa_map {F G : FlagD H r} (g : V ≃ₗ[K] V) (he : ∀ a, G.e a = g (F.e a)) (a : ℕ) :
     G.Xa a = (F.Xa a).map (g : V →ₗ[K] V) := by
