@@ -328,7 +328,7 @@ theorem satM_free_loc {l : ℕ} [Fact l.Prime] {P : LocPrime l} (H : LocHW l P) 
   haveI : Module.Finite (AA K LL) ↥(W.N T₂) := Module.Finite.iff_fg.mpr (W.N_fg T₂)
   haveI hR : IsNoetherianRing (PowerSeries ↥(OL LL)) := inferInstance
   haveI hA : IsNoetherianRing (AA K LL) :=
-    isNoetherian_of_tower (PowerSeries ↥(OL LL)) (isNoetherian_pi' (R := PowerSeries ↥(OL LL)))
+    inferInstanceAs (IsNoetherianRing (ZMod (Module.finrank ℚ_[l] ↥(K0 K)) → PowerSeries ↥(OL LL)))
   haveI hNn : IsNoetherian (AA K LL) ↥(W.N T₂) :=
     isNoetherian_of_isNoetherianRing_of_finite (AA K LL) ↥(W.N T₂)
   haveI : Module.Finite (AA K LL) ↥S :=

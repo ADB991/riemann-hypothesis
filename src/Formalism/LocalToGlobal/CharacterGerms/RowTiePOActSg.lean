@@ -186,7 +186,7 @@ theorem sg_act (Y : FBChart C V O dd) (α : O) (v : Fin dd → C) (hv : ∀ i, V
       rw [ev_neg hZ, ev_sum hZ]
       congr 1
       refine Finset.sum_congr rfl fun i _ => ?_
-      rw [Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul hZ, ev_C, eval_eval_pair constant_zero_first_zero hZ
+      rw [Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul hZ, PartialDerivEval.ev_C, eval_eval_pair constant_zero_first_zero hZ
         (a' := φ) (b' := 0) (fun j => ev_X hZ 0 j) (fun _ => ev_zero hZ)]
     rw [hsg, show Y.sgP (linAct ψ v) = -∑ j, MvPowerSeries.C (linAct ψ v j) *
         ev (n := 1) ![pt C dd 0, 0] (pderiv (R := C) ((1 : Fin 2), j) Y.h) from rfl, e]
