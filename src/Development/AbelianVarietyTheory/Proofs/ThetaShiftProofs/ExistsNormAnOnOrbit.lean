@@ -250,7 +250,7 @@ lemma flow_coord (hσ : Formalism.L2.PjFree.GoodEmb c σ) (hU : IsUnf U) (k : U.
   obtain ⟨idx, hty, hlt, -⟩ := GlobalTheory.ArcFlow.exists_idx Uw hσ hU k
   obtain ⟨hp0, -⟩ := hU.2.1 k
   refine ⟨fun j => (idx j).1, fun v j => Formalism.L2.PjFree.relab c σ (Uw.e j).1 ((U.X k).κ0 * herm (U.X k).Gm (Uw.φ k v : Fin r → E) ξ') *
-    perFr (U.X k) x.1 ξ' (Formalism.L2.PjFree.relab c σ (Uw.e j).1) (Uw.e j).2, fun s hs v j => ?_, fun sE hs v u hu j => ?_⟩
+    Formalism.L2.PjFree.perFr (U.X k) x.1 ξ' (Formalism.L2.PjFree.relab c σ (Uw.e j).1) (Uw.e j).2, fun s hs v j => ?_, fun sE hs v u hu j => ?_⟩
   · rw [Uw.Pm_eq, Uw.Pm_eq]
     dsimp only
     rw [hty j]
