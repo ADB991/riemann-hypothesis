@@ -918,7 +918,7 @@ abbrev RatForms : Type := Forms (constFn p) d
 variable {p d}
 
 def formOf (U : X.Opens) (h : genericPoint X ∈ U) : FormsOn p d U →ₛₗ[fnOf U h] RatForms p d :=
-  formMap d (fnOf U h) (fnOf_comp_algX p U h)
+  GlobalTheory.TopForm.formMap d (fnOf U h) (fnOf_comp_algX p U h)
 
 @[simp] theorem formOf_resForm {U V : X.Opens} (e : V ≤ U) (h : genericPoint X ∈ V)
     (ω : FormsOn p d U) : formOf V h (resForm e ω) = formOf U (e h) ω := by

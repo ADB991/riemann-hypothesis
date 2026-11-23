@@ -312,7 +312,7 @@ theorem relIndex_ne_zero_of_nsmul_mem {W : Type*} [AddCommGroup W] (L G : AddSub
       simpa using hG y y.2
   exact AddSubgroup.index_ne_zero_of_finite
 
-theorem latEmb_relIndex_dual_ne_zero : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Λ : Type) [AddCommGroup Λ] [Module.Free ℤ Λ] [Module.Finite ℤ Λ] (N : ℕ) (e : Λ →+ (Fin N → E)), Function.Injective e → ∀ form : Λ →ₗ[ℤ] Λ →ₗ[ℤ] ℤ, Function.Bijective form → ∀ B : LinearMap.BilinForm ℚ (Fin N → E), (∀ x y, B (e x) (e y) = ((form x y : ℤ) : ℚ)) → (∀ u v, B u v = - B v u) → (∀ u, (∀ v, B v u = 0) → u = 0) → (∀ v : Fin N → E, ∃ (k : ℕ) (x : Λ), k ≠ 0 ∧ e x = k • v) → ∀ (h : HermitianForm (maximalRealSubfield E) E (Fin N → E)) (m : ℕ), m ≠ 0 → (∀ (a : E) u v, Algebra.trace ℚ E (a * (((m : E) * (H.rt : E))⁻¹ * h.toSesq v u)) = B (a • u) v) → e.range.relIndex (dualLattice h e.range) ≠ 0 := by
+theorem latEmb_relIndex_dual_ne_zero : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Λ : Type) [AddCommGroup Λ] [Module.Free ℤ Λ] [Module.Finite ℤ Λ] (N : ℕ) (e : Λ →+ (Fin N → E)), Function.Injective e → ∀ form : Λ →ₗ[ℤ] Λ →ₗ[ℤ] ℤ, Function.Bijective form → ∀ B : LinearMap.BilinForm ℚ (Fin N → E), (∀ x y, B (e x) (e y) = ((form x y : ℤ) : ℚ)) → (∀ u v, B u v = - B v u) → (∀ u, (∀ v, B v u = 0) → u = 0) → (∀ v : Fin N → E, ∃ (k : ℕ) (x : Λ), k ≠ 0 ∧ e x = k • v) → ∀ (h : HermitianForm (maximalRealSubfield E) E (Fin N → E)) (m : ℕ), m ≠ 0 → (∀ (a : E) u v, Algebra.trace ℚ E (a * (((m : E) * (H.rt : E))⁻¹ * h.toSesq v u)) = B (a • u) v) → e.range.relIndex (GroundTheory.Heights₂.Heights.FiniteCovolume.dualLattice h e.range) ≠ 0 := by
   intro E _ _ _ H Λ _ _ _ N e he form hform B hB hskew hnd hspan h m hm htr
   classical
   have hd0 : (H.d : E) ≠ 0 := Nat.cast_ne_zero.2 H.d_prime.ne_zero
@@ -328,7 +328,7 @@ theorem latEmb_relIndex_dual_ne_zero : ∀ (E : Type) [Field E] [NumberField E] 
     push_cast
     field_simp
     linear_combination hrtsq
-  have key : ∀ y ∈ dualLattice h e.range, ∀ x, ∃ n : ℤ, (n : ℚ) = ((m * H.d : ℕ) : ℚ) * B (e x) y := by
+  have key : ∀ y ∈ GroundTheory.Heights₂.Heights.FiniteCovolume.dualLattice h e.range, ∀ x, ∃ n : ℤ, (n : ℚ) = ((m * H.d : ℕ) : ℚ) * B (e x) y := by
     intro y hy x
     have hint : IsIntegral ℤ (h.toSesq y (e x)) := hy (e x) ⟨x, rfl⟩
     have ht := htr 1 (e x) y
@@ -344,7 +344,7 @@ theorem latEmb_relIndex_dual_ne_zero : ∀ (E : Type) [Field E] [NumberField E] 
       Algebra.isIntegral_trace (hrti.mul hint)
     obtain ⟨n, hn⟩ := IsIntegrallyClosed.isIntegral_iff.1 h3
     exact ⟨n, by rw [h2, ← hn]; simp⟩
-  have hDy : ∀ y ∈ dualLattice h e.range, (m * H.d) • y ∈ e.range := by
+  have hDy : ∀ y ∈ GroundTheory.Heights₂.Heights.FiniteCovolume.dualLattice h e.range, (m * H.d) • y ∈ e.range := by
     intro y hy
     choose n hn using key y hy
     have hadd : ∀ a b, n (a + b) = n a + n b := by

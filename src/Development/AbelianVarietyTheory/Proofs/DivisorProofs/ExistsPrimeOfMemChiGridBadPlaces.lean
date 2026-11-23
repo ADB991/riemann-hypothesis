@@ -42,7 +42,7 @@ theorem continuous_of_level {v : HeightOneSpectrum (𝓞 L)} {θ : (v.adicComple
   have := Valuation.map_one_add_of_lt (Valued.v : Valuation (v.adicCompletion L) _) hlt
   rwa [add_sub_cancel] at this
 
-theorem localIdele_inj (v : HeightOneSpectrum (𝓞 L)) : Function.Injective (localIdele L v) := fun x y h => by
+theorem localIdele_inj (v : HeightOneSpectrum (𝓞 L)) : Function.Injective (Neutral.B1.localIdele L v) := fun x y h => by
   rw [← finEv_local_self v x, h, finEv_local_self]
 
 
@@ -76,11 +76,11 @@ theorem exists_hecke_level {F : Type} [Field F] [NumberField F] [Algebra F L] {c
   have hψi : ∀ i (k : Lˣ), ((ψ (infIdele L (InfinitePlace.mk (φ i)) (atInf _ k)) : ℂˣ) : ℂ) =
       (φ i (k : L) / ((‖φ i (k : L)‖ : ℝ) : ℂ)) ^ e i := fun i k => by
     rw [hψe, Finset.prod_eq_one fun v _ => by rw [finEv_inf, map_one], mul_one, hψ0i]
-  have hψS : ∀ v ∈ S, ∀ x, ψ (localIdele L v x) = θ v x := fun v hv x => by
+  have hψS : ∀ v ∈ S, ∀ x, ψ (Neutral.B1.localIdele L v x) = θ v x := fun v hv x => by
     rw [hψe, hψ0N v (by simp), one_mul, Finset.prod_eq_single_of_mem v hv, finEv_local_self]
     intro w _ hw
     rw [finEv_local_ne hw, map_one]
-  have hψN : ∀ v ∉ S, ∀ x, ψ (localIdele L v x) = 1 := fun v hv x => by
+  have hψN : ∀ v ∉ S, ∀ x, ψ (Neutral.B1.localIdele L v x) = 1 := fun v hv x => by
     rw [hψe, hψ0N v (by simp), one_mul]
     refine Finset.prod_eq_one fun w hw => ?_
     rw [finEv_local_ne (fun hh : w = v => hv (hh ▸ hw)), map_one]
@@ -95,9 +95,9 @@ theorem exists_hecke_level {F : Type} [Field F] [NumberField F] [Algebra F L] {c
   obtain ⟨χ, hχu, hχ⟩ := exists_anti h hC ψ hψ hψu h1
   have hfix : ∀ z, C z = z → χ.1 z = 1 := fun z hz => by
     rw [hχ z (by rw [hz, div_self']; exact one_mem _), hz, div_self', map_one]
-  have hloc : ∀ v v' x x', C (localIdele L v x) = localIdele L v' x' → Formalism.L2.Host.IsUnitAt v x → Formalism.L2.Host.IsUnitAt v' x' →
-      χ.loc v x = ψ (localIdele L v x) / ψ (localIdele L v' x') := fun v v' x x' hx h1 h2 => by
-    show χ.1 (localIdele L v x) = _
+  have hloc : ∀ v v' x x', C (Neutral.B1.localIdele L v x) = Neutral.B1.localIdele L v' x' → Formalism.L2.Host.IsUnitAt v x → Formalism.L2.Host.IsUnitAt v' x' →
+      χ.loc v x = ψ (Neutral.B1.localIdele L v x) / ψ (Neutral.B1.localIdele L v' x') := fun v v' x x' hx h1 h2 => by
+    show χ.1 (Neutral.B1.localIdele L v x) = _
     rw [hχ _ (by rw [hx]; exact div_mem (loc_mem h1) (loc_mem h2)), hx, map_div]
   refine ⟨χ, hχu, ⟨fun v k => ?_, fun w k => ?_⟩, ?_, fun v hv x hx => ?_, fun w hwS v hv => ?_⟩
   · rw [← hfix _ (conj_locF h hC v k)]

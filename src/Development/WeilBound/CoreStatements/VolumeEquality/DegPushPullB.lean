@@ -162,7 +162,7 @@ theorem fnField_comp_le (y : (Σ b, ι' b) → Ω) (κ : K → K') (v : (Σ b, �
 
 theorem relDeg_pointIdeal [Fintype K] [DecidableEq K] [Fintype K'] [DecidableEq K'] (j : K ↪ K') (y : (Σ b, ι' b) → Ω)
     (hy : ∀ b, ∃ i, y ⟨b, i⟩ ≠ 0) [(pointIdeal k y).IsPrime] :
-    relDeg j (pointIdeal k y) = IntermediateField.relfinrank (fnField k (y ∘ blockIncl j ι')) (fnField k y) := by
+    relDeg j (pointIdeal k y) = IntermediateField.relfinrank (fnField k (y ∘ GroundTheory.Heights₂.Heights.FieldNumbers.blockIncl j ι')) (fnField k y) := by
   let P' := pointIdeal k y
   let M := MvPolynomial K' Ω
   let L := FractionRing M
@@ -189,11 +189,11 @@ theorem relDeg_pointIdeal [Fintype K] [DecidableEq K] [Fintype K'] [DecidableEq 
   have h1 := map_homFrac P' φ c t y hy ht hφ
   let φ₂ := φ.comp (contractFracMap j P')
   have hφ₂ : ∀ p, φ₂ (algebraMap _ (FractionRing (MRing (fun b => ι' (j b)) k ⧸ contractPrime j P'))
-      (Ideal.Quotient.mk (contractPrime j P') (X p))) = c ((y ∘ blockIncl j ι') p) * (t ∘ j) p.1 := by
+      (Ideal.Quotient.mk (contractPrime j P') (X p))) = c ((y ∘ GroundTheory.Heights₂.Heights.FieldNumbers.blockIncl j ι') p) * (t ∘ j) p.1 := by
     intro p
     have hc : contractQuot j P' (Ideal.Quotient.mk (contractPrime j P') (X p)) =
-        Ideal.Quotient.mk P' (X (blockIncl j ι' p)) := by
-      show Ideal.Quotient.mk P' (rename (blockIncl j ι') (X p)) = _
+        Ideal.Quotient.mk P' (X (GroundTheory.Heights₂.Heights.FieldNumbers.blockIncl j ι' p)) := by
+      show Ideal.Quotient.mk P' (rename (GroundTheory.Heights₂.Heights.FieldNumbers.blockIncl j ι') (X p)) = _
       rw [rename_X]
     have hcf : contractFracMap j P' (algebraMap _ (FractionRing (MRing (fun b => ι' (j b)) k ⧸ contractPrime j P'))
         (Ideal.Quotient.mk (contractPrime j P') (X p))) =
@@ -204,7 +204,7 @@ theorem relDeg_pointIdeal [Fintype K] [DecidableEq K] [Fintype K'] [DecidableEq 
     simp only [φ₂, AlgHom.comp_apply]
     rw [hcf, hc, hφ]
     rfl
-  have h2 := map_homFrac (contractPrime j P') φ₂ c (t ∘ j) (y ∘ blockIncl j ι') (fun b => hy (j b))
+  have h2 := map_homFrac (contractPrime j P') φ₂ c (t ∘ j) (y ∘ GroundTheory.Heights₂.Heights.FieldNumbers.blockIncl j ι') (fun b => hy (j b))
     (fun b => ht (j b)) hφ₂
   unfold relDeg
   rw [← IntermediateField.relfinrank_map_map _ _ φ, IntermediateField.map_map, h1]
@@ -219,12 +219,12 @@ theorem numPull : NumPull := by
   obtain ⟨hκ, hvinj, hv, hvs⟩ := hbm
   let j : K ↪ K' := ⟨κ, hκ⟩
   let τf : (Σ b, ι b) → Σ b : K, ι' (j b) := fun p => ⟨p.1, cast (congrArg ι' (hv p)) (v p).2⟩
-  have hτv : ∀ p, blockIncl j ι' (τf p) = v p := by
+  have hτv : ∀ p, GroundTheory.Heights₂.Heights.FieldNumbers.blockIncl j ι' (τf p) = v p := by
     intro p
     exact Sigma.ext (hv p).symm (cast_heq _ _)
-  have hbinj : Function.Injective (blockIncl j ι') := by
+  have hbinj : Function.Injective (GroundTheory.Heights₂.Heights.FieldNumbers.blockIncl j ι') := by
     rintro ⟨b1, i1⟩ ⟨b2, i2⟩ h
-    simp only [blockIncl, Sigma.mk.inj_iff] at h
+    simp only [GroundTheory.Heights₂.Heights.FieldNumbers.blockIncl, Sigma.mk.inj_iff] at h
     obtain ⟨h1, h2⟩ := h
     have hb : b1 = b2 := hκ h1
     subst hb
@@ -235,10 +235,10 @@ theorem numPull : NumPull := by
     obtain ⟨p, hp⟩ := hvs ⟨κ b, i⟩ ⟨b, rfl⟩
     exact ⟨p, hbinj (by rw [hτv, hp]; rfl)⟩
   let τ := Equiv.ofBijective τf ⟨hτinj, hτsurj⟩
-  let z := y ∘ blockIncl j ι'
+  let z := y ∘ GroundTheory.Heights₂.Heights.FieldNumbers.blockIncl j ι'
   have hyvz : y ∘ v = z ∘ τ := by
     funext p
-    show y (v p) = y (blockIncl j ι' (τf p))
+    show y (v p) = y (GroundTheory.Heights₂.Heights.FieldNumbers.blockIncl j ι' (τf p))
     rw [hτv]
   have hF1 : fnField k (y ∘ v) = fnField k z := by
     rw [hyvz]
@@ -271,13 +271,13 @@ theorem numPull : NumPull := by
   obtain ⟨hPzm, hrelz, -⟩ := ptDim k Ω K (fun b => ι' (j b)) z d hzPt
   haveI : (pointIdeal k y).IsPrime := hP'm.isPrime
   have hcon : contractPrime j (pointIdeal k y) = pointIdeal k z :=
-    (pointIdeal_comp y κ hκ (blockIncl j ι') (fun p => rfl)).symm
+    (pointIdeal_comp y κ hκ (GroundTheory.Heights₂.Heights.FieldNumbers.blockIncl j ι') (fun p => rfl)).symm
   have hPF := (ProjectionFormulaDegree.of_divPushForward
     (DivPushForward.proof ContractRelDimLe.proof DivPushForwardLocalZero)
     k K K' j ι' (pointIdeal k y) hP'm d hrel (by rw [hcon]; exact hrelz) a).2
   rw [hcon] at hPF
   have hrd := relDeg_pointIdeal (k := k) j y hy.1
-  have hle : fnField k z ≤ fnField k y := fnField_comp_le y κ (blockIncl j ι') (fun p => rfl)
+  have hle : fnField k z ≤ fnField k y := fnField_comp_le y κ (GroundTheory.Heights₂.Heights.FieldNumbers.blockIncl j ι') (fun p => rfl)
   haveI : FiniteDimensional (fnField k y) Ω := hy.2.1
   unfold num
   rw [hinum, hF1, ← IntermediateField.relfinrank_mul_finrank_top hle]

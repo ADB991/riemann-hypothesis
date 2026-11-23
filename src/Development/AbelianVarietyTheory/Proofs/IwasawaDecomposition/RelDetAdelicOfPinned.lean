@@ -66,12 +66,12 @@ theorem ordSub_coe {I : FractionalIdeal (𝓞 L)⁰ L} (hI : I ≠ 0) (w : Heigh
     ordSub w (I : Submodule (𝓞 L) L) = FractionalIdeal.count L w I := by
   obtain ⟨y, hy, e⟩ := GlobalTheory.Idele.exists_mem_valuation_eq hI w
   have hy0 : y ≠ 0 := fun h => by rw [h, map_zero] at e; exact exp_ne_zero e.symm
-  refine IsLeast.csInf_eq ⟨⟨Units.mk0 y hy0, hy, by simp [ordF, e]⟩, ?_⟩
+  refine IsLeast.csInf_eq ⟨⟨Units.mk0 y hy0, hy, by simp [Formalism.L2.Host.ordF, e]⟩, ?_⟩
   rintro n ⟨k, hk, rfl⟩
   have h0 : w.valuation L (k : L) ≠ 0 := by simp
   have := (GlobalTheory.Idele.mem_iff_valuation_le hI _).1 hk w
   rw [← exp_log h0, exp_le_exp] at this
-  unfold ordF
+  unfold Formalism.L2.Host.ordF
   omega
 
 theorem coe_eq_of_pow {𝔞 𝔟 : Submodule (𝓞 L) L} (hb : 𝔞 * 𝔟 = 1) {I : FractionalIdeal (𝓞 L)⁰ L} (hI : I ≠ 0) {z : L}
