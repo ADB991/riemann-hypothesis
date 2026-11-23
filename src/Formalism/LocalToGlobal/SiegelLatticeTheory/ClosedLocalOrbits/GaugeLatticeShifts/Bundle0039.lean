@@ -70,7 +70,7 @@ theorem tmap_id {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ
 
 variable {Y : Full X} {u u' : D.what₂.Word}
 
-theorem act_one (q : {Λ // Λ ∈ Y.what₂ u'}) (t : TT Y u u') :
+theorem act_one (q : {Λ // Λ ∈ Y.what₂ u'}) (t : Formalism.L2.SG.PackageTie2.TT Y u u') :
     KernelOfEmbedding.act Y q ⟨1, one_mem_gamL (Y.cs u') q⟩ t = t :=
   tmap_id _ _ rfl isoG_one t
 
@@ -99,7 +99,7 @@ theorem rowFree_of (hN : ∀ u' : D.what₂.Word, Formalism.L2.SG.PoincareInHH.C
   rw [h1, act_one]
 
 theorem liftIotaFree (hN : ∀ u' : D.what₂.Word, Formalism.L2.SG.PoincareInHH.Cut.NeatKu X u' Y.hK)
-    (hIR : SatGramRep.IotaRepC) (u u' : D.what₂.Word) (s₁ s₂ : TT Y u u') (h : s₁.toTerm = s₂.toTerm)
+    (hIR : SatGramRep.IotaRepC) (u u' : D.what₂.Word) (s₁ s₂ : Formalism.L2.SG.PackageTie2.TT Y u u') (h : s₁.toTerm = s₂.toTerm)
     (hr : rowOf Y.TR (Y.cs u) (Y.cs u') s₁ = rowOf Y.TR (Y.cs u) (Y.cs u') s₂) : s₁ = s₂ :=
   rowFree_of hN hIR u u' s₁ s₂ h hr
 
