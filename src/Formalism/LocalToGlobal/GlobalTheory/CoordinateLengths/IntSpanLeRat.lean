@@ -19,9 +19,9 @@ def RatInC (D : D7) (u : D.what₂.Word) : Prop :=
 
 def RatGL (D : D7) (u : D.what₂.Word) : Prop :=
   ∀ (γ : D.what₂.Tau → GL (Fin (D.R.N 0)) D.host.E), ∀ P ∈ RatSpan D ((D.fm u).lam 0),
-    MvPolynomial.C (∏ τ, (atInf (embT D) ((γ τ : GL (Fin (D.R.N 0)) D.host.E) :
+    MvPolynomial.C (∏ τ, (atInf (Formalism.L2.Forms.embT D) ((γ τ : GL (Fin (D.R.N 0)) D.host.E) :
         Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) τ).det ^ shiftOf (lamT u 0) τ) *
-      subP (fun τ => atInf (embT D) ((γ τ : GL (Fin (D.R.N 0)) D.host.E) :
+      subP (fun τ => atInf (Formalism.L2.Forms.embT D) ((γ τ : GL (Fin (D.R.N 0)) D.host.E) :
         Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) τ) P ∈ RatSpan D ((D.fm u).lam 0)
 
 theorem intSpan_le_rat (w : D.what₂.places.Pl) {N : ℕ} (lam : D.what₂.Tau → DomWeight N) :
@@ -47,13 +47,13 @@ theorem mem_intSubm (w : D.what₂.places.Pl) {N : ℕ} (lam : D.what₂.Tau →
 theorem crd_surj (T : Forms0 D u) (hA : admS D u) (B : (D.mem u).C.cls 0 → GL (Fin (D.R.N 0)) D.host.E)
     (Q : (D.mem u).C.cls 0 → MvPolynomial (D.what₂.Tau × Fin (D.R.N 0) × Fin (D.R.N 0)) ℂ)
     (hQ : ∀ c, ∃ P ∈ RatSpan D ((D.fm u).lam 0), P ∈ Formalism.L2.Forms.CSpan ((D.fm u).lam 0) ∧
-      ∀ y, fnOf (gramC (gramN D 0 (Nat.zero_le _)) (embT D)) (shiftOf (lamT u 0)) 1 P y =
-        fnOf (gramC (gramN D 0 (Nat.zero_le _)) (embT D)) (shiftOf (lamT u 0))
-          (atInf (embT D) ((B c)⁻¹ : GL (Fin (D.R.N 0)) D.host.E).1) (Q c) y) :
+      ∀ y, fnOf (gramC (gramN D 0 (Nat.zero_le _)) (Formalism.L2.Forms.embT D)) (shiftOf (lamT u 0)) 1 P y =
+        fnOf (gramC (gramN D 0 (Nat.zero_le _)) (Formalism.L2.Forms.embT D)) (shiftOf (lamT u 0))
+          (atInf (Formalism.L2.Forms.embT D) ((B c)⁻¹ : GL (Fin (D.R.N 0)) D.host.E).1) (Q c) y) :
     ∃ x : ((D.fm u).lat 0).V, ∀ c, IsCrd T (B c) x c (Q c) := by
   let φ : (D.mem u).C.cls 0 → (D.mem u).C.Y 0 → ℂ := fun c z =>
-    fnOf (gramC (gramN D 0 (Nat.zero_le _)) (embT D)) (shiftOf (lamT u 0))
-      (atInf (embT D) ((B c)⁻¹ : GL (Fin (D.R.N 0)) D.host.E).1) (Q c) (T.val0.eY z)
+    fnOf (gramC (gramN D 0 (Nat.zero_le _)) (Formalism.L2.Forms.embT D)) (shiftOf (lamT u 0))
+      (atInf (Formalism.L2.Forms.embT D) ((B c)⁻¹ : GL (Fin (D.R.N 0)) D.host.E).1) (Q c) (T.val0.eY z)
   have hFi : φ ∈ (D.fm u).Fi 0 := by
     rw [(D.fm u).Fi_zero, S0.mem_forms_level_zero_iff T hA φ]
     intro c
@@ -72,13 +72,13 @@ theorem crd_surj (T : Forms0 D u) (hA : admS D u) (B : (D.mem u).C.cls 0 → GL 
 
 theorem fnOf_frame (B : GL (Fin (D.R.N 0)) D.host.E)
     (Q : MvPolynomial (D.what₂.Tau × Fin (D.R.N 0) × Fin (D.R.N 0)) ℂ) (y) :
-    fnOf (gramC (gramN D 0 (Nat.zero_le _)) (embT D)) (shiftOf (lamT u 0)) 1
-        (MvPolynomial.C (∏ τ, (atInf (embT D) ((B⁻¹ : GL (Fin (D.R.N 0)) D.host.E) :
+    fnOf (gramC (gramN D 0 (Nat.zero_le _)) (Formalism.L2.Forms.embT D)) (shiftOf (lamT u 0)) 1
+        (MvPolynomial.C (∏ τ, (atInf (Formalism.L2.Forms.embT D) ((B⁻¹ : GL (Fin (D.R.N 0)) D.host.E) :
           Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) τ).det ^ shiftOf (lamT u 0) τ) *
-          subP (fun τ => atInf (embT D) ((B⁻¹ : GL (Fin (D.R.N 0)) D.host.E) :
+          subP (fun τ => atInf (Formalism.L2.Forms.embT D) ((B⁻¹ : GL (Fin (D.R.N 0)) D.host.E) :
             Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) τ) Q) y =
-      fnOf (gramC (gramN D 0 (Nat.zero_le _)) (embT D)) (shiftOf (lamT u 0))
-        (atInf (embT D) (B⁻¹ : GL (Fin (D.R.N 0)) D.host.E).1) Q y := by
+      fnOf (gramC (gramN D 0 (Nat.zero_le _)) (Formalism.L2.Forms.embT D)) (shiftOf (lamT u 0))
+        (atInf (Formalism.L2.Forms.embT D) (B⁻¹ : GL (Fin (D.R.N 0)) D.host.E).1) Q y := by
   have key : ∀ (A z : D.what₂.Tau → Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) ℂ)
       (P : MvPolynomial (D.what₂.Tau × Fin (D.R.N 0) × Fin (D.R.N 0)) ℂ),
       MvPolynomial.eval (fun x => z x.1 x.2.1 x.2.2) (subP A P) =
