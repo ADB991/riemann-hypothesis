@@ -234,7 +234,7 @@ theorem DualStdFibreRatios.proof (hTr : GenFibreModelTransport.Statement) (hMod 
   have hΦ₀ : (algebraMap Φ₀ (dualStdModelField K i)).fieldRange = Φ₀ := Subfield.fieldRange_subtype _
   obtain ⟨h0, hrk, htr⟩ := hTr Unit (PBlk i) (Unit ⊕ Unit) (Sum.elim (dualBlocks T) (PBlk i))
     (inrV (ι := dualBlocks T) (ι₂ := PBlk i))
-    (graphIdeal (dualIdeal b) (linForm (ι₂ := PBlk i) (dualStdCoordMat b))) G (dualStdModelField K i)
+    (graphIdeal (dualIdeal b) (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι₂ := PBlk i) (dualStdCoordMat b))) G (dualStdModelField K i)
     (dualStdModelPt b) (hMod K i T b) Φ₀ hΦ₀ T
     (fun t => (⟨Sum.inl (), t⟩ : Σ k, Sum.elim (dualBlocks T) (PBlk i) k))
     (⟨Sum.inl (), c⟩ : Σ k, Sum.elim (dualBlocks T) (PBlk i) k)
@@ -264,10 +264,10 @@ variable {K : Type} [Field K] [NumberField K] {i : ℕ} {T : Type} [Fintype T]
 
 theorem mConeMap_linForm (b : Module.Basis T ℤ (dualLattice (HermLattice.standard K i)))
     (q : Σ _ : Unit, Fin i) :
-    mConeMap (dualLatticeCoord b) (linForm (ι₂ := PBlk i) (dualStdCoordMat b) q) =
-      C (aeval (dualLatticeCoord b) (linForm (ι₂ := PBlk i) (dualStdCoordMat b) q)) * X () := by
+    mConeMap (dualLatticeCoord b) (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι₂ := PBlk i) (dualStdCoordMat b) q) =
+      C (aeval (dualLatticeCoord b) (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι₂ := PBlk i) (dualStdCoordMat b) q)) * X () := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [linForm, map_sum, map_mul, Finset.sum_mul, mConeMap, aeval_X, eq_intCast, map_intCast]
+    simp only [ReciprocityTheory.ChartRestriction.G.AI.I4.linForm, map_sum, map_mul, Finset.sum_mul, mConeMap, aeval_X, eq_intCast, map_intCast]
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [mul_assoc]
 
@@ -298,7 +298,7 @@ theorem modelMap_injective (b : Module.Basis T ℤ (dualLattice (HermLattice.sta
 
 theorem modelMap_comp_graphMap [DecidableEq T]
     (b : Module.Basis T ℤ (dualLattice (HermLattice.standard K i))) :
-    (modelMap b).comp (graphMap (dualIdeal b) (linForm (ι₂ := PBlk i) (dualStdCoordMat b))) =
+    (modelMap b).comp (graphMap (dualIdeal b) (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι₂ := PBlk i) (dualStdCoordMat b))) =
       (eval₂Hom (Int.castRingHom (dualStdModelField K i)) (dualStdModelPt b) :
         MRing (Sum.elim (dualBlocks T) (PBlk i)) →+* dualStdModelField K i) := by
   refine MvPolynomial.ringHom_ext (fun r => by simp) ?_
@@ -308,7 +308,7 @@ theorem modelMap_comp_graphMap [DecidableEq T]
   · have h := mConeMap_linForm b ⟨(), j⟩
     rw [aeval_linForm] at h
     simp only [RingHom.comp_apply, graphMap, eval₂Hom_X', modelMap, map_mul, map_C, map_X, coneLift_mk, h,
-      dualStdModelPt, dualStdModelEmb, dualStdModelS, dualStdModelT, genPt]
+      dualStdModelPt, dualStdModelEmb, dualStdModelS, dualStdModelT, GroundTheory.Heights₂.Heights.StandardDualImageBottom.genPt]
 
 end StandardDualGraphModel
 

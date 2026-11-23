@@ -32,7 +32,7 @@ theorem isSmoothHerm_blockLine {m : ConeMetric ℂ (Ix κ)} (hm : IsSmoothMetric
     exact hi (congrFun h0 ⟨(), i⟩)
 
 theorem isMultiHomog_X_blk (b : Fin 2) (i : κ) :
-    IsMultiHomog (X ⟨b, i⟩ : MRing (FinTwoTypeFamily κ)) (Pi.single b 1) := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (X ⟨b, i⟩ : MRing (FinTwoTypeFamily κ)) (Pi.single b 1) := by
   classical
   intro mo hmo k
   rw [support_X, Finset.mem_singleton] at hmo
@@ -42,7 +42,7 @@ theorem isMultiHomog_X_blk (b : Fin 2) (i : κ) :
     simp [Finsupp.single_apply]
   · simp [hk]
 
-theorem isMultiHomog_twoBlockNum (l : Ix κ → ℤ) : IsMultiHomog (twoBlockNum l) (Pi.single 1 1) := by
+theorem isMultiHomog_twoBlockNum (l : Ix κ → ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (twoBlockNum l) (Pi.single 1 1) := by
   classical
   intro mo hmo k
   unfold twoBlockNum at hmo
@@ -166,8 +166,8 @@ theorem logNorm_eq {x : Ix κ → Ω} {B : Matrix (Ix κ) (Ix κ) ℚ} {m m' : C
 
 open Classical in
 theorem cycR_split {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
-    (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) (P : Ideal (MRing ι)) {n : ℕ}
-    (L : Fin n → HermLine ι) (s : MRing ι) :
+    (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ) (P : Ideal (MRing ι)) {n : ℕ}
+    (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) :
     ReciprocityTheory.ChartRestriction.G.AI.I2.cycR I P L s =
       (∑ᶠ W ∈ divSupp P s, (multAt (P ⊔ Ideal.span {s}) W : ℝ) * (if IsHorizontal W then I W n L else 0)) +
         ReciprocityTheory.ChartRestriction.G.AI.I2.vertR P L s := by
@@ -226,7 +226,7 @@ theorem TwoBlockCoeffCycle.proof (hA : CoordArithOfFnField.Statement) (hF : TwoB
   have hxc : x ⟨(), c⟩ ≠ 0 := hxi.ne_zero _
 
   set ii : Fin (D + 1) := ⟨i, Nat.lt_succ_of_le hi⟩ with hii
-  set L' : Fin D → HermLine (FinTwoTypeFamily κ) := fun j => twoBlockList m m' D i (ii.succAbove j) with hL'
+  set L' : Fin D → ReciprocityTheory.ChartRestriction.G.Geo.HermLine (FinTwoTypeFamily κ) := fun j => twoBlockList m m' D i (ii.succAbove j) with hL'
   set τ : Equiv.Perm (Fin (D + 1)) := (finSuccEquiv' (Fin.last D)).trans (finSuccEquiv' ii).symm with hτ
   have hτ_last : τ (Fin.last D) = ii := by
     simp [hτ, finSuccEquiv'_at]
