@@ -100,7 +100,7 @@ theorem UpperTheory.valBlocksS_of_blkMemS :
       exact this
   have hOK : ∀ o, ∀ q ∈ L o, GlobalTheory.AttainsOK (X o) (F o) q.1 q.2 := fun o q hq =>
     attainsOK_of (X o) (F o) (Or.inl (hAlt o)) (hj o) q.1 q.2 (hwt o q hq) (hAtt o q hq)
-  have hsum : ∑ o, (List.map (fun q => GlobalTheory.what₂ (X o).n q.1) (L o)).sum ≤ n := by omega
+  have hsum : ∑ o, (List.map (fun q => Formalism.L2.FormalSeriesBounds.RF.GlobalTheory.what₂ (X o).n q.1) (L o)).sum ≤ n := by omega
   exact val_lists hV jetProd F L hOK hsum (hMem L hOne hWt)
 end
 

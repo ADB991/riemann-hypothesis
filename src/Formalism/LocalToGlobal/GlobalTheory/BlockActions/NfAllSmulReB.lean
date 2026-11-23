@@ -183,7 +183,7 @@ theorem gram_bZ_map (Tf : FormsTiedSym D u Ch chOf) (τ : D.what₂.Tau) :
   simp only [Matrix.map_mul] at h2
   erw [map_cT] at h2
   show ((bZ u Tf.til.z0).map (Forms.embT D τ))ᴴ * (gramN D D.R.m le_rfl).map (Forms.embT D τ) * (bZ u Tf.til.z0).map (Forms.embT D τ) = _
-  rw [h2, Matrix.reindex_apply, Matrix.reindex_apply, ← Matrix.submatrix_map, Matrix.fromBlocks_map,
+  erw [h2]; rw [Matrix.reindex_apply, Matrix.reindex_apply, ← Matrix.submatrix_map, Matrix.fromBlocks_map,
     Matrix.map_zero _ (map_zero _), Matrix.map_zero _ (map_zero _)]
   congr 2
   ext i j
