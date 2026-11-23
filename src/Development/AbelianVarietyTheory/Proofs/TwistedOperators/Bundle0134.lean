@@ -83,7 +83,7 @@ theorem card_Cs' (hm : G.NearMid) (hs : 1 ≤ G.s) (hg : G.s < G.ga) {i : ℕ} (
       linarith [GlobalTheory.ChiGrid.a_add_le (G := G) h, b1.1, b1.2, b2.1, b2.2]
 
 theorem card_entries_parPi (hm : G.NearMid) (hs : 1 ≤ G.s) (hg : G.s < G.ga) {i : ℕ} (hi : i ≤ G.m) :
-    (entries (G.parPi i)).card = G.rankP i := by
+    (GlobalTheory.SignedHC.entries (G.parPi i)).card = G.rankP i := by
   have hg0 : 0 < G.ga := by omega
   have d1 : Disjoint G.tops G.cloudHalf := disjoint_left.2 fun x h1 h2 => by
     obtain ⟨l, hl, rfl⟩ := GridData.mem_tops.1 h1
