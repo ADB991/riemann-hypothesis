@@ -278,7 +278,7 @@ theorem SectionMapInj.full : SectionMapInj.Statement := by
     rw [MvPolynomial.as_sum (g f), Finset.sum_smul]
     refine Submodule.sum_mem _ fun μ _ => ?_
     set a : K → ℕ := fun k => ∑ i, μ ⟨k, i⟩ with ha
-    have hhom : IsMultiHomog (monomial μ (AddMonoidAlgebra.coeff (g f) μ) : MRingOver S ι) a := fun m hm k => by
+    have hhom : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (monomial μ (AddMonoidAlgebra.coeff (g f) μ) : MRingOver S ι) a := fun m hm k => by
       rw [Finset.mem_singleton.mp (MvPolynomial.support_monomial_subset hm)]
     have hmem := hM.2 a d _ f hhom hfd
     by_cases he : (d + fun k => (a k : ℤ)) = c

@@ -377,7 +377,7 @@ theorem level_eq_of_gLies_of_hasTh : Out.Laws → Out.Laws2 → ∀ (g n j : ℕ
   have c₁ : IsGrpPullback u'.A u.A (𝟙 _) χ :=
     a₁.cancel (a₁'.congr (Category.id_comp _).symm e₁.symm) (by rw [e₂, Category.comp_id])
   have c₀ : LBIso (u.L.pull χ) (L.pull ψ') :=
-    l.chartPull (chartPullPull u.L χ χ rfl)
+    l.chartPull (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull u.L χ χ rfl)
       (chartPullSame L (fun _ : PUnit => ψ') (fun _ : PUnit => ψ) (fun _ => 1) χ (fun _ => e₁.symm))
   have c₂ : LBIso u'.L (u.L.pull χ) :=
     LBIso.trans u'.isLB (pull_isLB hLB _) (pull_isLB u.isLB _) l' c₀.symm
