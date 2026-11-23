@@ -322,8 +322,8 @@ variable {F₁ F₂ : Type} [Field F₁] [Field F₂] (e : F₁ ≃+* F₂)
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem isMultiHomog_map_iff (f : MRing ι F₁) (b : K → ℕ) :
-    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (map (e : F₁ →+* F₂) f) b ↔ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f b := by
-  unfold ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog IsWeightedHomogeneous
+    GroundTheory.Heights₂.Heights.NumbersDVR.IsMultiHomog (map (e : F₁ →+* F₂) f) b ↔ GroundTheory.Heights₂.Heights.NumbersDVR.IsMultiHomog f b := by
+  unfold GroundTheory.Heights₂.Heights.NumbersDVR.IsMultiHomog IsWeightedHomogeneous
   simp only [coeff_map, ne_eq, RingHom.coe_coe, EmbeddingLike.map_eq_zero_iff]
 
 noncomputable def quotEquiv (P : Ideal (MRing ι F₁)) :
@@ -374,7 +374,7 @@ theorem finrank_gradedPiece_map (P : Ideal (MRing ι F₁)) (n : K → ℕ) :
       rw [mem_weightedHomogeneousSubmodule] at hg ⊢
       have hgg : map (e : F₁ →+* F₂) (map (e.symm : F₂ →+* F₁) g) = g :=
         (mapEquiv (Σ k, ι k) e).apply_symm_apply g
-      have h' : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (map (e : F₁ →+* F₂) (map (e.symm : F₂ →+* F₁) g)) n := by
+      have h' : GroundTheory.Heights₂.Heights.NumbersDVR.IsMultiHomog (map (e : F₁ →+* F₂) (map (e.symm : F₂ →+* F₁) g)) n := by
         rw [hgg]
         exact hg
       exact (isMultiHomog_map_iff e _ n).1 h'
