@@ -177,7 +177,7 @@ theorem exists_bas {Λ Λ' : Submodule (𝓞 E) (Fin r → E)} (h : Λ' = Λ) (b
 
 theorem polyDeriv_thA_rename (φ : TF n g) {ι κ : Type} (ρ : ι → κ) (hρ : Function.Injective ρ)
     (Q : MvPolynomial ι ℂ) (u : κ → Fin n → Fin g → ℂ) :
-    polyDeriv (MvPolynomial.rename ρ Q) u (thA X bas idx φ x) 0 = polyDeriv Q (u ∘ ρ) (thA X bas idx φ x) 0 := by
+    ReciprocityTheory.ChartRestriction.G.I2.polyDeriv (MvPolynomial.rename ρ Q) u (thA X bas idx φ x) 0 = ReciprocityTheory.ChartRestriction.G.I2.polyDeriv Q (u ∘ ρ) (thA X bas idx φ x) 0 := by
   let L : Matrix (Fin n) (Fin g) ℚ → (Fin n → Fin g → ℂ) →ₗ[ℂ] ℂ := fun y =>
     { toFun := fun z => Real.pi * I * ∑ k, 2 * (qv (y k) ⬝ᵥ hMat X bas idx x *ᵥ z k)
       map_add' := fun z w => by simp [mulVec_add, mul_add, Finset.sum_add_distrib]

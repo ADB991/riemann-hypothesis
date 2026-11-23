@@ -103,7 +103,7 @@ theorem exists_conjUnif (h : IsGrpPullback A' A cj ψ) (hM : M.IsLB) (u : HolUni
       ∀ z, u'.ex z = cjPt h (u.ex (star z)) := by
   have hM1 : (M.pull (𝟙 A.left)).IsLB := pull_isLB hM _
   obtain ⟨w, hw⟩ : LBIso M (M.pull (𝟙 A.left)) :=
-    LBIso.chartPull (chartPullId M) (chartPullPull M (𝟙 _) (𝟙 _) rfl) (PolBaseChange.lbIso_refl hM)
+    LBIso.chartPull (chartPullId M) (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull M (𝟙 _) (𝟙 _) rfl) (PolBaseChange.lbIso_refl hM)
   have key : ∀ f, f = ψ ≫ 𝟙 A.left → ∃ (u' : HolUnif A' (M.pull f) g) (χ' : u'.Λ → ℂ),
       u'.IsAH (Hm.map star) χ' ∧ ∀ z, u'.ex z = cjPt h (u.ex (star z)) := by
     rintro _ rfl

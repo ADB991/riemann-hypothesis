@@ -302,9 +302,9 @@ theorem cw_zero (m : ℕ) (e : ℤ) (ν : Measure (GR n)) [ν.IsHaarMeasure] (μ
   have hAc : Continuous A := by
     refine (hF.comp continuous_fst).mul (((hF.comp hk).inv₀ fun p => hFne _).mul ?_)
     exact Complex.continuous_ofReal.comp
-      (hβc.comp (continuous_mR.comp (hk.inv.mul continuous_fst)))
+      (hβc.comp (PositivityTheory.Rg.Sw.HSt.GRH.continuous_mR.comp (hk.inv.mul continuous_fst)))
   have hBc : Continuous B := by
-    refine (Complex.continuous_ofReal.comp (hβc.comp (continuous_mR.comp continuous_fst))).mul
+    refine (Complex.continuous_ofReal.comp (hβc.comp (PositivityTheory.Rg.Sw.HSt.GRH.continuous_mR.comp continuous_fst))).mul
       (((hF.comp hk).inv₀ fun p => hFne _).mul (hF.comp (hk.mul continuous_fst)))
   have hAs : HasCompactSupport A := by
     refine HasCompactSupport.intro
@@ -382,7 +382,7 @@ theorem exists_bump (m : ℕ) (e : ℤ) (ν : Measure (GR n)) [ν.IsHaarMeasure]
       (g := Complex.ofReal) Complex.ofReal_zero
     exact h.mul_right
   have hgc : Continuous g :=
-    (Complex.continuous_ofReal.comp (b.continuous.comp continuous_mR)).mul hpc
+    (Complex.continuous_ofReal.comp (b.continuous.comp PositivityTheory.Rg.Sw.HSt.GRH.continuous_mR)).mul hpc
   have hre : ∀ u, (g u).re = b (mR u) * (psi m e μK u).re := fun u => Complex.re_ofReal_mul _ _
   have hpos : 0 < ∫ u, (g u).re ∂ν := by
     refine Continuous.integral_pos_of_hasCompactSupport_nonneg_nonzero (x := 1)

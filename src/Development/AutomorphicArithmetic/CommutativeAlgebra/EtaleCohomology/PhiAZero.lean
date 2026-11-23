@@ -36,7 +36,7 @@ private theorem xi_coeff (A : PAlg l) : A.xi.coeff 0 = - A.s (pFlat l) := by
     rw [← WittVector.constantCoeff_apply, xi0, map_sub, map_natCast, CharP.cast_eq_zero, zero_sub,
       WittVector.constantCoeff_apply, WittVector.teichmuller_coeff_zero]
   change (WittVector.map A.s (xi0 l)).coeff 0 = _
-  rw [WittVector.map_coeff, h, map_neg]
+  rw [WittVector.map_coeff, h, A.s.map_neg]
 
 private def aq (A : PAlg l) (n : ℕ) : A.A →+* A.Acr n ⧸ A.PFil n :=
   (WittVector.constantCoeff (p := l) (R := A.A)).liftOfSurjective (WittVector.constantCoeff_surjective l)

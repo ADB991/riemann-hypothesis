@@ -288,7 +288,7 @@ theorem cone_pow_mem {Q : Ideal (MRingOver ℂ ι)} {e m : ℕ} {σ : Fin m ≃ 
     change eval (fun a => segre z (σ a)) f = 0
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [f, Gx, map_sub, map_add (f := _), map_pow, map_sum, map_mul, eval_X, eval_rename, hw,
-      eval_linPoly, hA, chartProjMatrix_mulVec]
+      GroundTheory.Heights₂.Heights.GoodChartModel.eval_linPoly, hA, chartProjMatrix_mulVec]
     rw [h]
     simp [Equiv.apply_symm_apply, mul_comm]
   have hdeg : f.totalDegree ≤ r := by

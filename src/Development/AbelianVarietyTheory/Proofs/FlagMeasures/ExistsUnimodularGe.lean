@@ -97,7 +97,7 @@ theorem exists_unimodular_ge {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) 
       exact { toIsLattice := Submodule.IsLattice.of_fg K (hA.fg.sup hG)
               span_eq_top := top_le_iff.1 ((Submodule.IsFullLattice.span_eq_top (A := K) (M := A)).ge.trans
                 (Submodule.span_mono (le_sup_left (a := A) (b := G)))) }
-  obtain ⟨h1, h2, -⟩ := dualLattice (𝓞 K) K V h hs hn star_algebraMap_ringOfIntegers_mem_range _ (lat M hM)
+  obtain ⟨h1, h2, -⟩ := Formalism.HermitianLatticesTheory.dualLattice (𝓞 K) K V h hs hn star_algebraMap_ringOfIntegers_mem_range _ (lat M hM)
   refine ⟨dual h (M ⊔ G) ⊔ G, lat _ h1, ?_, le_sup_right⟩
   unfold IsUnimodular at hu ⊢
   rw [hsup, h2, hsup, hu, sup_comm M G, sup_comm _ G, sup_inf_assoc_of_le _ hi]

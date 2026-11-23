@@ -234,7 +234,7 @@ theorem form_conj_of_pure (core : ∀ σ : L →+* ℂ, InnerProductSpace.Core �
     | zero => simp only [map_zero, core_zero_right]
     | add y y' hy hy' => simp only [map_add (f := _), core_add_right, hy, hy']
     | tmul b f =>
-      rw [pure_smul σ a e, pure_smul σ b f, conjMap_smul, conjMap_smul, h1, h1, (core _).smul_left, core_smul_right,
+      erw [pure_smul σ a e, pure_smul σ b f, conjMap_smul, conjMap_smul, h1, h1, (core _).smul_left, core_smul_right,
         (core _).smul_left, core_smul_right, h]
       simp only [map_mul, Complex.conj_conj]
 

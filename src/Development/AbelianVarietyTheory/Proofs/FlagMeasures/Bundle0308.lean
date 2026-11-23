@@ -312,7 +312,7 @@ namespace GlobalTheory.TypeAsm.LatticeOrthogonalComplement
 section Gen
 variable {K V W : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [AddCommGroup W] [Module K W] [Module (𝓞 K) W]
-  [IsScalarTower (𝓞 K) K W] {H : HermSpace K V} {HW : HermSpace K W} {r : ℕ}
+  [IsScalarTower (𝓞 K) K W] {H : Formalism.HermitianLatticeCounting.S6.HermSpace K V} {HW : Formalism.HermitianLatticeCounting.S6.HermSpace K W} {r : ℕ}
 
 theorem B_swap {x y : V} (h : H.B x y = 0) : H.B y x = 0 := by
   rw [← H.herm, h, star_zero]
