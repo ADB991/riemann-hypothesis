@@ -112,6 +112,7 @@ attribute [instance] IsCD.complete IsCD.isLocalHom IsCD.fin
 def FinCrit : Prop :=
   ∀ (O R : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [IsAdicComplete (maximalIdeal O) O]
     [Finite (ResidueField O)] [CommRing R] [Algebra O R] [IsCO O R] (W : UpperTheory.V.Alg.WPres O ℤ R),
+    letI := IsCO.toIsLocalRing O (R := R)
     (∀ i, W.z i ∈ maximalIdeal R) →
     (∀ (A : Type) [CommRing A] [Algebra O A] [IsCD O A] (f : R →ₐ[O] A), IsLocalHom f →
       (∀ a ∈ maximalIdeal O, algebraMap O A a = 0) →
