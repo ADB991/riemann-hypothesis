@@ -353,8 +353,8 @@ theorem gam_X {g : W.Gam} (hg : (W.χΓ g : ↥(OL LL)) = 1 + (l : ↥(OL LL))) 
   rw [GlobalTheory.WachTie.γ₀_eq W (P.PD_p K) χ' hχ', h1, GlobalTheory.CycFr.act_nat_X]
 
 theorem isNoetherianRing_OL : IsNoetherianRing ↥(OL LL) := by
-  obtain ⟨_, -, -⟩ := GlobalTheory.FinExtIntegers.dvr_complete LL
-  infer_instance
+  obtain ⟨hDVR, -, -⟩ := GlobalTheory.FinExtIntegers.dvr_complete LL
+  exact @PrincipalIdealRing.isNoetherianRing ↥(OL LL) _ hDVR.toIsPrincipalIdealRing
 
 theorem rankOne_of_caseA (h : CaseA K LL) (hs : W.s = 1) (h1 : InvBasis W) (h2 : SenOp W) : RankOne W := by
   have hp := P.PD_p K

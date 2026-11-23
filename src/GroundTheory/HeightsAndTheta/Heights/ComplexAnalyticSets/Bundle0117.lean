@@ -287,7 +287,7 @@ theorem ProjectionInjectiveOffHypersurface.proof (hF : FrameJacobianGeneric.Stat
     ContinuousLinearMap.pi fun j => ContinuousLinearMap.proj (e.symm (c j : Fin n))
   refine ⟨T ⁻¹' V, hV.preimage hTc, hzV, A, ?_⟩
 
-  have hback : ∀ x ∈ zeroSetIn I ∩ T ⁻¹' V, g (frameProj b I₀ (T x)) = T x := by
+  have hback : ∀ x ∈ zeroSetIn I ∩ T ⁻¹' V, g (GroundTheory.Heights₂.Heights.frameProj b I₀ (T x)) = T x := by
     rintro x ⟨hx, hxV⟩
     have hmem : T x ∈ {y : EuclideanSpace ℂ (Fin n) | ∀ j, eval (fun i => y i) (f j) = 0} ∩ V :=
       ⟨hf0 x hx, hxV⟩
@@ -296,7 +296,7 @@ theorem ProjectionInjectiveOffHypersurface.proof (hF : FrameJacobianGeneric.Stat
     rw [← hwx, hpg w hw]
   intro x hx y hy hAxy
   apply hTinj
-  have hproj : frameProj b I₀ (T x) = frameProj b I₀ (T y) := by
+  have hproj : GroundTheory.Heights₂.Heights.frameProj b I₀ (T x) = GroundTheory.Heights₂.Heights.frameProj b I₀ (T y) := by
     funext i
     have := congrFun hAxy (c.symm i)
     show inner ℂ (b i) (T x) = inner ℂ (b i) (T y)

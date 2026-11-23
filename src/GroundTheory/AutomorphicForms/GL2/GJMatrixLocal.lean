@@ -212,7 +212,7 @@ theorem isSchwartzBruhat_iff_comp_symm (Φ : Matrix (Fin n) (Fin n) F → ℂ) :
 variable [MeasurableSpace F] [BorelSpace F] (ψ : AddChar F Circle)
 
 def localMatrixFourier (Φ : Matrix (Fin n) (Fin n) F → ℂ) (y : Matrix (Fin n) (Fin n) F) : ℂ :=
-  ∫ x, Φ x * (ψ (trace (x * y)) : ℂ) ∂matrixMeasure (selfDualMeasure ψ)
+  ∫ x, Φ x * (ψ (Matrix.trace (x * y)) : ℂ) ∂matrixMeasure (selfDualMeasure ψ)
 
 theorem localMatrixFourier_eq (Φ : Matrix (Fin n) (Fin n) F → ℂ) (y : Matrix (Fin n) (Fin n) F) :
     localMatrixFourier ψ Φ y =

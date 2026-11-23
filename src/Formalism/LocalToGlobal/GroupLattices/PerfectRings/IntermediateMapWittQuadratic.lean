@@ -173,6 +173,12 @@ theorem gK_alg (z : OO p n) : gK p n (algebraMap (OO p n) (KO p n) z) = gO p n z
 
 variable {p n}
 
+section
+
+local instance (F : Type) [Field F] [Algebra (KO p n) F] : Module.IsTorsionFree (KO p n) F :=
+  (Module.isTorsionFree_iff_algebraMap_injective (R := KO p n) (A := F)).2
+    (algebraMap (KO p n) F).injective
+
 def gL (L : IntermediateField (KO p n) (Om p n)) : L →+* Kc p :=
   letI : Algebra (KO p n) (Kc p) := (gK p n).toAlgebra
   (IsAlgClosed.lift : L →ₐ[KO p n] Kc p).toRingHom
@@ -182,6 +188,8 @@ theorem gL_alg (L : IntermediateField (KO p n) (Om p n)) (y : KO p n) :
   unfold gL
   letI : Algebra (KO p n) (Kc p) := (gK p n).toAlgebra
   exact (IsAlgClosed.lift : L →ₐ[KO p n] Kc p).commutes y
+
+end
 
 theorem gL_algO (L : IntermediateField (KO p n) (Om p n)) (z : OO p n) :
     gL L (algebraMap (OO p n) L z) = gO p n z := by

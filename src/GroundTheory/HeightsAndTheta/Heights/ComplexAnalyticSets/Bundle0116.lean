@@ -190,11 +190,11 @@ theorem IsolatedPointsCountPrime.proof (hOpen : IsolatedFibreOpenPoly.Statement)
       ∃ W ∈ 𝓝 x, ∀ x' ∈ zeroSet P ∩ W, (∀ i, eval x' (q i) = eval x (q i)) → x' = x := by
     rintro z x ⟨hxP, hxQ, V, hV, hiso⟩
     have hQx : Qm x = z := funext hxQ
-    have hfin : (fibre K B (B.mulVec z) \ {z}).Finite := (hfib (B.mulVec z)).2.1.subset Set.sdiff_subset
-    have hO : (fibre K B (B.mulVec z) \ {z})ᶜ ∈ 𝓝 (Qm x) := by
+    have hfin : (GroundTheory.Heights₂.Heights.ComplexSets.fibre K B (B.mulVec z) \ {z}).Finite := (hfib (B.mulVec z)).2.1.subset Set.sdiff_subset
+    have hO : (GroundTheory.Heights₂.Heights.ComplexSets.fibre K B (B.mulVec z) \ {z})ᶜ ∈ 𝓝 (Qm x) := by
       rw [hQx]
       exact hfin.isClosed.compl_mem_nhds fun h => h.2 rfl
-    refine ⟨V ∩ Qm ⁻¹' (fibre K B (B.mulVec z) \ {z})ᶜ,
+    refine ⟨V ∩ Qm ⁻¹' (GroundTheory.Heights₂.Heights.ComplexSets.fibre K B (B.mulVec z) \ {z})ᶜ,
       Filter.inter_mem hV (hQc.continuousAt.preimage_mem_nhds hO), ?_⟩
     rintro x' ⟨hx'P, hx'V, hx'O⟩ hx'q
     refine hiso x' ⟨hx'P, hx'V⟩ fun i => congrFun (?_ : Qm x' = z) i

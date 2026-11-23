@@ -19,7 +19,7 @@ variable {k L A : Type} [Field k] [Field L] [Algebra k L] [CommRing A] [Algebra 
 end Spz
 
 private theorem locPow_of_mul_inc_eq_of_dvd_exponent_sub {k K L : Type} [Field k] [Field K] [Algebra k K] [Field L]
-    [Algebra k L] (q : ℕ) (hq0 : 0 < q) (B : Subalgebra k K) [IsDomain (L ⊗[k] B)]
+    [Algebra k L] (q : ℕ) (hq0 : 0 < q) (B : Subalgebra k K) [hDomain : IsDomain (L ⊗[k] B)]
     (m : Ideal (L ⊗[k] B)) (hm : m.IsPrime) (F : L ⊗[k] K) (a b π s t s' t' : L ⊗[k] B)
     (e e' : ℕ) (hπ : π ≠ 0) (hs : s ∉ m) (ht : t ∉ m) (hs' : s' ∉ m) (ht' : t' ∉ m)
     (has : a * s = t * π ^ e) (hbs : b * s' = t' * π ^ e') (hbu : IsUnit (inc L B b))
@@ -261,7 +261,8 @@ theorem UpperTheory.finite_kummerSelmer_on_prime_stratum :
     have h2 := hord b0 e' hPb
     have hdiv := hfS (Place.ofHeightOneSpectrum (B i) hk P)
     apply hnot
-    refine locPow_of_mul_inc_eq_of_dvd_exponent_sub q (Nat.pos_of_ne_zero (NeZero.ne q)) (B i) m hm.isPrime F a b π s t s' t'
+    refine locPow_of_mul_inc_eq_of_dvd_exponent_sub q (Nat.pos_of_ne_zero (NeZero.ne q)) (B i)
+      (hDomain := hdedL.toIsDomain) m hm.isPrime F a b π s t s' t'
       e e' hπ hs ht hs' ht' has hbs hbu hFab ?_
     have hfo : (Place.ofHeightOneSpectrum (B i) hk P).ord (f : K) = (e : ℤ) - e' := by
       change _ = _ + (Place.ofHeightOneSpectrum (B i) hk P).ord (algebraMap (B i) K b0) at hordmul

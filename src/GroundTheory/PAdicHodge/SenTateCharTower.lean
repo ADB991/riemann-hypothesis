@@ -95,6 +95,8 @@ theorem map_mem_charTower (hη : Continuous η) {k : ℕ} (σ : Gal(PadicAlgCl p
 
 section CFT
 
+attribute [local instance 1100] GroundTheory.LocalField.intermediateField_valuativeRel
+
 local instance : ValuativeExtension ℚ_[p] (PadicAlgCl p) := by
   refine ⟨fun {a b} ↦ ?_⟩
   rw [vle_iff_norm_le, PadicAlgCl.norm_extends, PadicAlgCl.norm_extends,

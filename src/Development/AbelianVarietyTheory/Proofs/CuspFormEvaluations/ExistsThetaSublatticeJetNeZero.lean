@@ -24,7 +24,7 @@ open scoped Classical
 
 theorem exists_poly_scale {σ W : Type} [NormedAddCommGroup W] [NormedSpace ℂ W] (P : MvPolynomial σ ℂ) {s : ℂ}
     (hs : s ≠ 0) : ∃ P' : MvPolynomial σ ℂ, P'.support = P.support ∧
-      ∀ (u : σ → W) (F : W → ℂ) (x : W), polyDeriv P (fun l => s • u l) F x = polyDeriv P' u F x := by
+      ∀ (u : σ → W) (F : W → ℂ) (x : W), ReciprocityTheory.ChartRestriction.G.I2.polyDeriv P (fun l => s • u l) F x = ReciprocityTheory.ChartRestriction.G.I2.polyDeriv P' u F x := by
   let P' : MvPolynomial σ ℂ := ∑ m ∈ P.support,
     MvPolynomial.monomial m (s ^ Multiset.card (Finsupp.toMultiset m) * P.coeff m)
   have hc : ∀ m, P'.coeff m = s ^ Multiset.card (Finsupp.toMultiset m) * P.coeff m := by
@@ -37,7 +37,7 @@ theorem exists_poly_scale {σ W : Type} [NormedAddCommGroup W] [NormedSpace ℂ 
     ext m
     simp only [MvPolynomial.mem_support_iff, hc, ne_eq, mul_eq_zero, pow_ne_zero _ hs, false_or]
   refine ⟨P', hsup, fun u F x => ?_⟩
-  unfold polyDeriv
+  unfold ReciprocityTheory.ChartRestriction.G.I2.polyDeriv
   rw [hsup]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [ContinuousMultilinearMap.map_smul_univ _ (fun _ => s), Finset.prod_const, Finset.card_univ,
@@ -53,7 +53,7 @@ theorem exists_jet_of_periods {ι A : Type} [Fintype ι] [AddCommGroup A] (p : A
     ∃ G : EuclideanSpace ℂ ι → ℂ, Differentiable ℂ G ∧
       (∀ a v, G (v + p a) = cexp (Real.pi * I * (q * Q a : ℝ)) *
         cexp (q * Real.pi * Hf v (p a) + q * Real.pi * Hf (p a) (p a) / 2) * G v) ∧
-      polyDeriv P (fun i => s • EuclideanSpace.single i 1) G 0 ≠ 0 := by
+      ReciprocityTheory.ChartRestriction.G.I2.polyDeriv P (fun i => s • EuclideanSpace.single i 1) G 0 ≠ 0 := by
   let Y : GT ι :=
     { b := b
       integral := fun x y hx hy => by
