@@ -234,16 +234,16 @@ theorem SemilocChartRatio.proof (hF : FibreOverFinite.Statement) : SemilocChartR
   have hwnz : Ideal.Quotient.mk P' w ∈ nonZeroDivisors (MRing ι' ⧸ P') :=
     mem_nonZeroDivisors_of_ne_zero (by rwa [Ne, Ideal.Quotient.eq_zero_iff_mem])
   set N : MRing ι' := ∏ k, (X ⟨k, i' k⟩ : MRing ι') ^ d₀ k with hN
-  have hNd : IsMultiHomog N d₀ := AvoidRing.isMultiHomog_coordProd i' d₀
+  have hNd : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog N d₀ := AvoidRing.isMultiHomog_coordProd i' d₀
   have hNP : N ∉ P' := AvoidRing.coordProd_not_mem hPp i' hi' d₀
   have hwW : ∀ W' ∈ fibreOver v P' W, w ∉ W' := fun W' hW' => hwS W' (Set.mem_insert_of_mem _ hW')
-  have gen : ∀ u : MRing ι', IsMultiHomog u (Pi.single q.1 1 + d₀) →
+  have gen : ∀ u : MRing ι', ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog u (Pi.single q.1 1 + d₀) →
       IsLocalization.mk' (FractionRing (MRing ι' ⧸ P')) (Ideal.Quotient.mk P' u) ⟨_, hwnz⟩ ∈
         semiLocRing P' (fibreOver v P' W) := fun u hu =>
     Subring.subset_closure ⟨u, w, _, hwnz, hwW, hu, hwd, rfl⟩
-  have hq : IsMultiHomog (X q * N) (Pi.single q.1 1 + d₀) :=
+  have hq : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (X q * N) (Pi.single q.1 1 + d₀) :=
     AvoidRing.isMultiHomog_mul (AvoidRing.isMultiHomog_X q.1 q.2) hNd
-  have hc : IsMultiHomog (X ⟨q.1, i' q.1⟩ * N) (Pi.single q.1 1 + d₀) :=
+  have hc : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (X ⟨q.1, i' q.1⟩ * N) (Pi.single q.1 1 + d₀) :=
     AvoidRing.isMultiHomog_mul (AvoidRing.isMultiHomog_X q.1 (i' q.1)) hNd
   refine ⟨⟨_, gen _ hq⟩, ⟨_, gen _ hc⟩, ?_, ?_⟩
   · show IsLocalization.mk' _ _ _ ≠ (0 : FractionRing (MRing ι' ⧸ P'))
@@ -438,7 +438,7 @@ def SemilocResidueAdjoin.Statement : Prop :=
     (K' : Type) [Fintype K'] (ι' : K' → Type) [∀ k, Fintype (ι' k)]
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (n : ℕ) (s : MRing ι) (α : K → ℕ)
     (W : Ideal (MRing ι)) (hv : IsBlockMap κ v) (hP' : IsArithVar P' (n + 1)),
-    IsArithVar (imageZ v P') (n + 1) → IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
+    IsArithVar (imageZ v P') (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
     ∀ (W' : Ideal (MRing ι')) (hW' : W' ∈ fibreOver v P' W) [IsLocalRing (locRing P' W')]
       (G' : GenFibre v W') (i' : ∀ k', ι' k'), (∀ k', (X ⟨k', i' k'⟩ : MRing ι') ∉ W') →
     haveI := hP'.2.1.1
@@ -468,8 +468,8 @@ def SemilocResidueFibreDim.Statement : Prop :=
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (n : ℕ) (s : MRing ι) (α : K → ℕ)
     (W : Ideal (MRing ι)),
     IsBlockMap κ v → IsArithVar P' (n + 1) →
-    IsArithVar (imageZ v P') (n + 1) → IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
-    ∀ W' ∈ fibreOver v P' W, ∀ G' : GenFibre v W', IsProjVarF (fibreIdeal κ G') 0
+    IsArithVar (imageZ v P') (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
+    ∀ W' ∈ fibreOver v P' W, ∀ G' : GenFibre v W', IsProjVarF (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G') 0
 
 end GroundTheory.Heights₂.Heights.Inter
 end

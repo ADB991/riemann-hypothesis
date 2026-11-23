@@ -74,7 +74,7 @@ theorem two_le_top' : (2 : WithTop ℕ∞) ≤ ((⊤ : ℕ∞) : WithTop ℕ∞)
   exact WithTop.coe_le_coe.mpr le_top
 
 theorem mem_of_homog {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {g : MRing ι} {δ : K → ℕ}
-    (hg : IsMultiHomog g δ) (h0 : aeval y g = 0) : g ∈ mCoordIdeal y := by
+    (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g δ) (h0 : aeval y g = 0) : g ∈ mCoordIdeal y := by
   show g ∈ RingHom.ker (mConeMap y)
   rw [RingHom.mem_ker]
   erw [mConeMap_homog y hg, h0]
@@ -82,7 +82,7 @@ theorem mem_of_homog {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {g : MRing
 
 theorem numer_mem {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {m : ℕ} {v : Fin N → Ω}
     {d e : (∀ k, ι k) → K → ℕ} {G : (∀ k, ι k) → Fin N → MRing ι}
-    (he : ∀ c k, (e c k : ℤ) = d c k + m * A.a k) (hG : ∀ c j, IsMultiHomog (G c j) (e c))
+    (he : ∀ c k, (e c k : ℤ) = d c k + m * A.a k) (hG : ∀ c j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (G c j) (e c))
     (hGy : ∀ c j, aeval y (G c j) = v j * aeval y (chartMon c (d c))) (c₀ c : ∀ k, ι k) (j : Fin N) :
     G c j * chartMon c₀ (d c₀) - G c₀ j * chartMon c (d c) ∈ mCoordIdeal y := by
   refine mem_of_homog (homog_sub (homog_mul (hG c j) (homog_chartMon c₀ (d c₀)))
@@ -158,9 +158,9 @@ variable {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {A : ReciprocityTheory
   {d e : (∀ k, ι k) → K → ℕ} {G : (∀ k, ι k) → Fin N → MRing ι} {F : Finset (MRing ι × (K → ℕ))}
 
 theorem isFlat_Uf (h₂ : LeviHolPerturb.Statement) (hsm : IsSmoothHerm A)
-    (he : ∀ c k, (e c k : ℤ) = d c k + m * A.a k) (hG : ∀ c j, IsMultiHomog (G c j) (e c))
+    (he : ∀ c k, (e c k : ℤ) = d c k + m * A.a k) (hG : ∀ c j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (G c j) (e c))
     (hGy : ∀ c j, aeval y (G c j) = v j * aeval y (chartMon c (d c)))
-    (hF : ∀ p ∈ F, IsMultiHomog p.1 p.2 ∧ p.1 ∈ mCoordIdeal y) (c₀ : ∀ k, ι k)
+    (hF : ∀ p ∈ F, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p.1 p.2 ∧ p.1 ∈ mCoordIdeal y) (c₀ : ∀ k, ι k)
     {z w : (Σ k, addIdx ι N k) → ℂ} (hz : z ∈ mcPts (mCoordIdeal (addBlock y v)))
     (hw : IsConeTangent (Int.castRingHom ℂ) (mCoordIdeal (addBlock y v)) z w) :
     IsFlat (Uf d G A m F c₀) (basePart₂ z) (basePart₂ w) := by
@@ -185,7 +185,7 @@ theorem isFlat_Uf (h₂ : LeviHolPerturb.Statement) (hsm : IsSmoothHerm A)
   exact h1.add h2
 
 theorem graph_cross (hGy : ∀ c j, aeval y (G c j) = v j * aeval y (chartMon c (d c)))
-    (hG : ∀ c j, IsMultiHomog (G c j) (e c)) (c₀ : ∀ k, ι k)
+    (hG : ∀ c j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (G c j) (e c)) (c₀ : ∀ k, ι k)
     {z w : (Σ k, addIdx ι N k) → ℂ} (hz : z ∈ mcPts (mCoordIdeal (addBlock y v)))
     (hw : IsConeTangent (Int.castRingHom ℂ) (mCoordIdeal (addBlock y v)) z w) (j j' : Fin N) :
     z ⟨none, j⟩ * ev (G c₀ j') (basePart₂ z) = z ⟨none, j'⟩ * ev (G c₀ j) (basePart₂ z) ∧
@@ -225,9 +225,9 @@ variable {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {A : ReciprocityTheory
 theorem levi_identity (h₁ : LeviLogFlat.Statement) (h₂ : LeviHolPerturb.Statement)
     (h₃ : LeviCompHol.Statement) (h₄ : LeviFSInvariant.Statement) (hsm : IsSmoothHerm A)
     (hgen : KH.GeneratesOn y (fun k => (m : ℤ) * A.a k) v)
-    (he : ∀ c k, (e c k : ℤ) = d c k + m * A.a k) (hG : ∀ c j, IsMultiHomog (G c j) (e c))
+    (he : ∀ c k, (e c k : ℤ) = d c k + m * A.a k) (hG : ∀ c j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (G c j) (e c))
     (hGy : ∀ c j, aeval y (G c j) = v j * aeval y (chartMon c (d c)))
-    (hF : ∀ p ∈ F, IsMultiHomog p.1 p.2 ∧ p.1 ∈ mCoordIdeal y)
+    (hF : ∀ p ∈ F, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p.1 p.2 ∧ p.1 ∈ mCoordIdeal y)
     (hFspan : mCoordIdeal y ≤ Ideal.span ((fun p => p.1) '' (F : Set (MRing ι × (K → ℕ)))))
     {z w : (Σ k, addIdx ι N k) → ℂ} (hz : z ∈ mcPts (mCoordIdeal (addBlock y v)))
     (hw : IsConeTangent (Int.castRingHom ℂ) (mCoordIdeal (addBlock y v)) z w) :
