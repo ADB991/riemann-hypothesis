@@ -57,7 +57,10 @@ theorem levelMaps_closed : Out.Laws → ∀ (E : Type) [Field E] [NumberField E]
   have hsim := SimAlg.sim_group
   have hact := Moduli.LevelAction.similitude_acts hsm hid hlow hrep
     (exists_obj_twist_by_similitude hsim) hsim
-  exact levelMaps_of_parts (GlobalTheory.exists_levelMap hsm hid hlow hrep) hact
+  exact levelMaps_of_parts
+    (GlobalTheory.exists_levelMap
+      GlobalTheory.isReduced_isNormalScheme_isLocallyNoetherian_of_smooth_over_field
+      hid hlow hrep) hact
     (LevCover.levelMap_finite_etale_surjective_of_laws hL)
     (levelMap_fibre_orbit hL obj_pull hid obj_isAbelianScheme_dim_rigidified_sym hlow
       (obj_rigid_closed hL) hrep tateIso_differ_by_similitude hsim hact)
@@ -421,7 +424,8 @@ theorem pushInvertible_of_model : Out.Laws → Out.Laws2 → Out.Laws3 → ∀ (
     have _ : GeometricallyConnected C.t.G.hom := by
       first | infer_instance | (cases sa; assumption)
     exact GlobalTheory.grpObj_geometricallyIntegral_of_smooth C.X C.t.G
-  exact @GlobalTheory.PushInv.pushInvertible_of_densePart C.X U hN (C.jQ ≫ pullback.fst C.s (spMap β)) C.normal hPre hFl hDo hQC
+  exact @GlobalTheory.PushInv.pushInvertible_of_densePart C.X U hN (C.jQ ≫ pullback.fst C.s (spMap β))
+    (GlobalTheory.IsNormalScheme.of_pred C.normal) hPre hFl hDo hQC
     C.t.G o.t.G C.m.φ C.t.PP.L o.t.PP.L hSm hGI hPB C.t.PP.isLB o.t.PP.isLB hIso
     (GlobalTheory.PushInv.pushInvertible_any hS hH U (GlobalTheory.Obj.toPolAV o)) hθ
 
