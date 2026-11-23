@@ -207,7 +207,7 @@ theorem pivotRatio_algebraicIndependent (F : Type) [Field F] (Ψ : Type) (n : �
   let δ : PivotIdxLe Ψ n → PivotIdxLe Ψ n :=
     fun q => (q.1, ⟨q.2.1, ⟨Fin.castLE (Nat.sub_le n 1) q.2.1, by simp⟩⟩)
   have hz := ratio_indep F hy δ (fun q => rfl)
-  let incl : PivotIdx Ψ n → PivotIdxLe Ψ n := fun q => (q.1, ⟨q.2.1, ⟨q.2.2.1, q.2.2.2.le⟩⟩)
+  let incl : GroundTheory.Heights₂.Heights.LowerBoundFree.PivotIdx Ψ n → PivotIdxLe Ψ n := fun q => (q.1, ⟨q.2.1, ⟨q.2.2.1, q.2.2.2.le⟩⟩)
   have hincl : Function.Injective incl := by
     rintro ⟨τ, a, b, hb⟩ ⟨τ', a', b', hb'⟩ h
     simp only [incl, Prod.mk.injEq, Sigma.mk.inj_iff] at h
@@ -231,27 +231,27 @@ theorem pivotRatio_algebraicIndependent (F : Type) [Field F] (Ψ : Type) (n : �
   exact hrat ▸ hz.comp incl hincl
 
 theorem flag_mem_of_le (F : Type) [Field F] {K : Type} [Field K] [Algebra F K] {m : ℕ}
-    (g : Matrix (Fin m) (Fin m) K) (A : IntermediateField F K) (hL : ∀ a, leadMinor g a ≠ 0)
+    (g : Matrix (Fin m) (Fin m) K) (A : IntermediateField F K) (hL : ∀ a, GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g a ≠ 0)
     (j : Fin (m - 1))
-    (hA : ∀ (a : Fin (m - 1)) (b : Fin m), (a : ℕ) ≤ j → (a : ℕ) < b → pivotMinor g a b / leadMinor g a ∈ A)
-    (S : PluckerBlocks m m j) : flagMinor g j S / leadMinor g j ∈ A := by
+    (hA : ∀ (a : Fin (m - 1)) (b : Fin m), (a : ℕ) ≤ j → (a : ℕ) < b → pivotMinor g a b / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g a ∈ A)
+    (S : PluckerBlocks m m j) : flagMinor g j S / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g j ∈ A := by
   have hj : (j : ℕ) + 1 ≤ m := by have := j.2; omega
-  have hent : ∀ (a : Fin (m - 1)) (b : Fin m), (a : ℕ) ≤ j → pivotMinor g a b / leadMinor g a ∈ A := by
+  have hent : ∀ (a : Fin (m - 1)) (b : Fin m), (a : ℕ) ≤ j → pivotMinor g a b / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g a ∈ A := by
     intro a b haj
     rcases lt_trichotomy (b : ℕ) a with h | h | h
     · rw [pivotMinor_eq_zero g a b h, zero_div]
       exact A.zero_mem
     · have e : b = Fin.castLE (Nat.sub_le m 1) a := Fin.ext h
       subst e
-      show leadMinor g a / leadMinor g a ∈ A
+      show GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g a / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g a ∈ A
       rw [div_self (hL a)]
       exact A.one_mem
     · exact hA a b haj h
   let U : Matrix (Fin (j + 1)) (Fin (j + 1)) K := Matrix.of fun r s =>
     pivotMinor g ⟨r, by have := r.2; have := j.2; omega⟩ (S.1.orderEmbOfFin S.2 s) /
-      leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩
+      GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩
   have hP : (pivotMatrix g).submatrix (Fin.castLE hj) (S.1.orderEmbOfFin S.2) =
-      Matrix.diagonal (fun r : Fin (j + 1) => leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩) * U := by
+      Matrix.diagonal (fun r : Fin (j + 1) => GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩) * U := by
     ext r s
     rw [Matrix.diagonal_mul]
     simp only [Matrix.submatrix_apply, pivotMatrix, Matrix.of_apply, U]
@@ -259,14 +259,14 @@ theorem flag_mem_of_le (F : Type) [Field F] {K : Type} [Field K] [Algebra F K] {
     rw [mul_div_cancel₀ _ (hL _)]
     rfl
   have hdet : flagMinor (pivotMatrix g) j S =
-      (∏ r : Fin (j + 1), leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩) * U.det := by
+      (∏ r : Fin (j + 1), GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩) * U.det := by
     unfold flagMinor
     rw [hP, Matrix.det_mul, Matrix.det_diagonal]
   have hid := FlagPivotIdentity.proof K m g j S
   rw [prod_Iic_fin, hdet] at hid
-  have hne : (∏ r : Fin (j + 1), leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩) ≠ 0 :=
+  have hne : (∏ r : Fin (j + 1), GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩) ≠ 0 :=
     Finset.prod_ne_zero_iff.2 fun r _ => hL _
-  have hU : flagMinor g j S / leadMinor g j = U.det := by
+  have hU : flagMinor g j S / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g j = U.det := by
     rw [div_eq_iff (hL j)]
     apply mul_right_cancel₀ hne
     linear_combination hid
@@ -279,7 +279,7 @@ variable {Ψ : Type} [Fintype Ψ] [DecidableEq Ψ] {N : ℕ} {K : Type}
 
 abbrev PivPos (j : K → FlBlock Ψ N) : Type := Σ k : K, {b : Fin N // ((j k).2 : ℕ) < b}
 
-def pivPosIncl (j : K → FlBlock Ψ N) (x : PivPos j) : PivotIdx Ψ N := ((j x.1).1, ⟨(j x.1).2, x.2⟩)
+def pivPosIncl (j : K → FlBlock Ψ N) (x : PivPos j) : GroundTheory.Heights₂.Heights.LowerBoundFree.PivotIdx Ψ N := ((j x.1).1, ⟨(j x.1).2, x.2⟩)
 
 theorem pivPosIncl_injective {j : K → FlBlock Ψ N} (hj : Function.Injective j) :
     Function.Injective (pivPosIncl j) := by
@@ -310,7 +310,7 @@ theorem pivotRatio_algebraicIndependent_of_eq (Ψ : Type) (N : ℕ) (I : Algebra
   exact pivotRatio_algebraicIndependent ℚ Ψ N
 
 theorem pivotRatio_rat_algebraicIndependent (Ψ : Type) (N : ℕ) :
-    AlgebraicIndependent ℚ (pivotRatio ℚ Ψ N : PivotIdx Ψ N → ΩFl Ψ N) :=
+    AlgebraicIndependent ℚ (pivotRatio ℚ Ψ N : GroundTheory.Heights₂.Heights.LowerBoundFree.PivotIdx Ψ N → ΩFl Ψ N) :=
   pivotRatio_algebraicIndependent_of_eq Ψ N _ (Subsingleton.elim _ _)
 
 theorem isArithVar_pPart (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) (K : Type) [Fintype K] [Nonempty K]
@@ -319,7 +319,7 @@ theorem isArithVar_pPart (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) (K 
   let e : PivPos j ≃ Fin (cellDim j) := Fintype.equivFinOfCardEq (card_pivPos j)
   let t : Fin (cellDim j) → ΩFl Ψ N := fun i => pivotRatio ℚ Ψ N (pivPosIncl j (e.symm i))
   let c : ∀ k, PIdx j k := fun k => leadIdx Ψ N (j k)
-  have hL : ∀ (τ : Ψ) (a : Fin (N - 1)), leadMinor (genMatFr ℚ Ψ N τ) a ≠ 0 := fun τ a =>
+  have hL : ∀ (τ : Ψ) (a : Fin (N - 1)), GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (genMatFr ℚ Ψ N τ) a ≠ 0 := fun τ a =>
     GenLeadMinorNeZero.full ℚ Ψ N τ a
   have hc : ∀ k, yPart j ⟨k, c k⟩ ≠ 0 := fun k => by
     show yFl Ψ N ⟨j k, leadIdx Ψ N (j k)⟩ ≠ 0
@@ -340,14 +340,14 @@ theorem isArithVar_pPart (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) (K 
     have h3 := yFl_lead Ψ N (j k)
     show yFl Ψ N ⟨j k, ⟨S.1.orderEmbOfFin S.2, (S.1.orderEmbOfFin S.2).strictMono⟩⟩ /
       yFl Ψ N ⟨j k, leadIdx Ψ N (j k)⟩ = pivotMinor (genMatFr ℚ Ψ N (j k).1) (j k).2 b /
-        leadMinor (genMatFr ℚ Ψ N (j k).1) (j k).2
+        GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (genMatFr ℚ Ψ N (j k).1) (j k).2
     rw [h3]
     congr 1
     exact h1.symm.trans h2.symm
   have halg : ∀ r ∈ coneRatios (yPart j) c, IsAlgebraic (IntermediateField.adjoin ℚ (Set.range t)) r := by
     rintro _ ⟨⟨k, A⟩, rfl⟩
     have hT : ∀ (k' : K) (b : Fin N) (h : ((j k').2 : ℕ) < b),
-        pivotMinor (genMatFr ℚ Ψ N (j k').1) (j k').2 b / leadMinor (genMatFr ℚ Ψ N (j k').1) (j k').2 ∈
+        pivotMinor (genMatFr ℚ Ψ N (j k').1) (j k').2 b / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (genMatFr ℚ Ψ N (j k').1) (j k').2 ∈
           IntermediateField.adjoin ℚ (Set.range t) := fun k' b h =>
       IntermediateField.subset_adjoin ℚ _ ⟨e ⟨k', b, h⟩, by
         show pivotRatio ℚ Ψ N (pivPosIncl j (e.symm (e ⟨k', b, h⟩))) = _

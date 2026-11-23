@@ -129,9 +129,9 @@ theorem exists_rel {w : (Σ k, ι k) → Φ} {z : (Σ k, ι k) → L} (hz : IsPt
   · rw [map_mul]; exact mul_ne_zero h0 (aeval_monoX_ne hc _)
   · rw [map_mul, map_mul, e2, ← chartMono_mul hc he]; ring
   · have hd : IsMultiHomog (m * monoX c dh * g - n * monoX c dg * h) (d + dh + dg) := by
-      refine isMultiHomog_sub (isMultiHomog_mul (isMultiHomog_mul hm (isMultiHomog_monoX _ _)) hg) ?_
+      refine isMultiHomog_sub (GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul (GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hm (isMultiHomog_monoX _ _)) hg) ?_
       rw [add_right_comm]
-      exact isMultiHomog_mul (isMultiHomog_mul hn (isMultiHomog_monoX _ _)) hh
+      exact GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul (GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hn (isMultiHomog_monoX _ _)) hh
     rw [mem_iff_of_homog hd]
     simp only [map_sub, map_mul, e1, hq, ← chartMono_mul hcw he]
     have := chartMono_ne hcw e
@@ -333,8 +333,8 @@ theorem sec_pen (h0 : ∀ k, ∃ i, y ⟨k, i⟩ ≠ 0)
   let dp : Option K → ℕ := fun o => (totDeg k₀ e o).toNat
   let dm : Option K → ℕ := fun o => (-totDeg k₀ e o).toNat
   have hpm : ∀ o, (dp o : ℤ) - dm o = totDeg k₀ e o := fun o => Int.toNat_sub_toNat_neg _
-  have hg := isMultiHomog_mul hn (isMultiHomog_monoX c dp)
-  have hh := isMultiHomog_mul hm (isMultiHomog_monoX c dm)
+  have hg := GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hn (isMultiHomog_monoX c dp)
+  have hh := GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hm (isMultiHomog_monoX c dm)
   have hdeg : ∀ o, ((d + dp) o : ℤ) - (d + dm) o = totDeg k₀ e o := fun o => by
     rw [← hpm]; simp
   have hhδ : aeval δ (m * monoX c dm) ≠ 0 := by rw [map_mul]; exact mul_ne_zero hm0 (aeval_monoX_ne hc _)
@@ -399,10 +399,10 @@ theorem sec_pen (h0 : ∀ k, ∃ i, y ⟨k, i⟩ ≠ 0)
       exact mul_ne_zero (mul_ne_zero hm0' (aeval_monoX_ne hc _)) hhδ this
     · have hd : IsMultiHomog (m' * monoX c (d + dp) * h * f - n' * monoX c a * monoX c (d + dm) * g)
           (d' + (d + dp) + (d + dm) + a) := by
-        refine isMultiHomog_sub (isMultiHomog_mul (isMultiHomog_mul
-          (isMultiHomog_mul hm' (isMultiHomog_monoX _ _)) hh) hf) ?_
+        refine isMultiHomog_sub (GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul (GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul
+          (GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hm' (isMultiHomog_monoX _ _)) hh) hf) ?_
         rw [show d' + (d + dp) + (d + dm) + a = d' + a + (d + dm) + (d + dp) by ring]
-        exact isMultiHomog_mul (isMultiHomog_mul (isMultiHomog_mul hn' (isMultiHomog_monoX _ _))
+        exact GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul (GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul (GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hn' (isMultiHomog_monoX _ _))
           (isMultiHomog_monoX _ _)) hg
       have hP : m' * monoX c (d + dp) * h * f - n' * monoX c a * monoX c (d + dm) * g ∈ mCoordIdeal w := by
         rw [mem_iff_of_homog hd]
