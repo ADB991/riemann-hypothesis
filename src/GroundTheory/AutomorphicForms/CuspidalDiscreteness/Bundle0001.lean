@@ -347,7 +347,7 @@ theorem exists_natCast_conj_unipGL_mem (U : Subgroup (AdelicGLn.integralFiniteGL
     (hU : IsOpen (U : Set (AdelicGLn.integralFiniteGL K n))) {ω : Set (AdelicGLn.AdelicGL K n)}
     (hω : IsCompact ω) (r : ℕ) :
     ∃ M : ℕ, 0 < M ∧ ∀ b ∈ ω, ∀ (ρ : Fin n → ℝ) (hρ : ∀ i, 0 < ρ i),
-      ∀ k ∈ (maxCompact (K := K) (n := n)), ∀ z : UPos n r → 𝔸[K], (∀ p, (z p).1 = 0) →
+      ∀ k ∈ (GroundTheory.Automorphic.Reduction.maxCompact (K := K) (n := n)), ∀ z : UPos n r → 𝔸[K], (∀ p, (z p).1 = 0) →
         (∀ p, ∃ a ∈ GroundTheory.Global.integralFiniteAdeles (𝓞 K) K,
           (z p).2 = (M : FiniteAdeleRing (𝓞 K) K) * a) →
         ∃ u : U, ((b * diagUnits n (fun i => posIdele (ρ i) (hρ i)) * k)⁻¹ :
@@ -362,7 +362,7 @@ theorem exists_natCast_conj_unipGL_mem (U : Subgroup (AdelicGLn.integralFiniteGL
 
   set Cf : Set (AdelicGLn.FiniteAdelicGL K n) :=
     (fun p : AdelicGLn.AdelicGL K n × AdelicGLn.AdelicGL K n => (AdelicGLn.prodEquiv K n (p.1 * p.2)).2) ''
-      (ω ×ˢ (maxCompact (K := K) (n := n) : Set (AdelicGLn.AdelicGL K n)))
+      (ω ×ˢ (GroundTheory.Automorphic.Reduction.maxCompact (K := K) (n := n) : Set (AdelicGLn.AdelicGL K n)))
   have hCf : IsCompact Cf := (hω.prod isCompact_maxCompact).image
     (continuous_snd.comp ((AdelicGLn.prodEquiv K n).continuous.comp (continuous_fst.mul continuous_snd)))
 
