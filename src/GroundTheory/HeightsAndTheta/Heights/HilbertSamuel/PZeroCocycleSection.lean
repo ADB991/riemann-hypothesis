@@ -25,16 +25,16 @@ section Graded
 
 variable {S : Type} [CommRing S] {V : Ideal (MRingOver S ι)}
 
-theorem homog_smul {p : MRingOver S ι} {a : K → ℕ} (r : S) (hp : IsMultiHomog p a) :
-    IsMultiHomog (r • p) a :=
+theorem homog_smul {p : MRingOver S ι} {a : K → ℕ} (r : S) (hp : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p a) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (r • p) a :=
   fun m hm k => hp m (MvPolynomial.support_smul hm) k
 
 theorem quotPart_eq_mk {c : K → ℤ} {m : MRingOver S ι ⧸ V} (hm : m ∈ KH.quotPart S V c) (h0 : m ≠ 0) :
-    (∀ k, 0 ≤ c k) ∧ ∃ p, IsMultiHomog p (fun k => (c k).toNat) ∧ Ideal.Quotient.mk V p = m := by
+    (∀ k, 0 ≤ c k) ∧ ∃ p, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p (fun k => (c k).toNat) ∧ Ideal.Quotient.mk V p = m := by
   by_cases hc : ∀ k, 0 ≤ c k
   · refine ⟨hc, ?_⟩
     have hm' : m ∈ Submodule.map (Ideal.Quotient.mkₐ S V).toLinearMap
-        (Submodule.span S {p : MRingOver S ι | (∀ k, 0 ≤ c k) ∧ IsMultiHomog p (fun k => (c k).toNat)}) := by
+        (Submodule.span S {p : MRingOver S ι | (∀ k, 0 ≤ c k) ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p (fun k => (c k).toNat)}) := by
       rw [← Submodule.span_image]
       exact hm
     obtain ⟨p, hp, rfl⟩ := Submodule.mem_map.mp hm'
@@ -47,7 +47,7 @@ theorem quotPart_eq_mk {c : K → ℤ} {m : MRingOver S ι ⧸ V} (hm : m ∈ KH
     | smul r x _ hx => exact homog_smul r hx
   · exfalso
     apply h0
-    have e : {p : MRingOver S ι | (∀ k, 0 ≤ c k) ∧ IsMultiHomog p (fun k => (c k).toNat)} = ∅ :=
+    have e : {p : MRingOver S ι | (∀ k, 0 ≤ c k) ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p (fun k => (c k).toNat)} = ∅ :=
       Set.eq_empty_of_forall_notMem fun p hp => hc hp.1
     unfold KH.quotPart at hm
     rw [e, Set.image_empty, Submodule.span_empty, Submodule.mem_bot] at hm
@@ -72,7 +72,7 @@ theorem smul_quot (r : MRingOver S ι) (a : MRingOver S ι ⧸ V) : r • a = Id
 
 theorem locPart_eq_mk {T : Submonoid (MRingOver S ι)} {c : K → ℤ}
     {x : LocalizedModule T (MRingOver S ι ⧸ V)} (hx : x ∈ KH.locPart ι (KH.quotPart S V) T c) :
-    ∃ (m : MRingOver S ι ⧸ V) (t : T) (β : K → ℕ), IsMultiHomog (t : MRingOver S ι) β ∧
+    ∃ (m : MRingOver S ι ⧸ V) (t : T) (β : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (t : MRingOver S ι) β ∧
       m ∈ KH.quotPart S V (c + fun k => (β k : ℤ)) ∧ x = LocalizedModule.mk m t := by
   induction hx using Submodule.span_induction with
   | mem x hx => exact hx
@@ -82,7 +82,7 @@ theorem locPart_eq_mk {T : Submonoid (MRingOver S ι)} {c : K → ℤ}
     obtain ⟨m, t, β, ht, hm, rfl⟩ := hx
     obtain ⟨m', t', β', ht', hm', rfl⟩ := hy
     refine ⟨t' • m + t • m', t * t', β + β', homog_mul ht ht', ?_, LocalizedModule.mk_add_mk⟩
-    have deg : ∀ (s : T) (γ : K → ℕ), IsMultiHomog (s : MRingOver S ι) γ →
+    have deg : ∀ (s : T) (γ : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (s : MRingOver S ι) γ →
         Ideal.Quotient.mk V (s : MRingOver S ι) ∈ KH.quotPart S V (fun k => (γ k : ℤ)) := by
       intro s γ hs
       exact Submodule.subset_span ⟨s, ⟨fun k => Int.natCast_nonneg _, by simpa using hs⟩, rfl⟩
@@ -138,7 +138,7 @@ theorem cellMon_aeval_ne {I : ∀ k, Finset (ι k)} (hI : ∀ k, ∀ i ∈ I k, 
 
 
 variable (y) in
-theorem aeval_div_mem (c : ∀ k, ι k) {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) :
+theorem aeval_div_mem (c : ∀ k, ι k) {g : MRing ι} {d : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) :
     aeval y g / ∏ k, y ⟨k, c k⟩ ^ d k ∈ chartRingZ y c := by
   classical
   set_option synthInstance.maxHeartbeats 100000 in

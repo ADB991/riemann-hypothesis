@@ -20,7 +20,7 @@ namespace ProjFrameFibrePt
 
 theorem aeval_mul_of_isHomogeneous {R J : Type*} [CommRing R] (c : J → R) (s : R) {f : MvPolynomial J ℤ}
     {n : ℕ} (hf : f.IsHomogeneous n) : aeval (fun i => c i * s) f = aeval c f * s ^ n := by
-  have h := congrArg ((Polynomial.aeval s).restrictScalars ℤ) (coneMap_of_isHomogeneous ℤ c hf)
+  have h := congrArg ((Polynomial.aeval s).restrictScalars ℤ) (ReciprocityTheory.ChartRestriction.G.Geo.coneMap_of_isHomogeneous ℤ c hf)
   rw [coneMap, comp_aeval_apply] at h
   simp only [AlgHom.restrictScalars_apply, map_mul, map_pow, Polynomial.aeval_C, Polynomial.aeval_X,
     Algebra.algebraMap_self, RingHom.id_apply] at h
@@ -32,7 +32,7 @@ variable {κ : Type} [Fintype κ] {D : ℕ} {Ω : Type} [Field Ω] [CharZero Ω]
   {e : Fin (D + 1) → Ix κ}
 
 abbrev graphP (x : Ix κ → Ω) (e : Fin (D + 1) → Ix κ) : Ideal (MRing (Sum.elim (GlobalTheory κ) (GlobalTheory (Fin (D + 1))))) :=
-  graphIdeal (coordIdeal ℤ x) (linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e))
+  graphIdeal (coordIdeal ℤ x) (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e))
 
 abbrev aV (D : ℕ) (i : κ) : Σ k, Sum.elim (GlobalTheory κ) (GlobalTheory (Fin (D + 1))) k := ⟨Sum.inl (), i⟩
 
@@ -153,17 +153,17 @@ theorem aeval_scaled_eq_zero (hF : IsProjFrame x e) {F : MRing (Sum.elim (Global
       (fun f hf => eval₂_inl_mul_eq_zero G hf ℓ s)
   let lam : MvPolynomial Unit (MRing (GlobalTheory κ) ⧸ coordIdeal ℤ x) →+* RatFunc G.Φ' :=
     eval₂Hom lam0 fun _ => ℓ (G.x' (bV κ 0)) / RatFunc.X
-  have hcomp : lam.comp (graphMap (coordIdeal ℤ x) (linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e))) =
+  have hcomp : lam.comp (graphMap (coordIdeal ℤ x) (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e))) =
       (aeval (fun v : Σ k, Sum.elim (GlobalTheory κ) (GlobalTheory (Fin (D + 1))) k =>
         ℓ (G.x' v) * Sum.elim (fun _ => s) (fun _ => 1) v.1)).toRingHom := by
-    have hinl : ∀ i : κ, lam (graphMap (coordIdeal ℤ x) (linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1)))
+    have hinl : ∀ i : κ, lam (graphMap (coordIdeal ℤ x) (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1)))
         (projMat e)) (X (aV D (⟨(), i⟩ : Ix κ).2))) = ℓ (G.x' (aV D i)) * s := by
       intro i
       rw [graphMap_inl]
       simp only [lam, lam0, coe_eval₂Hom, eval₂_C]
       erw [Ideal.Quotient.lift_mk]
       simp
-    have hinr : ∀ j : Fin (D + 1), lam (graphMap (coordIdeal ℤ x) (linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1)))
+    have hinr : ∀ j : Fin (D + 1), lam (graphMap (coordIdeal ℤ x) (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1)))
         (projMat e)) (X (bV κ j))) = ℓ (G.x' (bV κ j)) := by
       intro j
       have hj := congrArg ℓ (x'_frame_mul G (e := e) j)

@@ -124,12 +124,12 @@ theorem PtsBddConv.proof (hAbs : Inter.PtsAbsIntegrable.Statement) : PtsBddConv.
   classical
 
   have key : ∀ Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ), IsGoodProj P Ψ →
-      Integrable (fun y => ∑ᶠ w ∈ fibre P Ψ y,
+      Integrable (fun y => ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y,
         sheetDensity P Ψ (fun (_ : Fin e) z => Real.log (L.h z) / r) g₀ y w) ∧
       Tendsto (fun s => ptsIntegralAt P Ψ (fun (_ : Fin e) z => Real.log (L.h z) / r) (g s)) (𝓝[>] 0)
         (𝓝 (ptsIntegralAt P Ψ (fun (_ : Fin e) z => Real.log (L.h z) / r) g₀)) := by
     intro Ψ hΨ
-    have hfin : ∀ y, (fibre P Ψ y).Finite := fibreFinite K ι P e Ψ hP hΨ
+    have hfin : ∀ y, (ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y).Finite := fibreFinite K ι P e Ψ hP hΨ
     have hL' : ∀ j : Fin e, IsSmoothHerm ((fun _ => L) j) := fun _ => hL
     have hone : IsSectionOn P (oneLine (ι := ι)) 1 := by
       refine ⟨0, fun k => by simp [oneLine, HermLine.ofWeight], fun m hm k => ?_,
@@ -151,8 +151,8 @@ theorem PtsBddConv.proof (hAbs : Inter.PtsAbsIntegrable.Statement) : PtsBddConv.
           (pow_nonneg (inv_nonneg.mpr hr.le) e)) (abs_nonneg _)
       · simp only [sheetDensity, dif_neg hγ, abs_zero, mul_zero, le_refl]
     have hsum : ∀ (h : ((Σ k, ι k) → ℂ) → ℝ) y, (∀ w (hγ : ∃ γ, IsSheet P Ψ y w γ), |h (hγ.choose y)| ≤ C) →
-        ‖∑ᶠ w ∈ fibre P Ψ y, sheetDensity P Ψ (fun (_ : Fin e) z => Real.log (L.h z) / r) h y w‖ ≤
-          C * r⁻¹ ^ e * ∑ᶠ w ∈ fibre P Ψ y, |sheetDensity P Ψ (pot fun _ => L) (logNorm oneLine 1) y w| := by
+        ‖∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, sheetDensity P Ψ (fun (_ : Fin e) z => Real.log (L.h z) / r) h y w‖ ≤
+          C * r⁻¹ ^ e * ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, |sheetDensity P Ψ (pot fun _ => L) (logNorm oneLine 1) y w| := by
       intro h y hh
       rw [Real.norm_eq_abs, finsum_mem_eq_finite_toFinset_sum _ (hfin y),
         finsum_mem_eq_finite_toFinset_sum _ (hfin y), Finset.mul_sum]
@@ -166,7 +166,7 @@ theorem PtsBddConv.proof (hAbs : Inter.PtsAbsIntegrable.Statement) : PtsBddConv.
     have hoff : ∀ y ∉ S, ∀ w (hγ : ∃ γ, IsSheet P Ψ y w γ), hγ.choose y ∉ N :=
       fun y hy w hγ hz => hy ⟨_, (hpt y w hγ).1, hz, (hpt y w hγ).2⟩
 
-    have hmeas : ∀ s, 0 < s → s < s₀ → AEStronglyMeasurable (fun y => ∑ᶠ w ∈ fibre P Ψ y,
+    have hmeas : ∀ s, 0 < s → s < s₀ → AEStronglyMeasurable (fun y => ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y,
         sheetDensity P Ψ (fun (_ : Fin e) z => Real.log (L.h z) / r) (g s) y w) volume := by
       intro s hs hs1
       obtain ⟨-, hgc, hgt⟩ := hg s hs hs1
@@ -231,9 +231,9 @@ theorem PtsBddConv.proof (hAbs : Inter.PtsAbsIntegrable.Statement) : PtsBddConv.
         rw [hg', if_neg hne]
       · simp only [id, sheetDensity, dif_neg hγ]
 
-    have hlimpt : ∀ᵐ y, Tendsto (fun s => ∑ᶠ w ∈ fibre P Ψ y,
+    have hlimpt : ∀ᵐ y, Tendsto (fun s => ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y,
         sheetDensity P Ψ (fun (_ : Fin e) z => Real.log (L.h z) / r) (g s) y w) (𝓝[>] 0)
-        (𝓝 (∑ᶠ w ∈ fibre P Ψ y, sheetDensity P Ψ (fun (_ : Fin e) z => Real.log (L.h z) / r) g₀ y w)) := by
+        (𝓝 (∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, sheetDensity P Ψ (fun (_ : Fin e) z => Real.log (L.h z) / r) g₀ y w)) := by
       filter_upwards [hSae] with y hy
       rw [finsum_mem_eq_finite_toFinset_sum _ (hfin y)]
       simp only [finsum_mem_eq_finite_toFinset_sum _ (hfin y)]

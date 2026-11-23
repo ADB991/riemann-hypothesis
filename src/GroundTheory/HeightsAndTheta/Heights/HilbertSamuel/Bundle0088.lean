@@ -196,8 +196,8 @@ theorem H1VanishingDevissage.proof (hPF : KH.PrimeFiltStatement) (hSES : KH.Cech
           refine ⟨c₂, fun n hn => cechHc_subsingleton_of_bij hSES _ _ φ hA hq hG hinj hsurj _ _ ?_⟩
           rw [cechHc_shift_iff, show e + n • N + -c l = e + -c l + n • N by abel]
           exact hc₂ n hn
-        · have hirr : ¬ IsRelevant (𝔭 l) := fun h => hrel ⟨(h𝔭 l).1, (h𝔭 l).2.1, h⟩
-          simp only [IsRelevant, not_forall, not_exists, not_not] at hirr
+        · have hirr : ¬ ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant (𝔭 l) := fun h => hrel ⟨(h𝔭 l).1, (h𝔭 l).2.1, h⟩
+          simp only [ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant, not_forall, not_exists, not_not] at hirr
           obtain ⟨k, hk⟩ := hirr
           refine ⟨0, fun n _ => (h1_vanish_generated_of_localized_subsingleton (fun _ I => ?_) _ _).1⟩
           obtain ⟨i, hi⟩ := I.2.1 k
@@ -318,7 +318,7 @@ theorem exists_monomial_not_mem {P : Ideal (MRing ι)} (hP : IsMultiProjPrime P)
     · exact hμp (by simp [μ, hj])
 
 theorem isMultiHomog_monomial {μ : (Σ k, ι k) →₀ ℕ} {a : K → ℕ} (hμ : ∀ k, ∑ i, μ ⟨k, i⟩ = a k) :
-    IsMultiHomog (monomial μ (1 : ℤ)) a := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (monomial μ (1 : ℤ)) a := by
   intro m hm k
   rw [Finset.mem_singleton.1 (support_monomial_subset hm)]
   exact hμ k
@@ -345,7 +345,7 @@ theorem isConeTangent_of_sheet {P0 P : Ideal (MRing ι)} (hP0 : P0 ≤ P) {e : �
   have := congrArg (fun L => L ξ) (hd.unique h0)
   simpa [ContinuousLinearMap.sum_apply, smul_eq_mul] using this
 
-theorem maDensity_nonneg_of_sheet {P0 P : Ideal (MRing ι)} (hP0 : P0 ≤ P) {A : HermLine ι}
+theorem maDensity_nonneg_of_sheet {P0 P : Ideal (MRing ι)} (hP0 : P0 ≤ P) {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι}
     (hsp : IsSemipositiveRel P0 P A) {e : ℕ} {Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)}
     {y : Fin e → ℂ} {w : ((k : K) → ι k) → ℂ} {γ : (Fin e → ℂ) → (Σ k, ι k) → ℂ}
     (h : IsSheet P Ψ y w γ) :
@@ -366,7 +366,7 @@ theorem maDensity_nonneg_of_sheet {P0 P : Ideal (MRing ι)} (hP0 : P0 ≤ P) {A 
   rw [hl]
   exact hsp.2 _ hy _ (isConeTangent_of_sheet hP0 hA hpts ξ)
 
-theorem arInt_nonpos {P0 P : Ideal (MRing ι)} (hP0 : P0 ≤ P) {A : HermLine ι}
+theorem arInt_nonpos {P0 P : Ideal (MRing ι)} (hP0 : P0 ≤ P) {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι}
     (hsp : IsSemipositiveRel P0 P A) {s : MRing ι}
     (hs : ∀ z ∈ mcPts P, ‖eval z (map (Int.castRingHom ℂ) s)‖ ≤ A.h z) (e : ℕ) :
     arInt P s A (fun _ : Fin e => A) ≤ 0 := by
@@ -391,8 +391,8 @@ theorem arInt_nonpos {P0 P : Ideal (MRing ι)} (hP0 : P0 ≤ P) {A : HermLine ι
     exact finsum_nonpos' fun w => finsum_nonpos' fun _ => key w
   · exact le_rfl
 
-theorem nonneg_of_family (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ)
-    (hI : IsIntersectionFamily I) (a : K → ℕ) (A : HermLine ι) (hA : A.a = fun k => (a k : ℤ))
+theorem nonneg_of_family (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ)
+    (hI : IsIntersectionFamily I) (a : K → ℕ) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hA : A.a = fun k => (a k : ℤ))
     (P0 : Ideal (MRing ι)) (n : ℕ) :
     ∀ P : Ideal (MRing ι), IsArithVar P n → P0 ≤ P → IsSemipositiveRel P0 P A →
       MonomialsBounded P A a → 0 ≤ I P n (fun _ => A) := by
@@ -404,14 +404,14 @@ theorem nonneg_of_family (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → Herm
     intro P hP hP0 hsp hmb
     obtain ⟨μ, hμ, hμP⟩ := exists_monomial_not_mem hP.2.1 a
     set s : MRing ι := monomial μ (1 : ℤ) with hsdef
-    have hsa : IsMultiHomog s a := isMultiHomog_monomial hμ
+    have hsa : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a := isMultiHomog_monomial hμ
     have hAa : ∀ k, A.a k = a k := fun k => by rw [hA]
     have hsmall : ∀ z ∈ mcPts P, ‖eval z (map (Int.castRingHom ℂ) s)‖ ≤ A.h z := by
       intro z hz
       rw [hsdef, eval_monomial_one]
       exact hmb z hz μ hμ
     have hR := hI.2.2 P m (fun _ => A) A s a hP (fun _ => hsp.1) hsp.1 hAa hsa hμP
-    have hconst : (Fin.snoc (fun _ : Fin m => A) A : Fin (m + 1) → HermLine ι) = fun _ => A := by
+    have hconst : (Fin.snoc (fun _ : Fin m => A) A : Fin (m + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) = fun _ => A := by
       funext j
       refine Fin.lastCases ?_ (fun j => ?_) j <;> simp
     rw [hconst] at hR
@@ -453,14 +453,14 @@ theorem BlockResolutionMixedBridge.proof : BlockResolutionMixedBridge.Statement 
   have hex : ∃ Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (D + 1) → ℂ),
       IsGoodProj (mCoordIdeal d.y) Ψ :=
     goodProjExists K ι (mCoordIdeal d.y) D d.arith
-  set B : HermLine ι := A₁.tensor d.A.inv with hBdef
+  set B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := A₁.tensor d.A.inv with hBdef
   have hB0 : B.a = 0 := by
     funext k
-    simp [B, HermLine.tensor, HermLine.inv, hdeg, d.deg]
+    simp [B, HermLine.tensor, ReciprocityTheory.ChartRestriction.G.Geo.HermLine.inv, hdeg, d.deg]
   have hgl : (fun z => Real.log (A₁.h z / d.A.h z)) = logNorm B.inv 1 := by
     funext z
     rw [logNorm_inv_one]
-    simp only [B, HermLine.tensor, HermLine.inv, div_eq_mul_inv]
+    simp only [B, HermLine.tensor, ReciprocityTheory.ChartRestriction.G.Geo.HermLine.inv, div_eq_mul_inv]
   have hBs : IsSmoothHerm B.inv :=
     isSmoothHerm_inv (isSmoothHerm_tensor hA₁ (isSmoothHerm_inv d.semipos.1))
   have hsec : IsSectionOn (mCoordIdeal d.y) B.inv 1 := isSectionOn_inv_one d.arith.2.1.1 hB0

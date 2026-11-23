@@ -73,7 +73,7 @@ theorem isConeTangent_lift {P J : Ideal (MRing ι)} {e : ℕ} (R : AnLogRes P J 
   have h1 := congrArg (fun L => L w) (hD.unique hD0)
   simpa [smul_eq_mul, mul_comm] using h1
 
-theorem isPsh_potOf {P J : Ideal (MRing ι)} {e : ℕ} (R : AnLogRes P J e) {A : HermLine ι}
+theorem isPsh_potOf {P J : Ideal (MRing ι)} {e : ℕ} (R : AnLogRes P J e) {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι}
     (hA : IsSemipositiveH P A) : IsPsh R.A (potOf R A) := by
   intro x j y hy w
   have hy' : y ∈ (R.A.chart j).target ∩ (R.A.chart j).symm ⁻¹' R.U x := hy
@@ -97,7 +97,7 @@ theorem StokesStep.proof (hE : ResExistsStatement) : StokesStep.Statement := by
   obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
   obtain ⟨J, ⟨R⟩⟩ := exists_anLogRes hE hP
   set C := A'.tensor A.inv with hCdef
-  have hC0 : C.a = 0 := by simp [C, HermLine.tensor, HermLine.inv, ha]
+  have hC0 : C.a = 0 := by simp [C, HermLine.tensor, ReciprocityTheory.ChartRestriction.G.Geo.HermLine.inv, ha]
   have hCs : IsSmoothHerm C := hA'.1.mul (isSmoothHerm_inv hA.1)
   have hlogC : ∀ z, (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) →
       Real.log (C.h z) = Real.log (A'.h z) - Real.log (A.h z) := by
@@ -105,7 +105,7 @@ theorem StokesStep.proof (hE : ResExistsStatement) : StokesStep.Statement := by
     show Real.log (A'.h z * (A.h z)⁻¹) = _
     rw [Real.log_mul (A'.pos z hz).ne' (inv_ne_zero (A.pos z hz).ne'), Real.log_inv]
     ring
-  let L : ℕ → Fin (m + 1) → HermLine ι := fun l j => if j.val < l then A' else A
+  let L : ℕ → Fin (m + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := fun l j => if j.val < l then A' else A
   have hpot : ∀ l, stokesMixPot A A' (m + 1) l = pot (L l) := by
     intro l
     funext j z
@@ -241,7 +241,7 @@ theorem prod_norm_zpow_add {c : K → ℂ} (hc : ∀ k, c k ≠ 0) (a b : K → 
   simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, Nat.cast_one, one_mul]
   rw [zpow_add₀ h0, show (q : ℤ) * a k = a k * q by ring, zpow_mul, zpow_natCast]
 
-theorem smoothRep_smooth_of {P : Ideal (MRing ι)} {A Z : HermLine ι} (ha : Z.a = A.a) (hZ : IsSmoothHerm Z)
+theorem smoothRep_smooth_of {P : Ideal (MRing ι)} {A Z : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (ha : Z.a = A.a) (hZ : IsSmoothHerm Z)
     (hh : ∀ z ∈ mcPts P, Z.h z = A.h z) : IsSmoothHerm (smoothRep P A) := by
   classical
   unfold smoothRep
@@ -439,7 +439,7 @@ open MvPolynomial MeasureTheory ReciprocityTheory.ChartRestriction.G.Geo Filter 
 
 def ModelLogIntegrable.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (e : ℕ)
-    (M : CxModel P e) (R : GroundTheory.Heights₂.Heights.Regular.RegChartData M.atlas) (L : HermLine ι) (c : ℝ)
+    (M : CxModel P e) (R : GroundTheory.Heights₂.Heights.Regular.RegChartData M.atlas) (L : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (c : ℝ)
     (N : Set ((Σ k, ι k) → ℂ)) (u : M.Xc → ℝ) (C C' : ℝ) (g : ((Σ k, ι k) → ℂ) → ℝ),
     IsArithVar P (e + 1) → IsSmoothHerm L → IsPtsNull P e N → @Measurable M.Xc ℝ (borel M.Xc) _ u →
     (∀ x ∈ R.Yo, |u x| ≤ C + C' * Real.log (R.r x)) →

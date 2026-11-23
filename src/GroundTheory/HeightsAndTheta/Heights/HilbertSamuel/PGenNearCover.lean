@@ -35,7 +35,7 @@ theorem weight_blockDeg_apply [∀ k, Fintype (ι k)] (m : (Σ k, ι k) →₀ �
   · simp
 
 theorem isWeightedHomogeneous_iff {f : MRingOver S ι} {a : K → ℕ} :
-    IsWeightedHomogeneous (blockDeg (ι := ι)) f a ↔ IsMultiHomog f a := by
+    IsWeightedHomogeneous (blockDeg (ι := ι)) f a ↔ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a := by
   constructor
   · intro h m hm k
     rw [← weight_blockDeg_apply, h (mem_support_iff.1 hm)]
@@ -101,7 +101,7 @@ theorem cellProd_isWeightedHomogeneous (I : ∀ k, Finset (ι k)) :
 
 omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem isRelevant_of_cellProd_notMem {I : ∀ k, Finset (ι k)} (hI : ∀ k, (I k).Nonempty)
-    {W : Ideal (MRingOver S ι)} (hW : cellProd S I ∉ W) : IsRelevant W := by
+    {W : Ideal (MRingOver S ι)} (hW : cellProd S I ∉ W) : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W := by
   intro k
   obtain ⟨i, hi⟩ := hI k
   refine ⟨i, fun hX => hW ?_⟩
@@ -225,7 +225,7 @@ theorem GenNearCover.proof (hG : GradedSubmodules.Statement) : GenNearCover.Stat
     refine Finset.sum_congr rfl fun P _ => ?_
     rw [hsplit P, mul_smul, he P, Finset.smul_sum]
     simp only [smul_smul]
-  have hq : ∀ P j, IsMultiHomog (gc P * F P.1 ^ (N - n P) * (∏ Q ∈ Finset.univ.erase P, t Q) * p P j)
+  have hq : ∀ P j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (gc P * F P.1 ^ (N - n P) * (∏ Q ∈ Finset.univ.erase P, t Q) * p P j)
       (D + ∑ Q, a Q) := by
     intro P j
     rw [← isWeightedHomogeneous_iff]
