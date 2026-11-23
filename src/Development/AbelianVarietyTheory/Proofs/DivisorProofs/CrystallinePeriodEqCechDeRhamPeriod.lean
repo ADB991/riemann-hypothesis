@@ -130,6 +130,9 @@ theorem snd_phi {B O : Type} [CommRing B] [Algebra ℂ B] [CommRing O] [Algebra 
     (h : ∀ (b : B) ω, ℓ (b • ω) = α b • ℓ ω) (c : TrivSqZeroExt B Ω[B⁄ℂ]) : (phi α ℓ h c).snd = ℓ c.snd := zero_add _
 
 
+local instance (U : A.left.Opens) : SMul (Hol (W u U)) (Fin g → Hol (W u U)) :=
+  ⟨fun f v i => f * v i⟩
+
 set_option maxHeartbeats 1600000 in
 def Phi (U : A.left.affineOpens) (ℓ : Ω[Sec (str A) U.1⁄ℂ] →+ (Fin g → Hol (W u U.1)))
     (h : ∀ b ω, ℓ (b • ω) = valHom u U.1 b • ℓ ω) :
