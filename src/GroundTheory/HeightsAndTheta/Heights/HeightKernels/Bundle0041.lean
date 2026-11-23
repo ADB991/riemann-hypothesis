@@ -370,7 +370,7 @@ def DualStackedGraphBihomog.Statement : Prop :=
     (a : T → ℤ),
     (∀ t, (b t : Fin i → K) = a t • (b' t : Fin i → K)) →
     ∀ f ∈ stackedGraph b' a, ∃ (s : Finset (ℕ × ℕ)) (g : ℕ × ℕ → MRing (stackedBlocks T)),
-      f = ∑ p ∈ s, g p ∧ ∀ p ∈ s, IsMultiHomog (g p) (bidegree p.1 p.2) ∧ stackedFormEval b b' (g p) = 0
+      f = ∑ p ∈ s, g p ∧ ∀ p ∈ s, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (g p) (bidegree p.1 p.2) ∧ stackedFormEval b b' (g p) = 0
 
 def DualStackedExcLeadForm.Statement : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (i : ℕ) (F F' : HermLattice K i) (T : Type) [Fintype T]
@@ -380,7 +380,7 @@ def DualStackedExcLeadForm.Statement : Prop :=
     (∀ N : Submodule (𝓞 K) (Fin i → K), F'.lattice ≤ N → N ≤ F.lattice → N = F'.lattice ∨ N = F.lattice) →
     (∀ t, (b t : Fin i → K) = a t • (b' t : Fin i → K)) →
     ∀ (k : Type) [Field k] (α : T → k) (M : T → Fin i → k), IsExcResidueData b b' α M →
-      ∀ (d e : ℕ) (f : MRing (stackedBlocks T)), IsMultiHomog f (bidegree d e) →
+      ∀ (d e : ℕ) (f : MRing (stackedBlocks T)), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f (bidegree d e) →
         stackedFormEval b b' f = 0 → linPointMap α M f = 0
 
 namespace DualStackedExcLeadExample

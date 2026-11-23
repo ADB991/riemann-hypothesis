@@ -89,7 +89,7 @@ open IndefiniteRowSideFullHecke.HeightsSet.CoordCurveDegree
 
 variable {T : Type} [Fintype T]
 
-theorem logNorm_smul {A : HermLine (fun _ : Unit => T)} {s : MRing (fun _ : Unit => T)}
+theorem logNorm_smul {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (fun _ : Unit => T)} {s : MRing (fun _ : Unit => T)}
     {P : Ideal (MRing (fun _ : Unit => T))} (hs : IsSectionOn P A s) (c : ℂ) (hc : c ≠ 0)
     (z : (Σ _ : Unit, T) → ℂ) : logNorm A s (fun p => c * z p) = logNorm A s z := by
   obtain ⟨a, ha, hhom, -⟩ := hs
@@ -188,11 +188,11 @@ theorem PointArInt.proof : PointArInt.Statement := by
   let c : Unit → T := fun _ => c0
   have hc : ∀ k, y ⟨k, c k⟩ ≠ 0 := fun k h => hc0 (X_mem_of_eq_zero h)
   obtain ⟨R, hR, hU, hsum⟩ := Inter.regularityPointsSum_holds.proof Unit (fun _ => T) (mCoordIdeal y) hP
-  have harInt : arInt (mCoordIdeal y) s A (Fin.elim0 : Fin 0 → HermLine (fun _ : Unit => T)) =
+  have harInt : arInt (mCoordIdeal y) s A (Fin.elim0 : Fin 0 → ReciprocityTheory.ChartRestriction.G.Geo.HermLine (fun _ : Unit => T)) =
       ∑ t ∈ R, logNorm A s t := by
     unfold arInt
     have e0 : (fun (j : Fin 0) (z : (Σ _ : Unit, T) → ℂ) =>
-        Real.log (((Fin.elim0 j : HermLine (fun _ : Unit => T))).h z)) =
+        Real.log (((Fin.elim0 j : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (fun _ : Unit => T))).h z)) =
         (Fin.elim0 : Fin 0 → ((Σ _ : Unit, T) → ℂ) → ℝ) := funext fun j => j.elim0
     rw [e0]
     apply hsum
@@ -328,7 +328,7 @@ theorem length_quotient_of_surjective {A N : Type*} [CommRing A] [CommRing N] (�
   exact Module.length_eq_of_surjective hΦ
 
 theorem aeval_C_mul_X {T : Type} [Fintype T] {S : Type*} [CommRing S] (r : (Σ _ : Unit, T) → S)
-    (f : MRing (fun _ : Unit => T)) (d : ℕ) (hf : IsMultiHomog f (fun _ => d)) :
+    (f : MRing (fun _ : Unit => T)) (d : ℕ) (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f (fun _ => d)) :
     eval₂ (Int.castRingHom (Polynomial S)) (fun p => Polynomial.C (r p) * Polynomial.X) f =
       Polynomial.C (eval₂ (Int.castRingHom S) r f) * Polynomial.X ^ d := by
   classical

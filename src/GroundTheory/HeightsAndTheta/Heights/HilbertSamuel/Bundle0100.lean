@@ -143,7 +143,7 @@ theorem proof : ProjFrameGenPtTransc.Statement := by
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [map_mul, map_pow, aeval_X, aeval_rename]
     exact congrArg (· * _) (hg n)
-  replace hFΓ : graphMap (coordIdeal ℤ x) (linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e))
+  replace hFΓ : graphMap (coordIdeal ℤ x) (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e))
       (∑ n ∈ q.support, rename (fun p : Ix κ => aV D p.2) (g n) * X (bV κ 0) ^ n) = 0 := hFΓ
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum] at hFΓ
@@ -198,14 +198,14 @@ section Lemmas
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
 theorem isWeightedHomogeneous_of_isMultiHomog {f : MRing ι} {a : K → ℕ}
-    (hf : IsMultiHomog f a) : IsWeightedHomogeneous (NumbersDVR.blockWeight ι) f a := by
+    (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) : IsWeightedHomogeneous (NumbersDVR.blockWeight ι) f a := by
   intro m hm
   funext k
   rw [weight_blockWeight_apply]
   exact hf m (mem_support_iff.mpr hm) k
 
 theorem isMultiHomog_of_isWeightedHomogeneous {f : MRing ι} {a : K → ℕ}
-    (hf : IsWeightedHomogeneous (NumbersDVR.blockWeight ι) f a) : IsMultiHomog f a := by
+    (hf : IsWeightedHomogeneous (NumbersDVR.blockWeight ι) f a) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a := by
   intro m hm k
   rw [← weight_blockWeight_apply, hf (mem_support_iff.mp hm)]
 
@@ -405,7 +405,7 @@ theorem mass_pullFS (hPM : ProjFSMass.Statement) (d : HSMDatum D Ω κ) {e : Fin
     {m₀ : ConeMetric ℂ (Ix κ)} (hfr : IsProjFrame d.x e) (h₀ : IsSmoothMetric m₀) (hFS : IsPullFS d.x e m₀) :
     mInt d.R.A (fun _ => resPot d m₀) (fun _ => 1) = (projDeg d.x e : ℝ) := by
   obtain ⟨Ψ, hΨ, hmass⟩ := hPM D Ω κ d.x e m₀ hfr hFS
-  let A : HermLine (GlobalTheory κ) := HermLine.ofWeight (fun _ => (1 : ℝ)) (fun _ _ _ => rfl)
+  let A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (GlobalTheory κ) := HermLine.ofWeight (fun _ => (1 : ℝ)) (fun _ _ _ => rfl)
   have hA : IsSmoothHerm A := contDiffOn_const
   have hlog : logNorm A 1 = fun _ => (1 : ℝ) := by
     funext z

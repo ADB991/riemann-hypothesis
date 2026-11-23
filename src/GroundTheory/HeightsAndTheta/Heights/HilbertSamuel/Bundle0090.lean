@@ -42,12 +42,12 @@ theorem BlockResolutionFormsIndependent.proof (hND : NonvanishingDense.Statement
     exact this
   have hli : LinearIndependent ℤ fun k => aeval d.y (f k) := by
     have := hb.2.1
-    simp only [hbf, aeval_map_int] at this
+    simp only [hbf, GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.aeval_map_int] at this
     exact this
   have hFc : Continuous F :=
     continuous_finsetSum _ fun k _ => continuous_const.mul (continuous_eval _)
 
-  have hev : ∀ (s : MRing ι) (e : K → ℕ), IsMultiHomog s e → ∀ (c : K → ℂ) (z : (Σ k, ι k) → ℂ),
+  have hev : ∀ (s : MRing ι) (e : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s e → ∀ (c : K → ℂ) (z : (Σ k, ι k) → ℂ),
       eval (fun p => c p.1 * z p) (map (Int.castRingHom ℂ) s) =
         (∏ k, c k ^ e k) * eval z (map (Int.castRingHom ℂ) s) := by
     intro s e hs c z
@@ -104,7 +104,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo MvPolynomial
 noncomputable section
 
 theorem aeval_mul_blockScale_of_isMultiHomog {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
-    {Ω : Type*} [CommRing Ω] {f : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) (t : K → Ω)
+    {Ω : Type*} [CommRing Ω] {f : MRing ι} {a : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) (t : K → Ω)
     (y : (Σ k, ι k) → Ω) :
     aeval (fun p => y p * t p.1) f = aeval y f * ∏ k, t k ^ a k := by
   rw [aeval_def, aeval_def, eval₂_eq', eval₂_eq', Finset.sum_mul]
@@ -256,12 +256,12 @@ variable {S : Type} [CommRing S] {K : Type} [Fintype K] [LinearOrder K] {ι : K 
   {𝓜 : (K → ℤ) → Submodule S M}
 
 theorem genNear_of_mul_eq_pow {d : K → ℤ} {a q b : MRingOver S ι} {α β δ : K → ℕ} {m : ℕ}
-    (h : GenNear S ι 𝓜 d a α) (hq : IsMultiHomog q β) (hab : a * q = b ^ m) (hdeg : m • δ = α + β) :
+    (h : GenNear S ι 𝓜 d a α) (hq : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog q β) (hab : a * q = b ^ m) (hdeg : m • δ = α + β) :
     GenNear S ι 𝓜 d b δ := by
   intro I x hx
   obtain ⟨n, t, c, r, p, z, ht, htc, hp, hz, he⟩ := h I x hx
   refine ⟨m * n, t, c, r, fun j => q ^ n * p j, z, ht, htc, fun j => ?_, hz, ?_⟩
-  · have h' := isMultiHomog_mul (isMultiHomog_pow hq n) (hp j)
+  · have h' := GroundTheory.Heights₂.Heights.Inter.AvoidRing.isMultiHomog_mul (GroundTheory.Heights₂.Heights.Inter.AvoidRing.isMultiHomog_pow hq n) (hp j)
     convert h' using 1
     funext k
     have hk := congrFun hdeg k
@@ -274,7 +274,7 @@ theorem genNear_of_mul_eq_pow {d : K → ℤ} {a q b : MRingOver S ι} {α β δ
 
 theorem genNear_mul_pow (hM : GenNearMul.Statement) (hgr : KH.IsMGraded S ι 𝓜) {W : Ideal (MRingOver S ι)}
     (hW : W ≤ Module.annihilator (MRingOver S ι) M) {d n : K → ℤ} {f g : MRingOver S ι} {δ γ : K → ℕ}
-    (hf : IsMultiHomog f δ) (hg : IsMultiHomog g γ) (hfd : GenNear S ι 𝓜 d f δ)
+    (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f δ) (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g γ) (hfd : GenNear S ι 𝓜 d f δ)
     (hgn : GenNear S ι (KH.quotPart S W) n g γ) :
     ∀ a : ℕ, GenNear S ι 𝓜 (d + a • n) (f * g ^ a) (δ + a • γ) := by
   intro a
@@ -282,7 +282,7 @@ theorem genNear_mul_pow (hM : GenNearMul.Statement) (hgr : KH.IsMGraded S ι �
   | zero => simpa using hfd
   | succ a ih =>
     have h' := hM S K ι M 𝓜 W (d + a • n) n (f * g ^ a) g (δ + a • γ) γ hgr hW
-      (isMultiHomog_mul hf (isMultiHomog_pow hg a)) hg ih hgn
+      (GroundTheory.Heights₂.Heights.Inter.AvoidRing.isMultiHomog_mul hf (GroundTheory.Heights₂.Heights.Inter.AvoidRing.isMultiHomog_pow hg a)) hg ih hgn
     rw [succ_nsmul, succ_nsmul, pow_succ, ← mul_assoc, ← add_assoc, ← add_assoc]
     exact h'
 
@@ -328,7 +328,7 @@ theorem ClosedPtGenUniform.proof (hG : GradedSubmodules.Statement) (hF : ClosedP
       (P • ⊤ : Submodule (MRingOver S ι) (MRingOver S ι ⧸ W)).injective_subtype)
   obtain ⟨cO, hcO⟩ := hH (P • ⊤ : Submodule (MRingOver S ι) (MRingOver S ι ⧸ W))
     (subGrading (KH.quotPart S W) (P • ⊤)) inferInstance (hQsub P hPhom).1 hVPQ 0
-  have hgenO : ∀ n : ℕ, cO ≤ n → ∃ (g : MRingOver S ι) (γ : K → ℕ), IsMultiHomog g γ ∧ g ∉ P ∧
+  have hgenO : ∀ n : ℕ, cO ≤ n → ∃ (g : MRingOver S ι) (γ : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g γ ∧ g ∉ P ∧
       GenNear S ι (KH.quotPart S W) (0 + n • N) g γ := fun n hn =>
     hN S K ι _ (KH.quotPart S W) P (0 + n • N) hS hQfin hWgr hPprime hPhom I hI
       (hF S K ι _ (KH.quotPart S W) P (0 + n • N) hS hQfin hWgr hP (hcO n hn) I hI)
@@ -336,7 +336,7 @@ theorem ClosedPtGenUniform.proof (hG : GradedSubmodules.Statement) (hF : ClosedP
   obtain ⟨g₁, γ₁, hg₁, hg₁P, hgen₁⟩ := hgenO n₁ (by omega)
   obtain ⟨g₂, γ₂, hg₂, hg₂P, hgen₂⟩ := hgenO (n₁ + 1) (by omega)
 
-  refine ⟨fM * g₁ * g₂, δM + γ₁ + γ₂, cM + n₁ * n₁, isMultiHomog_mul (isMultiHomog_mul hfM hg₁) hg₂, ?_, ?_⟩
+  refine ⟨fM * g₁ * g₂, δM + γ₁ + γ₂, cM + n₁ * n₁, GroundTheory.Heights₂.Heights.Inter.AvoidRing.isMultiHomog_mul (GroundTheory.Heights₂.Heights.Inter.AvoidRing.isMultiHomog_mul hfM hg₁) hg₂, ?_, ?_⟩
   · intro hmem
     rcases hPprime.mem_or_mem hmem with h | h
     · rcases hPprime.mem_or_mem h with h | h
@@ -358,7 +358,7 @@ theorem ClosedPtGenUniform.proof (hG : GradedSubmodules.Statement) (hF : ClosedP
     rw [← h1, ← hdm, ha]
     ring
   have hA := genNear_mul_pow hM hgr le_rfl hfM hg₁ hgenM hgen₁ a
-  have hB := genNear_mul_pow hM hgr le_rfl (isMultiHomog_mul hfM (isMultiHomog_pow hg₁ a)) hg₂ hA hgen₂ s
+  have hB := genNear_mul_pow hM hgr le_rfl (GroundTheory.Heights₂.Heights.Inter.AvoidRing.isMultiHomog_mul hfM (GroundTheory.Heights₂.Heights.Inter.AvoidRing.isMultiHomog_pow hg₁ a)) hg₂ hA hgen₂ s
   have htw : e + cM • N + a • (0 + n₁ • N) + s • (0 + (n₁ + 1) • N) = e + c • N := by
     rw [hca]
     funext k
@@ -367,8 +367,8 @@ theorem ClosedPtGenUniform.proof (hG : GradedSubmodules.Statement) (hF : ClosedP
     ring
   rw [htw] at hB
   refine genNear_of_mul_eq_pow hB
-    (isMultiHomog_mul (isMultiHomog_mul (isMultiHomog_pow hfM (a + s)) (isMultiHomog_pow hg₁ (s + 1)))
-      (isMultiHomog_pow hg₂ (a + 1))) (m := a + s + 1) (by ring) ?_
+    (GroundTheory.Heights₂.Heights.Inter.AvoidRing.isMultiHomog_mul (GroundTheory.Heights₂.Heights.Inter.AvoidRing.isMultiHomog_mul (GroundTheory.Heights₂.Heights.Inter.AvoidRing.isMultiHomog_pow hfM (a + s)) (GroundTheory.Heights₂.Heights.Inter.AvoidRing.isMultiHomog_pow hg₁ (s + 1)))
+      (GroundTheory.Heights₂.Heights.Inter.AvoidRing.isMultiHomog_pow hg₂ (a + 1))) (m := a + s + 1) (by ring) ?_
   funext k
   simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
   ring
