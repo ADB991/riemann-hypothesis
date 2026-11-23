@@ -260,7 +260,7 @@ theorem potKnown_of_lamIs : Out.Laws → ThetaUnifAV → ∀ (K : Type) [Field K
   let b : y'.P.A.left ⟶ X₂.left := hχ.lift a (y'.P.A.hom ≫ spMap j) (by rw [a₂, Category.assoc])
   have b₁ : b ≫ χ = a := hχ.lift_fst _ _ _
   have i₃ := (lbIso_pull_both b P.isLB y.P.isLB).1
-    (LBIso.chartPull (chartPullPull _ b b rfl) (chartPullPull _ b b rfl) i₂)
+    (LBIso.chartPull (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull _ b b rfl) (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull _ b b rfl) i₂)
   rw [← Category.assoc, ← Category.assoc, b₁, a₁] at i₃
   refine known_of_point hL hT _ y y' (φ ≫ e.hom.left) (a ≫ w₁)
     ((hφ.1.comp (isGrpPullback_of_iso e)).congr (Category.comp_id _) rfl)
