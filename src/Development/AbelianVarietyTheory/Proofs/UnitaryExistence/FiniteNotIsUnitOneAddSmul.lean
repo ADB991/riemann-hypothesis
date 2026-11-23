@@ -384,7 +384,7 @@ theorem exists_nsmul_mem {p : ℕ} (hp : p.Prime) (L : Submodule (𝓞 E) (Fin n
   exact hs (hIQ hsx)
 
 theorem herm_one (x y : Fin n → E) : herm 1 x y = stdForm x y := by
-  rw [herm_eq_dotProduct, Matrix.vecMul_one]
+  rw [herm_eq_dotProduct, Matrix.one_mulVec]
   rfl
 
 theorem exists_smul_mem_stdMod (v : HeightOneSpectrum (𝓞 (maximalRealSubfield E))) {y : Fin n → E}
