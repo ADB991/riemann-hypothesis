@@ -115,7 +115,7 @@ namespace GlobalTheory.LocCong
 
 
 set_option maxHeartbeats 1000000 in
-theorem qsmul_latP_le_gS : ∀ (D : D7) (Z : LocDat D) (P : IsDedekindDomain.HeightOneSpectrum (𝓞 D.host.E)), ((gS D : ℕ) : 𝓞 D.host.E) ∈ P.asIdeal → ∃ sg : Loc.SplitG (Z.M (below D P)).L, (Z.M (below D P)).split = some sg ∧ ∀ (Λ : LV D) (v : Vp D (below D P)), v ∈ (locH Z (below D P)).smulLat (algebraMap (D.s.atP (below D P)).Fp (D.s.atP (below D P)).Ep (sg.q : (D.s.atP (below D P)).Fp)) (lattice₂ D Z.M (below D P) Λ) → v ∈ lattice₂ D Z.M (below D P) (Ideal.span {((gS D : ℕ) : 𝓞 D.host.E)} • Λ) := by
+theorem qsmul_latP_le_gS : ∀ (D : D7) (Z : LocDat D) (P : IsDedekindDomain.HeightOneSpectrum (𝓞 D.host.E)), ((Formalism.MainNotions.S.Lat.gS D : ℕ) : 𝓞 D.host.E) ∈ P.asIdeal → ∃ sg : Loc.SplitG (Z.M (below D P)).L, (Z.M (below D P)).split = some sg ∧ ∀ (Λ : LV D) (v : Vp D (below D P)), v ∈ (locH Z (below D P)).smulLat (algebraMap (D.s.atP (below D P)).Fp (D.s.atP (below D P)).Ep (sg.q : (D.s.atP (below D P)).Fp)) (lattice₂ D Z.M (below D P) Λ) → v ∈ lattice₂ D Z.M (below D P) (Ideal.span {((Formalism.MainNotions.S.Lat.gS D : ℕ) : 𝓞 D.host.E)} • Λ) := by
   intro D Z P hP
   set p : PlF D := below D P with hp
   have hmem : ∀ n : ℕ, ((n : 𝓞 D.host.F) ∈ p.asIdeal ↔ ((n : 𝓞 D.host.E)) ∈ P.asIdeal) := by
@@ -123,8 +123,8 @@ theorem qsmul_latP_le_gS : ∀ (D : D7) (Z : LocDat D) (P : IsDedekindDomain.Hei
     show (n : 𝓞 D.host.F) ∈ Ideal.comap _ P.asIdeal ↔ _
     rw [Ideal.mem_comap, map_natCast]
   have hg : ∃ i, ((D.host.g i : ℕ) : 𝓞 D.host.F) ∈ p.asIdeal := by
-    have h1 : ((gS D : ℕ) : 𝓞 D.host.F) ∈ p.asIdeal := (hmem _).2 hP
-    simp only [gS, Nat.cast_mul] at h1
+    have h1 : ((Formalism.MainNotions.S.Lat.gS D : ℕ) : 𝓞 D.host.F) ∈ p.asIdeal := (hmem _).2 hP
+    simp only [Formalism.MainNotions.S.Lat.gS, Nat.cast_mul] at h1
     rcases p.isPrime.mem_or_mem h1 with h | h
     · exact ⟨0, h⟩
     · exact ⟨1, h⟩
@@ -135,10 +135,10 @@ theorem qsmul_latP_le_gS : ∀ (D : D7) (Z : LocDat D) (P : IsDedekindDomain.Hei
       exact hi
     have hd : ringChar (𝓞 D.host.F ⧸ p.asIdeal) ∣ D.host.g i := ringChar.dvd hz
     exact (Nat.prime_dvd_prime_iff_eq (D.s.atP p).ellPrime.out (D.host.g_prime i)).1 hd
-  obtain ⟨j, hne, hgg⟩ : ∃ j : Fin 2, D.host.g i ≠ D.host.g j ∧ gS D = D.host.g i * D.host.g j := by
+  obtain ⟨j, hne, hgg⟩ : ∃ j : Fin 2, D.host.g i ≠ D.host.g j ∧ Formalism.MainNotions.S.Lat.gS D = D.host.g i * D.host.g j := by
     fin_cases i
     · exact ⟨1, D.host.g_ne, rfl⟩
-    · exact ⟨0, D.host.g_ne.symm, by simp [gS, mul_comm]⟩
+    · exact ⟨0, D.host.g_ne.symm, by simp [Formalism.MainNotions.S.Lat.gS, mul_comm]⟩
   have hsome : (D.s.atP p).split.isSome := (D.s_split p).2 (by
     rw [hchar]; fin_cases i <;> simp)
   obtain ⟨sg0, hsg0⟩ := Option.isSome_iff_exists.1 hsome
@@ -183,7 +183,7 @@ theorem qsmul_latP_le_gS : ∀ (D : D7) (Z : LocDat D) (P : IsDedekindDomain.Hei
     rw [(Z.agree p).2.2.2.1, (D.s.atP p).O_def]
     exact isIntegral_algebraMap
   have hsc : algebraMap (D.s.atP p).Fp (D.s.atP p).Ep (sg.q : (D.s.atP p).Fp) =
-      algebraMap (D.s.atP p).Fp (D.s.atP p).Ep (w : (D.s.atP p).Fp) * ((gS D : ℕ) : (D.s.atP p).Ep) := by
+      algebraMap (D.s.atP p).Fp (D.s.atP p).Ep (w : (D.s.atP p).Fp) * ((Formalism.MainNotions.S.Lat.gS D : ℕ) : (D.s.atP p).Ep) := by
     rw [← map_natCast (algebraMap (D.s.atP p).Fp (D.s.atP p).Ep), ← map_mul, hq, hgg]
     congr 1
     push_cast
@@ -198,7 +198,7 @@ theorem qsmul_latP_le_gS : ∀ (D : D7) (Z : LocDat D) (P : IsDedekindDomain.Hei
   | mem y hy =>
     obtain ⟨x, hx, rfl⟩ := hy
     rw [hsc, mul_smul]
-    have e : ((gS D : ℕ) : (D.s.atP p).Ep) • baseChange₂ D p x = baseChange₂ D p (((gS D : ℕ) : 𝓞 D.host.E) • x) := by
+    have e : ((Formalism.MainNotions.S.Lat.gS D : ℕ) : (D.s.atP p).Ep) • baseChange₂ D p x = baseChange₂ D p (((Formalism.MainNotions.S.Lat.gS D : ℕ) : 𝓞 D.host.E) • x) := by
       rw [Nat.cast_smul_eq_nsmul, Nat.cast_smul_eq_nsmul, map_nsmul]
     rw [e]
     exact (lattice₂ D Z.M p _).smul_mem (⟨_, hwO⟩ : (Z.M p).L.O)

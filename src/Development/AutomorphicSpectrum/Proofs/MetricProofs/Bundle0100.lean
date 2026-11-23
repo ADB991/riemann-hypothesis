@@ -31,7 +31,7 @@ theorem exists_unit_mul_monomial_of_primes {m e : ℕ} (I Dc : Ideal (MvPolynomi
     ∃ (u : (locRing I t)ˣ) (mm : Fin e → ℕ), (∀ i, i ∉ J → mm i = 0) ∧
       algebraMap _ (locRing I t) g = u * ∏ i ∈ J, algebraMap _ (locRing I t) (r i) ^ mm i := by
   classical
-  have hdom : IsDomain (locRing I t) := isDomain_of_isRegularLocalRing
+  have hdom : IsDomain (locRing I t) := ReciprocityTheory.AnForm.R.isDomain_of_isRegularLocalRing
   have hKt : I ≤ ptIdeal t := fun h hh => RingHom.mem_ker.mpr (hI h hh)
   have hspan' : Ideal.span (Set.range fun l => algebraMap _ (locRing I t) (r l)) =
       IsLocalRing.maximalIdeal (locRing I t) := by

@@ -94,7 +94,7 @@ theorem toBcris_hom {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} (F : BK.
   rw [toBcris_apply, Matrix.mulVec, dotProduct]
   simp only [Matrix.map_apply, toBcris_apply, homMat, Matrix.of_apply, ← PiSys.iTot_frob]
   trans ∑ j, ϖ.iB t K (fun τ => ⟨(frobAc l (fun τ => ⟨F.mat τ i j, F.mem τ i j⟩) τ : K⟦X⟧),
-      le_away _ _ (A_le_S l e (Subtype.prop _))⟩) * ϖ.iB t K (coordL P _ m j)
+      le_away _ _ (A_le_S l e (Subtype.prop _))⟩) * ϖ.iB t K (GlobalTheory.BKReal.coordL P _ m j)
   swap
   · exact Finset.sum_congr rfl fun j _ => by rw [hA]
   set_option synthInstance.maxHeartbeats 100000 in

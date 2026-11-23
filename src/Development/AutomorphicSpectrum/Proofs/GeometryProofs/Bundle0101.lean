@@ -83,7 +83,7 @@ theorem isUnit_germ_iff (hξ : IsCptGen ξ) {W : X.Opens} (hW : genPt ξ ∈ W) 
     IsUnit (X.presheaf.germ W (centre z) hz Q) ↔ v ≠ 0 := by
   obtain ⟨h, s, hs, rfl⟩ := hv
   have hs' : s = X.presheaf.germ W (centre z) hz Q :=
-    hξ.inj ⟨centre z, h⟩ (hs.trans (genMap_germ hW Q ⟨centre z, h⟩ hz).symm)
+    hξ.inj ⟨centre z, h⟩ (hs.trans (GlobalTheory.CompanionTheory.Ar.RootHt.ArchB.OpenNear.genMap_germ hW Q ⟨centre z, h⟩ hz).symm)
   subst hs'
   have := Scheme.isLocalHom_stalkClosedPointTo' z
   constructor
@@ -142,7 +142,7 @@ theorem open_near : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Sp Ω ⟶ 
       Algebra.adjoin ℤ (Set.range fun j : (k : K) → J k => (∏ k, y ⟨k, j k⟩) / ∏ k, y ⟨k, c k⟩) := by
     rw [ht.ring c hin₀.1]
     intro p hp
-    exact ⟨X.presheaf.germ W p.1 ((hW _).2 ⟨p.2, hp⟩) Q, genMap_germ hgW Q p _⟩
+    exact ⟨X.presheaf.germ W p.1 ((hW _).2 ⟨p.2, hp⟩) Q, GlobalTheory.CompanionTheory.Ar.RootHt.ArchB.OpenNear.genMap_germ hgW Q p _⟩
   rw [Algebra.adjoin_range_eq_range_aeval] at hreg
   obtain ⟨P, hP⟩ := hreg
   have hval : ∀ (z : Sp ℂ ⟶ X) (w : (Σ k, J k) → ℂ), CoordsAt ξ y z w → (∀ k, w ⟨k, c k⟩ ≠ 0) →

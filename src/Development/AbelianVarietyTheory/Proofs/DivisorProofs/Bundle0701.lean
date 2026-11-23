@@ -160,10 +160,10 @@ namespace GlobalTheory.SepCech
 
 theorem aug_comm {Y Y' X : Scheme.{0}} (f : Y ⟶ X) (g : Y' ⟶ X) (u : yoneda.obj Y ⟶ yoneda.obj Y')
     (w : u ≫ yoneda.map g = yoneda.map f ≫ 𝟙 _) :
-    SimplicialObject.cechNerve.map (Arrow.homMk u (𝟙 _) w : Arrow.mk (yoneda.map f) ⟶ Arrow.mk (yoneda.map g)) ≫ cechAug g =
-      cechAug f := by
+    SimplicialObject.cechNerve.map (Arrow.homMk u (𝟙 _) w : Arrow.mk (yoneda.map f) ⟶ Arrow.mk (yoneda.map g)) ≫ GlobalTheory.EtC.cechAug g =
+      GlobalTheory.EtC.cechAug f := by
   apply NatTrans.ext; funext n
-  simp [cechAug, SimplicialObject.cechNerve, Arrow.mapCechNerve, Arrow.augmentedCechNerve]
+  simp [GlobalTheory.EtC.cechAug, SimplicialObject.cechNerve, Arrow.mapCechNerve, Arrow.augmentedCechNerve]
   erw [NatTrans.comp_app, WidePullback.lift_base]
 
 theorem cont (R : Type) [CommRing R] (F : Shv R) (hF : Finitary F) (K Ω : Type) [Field K] [Field Ω] [Algebra K Ω]
@@ -181,33 +181,33 @@ theorem cont (R : Type) [CommRing R] (F : Shv R) (hF : Finitary F) (K Ω : Type)
     exact ⟨Z, ⟨e⟩⟩
 
 theorem cechAug_sepClosure_eqv : ∀ (R : Type) [CommRing R] (F : Shv R), Finitary F → ∀ (K Ω : Type) [Field K] [Field Ω] [Algebra K Ω]
-    [IsSepClosure K Ω], Eqv R (cechAug (Spec.map (CommRingCat.ofHom (algebraMap K Ω)))) F := by
+    [IsSepClosure K Ω], Eqv R (GlobalTheory.EtC.cechAug (Spec.map (CommRingCat.ofHom (algebraMap K Ω)))) F := by
   intro R _ F hF K Ω _ _ _ _
   haveI : Algebra.IsSeparable K Ω := IsSepClosure.separable
   have hc := cont R F hF K Ω
-  have hA : ∀ L : (FinSub K Ω)ᵒᵖ, Eqv R (cechAug (Spec.map (CommRingCat.ofHom (algebraMap K L.unop.1)))) F := by
+  have hA : ∀ L : (FinSub K Ω)ᵒᵖ, Eqv R (GlobalTheory.EtC.cechAug (Spec.map (CommRingCat.ofHom (algebraMap K L.unop.1)))) F := by
     intro L
     haveI := L.unop.2
     haveI : Algebra.IsSeparable K L.unop.1 := Algebra.isSeparable_tower_bot_of_isSeparable K L.unop.1 Ω
     obtain ⟨h1, h2⟩ := _root_.GlobalTheory.spec_map_smooth_surjective_of_isSeparable K L.unop.1
     exact _root_.GlobalTheory.EtC.smooth_surjective_cech_descent_cohomology R _ F
-  have hw : ∀ L : (FinSub K Ω)ᵒᵖ, (cechCone K Ω).π.app L ≫ cechAug (Spec.map (CommRingCat.ofHom (algebraMap K L.unop.1))) =
-      cechAug (Spec.map (CommRingCat.ofHom (algebraMap K Ω))) := fun L => aug_comm _ _ _ _
+  have hw : ∀ L : (FinSub K Ω)ᵒᵖ, (cechCone K Ω).π.app L ≫ GlobalTheory.EtC.cechAug (Spec.map (CommRingCat.ofHom (algebraMap K L.unop.1))) =
+      GlobalTheory.EtC.cechAug (Spec.map (CommRingCat.ofHom (algebraMap K Ω))) := fun L => aug_comm _ _ _ _
   have hw2 : ∀ ⦃L L' : (FinSub K Ω)ᵒᵖ⦄ (f : L ⟶ L'), (arr K Ω ⋙ SimplicialObject.cechNerve).map f ≫
-      cechAug (Spec.map (CommRingCat.ofHom (algebraMap K L'.unop.1))) =
-      cechAug (Spec.map (CommRingCat.ofHom (algebraMap K L.unop.1))) := fun L L' f => aug_comm _ _ _ _
+      GlobalTheory.EtC.cechAug (Spec.map (CommRingCat.ofHom (algebraMap K L'.unop.1))) =
+      GlobalTheory.EtC.cechAug (Spec.map (CommRingCat.ofHom (algebraMap K L.unop.1))) := fun L L' f => aug_comm _ _ _ _
   intro n
   constructor
   · refine (injective_iff_map_eq_zero (pull R _ F n)).mpr (fun z hz => ?_)
     let L0 : (FinSub K Ω)ᵒᵖ := op ⟨⊥, inferInstance⟩
     have h0 : pull R ((cechCone K Ω).π.app L0) F n
-        (pull R (cechAug (Spec.map (CommRingCat.ofHom (algebraMap K L0.unop.1)))) F n z) = 0 :=
+        (pull R (GlobalTheory.EtC.cechAug (Spec.map (CommRingCat.ofHom (algebraMap K L0.unop.1)))) F n z) = 0 :=
       (pull_comp R _ _ F n z).symm.trans ((congrArg (fun g => pull R g F n z) (hw L0)).trans hz)
     obtain ⟨L1, f, hf⟩ := (hc n).2 L0 _ h0
-    have hf' : pull R (cechAug (Spec.map (CommRingCat.ofHom (algebraMap K L1.unop.1)))) F n z = 0 :=
+    have hf' : pull R (GlobalTheory.EtC.cechAug (Spec.map (CommRingCat.ofHom (algebraMap K L1.unop.1)))) F n z = 0 :=
       (congrArg (fun g => pull R g F n z) (hw2 f)).symm.trans
         ((pull_comp R ((arr K Ω ⋙ SimplicialObject.cechNerve).map f)
-          (cechAug (Spec.map (CommRingCat.ofHom (algebraMap K L0.unop.1)))) F n z).trans hf)
+          (GlobalTheory.EtC.cechAug (Spec.map (CommRingCat.ofHom (algebraMap K L0.unop.1)))) F n z).trans hf)
     exact ((injective_iff_map_eq_zero (pull R _ F n)).mp (hA L1 n).1) z hf'
   · intro x
     obtain ⟨L, y, hy⟩ := (hc n).1 x

@@ -260,7 +260,7 @@ theorem map_ptIdeal_eq_maximalIdeal_ordAff {m : ℕ} (I : Ideal (MvPolynomial (F
 theorem exponent_eq_order_polynomial : ∀ (m e : ℕ) (I : Ideal (MvPolynomial (Fin m) ℂ)) (t : Fin m → ℂ) (r : Fin e → MvPolynomial (Fin m) ℂ) (Jf : Finset (Fin e)) (g : MvPolynomial (Fin m) ℂ) (u : (locRing I t)ˣ) (mm : Fin e → ℕ), (∀ h ∈ I, eval t h = 0) → IsRegularLocalRing (locRing I t) → ringKrullDim (locRing I t) = e → Ideal.span (Set.range fun l => algebraMap _ (locRing I t) (r l)) = Ideal.map (algebraMap _ (locRing I t)) (ptIdeal t) → algebraMap _ (locRing I t) g = u * ∏ i ∈ Jf, algebraMap _ (locRing I t) (r i) ^ mm i → ∀ i ∈ Jf, ∀ n : ℕ, (∃ s ∉ SncRes.Par.chPrime I t (r i), s * g ∈ SncRes.Par.chPrime I t (r i) ^ n ⊔ I) ↔ n ≤ mm i := by
   intro m e I t r Jf g u mm hI hreg hdim hspan hg i hi n
   haveI := hreg
-  haveI hdom : IsDomain (locRing I t) := isDomain_of_isRegularLocalRing
+  haveI hdom : IsDomain (locRing I t) := ReciprocityTheory.AnForm.R.isDomain_of_isRegularLocalRing
   have hu := IrreducibleComponentPreimages.isUnit_algebraMap_locRing_iff I t hI
   have hmax := map_ptIdeal_eq_maximalIdeal_ordAff I t hI
   have hspan' := hspan.trans hmax
