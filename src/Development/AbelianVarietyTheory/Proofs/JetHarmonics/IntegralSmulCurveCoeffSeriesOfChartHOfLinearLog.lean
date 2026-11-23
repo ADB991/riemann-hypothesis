@@ -139,7 +139,7 @@ theorem mm_of_mul_matrix {V : VF C} {κ : Type} [Fintype κ] {D : κ → MvPower
     (hM0 : ∀ j i, constantCoeff (M j i) = if j = i then 1 else 0)
     (h : ∀ i μ, V.MM (coeff μ (∑ j, D j * M j i))) : ∀ i μ, V.MM (coeff μ (D i)) := by
   have hsum : ∀ {ι : Type} (s : Finset ι) (f : ι → C), (∀ i ∈ s, V.MM (f i)) → V.MM (∑ i ∈ s, f i) :=
-    fun s f hf => Finset.sum_induction f V.MM (fun _ _ => GlobalTheory.PlaceProj.mm_add) mm_zero hf
+    fun s f hf => Finset.sum_induction f V.MM (fun _ _ => GlobalTheory.PlaceProj.mm_add) GlobalTheory.PlaceProj.mm_zero hf
   suffices H : ∀ N, ∀ μ : κ →₀ ℕ, μ.degree = N → ∀ i, V.MM (coeff μ (D i)) from fun i μ => H _ μ rfl i
   intro N
   induction N using Nat.strong_induction_on with
@@ -161,7 +161,7 @@ theorem mm_of_mul_matrix {V : VF C} {κ : Type} [Fintype κ] {D : κ → MvPower
         rw [h2, coeff_zero_eq_constantCoeff_apply, map_sub, hM0]
         split_ifs <;> simp
       rw [this, mul_zero]
-      exact mm_zero
+      exact GlobalTheory.PlaceProj.mm_zero
     · rw [mul_comm]
       refine mm_mul ?_ (ih p.1.degree ?_ p.1 rfl j)
       · rw [map_sub]
@@ -647,7 +647,7 @@ theorem mm_pderiv_l_smul_hCoef {X : RawChart C d I κ} {V : VF C} (h : RLaw X V)
     rw [coeff_C]
     split_ifs
     · exact h2
-    · rw [mul_zero]; exact mm_zero
+    · rw [mul_zero]; exact GlobalTheory.PlaceProj.mm_zero
   have h4 := mm_neg (GlobalTheory.PlaceProj.mm_add (mm_l_mul h1) h3)
   convert h4 using 1
   set_option synthInstance.maxHeartbeats 100000 in
