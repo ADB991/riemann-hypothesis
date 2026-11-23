@@ -46,7 +46,7 @@ theorem modelLift_spec (M : CxModel P e) (x : M.Xc) :
       ∀ p, M.atlas.HoloOn (modelU M x) fun y => modelLift M x y p :=
   (M.sections x).choose_spec.2.2.choose_spec
 
-def modelPot (M : CxModel P e) (L : HermLine ι) (c : ℝ) : LocPot M.Xc where
+def modelPot (M : CxModel P e) (L : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (c : ℝ) : LocPot M.Xc where
   U := modelU M
   isOpen_U := modelU_isOpen M
   mem_U := mem_modelU M
@@ -137,7 +137,7 @@ theorem ModelLogIntegrable.proof (hM : ModelPtsIntegrable.Statement) : ModelLogI
   have _ : BorelSpace M.Xc := ⟨rfl⟩
   obtain ⟨B, hB⟩ := R.f_bdd
   refine hM K ι P e M R.N R.chart L c N R.Yoᶜ u g hP hL hN R.compat (fun x => ?_)
-    (fun j => measure_mono_null (target_inter_compl_Yo_subset R j) (volume_coordDiv _))
+    (fun j => measure_mono_null (target_inter_compl_Yo_subset R j) (GroundTheory.Heights₂.Heights.LowerBoundFree.ModelLogIntegrableAlt.volume_coordDiv _))
     (fun j Q hQ hQc => ?_) (fun z hz hzN hzE => hg z hz hzN (not_not.mp hzE))
   · obtain ⟨j, hj⟩ := R.cover x
     exact ⟨j, R.toPotentialCharts.mid_subset_source j (R.toPotentialCharts.inner_subset_mid j hj)⟩
@@ -159,7 +159,7 @@ theorem ModelLogIntegrable.proof (hM : ModelPtsIntegrable.Statement) : ModelLogI
       hQc.isClosed.measurableSet)).aestronglyMeasurable
   refine Integrable.mono' hG hmeas ?_
   filter_upwards [ae_restrict_mem hQc.isClosed.measurableSet,
-    ae_restrict_of_ae (measure_eq_zero_iff_ae_notMem.mp (volume_coordDiv (R.S j)))] with y hyQ hyD
+    ae_restrict_of_ae (measure_eq_zero_iff_ae_notMem.mp (GroundTheory.Heights₂.Heights.LowerBoundFree.ModelLogIntegrableAlt.volume_coordDiv (R.S j)))] with y hyQ hyD
   have hyt := hQ hyQ
   have hYo : (R.chart j).symm y ∈ R.Yo := by
     have h := R.mem_Yo j _ ((R.chart j).map_target hyt)
@@ -241,7 +241,7 @@ theorem RegChartData.contDiffAt_u {n : ℕ} {X : Type*} [TopologicalSpace X] {A 
   exact hq.add h2
 
 theorem LogLogRegularisationSetting.log_h_eq {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {P : Ideal (MRing ι)}
-    {n : ℕ} {M : CxModel P n} {Xo : Set ((Σ k, ι k) → ℂ)} {A : HermLine ι} (S : LogLogRegularisationSetting M Xo A)
+    {n : ℕ} {M : CxModel P n} {Xo : Set ((Σ k, ι k) → ℂ)} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (S : LogLogRegularisationSetting M Xo A)
     {z : (Σ k, ι k) → ℂ} (hz : z ∈ mcPts P) (hY : M.proj z ∈ S.R.Yo) :
     Real.log (A.h z) = S.R.ph (M.proj z) + Real.log (S.ref.h z) := by
   obtain ⟨z', ⟨hz'o, hz'⟩, hp⟩ := S.Yo_sub _ hY

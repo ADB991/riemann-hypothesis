@@ -25,7 +25,7 @@ theorem PtsPosDensIntegrable.proof (hMass : PtsSemiPosMassFinite.Statement) : Pt
   classical
   obtain ⟨M, hMb⟩ := PtsPosDens.exists_bound hg
   choose T hTs hTp hLTp using fun j => Inter.SemiPosTwist.proof Inter.TorusInvLevi.proof K ι (L j) (hL j)
-  set N : Fin e → HermLine ι := fun j => ((L j).tensor (T j)).tensor (T j) with hNdef
+  set N : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := fun j => ((L j).tensor (T j)).tensor (T j) with hNdef
   have hLT : ∀ j, IsSmoothHerm ((L j).tensor (T j)) := fun j =>
     ReciprocityTheory.ChartRestriction.G.Geo.isSmoothHerm_tensor (hL j) (hTs j)
   have hNs : ∀ j, IsSmoothHerm (N j) := fun j => ReciprocityTheory.ChartRestriction.G.Geo.isSmoothHerm_tensor (hLT j) (hTs j)
@@ -92,9 +92,9 @@ namespace GroundTheory.Heights₂.Heights.Targets
 
 open ReciprocityTheory.ChartRestriction.G.Geo Filter Topology
 
-theorem pot_fin_cons {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {e : ℕ} (M : HermLine ι)
-    (L : Fin e → HermLine ι) :
-    pot (Fin.cons M L : Fin (e + 1) → HermLine ι) = Fin.cons (fun z => Real.log (M.h z)) (pot L) := by
+theorem pot_fin_cons {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {e : ℕ} (M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι)
+    (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) :
+    pot (Fin.cons M L : Fin (e + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) = Fin.cons (fun z => Real.log (M.h z)) (pot L) := by
   funext j z
   refine Fin.cases ?_ (fun i => ?_) j <;> simp [pot]
 
@@ -102,7 +102,7 @@ theorem PoincareLelongRegularised.proof (hInt : PtsIntegrableStatement)
     (hMeas : GroundTheory.Heights₂.Heights.Inter.PtsAbsMeasurable.Statement) : PoincareLelongRegularised.Statement := by
   intro K _ ι _ P n L A B s hP hL hA hB _ hs
   obtain ⟨a, ha, hsa, hsP⟩ := id hs
-  have hM : ∀ j, IsSmoothHerm ((Fin.cons B L : Fin (n + 1) → HermLine ι) j) := fun j =>
+  have hM : ∀ j, IsSmoothHerm ((Fin.cons B L : Fin (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) j) := fun j =>
     Fin.cases (by simpa using hB) (fun i => by simpa using hL i) j
   have hlim := GroundTheory.Heights₂.Heights.Inter.PtsRegLimit.proof hInt
     (GroundTheory.Heights₂.Heights.Inter.PtsAbsIntegrable.proof hInt hMeas) K ι P (n + 1) (Fin.cons B L) A s

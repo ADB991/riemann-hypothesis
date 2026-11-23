@@ -120,7 +120,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {D : ComponentData II Ψ K ι Ω E}
 
 def regNbarQ (H : HodgeData D) (M : XModel D) (S : LogLogRegularisationSetting M D.Xo (muLine H)) (B p q : ℕ) (t : ℝ) :
-    HermLine ι :=
+    ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι :=
   smoothRep (mCoordIdeal D.y)
     (hermOfFun ι ((q : ℤ) • muTwDeg H B + (p : ℤ) • D.a') fun z =>
       (S.ref.h z * Real.exp (S.regWeight t (M.proj z))) ^ q *
