@@ -257,6 +257,10 @@ theorem isUnitU_exists_unique_rightInvariant : ∀ (D : D7) (ρ : ℕ), (∃ ν,
     set c := Measure.haarScalarFactor ν' ν with hc
     have hF'' : IsFundamentalDomain (UXQ D ρ) 𝓤 ν' :=
       hF.mono (by rw [hsm]; exact Measure.smul_absolutelyContinuous)
+    have : SMulInvariantMeasure (UX D ρ) (UX D ρ) ν' :=
+      Measure.IsMulLeftInvariant.smulInvariantMeasure
+    have : SMulInvariantMeasure (UXQ D ρ) (UX D ρ) ν' :=
+      MeasureTheory.Subgroup.smulInvariantMeasure (UXQ D ρ)
     have e := hF''.measure_eq hF'
     rw [h1', hsm, Measure.smul_apply, h1] at e
     have hc1 : (c : ENNReal) = 1 := by simpa [ENNReal.smul_def] using e
