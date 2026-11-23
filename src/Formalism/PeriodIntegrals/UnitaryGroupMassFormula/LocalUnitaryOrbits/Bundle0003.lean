@@ -167,7 +167,7 @@ def UnitV : Prop :=
 
 theorem hR_smul_right (x y : Fin n → Fv F v ⊗[F] E) (c : Fv F v ⊗[F] E) :
     hR (Fv F v) σ J x (c • y) = c * hR (Fv F v) σ J x y := by
-  simp only [hR, hform, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
+  simp only [hR, Formalism.UG.hform, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
 theorem perp_full {ι : Type} [Fintype ι] [DecidableEq ι] (X : ι → Fin n → Fv F v ⊗[F] E)
