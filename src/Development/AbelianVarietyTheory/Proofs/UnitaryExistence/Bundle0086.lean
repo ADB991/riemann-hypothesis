@@ -415,7 +415,7 @@ theorem test_value_eq_const_mul_reading : Out.SecBaseChangeSt → ∀ (E : Type)
     rw [dif_pos hT]
     exact hWD f hN _ _ _ _ _ _ _ _ hT.choose_spec.choose_spec.choose_spec hz
   have h2 : rdU U f k x.1 = Formalism.L2.PjFree.toC (evR Xo c f (U.un k x)) := by
-    unfold rdU
+    unfold Formalism.L2.PjFree.rdU
     exact dif_pos x.2
   have h3 := hBor (CAt σ) hred a n f hf t (U.un k x) z ht
   rw [← h1, h2, h3]
