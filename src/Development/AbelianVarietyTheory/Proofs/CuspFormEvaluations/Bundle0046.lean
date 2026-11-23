@@ -130,9 +130,9 @@ theorem exists_setup : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
   obtain ⟨W⟩ := nonempty_uw hU
   obtain ⟨-, hSD, hMk, -⟩ := _root_.GlobalTheory.Dict.uw_lattice E H Dw l Xo c σ r U hG hU hr W k
   obtain ⟨Dc, hDe, -⟩ := _root_.GlobalTheory.Dict.exists_dic E H Dw l c σ r W.g n (U.X k) a W.e hG hrpq hXk.1 hXk.2 hSD hD
-  have hper : ∀ y v j, pv (U.X k) Dc.idx y v j = perFr (U.X k) y v (relab c σ (W.e j).1) (W.e j).2 := by
+  have hper : ∀ y v j, pv (U.X k) Dc.idx y v j = Formalism.L2.PjFree.perFr (U.X k) y v (Formalism.L2.PjFree.relab c σ (W.e j).1) (W.e j).2 := by
     intro y v j; rw [← hDe]; exact Dc.per_eq y v j
-  have hty : ∀ j, rowType (U.X k) (Dc.idx j) = relab c σ (W.e j).1 := by
+  have hty : ∀ j, rowType (U.X k) (Dc.idx j) = Formalism.L2.PjFree.relab c σ (W.e j).1 := by
     intro j; rw [← hDe]; exact Dc.ty_eq j
   obtain ⟨A, hAm, θ, hAr, hM1⟩ :=
     GlobalTheory.T.analyticFibre_unitFrame_uniformisation E H Dw l Xo c σ r U hG hU hr W k Dc.bas Dc.idx Dc.sympl hper hty x hx
