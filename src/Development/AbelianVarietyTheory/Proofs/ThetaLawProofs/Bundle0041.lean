@@ -230,6 +230,7 @@ theorem exists_geomInt_component : ∀ (K : Type) [Field K] [NumberField K] [Alg
   haveI : IsAlgClosed Ω := (algebraicClosure.isAlgClosure K ℂ).isAlgClosed
   haveI : Algebra.IsAlgebraic K Ω := algebraicClosure.isAlgebraic K ℂ
   haveI hreg : IsRegularRing (Ω ⊗[K] R) := GlobalTheory.isRegularRing_of_smooth Ω _
+  have : IsNoetherianRing (Ω ⊗[K] R) := hreg.toIsNoetherian
   let π : Ω ⊗[K] R →ₐ[K] ℂ := Algebra.TensorProduct.lift Ω.val p (fun _ _ => Commute.all _ _)
   haveI : (RingHom.ker π).IsPrime := RingHom.ker_isPrime _
   obtain ⟨e', he', hP, hpr⟩ := exists_idempotent (A := Ω ⊗[K] R)
