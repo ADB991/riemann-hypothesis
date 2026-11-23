@@ -349,7 +349,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo GroundTheory.Heights�
 def FlagRatioTrdeg.Statement : Prop :=
   ∀ (F : Type) [Field F] (Ψ : Type) [Fintype Ψ] (n : ℕ),
     Algebra.trdeg F (IntermediateField.adjoin F (Set.range (flagMinorRatio F Ψ n))) =
-      ((Fintype.card Ψ * flagDim n : ℕ) : Cardinal)
+      ((Fintype.card Ψ * GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.flagDim n : ℕ) : Cardinal)
 
 end GroundTheory.Heights₂.Heights.LowerBoundFree
 end
@@ -384,7 +384,7 @@ namespace GroundTheory.Heights₂.Heights.LowerBoundFree
 open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter
 
 def GenLeadMinorNeZero.Statement : Prop :=
-  ∀ (F : Type) [Field F] (Ψ : Type) (n : ℕ) (τ : Ψ) (a : Fin (n - 1)), leadMinor (genMatFr F Ψ n τ) a ≠ 0
+  ∀ (F : Type) [Field F] (Ψ : Type) (n : ℕ) (τ : Ψ) (a : Fin (n - 1)), GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (genMatFr F Ψ n τ) a ≠ 0
 
 end GroundTheory.Heights₂.Heights.LowerBoundFree
 end
@@ -405,7 +405,7 @@ def genMat0Fr (F : Type) [Field F] (Ψ : Type) (n j : ℕ) (τ : Ψ) : Matrix (F
 
 def flagMinorRatio0 (F : Type) [Field F] (Ψ : Type) (n j : ℕ) (q : Ψ × Σ i : Fin (n - 1), PluckerBlocks n n i) :
     GenFrac F Ψ n :=
-  flagMinor (genMat0Fr F Ψ n j q.1) q.2.1 q.2.2 / leadMinor (genMat0Fr F Ψ n j q.1) q.2.1
+  flagMinor (genMat0Fr F Ψ n j q.1) q.2.1 q.2.2 / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (genMat0Fr F Ψ n j q.1) q.2.1
 
 def HodgeFlagMinorTrdeg.Statement : Prop :=
   ∀ (F : Type) [Field F] (Ψ : Type) [Fintype Ψ] (n j : ℕ), j ≤ n →

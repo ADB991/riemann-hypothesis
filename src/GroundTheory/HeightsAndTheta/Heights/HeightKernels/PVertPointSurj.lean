@@ -30,7 +30,7 @@ theorem ringHom_aeval {A A' : Type*} [CommRing A] [CommRing A'] [Algebra ℤ A] 
   | mul_X p n hp => simp [hp]
 
 theorem aeval_smul_of_homog {S : Type*} [CommRing S] {g : MRing (fun _ : Unit => T)} {d : ℕ}
-    (hg : IsMultiHomog g (fun _ => d)) (c : S) (z : (Σ _ : Unit, T) → S) :
+    (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => d)) (c : S) (z : (Σ _ : Unit, T) → S) :
     aeval (fun p => c * z p) g = c ^ d * aeval z g := by
   classical
   conv_lhs => rw [g.as_sum]
@@ -49,43 +49,43 @@ theorem aeval_smul_of_homog {S : Type*} [CommRing S] {g : MRing (fun _ : Unit =>
 variable {K' : Type} [Field K']
 
 theorem aeval_ratio_of_homog (y : (Σ _ : Unit, T) → K') (t : T) {g : MRing (fun _ : Unit => T)}
-    {d : ℕ} (hg : IsMultiHomog g (fun _ => d)) :
+    {d : ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => d)) :
     aeval (fun p => y p / y ⟨(), t⟩) g = aeval y g / y ⟨(), t⟩ ^ d := by
   have h := aeval_smul_of_homog hg (y ⟨(), t⟩)⁻¹ y
   rw [show (fun p => y p / y ⟨(), t⟩) = fun p => (y ⟨(), t⟩)⁻¹ * y p from
     funext fun p => by rw [div_eq_inv_mul], h, inv_pow, div_eq_inv_mul]
 
 theorem mem_mCoordIdeal_iff {Ω : Type} [Field Ω] (y : (Σ _ : Unit, T) → Ω)
-    {g : MRing (fun _ : Unit => T)} {d : ℕ} (hg : IsMultiHomog g (fun _ => d)) :
+    {g : MRing (fun _ : Unit => T)} {d : ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => d)) :
     g ∈ mCoordIdeal y ↔ aeval y g = 0 := by
   rw [mCoordIdeal, RingHom.mem_ker, HilbertSamuel.SectionBounded.mConeMap_homog y hg, mul_eq_zero,
     C_eq_zero]
   exact or_iff_left (Finset.prod_ne_zero_iff.mpr fun k _ => pow_ne_zero _ (X_ne_zero k))
 
 theorem sub_mem_mCoordIdeal {Ω : Type} [Field Ω] (y : (Σ _ : Unit, T) → Ω)
-    {f g : MRing (fun _ : Unit => T)} {d : ℕ} (hf : IsMultiHomog f (fun _ => d))
-    (hg : IsMultiHomog g (fun _ => d)) (h : aeval y f = aeval y g) : f - g ∈ mCoordIdeal y := by
+    {f g : MRing (fun _ : Unit => T)} {d : ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f (fun _ => d))
+    (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => d)) (h : aeval y f = aeval y g) : f - g ∈ mCoordIdeal y := by
   rw [mem_mCoordIdeal_iff y (HilbertSamuel.SectionBounded.homog_sub hf hg), map_sub, h, sub_self]
 
-theorem homogDeg {f : MRing (fun _ : Unit => T)} {a b : ℕ} (hf : IsMultiHomog f (fun _ => a))
-    (h : a = b) : IsMultiHomog f (fun _ => b) :=
+theorem homogDeg {f : MRing (fun _ : Unit => T)} {a b : ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f (fun _ => a))
+    (h : a = b) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f (fun _ => b) :=
   HilbertSamuel.SectionBounded.homog_congr hf fun _ => h
 
-theorem homogMul {f g : MRing (fun _ : Unit => T)} {a b : ℕ} (hf : IsMultiHomog f (fun _ => a))
-    (hg : IsMultiHomog g (fun _ => b)) : IsMultiHomog (f * g) (fun _ => a + b) :=
+theorem homogMul {f g : MRing (fun _ : Unit => T)} {a b : ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f (fun _ => a))
+    (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => b)) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f * g) (fun _ => a + b) :=
   HilbertSamuel.SectionBounded.homog_congr (HilbertSamuel.SectionBounded.homog_mul hf hg) fun _ => rfl
 
-theorem homogXt (t : T) : IsMultiHomog (X ⟨(), t⟩ : MRing (fun _ : Unit => T)) (fun _ => 1) :=
+theorem homogXt (t : T) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (X ⟨(), t⟩ : MRing (fun _ : Unit => T)) (fun _ => 1) :=
   HilbertSamuel.SectionBounded.homog_congr (HilbertSamuel.SectionBounded.homog_X _) fun k => by
     cases k; simp
 
 theorem homogXtPow (t : T) (n : ℕ) :
-    IsMultiHomog ((X ⟨(), t⟩ : MRing (fun _ : Unit => T)) ^ n) (fun _ => n) :=
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog ((X ⟨(), t⟩ : MRing (fun _ : Unit => T)) ^ n) (fun _ => n) :=
   HilbertSamuel.SectionBounded.homog_congr (HilbertSamuel.SectionBounded.homog_pow (homogXt t) n)
     fun _ => by simp
 
 theorem exists_form (y : (Σ _ : Unit, T) → K') (t : T) (ht : y ⟨(), t⟩ ≠ 0) (c : curveRing y) :
-    ∃ (e : ℕ) (g : MRing (fun _ : Unit => T)), IsMultiHomog g (fun _ => e) ∧
+    ∃ (e : ℕ) (g : MRing (fun _ : Unit => T)), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => e) ∧
       aeval y g = (c : K') * y ⟨(), t⟩ ^ e := by
   have hc : (c : K') ∈ chartRingZ y (fun _ => t) := mem_curveRing.mp c.2 (fun _ => t) (fun _ => ht)
   obtain ⟨δ, g, hg, hgy⟩ :=
@@ -95,11 +95,11 @@ theorem exists_form (y : (Σ _ : Unit, T) → K') (t : T) (ht : y ⟨(), t⟩ �
 
 def formSet (y : (Σ _ : Unit, T) → K') (t : T) (Q : Ideal (MRing (fun _ : Unit => T))) :
     Set (curveRing y) :=
-  {c | ∃ (e : ℕ) (g : MRing (fun _ : Unit => T)), IsMultiHomog g (fun _ => e) ∧
+  {c | ∃ (e : ℕ) (g : MRing (fun _ : Unit => T)), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => e) ∧
     aeval y g = (c : K') * y ⟨(), t⟩ ^ e ∧ g ∈ Q}
 
 theorem mem_formSet_of {y : (Σ _ : Unit, T) → K'} {t : T} {Q : Ideal (MRing (fun _ : Unit => T))}
-    {c : curveRing y} (e : ℕ) {g : MRing (fun _ : Unit => T)} (hg : IsMultiHomog g (fun _ => e))
+    {c : curveRing y} (e : ℕ) {g : MRing (fun _ : Unit => T)} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => e))
     (hv : aeval y g = (c : K') * y ⟨(), t⟩ ^ e) (hgQ : g ∈ Q) : c ∈ formSet y t Q := by
   rw [formSet, Set.mem_ofPred_eq]
   exact ⟨e, g, hg, hv, hgQ⟩
@@ -150,17 +150,17 @@ theorem le_of_minimal_prime_over_coord (y : (Σ _ : Unit, T) → K') (t : T) (ht
     (W Q : Ideal (MRing (fun _ : Unit => T))) (hQ : Q.IsPrime) (hPQ : mCoordIdeal y ≤ Q) (hQW : Q ≤ W)
     (hXt : (X ⟨(), t⟩ : MRing (fun _ : Unit => T)) ∉ W)
     (hWB : ∀ {g : MRing (fun _ : Unit => T)} {d : ℕ} (c : curveRing y),
-      IsMultiHomog g (fun _ => d) → aeval y g = (c : K') * y ⟨(), t⟩ ^ d → (g ∈ W ↔ c ∈ m))
-    (hWfrac : ∀ {f : MRing (fun _ : Unit => T)} {n : ℕ}, IsMultiHomog f (fun _ => n) →
+      ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => d) → aeval y g = (c : K') * y ⟨(), t⟩ ^ d → (g ∈ W ↔ c ∈ m))
+    (hWfrac : ∀ {f : MRing (fun _ : Unit => T)} {n : ℕ}, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f (fun _ => n) →
       f ∈ W → ∃ a' b' : curveRing y, a' ∈ m ∧ b' ∉ m ∧
         ((b' : curveRing y) : K') * aeval y f = (a' : K') * y ⟨(), t⟩ ^ n)
     (hWforms : IsMultiHomogIdeal W) {a b : curveRing y} (ha0 : a ≠ 0)
-    {s : MRing (fun _ : Unit => T)} (hs : IsMultiHomog s (fun _ => 1)) (hsQ : s ∈ Q)
+    {s : MRing (fun _ : Unit => T)} (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s (fun _ => 1)) (hsQ : s ∈ Q)
     (hbx : (b : K') * aeval y s = (a : K') * y ⟨(), t⟩) : W ≤ Q := by
   have hXtpowQ : ∀ n, (X ⟨(), t⟩ : MRing (fun _ : Unit => T)) ^ n ∉ Q :=
     fun n h => hXt (hQW (hQ.mem_of_pow_mem _ h))
-  have htr : ∀ {f g : MRing (fun _ : Unit => T)} {n : ℕ}, IsMultiHomog f (fun _ => n) →
-      IsMultiHomog g (fun _ => n) → aeval y f = aeval y g → g ∈ Q → f ∈ Q := by
+  have htr : ∀ {f g : MRing (fun _ : Unit => T)} {n : ℕ}, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f (fun _ => n) →
+      ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => n) → aeval y f = aeval y g → g ∈ Q → f ∈ Q := by
     intro f g n hf hg he hgQ
     have h1 := Q.add_mem (hPQ (sub_mem_mCoordIdeal y hf hg he)) hgQ
     rwa [sub_add_cancel] at h1
@@ -210,7 +210,7 @@ theorem le_of_minimal_prime_over_coord (y : (Σ _ : Unit, T) → K') (t : T) (ht
   refine (Ideal.span_le.mpr ?_) hfW
   intro f hf
   obtain ⟨δ, hδ⟩ := hS f hf
-  have hf' : IsMultiHomog f (fun _ => δ ()) :=
+  have hf' : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f (fun _ => δ ()) :=
     HilbertSamuel.SectionBounded.homog_congr hδ fun k => by cases k; rfl
   have hfW' : f ∈ W := by rw [hWS]; exact Ideal.subset_span hf
   obtain ⟨a', b', ha'm, hb'm, hv'⟩ := hWfrac hf' hfW'
@@ -287,25 +287,25 @@ theorem VertPointSurj.proof (hC : CurveCharts.Statement) (hSQ : SectionQuotLocal
   have hιρ : ∀ p, ι (ρ p) = y p / y ⟨(), t⟩ := by
     rintro ⟨⟨⟩, u⟩
     exact (hιmk _ _ _).mpr (hαβ u).symm
-  have hιev : ∀ {g : MRing (fun _ : Unit => T)} {d : ℕ}, IsMultiHomog g (fun _ => d) →
+  have hιev : ∀ {g : MRing (fun _ : Unit => T)} {d : ℕ}, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => d) →
       ι (aeval ρ g) = aeval y g / y ⟨(), t⟩ ^ d := by
     intro g d hg
     rw [ringHom_aeval ι ρ g, show (fun p => ι (ρ p)) = fun p => y p / y ⟨(), t⟩ from funext hιρ]
     exact aeval_ratio_of_homog y t hg
   have hevB : ∀ {g : MRing (fun _ : Unit => T)} {d : ℕ} (c : curveRing y),
-      IsMultiHomog g (fun _ => d) → aeval y g = (c : K') * y ⟨(), t⟩ ^ d →
+      ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => d) → aeval y g = (c : K') * y ⟨(), t⟩ ^ d →
         aeval ρ g = algebraMap _ L c := by
     intro g d c hg hgc
     apply hιinj
     rw [hιev hg, hιB, hgc, mul_div_assoc, div_self (pow_ne_zero _ hyt), mul_one]
 
   let r : (Σ _ : Unit, T) → IsLocalRing.ResidueField L := fun p => IsLocalRing.residue L (ρ p)
-  have hWform : ∀ {g : MRing (fun _ : Unit => T)} {d : ℕ}, IsMultiHomog g (fun _ => d) →
+  have hWform : ∀ {g : MRing (fun _ : Unit => T)} {d : ℕ}, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => d) →
       (g ∈ mCoordIdeal r ↔ aeval ρ g ∈ IsLocalRing.maximalIdeal L) := by
     intro g d hg
     rw [mem_mCoordIdeal_iff r hg, ← IsLocalRing.residue_eq_zero_iff, ringHom_aeval]
   have hWB : ∀ {g : MRing (fun _ : Unit => T)} {d : ℕ} (c : curveRing y),
-      IsMultiHomog g (fun _ => d) → aeval y g = (c : K') * y ⟨(), t⟩ ^ d →
+      ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => d) → aeval y g = (c : K') * y ⟨(), t⟩ ^ d →
         (g ∈ mCoordIdeal r ↔ c ∈ m) := by
     intro g d c hg hgc
     rw [hWform hg, hevB c hg hgc]
@@ -321,7 +321,7 @@ theorem VertPointSurj.proof (hC : CurveCharts.Statement) (hSQ : SectionQuotLocal
     refine (Ideal.span_le.mpr ?_) hfP
     intro f hf
     obtain ⟨a, ha⟩ := hS f hf
-    have ha' : IsMultiHomog f (fun _ => a ()) :=
+    have ha' : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f (fun _ => a ()) :=
       HilbertSamuel.SectionBounded.homog_congr ha fun k => by cases k; rfl
     have hfP' : f ∈ mCoordIdeal y := by rw [hPS]; exact Ideal.subset_span hf
     have hf0 : aeval y f = ((0 : curveRing y) : K') * y ⟨(), t⟩ ^ a () := by
@@ -351,9 +351,9 @@ theorem VertPointSurj.proof (hC : CurveCharts.Statement) (hSQ : SectionQuotLocal
     apply le_antisymm
     · refine Ideal.span_le.mpr ?_
       rintro c ⟨d, g, h, hg, hh, hgW, hhW, hc⟩
-      have hg' : IsMultiHomog g (fun _ => d ()) :=
+      have hg' : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun _ => d ()) :=
         HilbertSamuel.SectionBounded.homog_congr hg fun k => by cases k; rfl
-      have hh' : IsMultiHomog h (fun _ => d ()) :=
+      have hh' : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h (fun _ => d ()) :=
         HilbertSamuel.SectionBounded.homog_congr hh fun k => by cases k; rfl
       have heq : algebraMap _ L c * aeval ρ h = aeval ρ g := by
         apply hιinj
@@ -371,10 +371,10 @@ theorem VertPointSurj.proof (hC : CurveCharts.Statement) (hSQ : SectionQuotLocal
         fun h => hXt (hWprime.mem_of_pow_mem _ h)
       have hval : (c : K') * aeval y ((X ⟨(), t⟩ : MRing (fun _ : Unit => T)) ^ e) = aeval y g := by
         rw [map_pow, aeval_X, hgc]
-      have key : ∀ h : MRing (fun _ : Unit => T), IsMultiHomog h (fun _ => e) → h ∉ mCoordIdeal r →
+      have key : ∀ h : MRing (fun _ : Unit => T), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h (fun _ => e) → h ∉ mCoordIdeal r →
           (c : K') * aeval y h = aeval y g →
           c ∈ {b : curveRing y | ∃ (d : Unit → ℕ) (g h : MRing (fun _ : Unit => T)),
-            IsMultiHomog g d ∧ IsMultiHomog h d ∧ g ∈ mCoordIdeal r ∧ h ∉ mCoordIdeal r ∧
+            ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h d ∧ g ∈ mCoordIdeal r ∧ h ∉ mCoordIdeal r ∧
               (b : K') * aeval y h = aeval y g} :=
         fun h hh hhW hv => ⟨fun _ => e, g, h, hg, hh, hgW, hhW, hv⟩
       exact Ideal.subset_span (key _ (homogXtPow t e) hXW hval)
@@ -389,7 +389,7 @@ theorem VertPointSurj.proof (hC : CurveCharts.Statement) (hSQ : SectionQuotLocal
     have h2 := hbx
     rw [h0, ZeroMemClass.coe_zero, zero_mul] at h2
     exact mul_ne_zero hb0 hx0 h2
-  have hWfrac : ∀ {f : MRing (fun _ : Unit => T)} {n : ℕ}, IsMultiHomog f (fun _ => n) →
+  have hWfrac : ∀ {f : MRing (fun _ : Unit => T)} {n : ℕ}, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f (fun _ => n) →
       f ∈ mCoordIdeal r → ∃ a' b' : curveRing y, a' ∈ m ∧ b' ∉ m ∧
         ((b' : curveRing y) : K') * aeval y f = (a' : K') * y ⟨(), t⟩ ^ n := by
     intro f n hf hfW
