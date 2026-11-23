@@ -500,7 +500,7 @@ theorem exists_eq_glue (hn : (hRes h U).Nondegenerate) (L : Submodule (𝓞 K) V
     · rintro H _ ⟨l, hl, rfl⟩
       exact hp l y ▸ H l hl
   have hxN : x ∈ N := by
-    rw [← (dualLattice (𝓞 K) K U _ hsU hn star_algebraMap_ringOfIntegers_mem_range N hNfull).2.1, hd]
+    rw [← (Formalism.HermitianLatticesTheory.dualLattice (𝓞 K) K U _ hsU hn star_algebraMap_ringOfIntegers_mem_range N hNfull).2.1, hd]
     exact hx
   obtain ⟨l, hl, e⟩ := hxN
   have e' : pr l = x := e
@@ -559,7 +559,7 @@ theorem fibre_card (hK : IsCMUnram K) (hn : (hRes h U).Nondegenerate)
     rw [map_mul, map_mul, map_natCast, hc] at hk'
     have e : algebraMap (𝓞 K) K r * hRes h U x x = algebraMap (𝓞 K) K k :=
       mul_left_cancel₀ T0 (by linear_combination -hk')
-    rw [← g2, ← (dualLattice (𝓞 K) K U _ hsU hn star_algebraMap_ringOfIntegers_mem_range M hM.1).2.1, dualBasic_mem_dual]
+    rw [← g2, ← (Formalism.HermitianLatticesTheory.dualLattice (𝓞 K) K U _ hsU hn star_algebraMap_ringOfIntegers_mem_range M hM.1).2.1, dualBasic_mem_dual]
     intro y hy
     obtain ⟨a, ha⟩ := g1 y hy
     rw [← sub_add_cancel y (a • x), map_add (f := _), LinearMap.add_apply]
@@ -627,7 +627,7 @@ include hU in
 theorem smul_compl (g : MulAction.stabilizer (isom h) z) : g.1 • U = U := by
   have hg : g.1.1 z = z := g.2
   have hi : ∀ x y, h (g.1.1 x) (g.1.1 y) = h x y := g.1.2
-  rw [smul_eq_map]
+  rw [GlobalTheory.Mass.StabSplit.smul_eq_map]
   ext v
   constructor
   · rintro ⟨w, hw, rfl⟩
