@@ -34,7 +34,7 @@ theorem exists_isOpen_forall_eq_of_finiteDimensional (σ : BanachRep L E) (v : E
     (hv : FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun g : L => σ g v))) :
     ∃ U : Subgroup L, IsOpen (U : Set L) ∧ ∀ u ∈ U, σ u v = v := by
   classical
-  let _ : MeasurableSpace L := GroundTheory.Automorphic.Iwasawa.borel L
+  let _ : MeasurableSpace L := _root_.borel L
   have _ : BorelSpace L := ⟨rfl⟩
   set W := Submodule.span ℂ (Set.range fun g : L => σ g v) with hWdef
   have hWc : IsClosed (W : Set E) := Submodule.closed_of_finiteDimensional W
