@@ -333,7 +333,7 @@ theorem hasGrowth_uAction {N : ℕ} (u : UEnv K n) :
     exact mul_le_mul_of_nonneg_left (hC g) (abs_nonneg r)
   | hι X =>
     intro φ hφ hN
-    let _ : MeasurableSpace (archGroup K n) := GroundTheory.Automorphic.Iwasawa.borel _
+    let _ : MeasurableSpace (archGroup K n) := _root_.borel _
     have _ : BorelSpace (archGroup K n) := ⟨rfl⟩
     obtain ⟨D, hD, hDc, hrep⟩ := exists_integral_uAction_ι hφ Measure.haar X
     exact hN.of_eq_integral Measure.haar hD hDc hrep
