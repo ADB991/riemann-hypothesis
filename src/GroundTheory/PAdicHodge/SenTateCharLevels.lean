@@ -19,6 +19,8 @@ open CyclNorms GroundTheory.LocalField ValuativeRel
 variable {p : ℕ} [hp : Fact p.Prime] {K : IntermediateField ℚ_[p] (PadicAlgCl p)}
   [FiniteDimensional ℚ_[p] K] {η : Gal(PadicAlgCl p/K) →* ℤ_[p]ˣ}
 
+attribute [-instance] GroundTheory.PAdicHodge.subfield_valuativeRel
+
 instance valuativeExtension_charTower (k : ℕ) : ValuativeExtension K (charTower η k) :=
   GroundTheory.LocalField.intermediateField_valuativeExtension_left _
 
