@@ -279,7 +279,7 @@ def BlockImageTop.Statement : Prop :=
     (M : Matrix (Ix κ) (ι k₀) ℤ) (N : Matrix (ι k₀) (Ix κ) ℤ) (x : Ix κ → Ω)
     (m : ConeMetric (C := ℂ) (ι := Ix κ)),
     I.IsFamily → IsArithVar (mCoordIdeal y) (D + 1) → BlockBirational y k₀ →
-    IsArithVar (ι := GlobalTheory κ) (coordIdeal ℤ x) (D + 1) → IsBlockImage y k₀ M N x → A.a = unitDeg k₀ →
+    IsArithVar (ι := GlobalTheory κ) (coordIdeal ℤ x) (D + 1) → IsBlockImage y k₀ M N x → A.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg k₀ →
     IsSmoothHerm A → IsSmoothMetric m → (∀ z ∈ mcPts (mCoordIdeal y), A.h z = m.ρ (blockMapC k₀ M z)) →
     I K ι (mCoordIdeal y) (D + 1) (fun _ => A) = top I x m D
 
@@ -321,7 +321,7 @@ noncomputable section
 def BlockResolutionDegree.Statement : Prop :=
   ∀ (D : ℕ) (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
     [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A₀ A₁ : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι),
-    A₀.a = unitDeg d.k₀ → A₁.a = unitDeg d.k₀ → IsSmoothHerm A₀ → IsSmoothHerm A₁ →
+    A₀.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀ → A₁.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀ → IsSmoothHerm A₀ → IsSmoothHerm A₁ →
     ∀ t ∈ Set.Icc (0 : ℝ) 1, ∃ C : ℝ, ∀ n : ℕ,
       |(Module.finrank ℤ (secM d.y (blockDeg d.k₀ n)) : ℝ) -
           mInt d.R.A (fun _ => blockInterpPot d A₀ A₁ t) (fun _ => 1) * (n : ℝ) ^ D / (D.factorial : ℝ)| ≤
