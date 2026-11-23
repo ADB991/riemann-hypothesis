@@ -120,7 +120,7 @@ theorem sectionValue_add {y : (Σ k, ι k) → Ω} {a : K → ℤ} {τ : ℕ} {s
   obtain ⟨w, hw⟩ := exists_isSectionValue ht hz
   rw [sectionValue_eq hz hv, sectionValue_eq hz hw, sectionValue_eq hz (isSectionValue_add hv hw)]
 
-theorem norm_sectionValue_le_of_isSmallH {y : (Σ k, ι k) → Ω} {A : HermLine ι} {τ : ℕ} {s : Ω}
+theorem norm_sectionValue_le_of_isSmallH {y : (Σ k, ι k) → Ω} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {τ : ℕ} {s : Ω}
     {z : (Σ k, ι k) → ℂ} (hs : s ∈ chartLat y A.a τ) (hz : z ∈ mcPts (mCoordIdeal y))
     (hsm : IsSmallH (mCoordIdeal y) y A τ s) : ‖sectionValue y A.a τ s z‖ ≤ A.h z ^ τ := by
   obtain ⟨v, hv⟩ := exists_isSectionValue hs hz
@@ -130,7 +130,7 @@ theorem norm_sectionValue_le_of_isSmallH {y : (Σ k, ι k) → Ω} {A : HermLine
   rw [norm_div, div_le_iff₀ (norm_pos_iff.2 hz0)]
   exact hle.trans_eq (mul_comm _ _)
 
-theorem isBoundedH_of_sectionValue {y : (Σ k, ι k) → Ω} {A : HermLine ι} {τ : ℕ} {s : Ω} {c : ℝ}
+theorem isBoundedH_of_sectionValue {y : (Σ k, ι k) → Ω} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {τ : ℕ} {s : Ω} {c : ℝ}
     (hs : s ∈ chartLat y A.a τ)
     (hc : ∀ z ∈ mcPts (mCoordIdeal y), ‖sectionValue y A.a τ s z‖ ≤ c * A.h z ^ τ) :
     IsBoundedH (mCoordIdeal y) y A τ c s := by
