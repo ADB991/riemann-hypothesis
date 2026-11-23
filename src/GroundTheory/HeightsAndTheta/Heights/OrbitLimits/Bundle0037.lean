@@ -124,7 +124,7 @@ theorem sum_eq_of_transversal {P : Ideal (MRing ι)} {R R' : Finset ((Σ k, ι k
     exact hh _ _ (hRP t ht) (hR'u t (hRP t ht)).exists.choose_spec.2
 
 theorem logNorm_sameOrbit {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {s : MRing ι} {a : K → ℕ} (ha : ∀ k, A.a k = a k)
-    (hs : IsMultiHomog s a) {z z' : (Σ k, ι k) → ℂ} (h : SameOrbit z z') :
+    (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a) {z z' : (Σ k, ι k) → ℂ} (h : SameOrbit z z') :
     logNorm A s z = logNorm A s z' := by
   obtain ⟨c, hc, rfl⟩ := h
   unfold logNorm
@@ -184,7 +184,7 @@ theorem proof : CurveDegreeVert.Statement := by
   obtain ⟨R', hR'P, hR'u, hsum⟩ := regularityPointsSum_holds.proof K ι P hP
   have hφ : (fun (j : Fin 0) (z : (Σ k, ι k) → ℂ) => Real.log (((Fin.elim0 : Fin 0 → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) j).h z)) =
       (Fin.elim0 : Fin 0 → ((Σ k, ι k) → ℂ) → ℝ) := funext fun j => j.elim0
-  have hint : ∀ (C : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) (e : K → ℕ), (∀ k, C.a k = e k) → IsMultiHomog s e →
+  have hint : ∀ (C : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) (e : K → ℕ), (∀ k, C.a k = e k) → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s e →
       arInt P s C (Fin.elim0 : Fin 0 → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) = ∑ t ∈ R, logNorm C s t := by
     intro C s e hCe hse
     have hinv : ∀ z z', z ∈ mcPts P → SameOrbit z z' → logNorm C s z = logNorm C s z' :=
