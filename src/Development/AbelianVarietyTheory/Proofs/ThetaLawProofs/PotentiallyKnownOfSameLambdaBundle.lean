@@ -132,7 +132,7 @@ theorem known_of_point (hL : Out.Laws) (hT : ThetaUnifAV) {K F : Type} [Field K]
     rw [h1, he]
     exact ((isProd_mul t t).push hχ.1).unique h₂ ht ht
   · have hw' := ((isProd_transl e.hom t).push hχ.1).unique hw (by rw [Category.assoc, ht]) hφe
-    have k := lbIso_pull_comp hχ.2.2 (e.hom ≫ ((toUnit z.P.A ≫ t) * 𝟙 z.P.A)).left
+    have k := GlobalTheory.ZM.SiegPull.lbIso_pull_comp hχ.2.2 (e.hom ≫ ((toUnit z.P.A ≫ t) * 𝟙 z.P.A)).left
     rw [hw'] at k
     exact LBIso.trans y'.P.isLB (LB.isLB_pull y.P.isLB _) (LB.isLB_pull z.P.isLB _) hi k.symm
 
@@ -176,7 +176,7 @@ theorem exists_point (hL : Out.Laws) {K Ω : Type} [Field K] [Field Ω] [IsAlgCl
     obtain ⟨φ₂, s₂, i₂⟩ := hχ.lamIs
     obtain ⟨φ₂', s₂', i₂'⟩ := LamIs.comp P'.isLB P.isLB lQ hψ.lamIs hl
     refine ⟨_, isSquare_tensor e'.hom, ?_⟩
-    have k₁ := lbIso_pull_comp i₂ (e'.hom ⊗ₘ e'.hom).left
+    have k₁ := GlobalTheory.ZM.SiegPull.lbIso_pull_comp i₂ (e'.hom ⊗ₘ e'.hom).left
     rw [isSquare_unique (isSquare_comp (isSquare_tensor e'.hom) s₂) s₂' he'] at k₁
     exact LBIso.trans (DVR.linComb_isLB _ P'.isLB _ _) (LB.isLB_pull lQ _)
       (LB.isLB_pull (DVR.linComb_isLB _ Q'.isLB _ _) _) i₂' k₁.symm
@@ -189,13 +189,13 @@ theorem exists_point (hL : Out.Laws) {K Ω : Type} [Field K] [Field Ω] [IsAlgCl
   · rw [← he', ← Category.assoc]
     exact (isProd_transl e'.hom t).push hχ.1
   · exact LBIso.trans (LB.isLB_pull P.isLB _) P'.isLB (LB.isLB_pull Q.isLB _) hψ.2.2.symm
-      (LBIso.trans P'.isLB (LB.isLB_pull Q'.isLB _) (LB.isLB_pull Q.isLB _) hi (lbIso_pull_comp hχ.2.2 _))
+      (LBIso.trans P'.isLB (LB.isLB_pull Q'.isLB _) (LB.isLB_pull Q.isLB _) hi (GlobalTheory.ZM.SiegPull.lbIso_pull_comp hχ.2.2 _))
 
 theorem lbIso_pull_both {W Y X Z : Scheme.{0}} {L : LB X} {M : LB Z} {a : Y ⟶ X} {b : Y ⟶ Z} (j : W ⟶ Y)
     (hL : L.IsLB) (hM : M.IsLB) :
     LBIso ((L.pull a).pull j) ((M.pull b).pull j) ↔ LBIso (L.pull (j ≫ a)) (M.pull (j ≫ b)) := by
-  have k₁ := lbIso_pull_comp (⟨idIso _, idIso_isGen (LB.isLB_pull hL a)⟩ : LBIso (L.pull a) (L.pull a)) j
-  have k₂ := lbIso_pull_comp (⟨idIso _, idIso_isGen (LB.isLB_pull hM b)⟩ : LBIso (M.pull b) (M.pull b)) j
+  have k₁ := GlobalTheory.ZM.SiegPull.lbIso_pull_comp (⟨idIso _, idIso_isGen (LB.isLB_pull hL a)⟩ : LBIso (L.pull a) (L.pull a)) j
+  have k₂ := GlobalTheory.ZM.SiegPull.lbIso_pull_comp (⟨idIso _, idIso_isGen (LB.isLB_pull hM b)⟩ : LBIso (M.pull b) (M.pull b)) j
   have a₁ := LB.isLB_pull (LB.isLB_pull hL a) j
   have a₂ := LB.isLB_pull (LB.isLB_pull hM b) j
   have b₁ := LB.isLB_pull hL (j ≫ a)

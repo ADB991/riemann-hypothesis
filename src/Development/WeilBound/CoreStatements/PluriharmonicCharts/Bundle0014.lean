@@ -33,16 +33,16 @@ namespace PositivityTheory.Xgp.lemma_v
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem divCycle_of_mem {P : Ideal (MRing ι)} {s : MRing ι} {W : Ideal (MRing ι)} (h : W ∈ divSupp P s) :
-    divCycle P s W = multAt (P ⊔ Ideal.span {s}) W := by
-  simp [divCycle, Finsupp.ofSupportFinite_coe, h]
+    ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s W = multAt (P ⊔ Ideal.span {s}) W := by
+  simp [ReciprocityTheory.ChartRestriction.G.Geo.divCycle, Finsupp.ofSupportFinite_coe, h]
 
 theorem divCycle_of_notMem {P : Ideal (MRing ι)} {s : MRing ι} {W : Ideal (MRing ι)} (h : W ∉ divSupp P s) :
-    divCycle P s W = 0 := by
-  simp [divCycle, Finsupp.ofSupportFinite_coe, h]
+    ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s W = 0 := by
+  simp [ReciprocityTheory.ChartRestriction.G.Geo.divCycle, Finsupp.ofSupportFinite_coe, h]
 
 theorem finsum_eq_sum (P : Ideal (MRing ι)) (s : MRing ι) (F : Ideal (MRing ι) → ℝ) (S : Finset (Ideal (MRing ι)))
     (hS : (divSupp_finite P s).toFinset ⊆ S) :
-    ∑ᶠ W ∈ divSupp P s, (multAt (P ⊔ Ideal.span {s}) W : ℝ) * F W = ∑ W ∈ S, (divCycle P s W : ℝ) * F W := by
+    ∑ᶠ W ∈ divSupp P s, (multAt (P ⊔ Ideal.span {s}) W : ℝ) * F W = ∑ W ∈ S, (ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s W : ℝ) * F W := by
   rw [finsum_mem_eq_finite_toFinset_sum _ (divSupp_finite P s), ← Finset.sum_subset hS]
   · refine Finset.sum_congr rfl fun W hW => ?_
     rw [divCycle_of_mem ((Set.Finite.mem_toFinset _).1 hW)]

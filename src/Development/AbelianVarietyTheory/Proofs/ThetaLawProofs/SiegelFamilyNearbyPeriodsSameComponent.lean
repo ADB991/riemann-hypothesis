@@ -103,7 +103,7 @@ theorem exists_sqOf_polPB (hL : Out.Laws) {R : Type} [CommRing R] {c : SiegPre h
     rw [E] at j₁
     have j₂ := LBIso.chartPull (Geo.Tor.chartPullPull _ _ (e.hom.left ≫ ψ₀ ≫ e'.inv.left) rfl)
       (Geo.Tor.chartPullPull _ _ _ rfl) i'
-    have j₃ := LBIso.trans P₀.isLB (pull_isLB Q₀.isLB _) (pull_isLB Q.isLB _) i₀ (lbIso_pull_comp hpb.2.2 _)
+    have j₃ := LBIso.trans P₀.isLB (pull_isLB Q₀.isLB _) (pull_isLB Q.isLB _) i₀ (GlobalTheory.ZM.SiegPull.lbIso_pull_comp hpb.2.2 _)
     exact LBIso.trans P₀.isLB (pull_isLB Q.isLB _) (pull_isLB Q'.isLB _) j₃
       (LBIso.trans (pull_isLB Q'.isLB _) (pull_isLB (DVR.linComb_isLB _ Q.isLB _ _) _) (pull_isLB Q.isLB _) j₂ j₁).symm
   · rw [Category.assoc, Category.assoc, ← Category.assoc e'.inv.left, ee, Category.id_comp, heφ]

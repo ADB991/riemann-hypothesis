@@ -31,8 +31,8 @@ theorem multAt_eqZ (J W : Ideal (MRing ι)) (hW : W.IsPrime) :
 
 open Classical in
 theorem divCycle_applyZ (V W : Ideal (MRing ι)) (f : MRing ι) :
-    divCycle V f W = if W ∈ divSupp V f then multAt (V ⊔ Ideal.span {f}) W else 0 := by
-  simp only [divCycle, Finsupp.ofSupportFinite_coe]
+    ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f W = if W ∈ divSupp V f then multAt (V ⊔ Ideal.span {f}) W else 0 := by
+  simp only [ReciprocityTheory.ChartRestriction.G.Geo.divCycle, Finsupp.ofSupportFinite_coe]
 
 theorem mem_of_mem_divSuppZ {V W : Ideal (MRing ι)} {f : MRing ι} (hW : W ∈ divSupp V f) : f ∈ W :=
   hW.1.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self _))
@@ -44,12 +44,12 @@ theorem mem_divSupp_of_memZ {V W : Ideal (MRing ι)} (hV : V.IsPrime) {f g : MRi
   exact (eq_of_le_of_mem_minimalPrimes hV hW.1 hQ.1 (le_sup_left.trans hQ.2)
     (hQ.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self g))) hgV hQW).ge
 
-theorem divCycle_eq_zero_of_not_memZ {V W : Ideal (MRing ι)} {f : MRing ι} (h : f ∉ W) : divCycle V f W = 0 := by
+theorem divCycle_eq_zero_of_not_memZ {V W : Ideal (MRing ι)} {f : MRing ι} (h : f ∉ W) : ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f W = 0 := by
   rw [divCycle_applyZ, if_neg fun h2 => h (mem_of_mem_divSuppZ h2)]
 
 theorem divCycle_mulZ {V : Ideal (MRing ι)} (hV : V.IsPrime) {f g : MRing ι}
     (hf : f ∉ V) (hg : g ∉ V) (W : Ideal (MRing ι)) :
-    divCycle V (f * g) W = divCycle V f W + divCycle V g W := by
+    ReciprocityTheory.ChartRestriction.G.Geo.divCycle V (f * g) W = ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f W + ReciprocityTheory.ChartRestriction.G.Geo.divCycle V g W := by
   classical
   have hfg : f * g ∉ V := fun h => (hV.mem_or_mem h).elim hf hg
   simp only [divCycle_applyZ]
@@ -75,19 +75,19 @@ theorem divCycle_mulZ {V : Ideal (MRing ι)} (hV : V.IsPrime) {f g : MRing ι}
 theorem pow_not_memZ {V : Ideal (MRing ι)} (hV : V.IsPrime) {f : MRing ι} (hf : f ∉ V) (n : ℕ) : f ^ n ∉ V :=
   fun h => hf (hV.mem_of_pow_mem n h)
 
-theorem divCycle_oneZ (V W : Ideal (MRing ι)) : divCycle V 1 W = 0 := by
+theorem divCycle_oneZ (V W : Ideal (MRing ι)) : ReciprocityTheory.ChartRestriction.G.Geo.divCycle V 1 W = 0 := by
   rw [divCycle_applyZ, if_neg]
   intro h
   exact h.1.1.1.ne_top ((Ideal.eq_top_iff_one _).2 (mem_of_mem_divSuppZ h))
 
 theorem divCycle_powZ {V : Ideal (MRing ι)} (hV : V.IsPrime) {f : MRing ι} (hf : f ∉ V) (n : ℕ)
-    (W : Ideal (MRing ι)) : divCycle V (f ^ n) W = n * divCycle V f W := by
+    (W : Ideal (MRing ι)) : ReciprocityTheory.ChartRestriction.G.Geo.divCycle V (f ^ n) W = n * ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f W := by
   induction n with
   | zero => simp [divCycle_oneZ]
   | succ n ih => rw [pow_succ, divCycle_mulZ hV (pow_not_memZ hV hf n) hf, ih]; ring
 
 theorem divCycle_congrZ {V : Ideal (MRing ι)} {f g : MRing ι} (h : f - g ∈ V) (W : Ideal (MRing ι)) :
-    divCycle V f W = divCycle V g W := by
+    ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f W = ReciprocityTheory.ChartRestriction.G.Geo.divCycle V g W := by
   have key : ∀ {a b : MRing ι}, a - b ∈ V → V ⊔ Ideal.span {a} ≤ V ⊔ Ideal.span {b} := by
     intro a b hab
     refine sup_le le_sup_left ((Ideal.span_singleton_le_iff_mem _).mpr ?_)
@@ -102,7 +102,7 @@ theorem divCycle_congrZ {V : Ideal (MRing ι)} {f g : MRing ι} (h : f - g ∈ V
 theorem divCycle_le_of_rel {V W : Ideal (MRing ι)} (hV : V.IsPrime) {a b u : MRing ι} (ha : a ∉ V) (hb : b ∉ V)
     (hu : u ∉ W) {n : ℕ} (c : ℕ → MRing ι)
     (hrel : u * a ^ n + ∑ j ∈ Finset.range n, c j * a ^ j * b ^ (n - j) ∈ V) :
-    divCycle V b W ≤ divCycle V a W := by
+    ReciprocityTheory.ChartRestriction.G.Geo.divCycle V b W ≤ ReciprocityTheory.ChartRestriction.G.Geo.divCycle V a W := by
   classical
   by_cases h : W ∈ divSupp V b
   · have hWp := h.1.1.1
@@ -176,7 +176,7 @@ theorem div_le_of_integral (y : (Σ k, ι k) → Ω) (hP : (mCoordIdeal y).IsPri
     {a b : MRing ι} {d : K → ℕ} (ha : IsMultiHomog a d) (hb : IsMultiHomog b d)
     (haP : a ∉ mCoordIdeal y) (hbP : b ∉ mCoordIdeal y) {t : Ω} (ht : aeval y a = t * aeval y b)
     (hint : IsIntegral (chartRingZ y c) t) :
-    divCycle (mCoordIdeal y) b W ≤ divCycle (mCoordIdeal y) a W := by
+    ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal y) b W ≤ ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal y) a W := by
   classical
   obtain ⟨p, hpm, hp⟩ := hint
   set n := p.natDegree
@@ -237,8 +237,8 @@ theorem half_bound (y : (Σ k, ι k) → Ω) (hP : (mCoordIdeal y).IsPrime) (hH 
     (hfP : f ∉ mCoordIdeal y) (hgP : g ∉ mCoordIdeal y) {u : Ω} (hu : aeval y f = u * aeval y g)
     (hval : ∀ c : ∀ k, ι k, (∀ k, y ⟨k, c k⟩ ≠ 0) → ∀ W : ValuationSubring Ω, (∀ p, y p / y ⟨p.1, c p.1⟩ ∈ W) →
       (m : Ω) * (u * ∏ k, y ⟨k, c k⟩ ^ (-((df k : ℤ) - dg k))) ^ q ∈ W) (W : Ideal (MRing ι)) :
-    q * divCycle (mCoordIdeal y) g W ≤
-      divCycle (mCoordIdeal y) (C (m : ℤ)) W + q * divCycle (mCoordIdeal y) f W := by
+    q * ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal y) g W ≤
+      ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal y) (C (m : ℤ)) W + q * ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal y) f W := by
   classical
   by_cases h : W ∈ divSupp (mCoordIdeal y) g
   swap
@@ -293,7 +293,7 @@ theorem charOf_dvd {W : Ideal (MRing ι)} {n : ℕ} (h : (C (n : ℤ) : MRing ι
   exact Int.natAbs_dvd_natAbs.2 hd
 
 theorem div_const_off {P W : Ideal (MRing ι)} {m : ℕ} (hm : 0 < m)
-    (h : ¬ ((charOf W).Prime ∧ charOf W ∣ m)) : divCycle P (C (m : ℤ)) W = 0 := by
+    (h : ¬ ((charOf W).Prime ∧ charOf W ∣ m)) : ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C (m : ℤ)) W = 0 := by
   classical
   rw [divCycle_applyZ, if_neg]
   intro hW
@@ -304,7 +304,7 @@ theorem div_const_off {P W : Ideal (MRing ι)} {m : ℕ} (hm : 0 < m)
 
 theorem div_const_on {P W : Ideal (MRing ι)} (hP : P.IsPrime) (hH : IsHorizontal P) {m : ℕ} (hm : 0 < m)
     (hp : (charOf W).Prime) :
-    divCycle P (C (m : ℤ)) W = padicValNat (charOf W) m * divCycle P (C (charOf W : ℤ)) W := by
+    ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C (m : ℤ)) W = padicValNat (charOf W) m * ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C (charOf W : ℤ)) W := by
   set p := charOf W with hpd
   have : Fact p.Prime := ⟨hp⟩
   obtain ⟨m', hm'⟩ : p ^ padicValNat p m ∣ m := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
@@ -335,9 +335,9 @@ theorem div_close {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k
     (hval : ∀ c : ∀ k, ι k, (∀ k, y ⟨k, c k⟩ ≠ 0) → ∀ W : ValuationSubring Ω, (∀ p, y p / y ⟨p.1, c p.1⟩ ∈ W) →
       (m : Ω) * (u * ∏ k, y ⟨k, c k⟩ ^ (-((df k : ℤ) - dg k))) ^ q ∈ W ∧
       (m : Ω) * ((u * ∏ k, y ⟨k, c k⟩ ^ (-((df k : ℤ) - dg k)))⁻¹) ^ q ∈ W) :
-    (∀ W, charOf W ∉ T → divCycle (mCoordIdeal y) f W = divCycle (mCoordIdeal y) g W) ∧
-      ∀ W, charOf W ∈ T → |(divCycle (mCoordIdeal y) f W : ℝ) - divCycle (mCoordIdeal y) g W| ≤
-        ((padicValNat (charOf W) m : ℝ) / q) * divCycle (mCoordIdeal y) (C (charOf W : ℤ)) W := by
+    (∀ W, charOf W ∉ T → ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal y) f W = ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal y) g W) ∧
+      ∀ W, charOf W ∈ T → |(ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal y) f W : ℝ) - ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal y) g W| ≤
+        ((padicValNat (charOf W) m : ℝ) / q) * ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal y) (C (charOf W : ℤ)) W := by
   have hP : (mCoordIdeal y).IsPrime := hA.2.1.1
   have hH : IsHorizontal (mCoordIdeal y) := hA.2.2.1
   have hf0 : aeval y f ≠ 0 := fun h =>
@@ -353,7 +353,7 @@ theorem div_close {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k
       congr 1
       ring
   refine ⟨fun W hW => ?_, fun W hW => ?_⟩
-  · have h0 : divCycle (mCoordIdeal y) (C (m : ℤ)) W = 0 := div_const_off hm fun h => hW (hmT _ h.1 h.2)
+  · have h0 : ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal y) (C (m : ℤ)) W = 0 := div_const_off hm fun h => hW (hmT _ h.1 h.2)
     have a1 := h1 W
     have a2 := h2 W
     rw [h0, zero_add] at a1 a2
@@ -372,7 +372,7 @@ theorem div_close {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k
 theorem div_eq_of_unit {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {P : Ideal (MRing ι)}
     (hP : P.IsPrime) {f g : MRing ι} (hfP : f ∉ P) (hgP : g ∉ P)
     (h : ∀ W : Ideal (MRing ι), W.IsPrime → P ≤ W → IsRelevant W → ∃ u v : MRing ι, u ∉ W ∧ v ∉ W ∧ u * f - v * g ∈ P) :
-    divCycle P f = divCycle P g := by
+    ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f = ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g := by
   classical
   ext W
   by_cases hW : W ∈ divSupp P f ∨ W ∈ divSupp P g
