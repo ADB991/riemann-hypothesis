@@ -14,7 +14,7 @@ open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalC
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.CM
 open scoped CategoryTheory.Obj
 
-attribute [-instance] Formalism.MainNotions.ModuliIntegralCharts.H1.ExpUniqBC.instGrpObjGS
+attribute [-instance] Formalism.MainNotions.ModuliIntegralCharts.H1.ExpUniqBC.instGrpObjOverSchemeSpecOfGS
 
 noncomputable section
 namespace GlobalTheory.TorsionKill
