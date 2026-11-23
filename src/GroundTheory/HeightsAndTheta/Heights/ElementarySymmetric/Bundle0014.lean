@@ -152,7 +152,7 @@ theorem along_of_shift (hAC : AmpleCountAlongMultiples.StatementAmple) (hGD : Ge
     (hsp : IsSemipositiveRel P0 (mCoordIdeal y) N) (hci : IsConjInvariantH N)
     (hamp : KH.AmpleV ℚ (KH.genIdeal y) N.a)
     (hamp2 : ∃ c : ℕ, 1 ≤ c ∧ KH.AmpleV ℚ (KH.genIdeal y) (c • N.a - fun _ => 1))
-    (hampl : ∀ ℓ : ℕ, ℓ.Prime → KH.AmpleV (ZMod ℓ) (fibreIdeal ℓ y) N.a) (he0 : e ≠ 0)
+    (hampl : ∀ ℓ : ℕ, ℓ.Prime → KH.AmpleV (ZMod ℓ) (GroundTheory.Heights₂.Heights.HilbertSamuel.fibreIdeal ℓ y) N.a) (he0 : e ≠ 0)
     (hmap : ∀ (n : ℕ) (s : Ω), s ∈ chartLat y N.a n → s * e ^ (p * n) ∈ chartLat y A.a (q * n) ∧
       ∀ c : ℝ, IsBoundedH (mCoordIdeal y) y N n c s →
         IsBoundedH (mCoordIdeal y) y A (q * n) (c * Real.exp (((p * n : ℕ) : ℝ) * C)) (s * e ^ (p * n)))

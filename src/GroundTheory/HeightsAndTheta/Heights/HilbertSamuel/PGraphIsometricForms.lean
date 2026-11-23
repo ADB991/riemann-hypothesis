@@ -84,23 +84,23 @@ def den (g : (Σ k, ι₂ k) → MRing ι) (j : ∀ k, ι₂ k) (a : K₂ → �
   ∏ k, X (inrV ⟨k, j k⟩) ^ (a k).toNat * rename inlV (g ⟨k, j k⟩) ^ (-a k).toNat
 
 theorem wh_form [DecidableEq K] [DecidableEq K₂] {g : (Σ k, ι₂ k) → MRing ι} {δ : K₂ → K → ℕ}
-    (hg : ∀ q, IsMultiHomog (g q) (δ q.1)) (q : Σ k, ι₂ k) :
+    (hg : ∀ q, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (g q) (δ q.1)) (q : Σ k, ι₂ k) :
     IsWeightedHomogeneous (GroundTheory.Heights₂.Heights.NumbersDVR.blockWeight (Sum.elim ι ι₂))
       (rename inlV (g q)) (Function.extend Sum.inl (δ q.1) 0) :=
   (GroundTheory.Heights₂.Heights.Bridge.isMultiHomog_iff _ _).mpr
     (GroundTheory.Heights₂.Heights.Inter.rename_isMultiHomog isBlockMap_inl (hg q))
 
 theorem isMultiHomog_num [DecidableEq K] [DecidableEq K₂] {g : (Σ k, ι₂ k) → MRing ι} {δ : K₂ → K → ℕ}
-    (hg : ∀ q, IsMultiHomog (g q) (δ q.1)) (j : ∀ k, ι₂ k) (a : K₂ → ℤ) :
-    IsMultiHomog (num g j a)
+    (hg : ∀ q, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (g q) (δ q.1)) (j : ∀ k, ι₂ k) (a : K₂ → ℤ) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (num g j a)
       (∑ k, ((a k).toNat • Function.extend Sum.inl (δ k) 0 + (-a k).toNat • Pi.single (Sum.inr k) 1)) := by
   refine (GroundTheory.Heights₂.Heights.Bridge.isMultiHomog_iff _ _).mp ?_
   exact IsWeightedHomogeneous.prod _ _ _ fun k _ =>
     ((wh_form hg ⟨k, j k⟩).pow _).mul ((isWeightedHomogeneous_X ℤ _ _).pow _)
 
 theorem isMultiHomog_den [DecidableEq K] [DecidableEq K₂] {g : (Σ k, ι₂ k) → MRing ι} {δ : K₂ → K → ℕ}
-    (hg : ∀ q, IsMultiHomog (g q) (δ q.1)) (j : ∀ k, ι₂ k) (a : K₂ → ℤ) :
-    IsMultiHomog (den g j a)
+    (hg : ∀ q, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (g q) (δ q.1)) (j : ∀ k, ι₂ k) (a : K₂ → ℤ) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (den g j a)
       (∑ k, ((a k).toNat • Pi.single (Sum.inr k) 1 + (-a k).toNat • Function.extend Sum.inl (δ k) 0)) := by
   refine (GroundTheory.Heights₂.Heights.Bridge.isMultiHomog_iff _ _).mp ?_
   exact IsWeightedHomogeneous.prod _ _ _ fun k _ =>
@@ -126,7 +126,7 @@ theorem num_den_not_mem {P : Ideal (MRing ι)} (hP : P.IsPrime) (g : (Σ k, ι�
 
 theorem exists_unit {P : Ideal (MRing ι)} {g : (Σ k, ι₂ k) → MRing ι} (hBP : IsBasePtFree P g)
     (j : ∀ k, ι₂ k) (a : K₂ → ℤ) {W : Ideal (MRing (Sum.elim ι ι₂))} (hW : W.IsPrime)
-    (hΓW : graphIdeal P g ≤ W) (hrel : IsRelevant W) :
+    (hΓW : graphIdeal P g ≤ W) (hrel : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W) :
     ∃ u v, u ∉ W ∧ v ∉ W ∧ u * num g j a - v * den g j a ∈ graphIdeal P g := by
   have hlin : ∀ k, ∃ j', rename inlV (g ⟨k, j'⟩) ∉ W := by
     intro k

@@ -37,7 +37,7 @@ def chartExp (c : ∀ k, ι k) (n : K → ℕ) : (Σ k, ι k) →₀ ℕ :=
 def chartMon (c : ∀ k, ι k) (n : K → ℕ) : MRingOver S ι :=
   monomial (chartExp c n) 1
 
-theorem chartMon_homog (c : ∀ k, ι k) (n : K → ℕ) : IsMultiHomog (chartMon (S := S) c n) n :=
+theorem chartMon_homog (c : ∀ k, ι k) (n : K → ℕ) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (chartMon (S := S) c n) n :=
   GenTwistGenerated.isMultiHomog_monomial _ _ _ fun k => by simp [chartExp]
 
 theorem chartMon_mem {I : ∀ k, Finset (ι k)} {c : ∀ k, ι k} (hc : ∀ k, c k ∈ I k) (n : K → ℕ) :
@@ -81,7 +81,7 @@ theorem generatedV_of_generatedMod {d : K → ℤ} (h : GeneratedMod S ι (KH.qu
   let Q : MRingOver S ι := chartMon c dm
   have hP : P ∈ KH.cellMon S I.1 := chartMon_mem hc dp
   have hQ : Q ∈ KH.cellMon S I.1 := chartMon_mem hc dm
-  have hpart : ∀ (f : MRingOver S ι) (a : K → ℕ), IsMultiHomog f a →
+  have hpart : ∀ (f : MRingOver S ι) (a : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a →
       Ideal.Quotient.mk V f ∈ KH.quotPart S V (fun k => (a k : ℤ)) := fun f a hf =>
     Submodule.subset_span ⟨f, ⟨fun k => Int.natCast_nonneg _, by simpa using hf⟩, rfl⟩
   let x : LocalizedModule (KH.cellMon S I.1) (MRingOver S ι ⧸ V) :=
@@ -223,23 +223,23 @@ namespace BirationalModelExists
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem isMultiHomog_zero' (a : K → ℕ) : IsMultiHomog (0 : MRing ι) a := by
+theorem isMultiHomog_zero' (a : K → ℕ) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (0 : MRing ι) a := by
   intro m hm
   simp at hm
 
-theorem isMultiHomog_add' {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) (hg : IsMultiHomog g a) :
-    IsMultiHomog (f + g) a := by
+theorem isMultiHomog_add' {f g : MRing ι} {a : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f + g) a := by
   classical
   intro m hm
   rcases Finset.mem_union.1 (support_add hm) with h | h
   exacts [hf m h, hg m h]
 
-theorem isMultiHomog_neg' {f : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) : IsMultiHomog (-f) a := by
+theorem isMultiHomog_neg' {f : MRing ι} {a : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (-f) a := by
   intro m hm
   rw [support_neg] at hm
   exact hf m hm
 
-theorem aeval_scale {S : Type*} [CommRing S] [Algebra ℤ S] {g : MRing ι} {a : K → ℕ} (hg : IsMultiHomog g a)
+theorem aeval_scale {S : Type*} [CommRing S] [Algebra ℤ S] {g : MRing ι} {a : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a)
     (z : (Σ k, ι k) → S) (u : K → S) :
     aeval (fun p => z p * u p.1) g = aeval z g * ∏ k, u k ^ a k := by
   rw [aeval_def, aeval_def, eval₂_eq', eval₂_eq', Finset.sum_mul]
@@ -281,20 +281,20 @@ theorem aeval_coordClass_eq_zero (g : MRing ι) : aeval (coordClass P) g = 0 ↔
     Ideal.Quotient.eq_zero_iff_mem]
 
 def fnField : Subfield (FractionRing (MRing ι ⧸ P)) where
-  carrier := {s | ∃ (d : K → ℕ) (g h : MRing ι), IsMultiHomog g d ∧ IsMultiHomog h d ∧
+  carrier := {s | ∃ (d : K → ℕ) (g h : MRing ι), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h d ∧
     aeval (coordClass P) h ≠ 0 ∧ aeval (coordClass P) g = s * aeval (coordClass P) h}
-  zero_mem' := ⟨0, 0, 1, isMultiHomog_zero' 0, isMultiHomog_one, by simp, by simp⟩
-  one_mem' := ⟨0, 1, 1, isMultiHomog_one, isMultiHomog_one, by simp, by simp⟩
+  zero_mem' := ⟨0, 0, 1, isMultiHomog_zero' 0, ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_one, by simp, by simp⟩
+  one_mem' := ⟨0, 1, 1, ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_one, ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_one, by simp, by simp⟩
   add_mem' := by
     rintro s t ⟨d, g, h, hg, hh, h0, hs⟩ ⟨d', g', h', hg', hh', h0', ht⟩
     refine ⟨d + d', g * h' + h * g', h * h',
-      isMultiHomog_add' (isMultiHomog_mul hg hh') (isMultiHomog_mul hh hg'), isMultiHomog_mul hh hh',
+      isMultiHomog_add' (ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_mul hg hh') (ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_mul hh hg'), ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_mul hh hh',
       by simp [h0, h0'], ?_⟩
     simp only [map_add (f := _), map_mul, hs, ht]
     ring
   mul_mem' := by
     rintro s t ⟨d, g, h, hg, hh, h0, hs⟩ ⟨d', g', h', hg', hh', h0', ht⟩
-    refine ⟨d + d', g * g', h * h', isMultiHomog_mul hg hg', isMultiHomog_mul hh hh', by simp [h0, h0'], ?_⟩
+    refine ⟨d + d', g * g', h * h', ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_mul hg hg', ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_mul hh hh', by simp [h0, h0'], ?_⟩
     simp only [map_mul, hs, ht]
     ring
   neg_mem' := by
@@ -304,7 +304,7 @@ def fnField : Subfield (FractionRing (MRing ι ⧸ P)) where
     rintro s ⟨d, g, h, hg, hh, h0, hs⟩
     by_cases s0 : s = 0
     · subst s0
-      exact ⟨0, 0, 1, isMultiHomog_zero' 0, isMultiHomog_one, by simp, by simp⟩
+      exact ⟨0, 0, 1, isMultiHomog_zero' 0, ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_one, by simp, by simp⟩
     · refine ⟨d, h, g, hh, hg, ?_, ?_⟩
       · rw [hs]
         exact mul_ne_zero s0 h0
@@ -325,7 +325,7 @@ def birPoint (c : ∀ k, ι k) (hc : ∀ k, (X ⟨k, c k⟩ : MRing ι) ∉ P) (
       by rw [aeval_X, aeval_X, div_mul_cancel₀ _ (coordClass_ne_zero (hc p.1))]⟩⟩
 
 theorem coe_aeval_birPoint (c : ∀ k, ι k) (hc : ∀ k, (X ⟨k, c k⟩ : MRing ι) ∉ P) {g : MRing ι} {a : K → ℕ}
-    (hg : IsMultiHomog g a) :
+    (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a) :
     ((aeval (birPoint c hc) g : fnField P) : FractionRing (MRing ι ⧸ P)) =
       aeval (coordClass P) g * ∏ k, (coordClass P ⟨k, c k⟩)⁻¹ ^ a k := by
   have h := hom_aeval (fnField P).subtype (birPoint c hc) g
