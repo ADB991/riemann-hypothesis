@@ -147,7 +147,7 @@ theorem core_roomR {b' g A P Q k c de be eps N Y N1 ka : ℝ} (hb : 0 < b') (hAP
 
 variable {C0 Cde CE1 CE2 : ℝ} {X : Loc}
 
-theorem core_room (St : Std C0 Cde CE1 CE2 1 X) (hc : 1 ≤ X.c) (j : Fin (numSeg X.TT))
+theorem core_room (St : Formalism.MainNotions.ColumnSystems.Pf.Std C0 Cde CE1 CE2 1 X) (hc : 1 ≤ X.c) (j : Fin (numSeg X.TT))
     (b : SegBlock (segS X.TT j) X.m) (hdig : DigitsOK X.p (X.seg C0 CE1 CE2 j) (segATop X.TT X.aT j) b)
     (i : Fin (segS X.TT j)) :
     (X.c : ℝ) * (ka1 X + 2 * X.Q + 3 * X.k) + 4 ≤
@@ -197,7 +197,7 @@ theorem core_termS {A A' w w' g g' K q : ℕ} (hA : A ≤ A' + K) (hw : w' ≤ w
 
 set_option maxHeartbeats 1600000 in
 theorem numCore_std {C0 CYb Cde Ck CD Cb CE1 CE2 Cc : ℝ}
-    (hstd : ∀ X : Loc, D1num X → HIext C0 CYb Cde Ck CD Cb X → CBound Cc X → Std C0 Cde CE1 CE2 1 X) :
+    (hstd : ∀ X : Loc, D1num X → HIext C0 CYb Cde Ck CD Cb X → CBound Cc X → Formalism.MainNotions.ColumnSystems.Pf.Std C0 Cde CE1 CE2 1 X) :
     NumCoreAt C0 CYb Cde Ck CD Cb CE1 CE2 Cc := by
   intro X hD hH hcB mm _ n hn1 hnc e he1 hen j b hb
   have St := hstd X hD hH hcB
@@ -352,7 +352,7 @@ theorem numCore_thr : RestNumCore :=
 
 set_option maxHeartbeats 3200000 in
 theorem keptPair_bounds {C0 CYb Cde Ck CD Cb CE1 CE2 Cc : ℝ}
-    (hstd : ∀ X : Loc, D1num X → HIext C0 CYb Cde Ck CD Cb X → CBound Cc X → Std C0 Cde CE1 CE2 1 X) :
+    (hstd : ∀ X : Loc, D1num X → HIext C0 CYb Cde Ck CD Cb X → CBound Cc X → Formalism.MainNotions.ColumnSystems.Pf.Std C0 Cde CE1 CE2 1 X) :
     PairSAt C0 CYb Cde Ck CD Cb CE1 CE2 Cc := by
   intro X _ hD hI hc j rz ry hd A hA1 hA2 mu lam hP hK i hi
   have hs := hstd X hD hI hc

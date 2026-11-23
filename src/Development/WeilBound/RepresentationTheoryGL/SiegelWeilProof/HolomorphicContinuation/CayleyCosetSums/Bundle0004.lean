@@ -265,7 +265,7 @@ theorem fderiv_determinant_power_column_neg (t : ℂ) (X : Matrix (Fin N) (Fin (
 theorem ev_piFc (N : ℕ) :
     ∀ᶠ X in 𝓝 (0 : Matrix (Fin N) (Fin (N + 1)) ℂ), (1 + piF X).det ∈ Complex.slitPlane := by
   have hc : ContinuousAt (fun X : Matrix (Fin N) (Fin (N + 1)) ℂ => (1 + piF X).det) 0 :=
-    ((analyticAt_det _).comp (analyticAt_const.add (analyticAt_piF 0))).continuousAt
+    ((PositivityTheory.Rg.Sw.LVs.CK.analyticAt_det _).comp (analyticAt_const.add (analyticAt_piF 0))).continuousAt
   have h0 : (1 + piF (0 : Matrix (Fin N) (Fin (N + 1)) ℂ)).det ∈ Complex.slitPlane := by
     rw [piF_zero, add_zero, Matrix.det_one]
     exact Complex.one_mem_slitPlane

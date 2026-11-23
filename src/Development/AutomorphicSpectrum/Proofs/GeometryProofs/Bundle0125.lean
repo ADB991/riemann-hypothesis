@@ -93,7 +93,7 @@ theorem exists_hChart_of_extendsUnitAt : ∀ (X : Scheme.{0}) (s : X ⟶ Sp ℂ)
     intro hz
     obtain ⟨u, rfl⟩ := hv
     have e := valAt'_mul (Y b) N u.val u⁻¹.val
-    rw [Units.mul_inv, valAt'_one (Y b) N (htop b hb.1), hz, zero_mul] at e
+    rw [Units.mul_inv, ReciprocityTheory.ChartRestriction.G.TB.ValAt.valAt'_one (Y b) N (htop b hb.1), hz, zero_mul] at e
     exact one_ne_zero e
   · intro b hb hWb r hr
     have e₁ : ValAt ξ (Y b) (t / T) (valAt' (Y b) N v) :=

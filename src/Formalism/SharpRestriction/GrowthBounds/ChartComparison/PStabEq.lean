@@ -260,7 +260,7 @@ theorem reGL_symm_mem_UJ {a b : ℕ} (h : a = b) {R : Type} [CommRing R] (σ : R
   subst h
   have e1 : J' = J := by ext x y; exact hJ x y
   subst e1
-  have e2 : (reGL (rfl : a = a) R).symm g = g := by rw [MulEquiv.symm_apply_eq, reGL_rfl]
+  have e2 : (reGL (rfl : a = a) R).symm g = g := by rw [MulEquiv.symm_apply_eq, Formalism.L2.G.reGL_rfl]
   rw [e2]
   exact hg
 
