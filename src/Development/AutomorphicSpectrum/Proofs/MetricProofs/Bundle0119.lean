@@ -166,10 +166,10 @@ theorem setSegreCone_smul {Q : Ideal (MRingOver ℂ ι)} (hQ : ReciprocityTheory
 
 theorem chart_eq (S : Set ((Σ k, ι k) → ℂ)) {m e : ℕ} (σ : Fin m ≃ ((k : K) → ι k))
     (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) :
-    setChartSet S σ Ψ = {x | x ∈ setSegreCone S σ ∧ eval x (linForm (psiCoeffs σ Ψ)) = 1} := by
+    setChartSet S σ Ψ = {x | x ∈ setSegreCone S σ ∧ eval x (GroundTheory.Heights₂.Heights.linForm (psiCoeffs σ Ψ)) = 1} := by
   have hl : ∀ z : (Σ k, ι k) → ℂ,
-      eval (fun a => segre z (σ a)) (linForm (psiCoeffs σ Ψ)) = Ψ (segre z) 0 := fun z => by
-    rw [show linForm (psiCoeffs σ Ψ) = GoodChartZeroSet.linForm σ Ψ from rfl, GoodChartZeroSet.eval_linForm]
+      eval (fun a => segre z (σ a)) (GroundTheory.Heights₂.Heights.linForm (psiCoeffs σ Ψ)) = Ψ (segre z) 0 := fun z => by
+    rw [show GroundTheory.Heights₂.Heights.linForm (psiCoeffs σ Ψ) = GoodChartZeroSet.linForm σ Ψ from rfl, GoodChartZeroSet.eval_linForm]
     simp
   ext x
   constructor
@@ -181,7 +181,7 @@ theorem chart_eq (S : Set ((Σ k, ι k) → ℂ)) {m e : ℕ} (σ : Fin m ≃ ((
 
 omit [∀ k, Fintype (ι k)] in
 theorem segChart_eq (S : Set ((Σ k, ι k) → ℂ)) {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (a : Fin m) :
-    setSegChartSet S σ (σ a) = {x | x ∈ setSegreCone S σ ∧ eval x (linForm (Pi.single a (1 : ℂ))) = 1} := by
+    setSegChartSet S σ (σ a) = {x | x ∈ setSegreCone S σ ∧ eval x (GroundTheory.Heights₂.Heights.linForm (Pi.single a (1 : ℂ))) = 1} := by
   ext x
   simp only [setSegChartSet, setSegreCone, Set.mem_ofPred_eq, linForm_single', eval_X]
   constructor
@@ -198,14 +198,14 @@ theorem chart_dim {Q : Ideal (MRingOver ℂ ι)} (hQp : Q.IsPrime) (hQ : Recipro
   classical
   have hC := setSegreCone_smul hQ σ
   set t := psiCoeffs σ Ψ
-  have hS : setChartSet (conePts Q) σ Ψ = {x | x ∈ setSegreCone (conePts Q) σ ∧ eval x (linForm t) = 1} := chart_eq _ σ Ψ
+  have hS : setChartSet (conePts Q) σ Ψ = {x | x ∈ setSegreCone (conePts Q) σ ∧ eval x (GroundTheory.Heights₂.Heights.linForm t) = 1} := chart_eq _ σ Ψ
   have hJp : J.IsPrime := hJ.1.1
   have hIJ : setChartIdeal (conePts Q) σ Ψ ≤ J := hJ.1.2
   set H := vanishingIdeal ℂ (setSegreCone (conePts Q) σ)
   have hH : IsHomogIdeal H := ConeVanishingHomog.proof m _ hC
   have hHI : H ≤ setChartIdeal (conePts Q) σ Ψ := by
     rw [setChartIdeal, hS]; exact vanishingIdeal_anti_mono fun x hx => hx.1
-  have hℓ1 : linForm t - 1 ∈ setChartIdeal (conePts Q) σ Ψ := by
+  have hℓ1 : GroundTheory.Heights₂.Heights.linForm t - 1 ∈ setChartIdeal (conePts Q) σ Ψ := by
     rw [setChartIdeal, hS, mem_vanishingIdeal_iff]
     intro x hx
     simp [hx.2]
@@ -214,16 +214,16 @@ theorem chart_dim {Q : Ideal (MRingOver ℂ ι)} (hQp : Q.IsPrime) (hQ : Recipro
   have hHW : H ≤ W := hWcore H hH (hHI.trans hIJ)
   obtain ⟨a, ha⟩ := exists_X_not_mem hℓW
   set u : Fin m → ℂ := Pi.single a 1
-  have huW : linForm u ∉ W := by rw [linForm_single']; exact ha
-  have hT : setSegChartSet (conePts Q) σ (σ a) = {x | x ∈ setSegreCone (conePts Q) σ ∧ eval x (linForm u) = 1} :=
+  have huW : GroundTheory.Heights₂.Heights.linForm u ∉ W := by rw [linForm_single']; exact ha
+  have hT : setSegChartSet (conePts Q) σ (σ a) = {x | x ∈ setSegreCone (conePts Q) σ ∧ eval x (GroundTheory.Heights₂.Heights.linForm u) = 1} :=
     segChart_eq _ σ a
 
   have := ChartDehomogPrime.proof ℂ m W u hW huW
-  have hTJ' : setSegChartIdeal (conePts Q) σ (σ a) ≤ W ⊔ Ideal.span {linForm u - 1} := by
+  have hTJ' : setSegChartIdeal (conePts Q) σ (σ a) ≤ W ⊔ Ideal.span {GroundTheory.Heights₂.Heights.linForm u - 1} := by
     rw [setSegChartIdeal, hT]; exact ConeSliceIdeal.proof m _ u W hC hHW
   obtain ⟨Q₀, hQ₀, hQ₀J'⟩ := Ideal.exists_minimalPrimes_le hTJ'
   have hdimQ₀ := segChart_dim hQp hQ hdim σ (σ a) hQ₀
-  have hu1 : linForm u - 1 ∈ setSegChartIdeal (conePts Q) σ (σ a) := by
+  have hu1 : GroundTheory.Heights₂.Heights.linForm u - 1 ∈ setSegChartIdeal (conePts Q) σ (σ a) := by
     rw [setSegChartIdeal, hT, mem_vanishingIdeal_iff]
     intro x hx
     simp [hx.2]
@@ -234,20 +234,20 @@ theorem chart_dim {Q : Ideal (MRingOver ℂ ι)} (hQp : Q.IsPrime) (hQ : Recipro
   have hVW : V ≤ W := le_of_homog_le_sup hV.isHomog hW.isPrime hW.isHomog huW
     ((le_sup_left.trans hVQ₀.le).trans hQ₀J')
 
-  have hIV : setChartIdeal (conePts Q) σ Ψ ≤ V ⊔ Ideal.span {linForm t - 1} := by
+  have hIV : setChartIdeal (conePts Q) σ Ψ ≤ V ⊔ Ideal.span {GroundTheory.Heights₂.Heights.linForm t - 1} := by
     rw [setChartIdeal, hS]; exact ConeSliceIdeal.proof m _ t V hC hHV
-  have hVJ : V ⊔ Ideal.span {linForm t - 1} ≤ J :=
+  have hVJ : V ⊔ Ideal.span {GroundTheory.Heights₂.Heights.linForm t - 1} ≤ J :=
     sup_le (hVW.trans (le_sup_left.trans hWJ.le)) ((Ideal.span_singleton_le_iff_mem _).2 (hIJ hℓ1))
-  have hJmin : J ∈ (V ⊔ Ideal.span {linForm t - 1}).minimalPrimes :=
+  have hJmin : J ∈ (V ⊔ Ideal.span {GroundTheory.Heights₂.Heights.linForm t - 1}).minimalPrimes :=
     ⟨⟨hJp, hVJ⟩, fun Z hZ hZJ => hJ.2 ⟨hZ.1, hIV.trans hZ.2⟩ hZJ⟩
-  have hQ₀min : Q₀ ∈ (V ⊔ Ideal.span {linForm u - 1}).minimalPrimes := by
+  have hQ₀min : Q₀ ∈ (V ⊔ Ideal.span {GroundTheory.Heights₂.Heights.linForm u - 1}).minimalPrimes := by
     have := hQ₀.1.1
     rw [hVQ₀, Ideal.minimalPrimes_eq_subsingleton_self]
     rfl
 
-  have d₁ := ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.dimPIT ℂ (Fin m) V J (linForm t - 1) hV.isPrime
+  have d₁ := ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.dimPIT ℂ (Fin m) V J (GroundTheory.Heights₂.Heights.linForm t - 1) hV.isPrime
     (linForm_sub_one_not_mem hV.isHomog hV.isPrime.ne_top t) hJmin
-  have d₂ := ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.dimPIT ℂ (Fin m) V Q₀ (linForm u - 1) hV.isPrime
+  have d₂ := ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.dimPIT ℂ (Fin m) V Q₀ (GroundTheory.Heights₂.Heights.linForm u - 1) hV.isPrime
     (linForm_sub_one_not_mem hV.isHomog hV.isPrime.ne_top u) hQ₀min
   rw [← d₂, hdimQ₀] at d₁
   exact eq_of_add_one_eq d₁
