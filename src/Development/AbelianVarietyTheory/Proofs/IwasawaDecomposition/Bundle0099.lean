@@ -134,11 +134,12 @@ theorem exists_isConjI : ∀ (L : Type) [Field L] [NumberField L] (c : L ≃+* L
   let C : Ideles L →* Ideles L := Units.map A.toMonoidHom
   have hinf : ∀ (w w' : InfinitePlace L) (e : w'.comap (c : L →+* L) = w), ∃ θ : w.Completion →+* w'.Completion,
       (∀ k : L, θ (algebraMap L _ k) = algebraMap L _ (c k)) ∧
-      ∀ y, C (infIdele L w y) = infIdele L w' (Units.map θ.toMonoidHom y) := by
+      ∀ y, C (ReciprocityTheory.Neutral.Bridge.HCFR.infIdele L w y) =
+        ReciprocityTheory.Neutral.Bridge.HCFR.infIdele L w' (Units.map θ.toMonoidHom y) := by
     rintro _ w' rfl
     exact ⟨ψ w', ψk w', fun y => Units.ext (Prod.ext (map_update_one hgi ψ w' y) (map_one Φ))⟩
   have hloc : ∀ v (y : ((f v).adicCompletion L)ˣ),
-      C (localIdele L (f v) y) = localIdele L v (Units.map (φ v).toMonoidHom y) := fun v y =>
+      C (Neutral.B1.localIdele L (f v) y) = Neutral.B1.localIdele L v (Units.map (φ v).toMonoidHom y) := fun v y =>
     Units.ext (Prod.ext (map_one Ψ) (Subtype.ext (map_update_one hfi φ v y)))
   refine ⟨C, Continuous.units_map _ Ac, fun k => ?_, fun w k => ?_, fun w y => ?_, fun v v' h k => ?_,
     fun v v' h x => ?_, fun v v' h a => ?_⟩
@@ -295,9 +296,10 @@ variable {B : Type} [CommGroup B] [TopologicalSpace B] [T2Space B]
 
 
 open GlobalTheory.Mem.LocTriv GlobalTheory.Mem.Chr GlobalTheory.Mem.Chr.IdlFact in
-theorem eq_one_of_local (ψ : Ideles E →* B) (hψ : Continuous ψ) (a : Ideles E)
-    (h1 : (a : AdeleRing (𝓞 E) E).1 = 1) (hl : ∀ v, ψ (localIdele E v (Units.map (ev v) a)) = 1) : ψ a = 1 := by
-  have hp : ∀ (c : Ideles E) T, (∀ v, ψ (localIdele E v (Units.map (ev v) c)) = 1) → ψ (part c T) = 1 :=
+theorem eq_one_of_local (ψ : GlobalTheory.Mem.Chr.Ideles E →* B) (hψ : Continuous ψ)
+    (a : GlobalTheory.Mem.Chr.Ideles E)
+    (h1 : (a : AdeleRing (𝓞 E) E).1 = 1) (hl : ∀ v, ψ (GlobalTheory.Mem.Chr.localIdele E v (Units.map (ev v) a)) = 1) : ψ a = 1 := by
+  have hp : ∀ (c : GlobalTheory.Mem.Chr.Ideles E) T, (∀ v, ψ (GlobalTheory.Mem.Chr.localIdele E v (Units.map (ev v) c)) = 1) → ψ (part c T) = 1 :=
     fun c T hc => by
       rw [part, map_prod]
       exact Finset.prod_eq_one fun v _ => hc v
@@ -319,7 +321,7 @@ theorem eq_one_of_local (ψ : Ideles E →* B) (hψ : Continuous ψ) (a : Ideles
   have hbi : (b : AdeleRing (𝓞 E) E).1 = 1 := by
     show (part a⁻¹ T : AdeleRing (𝓞 E) E).1 * (a : AdeleRing (𝓞 E) E).1 = 1
     rw [part_fst, h1, one_mul]
-  have hbl : ∀ v, ψ (localIdele E v (Units.map (ev v) b)) = 1 := fun v => by
+  have hbl : ∀ v, ψ (GlobalTheory.Mem.Chr.localIdele E v (Units.map (ev v) b)) = 1 := fun v => by
     by_cases hv : v ∈ T
     · rw [show Units.map (ev v) b = 1 from Units.ext (hb1 v hv), map_one, map_one]
     · rw [show Units.map (ev v) b = Units.map (ev v) a from Units.ext (hb2 v hv), hl]
@@ -483,7 +485,9 @@ theorem eq_one_of_components {ψ : Ideles L →* ℂˣ} (hψ : Continuous ψ)
   have h1 : ψ (finPartI L u) = 1 :=
     GlobalTheory.Mem.LocTriv.eq_one_of_local L ψ hψ _ (finPartI_mem_unitIdl.2 hu) (fun _ => rfl) fun v x _ => loc_eq_one hψ v (hf v) x
   rw [← hy, map_mul, map_mul, h1, inf_eq_one hψ hi, map_prod, mul_one, mul_one]
-  exact Finset.prod_eq_one fun v _ => by rw [map_zpow, hf, one_zpow]
+  exact Finset.prod_eq_one fun v _ => by
+    rw [map_zpow]
+    exact (congrArg (fun z : ℂˣ => z ^ n v) (hf v (unif v))).trans (one_zpow _)
 
 end GlobalTheory.Mem.Chr.Determ
 end
