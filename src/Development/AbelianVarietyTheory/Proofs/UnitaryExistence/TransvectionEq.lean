@@ -107,12 +107,12 @@ theorem exists_poly {a : (E →+* ℂ) × ℕ → ℕ} {n : ℕ} {f : Rul Xo c} 
     ∃ P : (CAt σ)[X], ∀ (s : CAt σ) (y' : FrPt Xo c (CAt σ)),
       FrChg (fun τ => (G τ).map (eval s)) 1 y y' → evR Xo c f y' = P.eval s := by
   let π : CAt σ →ₐ[c.F] (CAt σ)[X] := IsScalarTower.toAlgHom _ _ _
-  obtain ⟨y₁, h₁⟩ := FramedBaseChange.exists_frMap GlobalTheory.abelianSchemeLaws_all.1.secBaseChange E H Dw l Xo c _ _ π y
+  obtain ⟨y₁, h₁⟩ := _root_.GlobalTheory.Frames.FramedBaseChange.exists_frMap GlobalTheory.abelianSchemeLaws_all.1.secBaseChange E H Dw l Xo c _ _ π y
   obtain ⟨z, hz, -⟩ := existsUnique_frChg E H Dw l Xo c _ y₁ G 1 hG
   refine ⟨evR Xo c f z, fun s y' hy' => ?_⟩
   let ev : (CAt σ)[X] →ₐ[c.F] CAt σ := (aeval s).restrictScalars c.F
   have hev : ∀ p, ev p = p.eval s := fun p => coe_aeval_eq_eval s ▸ rfl
-  obtain ⟨y₂, h₂⟩ := FramedBaseChange.exists_frMap GlobalTheory.abelianSchemeLaws_all.1.secBaseChange E H Dw l Xo c _ _ ev y₁
+  obtain ⟨y₂, h₂⟩ := _root_.GlobalTheory.Frames.FramedBaseChange.exists_frMap GlobalTheory.abelianSchemeLaws_all.1.secBaseChange E H Dw l Xo c _ _ ev y₁
   have h₃ := frMap_trans _ _ _ π ev _ _ _ h₁ h₂
   have e : ev.comp π = AlgHom.id _ _ := AlgHom.ext fun x => by
     rw [AlgHom.comp_apply, hev]; exact eval_C
