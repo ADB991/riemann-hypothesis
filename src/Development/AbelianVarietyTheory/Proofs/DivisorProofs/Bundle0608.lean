@@ -268,7 +268,7 @@ theorem etale_bc : ∀ (T O : Type) [CommRing T] [IsDomain T] [IsLocalRing T] [C
     rw [glue_tmul]
     change algebraMap T[X] O (Polynomial.map i₁ p) * _ = _
     simp
-  · exact IsLocalization.lift_comp _
+  · exact IsLocalization.lift_comp (S := LocAcyc.GenFib A₁ (Loc₁ f i i₁ EA QA jA hcomp hj)) (M := Algebra.algebraMapSubmonoid (Loc₁ f i i₁ EA QA jA hcomp hj) (nonZeroDivisors A₁)) _
   · exact isZTorsor_bc β DA q hq actA htor
   · apply RingHom.ext; intro x
     rw [RingHom.comp_apply, IsScalarTower.algebraMap_apply A₁ (Ext f EA) (Loc₁ f i i₁ EA QA jA hcomp hj)]
