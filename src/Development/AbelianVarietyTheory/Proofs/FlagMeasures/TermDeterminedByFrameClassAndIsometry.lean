@@ -19,7 +19,7 @@ namespace GlobalTheory.TypeAsm.InjProof
 open Formalism.HermitianLatticeCounting.S6 GlobalTheory.HermLat
 
 section Core
-variable {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K V] {H : HermSpace K V} {r : ℕ}
+variable {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K V] {H : Formalism.HermitianLatticeCounting.S6.HermSpace K V} {r : ℕ}
 
 theorem X_map {F G : FlagD H r} (g : V ≃ₗ[K] V) (hG : ∀ c, G.e c = g (F.e c)) :
     G.X = F.X.map (g : V →ₗ[K] V) := by
