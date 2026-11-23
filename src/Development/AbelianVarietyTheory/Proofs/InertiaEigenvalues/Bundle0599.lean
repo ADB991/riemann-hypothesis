@@ -236,7 +236,7 @@ theorem eq_par (z : Gn g (k + l)) (h0 : InPar k (z : Mt g (k + l))) (h1 : tl k (
     intro M i j
     have hi := i.2
     have hj := j.2
-    rw [tl, entN, dite_eq_left ⟨by omega, by omega⟩]
+    rw [GlobalTheory.GLq.tl, entN, dite_eq_left ⟨by omega, by omega⟩]
     rfl
   have e2 : ∀ (M : Mt g (k + l)) (i j : Fin l), br k l M i j = M (finSumFinEquiv (.inr i)) (finSumFinEquiv (.inr j)) := by
     intro M i j
