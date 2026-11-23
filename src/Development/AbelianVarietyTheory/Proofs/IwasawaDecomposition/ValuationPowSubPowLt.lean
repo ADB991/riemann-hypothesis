@@ -68,10 +68,10 @@ end Tame
 
 section Basic
 
-variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] {art : Ideles E →* Gab E Ω}
+variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] {art : GlobalTheory.Mem.Chr.Ideles E →* Gab E Ω}
 
-def IsHeckeOf (art : Ideles E →* Gab E Ω) (r : G E Ω →* ℂˣ) (χ : HChar E) : Prop :=
-  ∀ (x : Ideles E) (σ : G E Ω), art x = toAb E Ω σ → χ.1 x = r σ
+def IsHeckeOf (art : GlobalTheory.Mem.Chr.Ideles E →* Gab E Ω) (r : G E Ω →* ℂˣ) (χ : HChar E) : Prop :=
+  ∀ (x : GlobalTheory.Mem.Chr.Ideles E) (σ : G E Ω), art x = toAb E Ω σ → χ.1 x = r σ
 
 def heckeOf (ha : IsGlobalArtin art) (r : G E Ω →* ℂˣ) (hr : IsOpen (r.ker : Set (G E Ω))) : HChar E :=
   ⟨(liftAb r (continuous_of_isOpen_ker' r hr)).comp art,
@@ -392,7 +392,7 @@ theorem IsHeckeOf.trivOn [IsAlgClosure E Ω] [_root_.NumberField.IsTotallyComple
     (hinv : ∀ x, c (c x) = x)
     (hr : ∀ (P : HeightOneSpectrum (𝓞 E)) (k : Fˣ), ordF P (upF F k) = ordF (P.under (𝓞 F)) k)
     (cc : Ω ≃+* Ω) (hcc : ∀ x : E, cc (algebraMap E Ω x) = algebraMap E Ω (c x)) (hcc2 : ∀ x, cc (cc x) = x)
-    {art : Ideles E →* Gab E Ω} (ha : IsGlobalArtin art) {r : G E Ω →* ℂˣ} {χ : HChar E} (h : IsHeckeOf art r χ)
+    {art : GlobalTheory.Mem.Chr.Ideles E →* Gab E Ω} (ha : IsGlobalArtin art) {r : G E Ω →* ℂˣ} {χ : HChar E} (h : IsHeckeOf art r χ)
     (hanti : AntiHom cc r) {m : ℕ} (hm : 0 < m) (ho : χ.OrderDvd m) (htame : ∀ P, χ.TameAt P) : χ.TrivOn F := by
   classical
   have hc : ∀ x : E, ∃ y : E, cc.symm (algebraMap E Ω x) = algebraMap E Ω y := fun x =>
