@@ -89,7 +89,7 @@ variable {T : Type} [Fintype T] [DecidableEq T]
 
 theorem mul_mem_sup_first (P : Ideal (MRing (dualBlocks T))) (a : T → ℤ) (l t : T) :
     (C (a l) * graphFirst l) * graphSecond t ∈
-      graphIdeal P (linForm (stackedDiag a)) ⊔ Ideal.span {C (a t) * graphFirst t} := by
+      graphIdeal P (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (stackedDiag a)) ⊔ Ideal.span {C (a t) * graphFirst t} := by
   have h := TopDualSimpleStacked.minor_mem P a l t
   have e : (C (a l) * graphFirst l) * graphSecond t = graphSecond l * (C (a t) * graphFirst t) -
       (graphSecond l * (C (a t) * graphFirst t) - graphSecond t * (C (a l) * graphFirst l)) := by ring
@@ -99,7 +99,7 @@ theorem mul_mem_sup_first (P : Ideal (MRing (dualBlocks T))) (a : T → ℤ) (l 
 
 theorem mul_mem_sup_second (P : Ideal (MRing (dualBlocks T))) (a : T → ℤ) (l t : T) :
     graphSecond l * (C (a t) * graphFirst t) ∈
-      graphIdeal P (linForm (stackedDiag a)) ⊔ Ideal.span {graphSecond t} := by
+      graphIdeal P (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (stackedDiag a)) ⊔ Ideal.span {graphSecond t} := by
   have h := TopDualSimpleStacked.minor_mem P a l t
   have e : graphSecond l * (C (a t) * graphFirst t) =
       (graphSecond l * (C (a t) * graphFirst t) - graphSecond t * (C (a l) * graphFirst l)) +
@@ -110,7 +110,7 @@ theorem mul_mem_sup_second (P : Ideal (MRing (dualBlocks T))) (a : T → ℤ) (l
 
 theorem C_mul_first_not_mem {P : Ideal (MRing (dualBlocks T))} {a : T → ℤ} (ha : ∀ t, a t ≠ 0)
     {W : Ideal (MRing (stackedBlocks T))} (hW : W.IsPrime) (hhor : IsHorizontal W)
-    (hΓ : graphIdeal P (linForm (stackedDiag a)) ≤ W) {j l : T} (hj : graphFirst j ∉ W)
+    (hΓ : graphIdeal P (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (stackedDiag a)) ≤ W) {j l : T} (hj : graphFirst j ∉ W)
     (hl : graphSecond l ∉ W) : C (a l) * graphFirst l ∉ W := by
   have hC : ∀ c : ℤ, c ≠ 0 → (C c : MRing (stackedBlocks T)) ∉ W := by
     intro c hc h
@@ -140,7 +140,7 @@ theorem DualStackedGraphHorizontal.proof : DualStackedGraphHorizontal.Statement 
     apply Subtype.ext
     rw [hab t, h0, zero_smul]
     rfl
-  have key : W.IsPrime → stackedGraph b' a ≤ W → IsRelevant W →
+  have key : W.IsPrime → stackedGraph b' a ≤ W → ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W →
       ∃ s s' : MRing (stackedBlocks T), s ∉ W ∧ s' ∉ W ∧
         s * (C (a t) * graphFirst (T := T) t) ∈ stackedGraph b' a ⊔ Ideal.span {graphSecond (T := T) t} ∧
         s' * graphSecond (T := T) t ∈ stackedGraph b' a ⊔ Ideal.span {C (a t) * graphFirst (T := T) t} := by
@@ -211,7 +211,7 @@ theorem image_eq {F F' : HermLattice K i} {b : Module.Basis T ℤ (dualLattice F
     obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective x
     rw [Ideal.Quotient.lift_mk] at hx
     exact Ideal.Quotient.eq_zero_iff_mem.mpr (RingHom.mem_ker.mpr hx)
-  have hcomp : (MvPolynomial.map ι).comp ((graphMap (dualIdeal b') (linForm (stackedDiag a))).comp
+  have hcomp : (MvPolynomial.map ι).comp ((graphMap (dualIdeal b') (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (stackedDiag a))).comp
       (rename (inrV (ι := dualBlocks T) (ι₂ := dualBlocks T)) :
         MRing (dualBlocks T) →ₐ[ℤ] MRing (stackedBlocks T)).toRingHom) =
       (twist (ProjField K i)).comp (mConeMap (dualLatticeCoord b) : MRing (dualBlocks T) →+* _) := by
@@ -228,7 +228,7 @@ theorem image_eq {F F' : HermLattice K i} {b : Module.Basis T ℤ (dualLattice F
   have e := RingHom.congr_fun hcomp f
   simp only [RingHom.comp_apply] at e
   have e1 := map_eq_zero_iff _ (MvPolynomial.map_injective ι hι)
-    (x := graphMap (dualIdeal b') (linForm (stackedDiag a))
+    (x := graphMap (dualIdeal b') (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (stackedDiag a))
       ((rename (inrV (ι := dualBlocks T) (ι₂ := dualBlocks T)) :
         MRing (dualBlocks T) →ₐ[ℤ] MRing (stackedBlocks T)).toRingHom f))
   have e2 := map_eq_zero_iff _ (twist_injective (ProjField K i))
@@ -259,7 +259,7 @@ theorem fibre_deg (hGr : GraphStatement) (hDim : FibreDimStatement) {F F' : Herm
   have hlin : (C (a t₀) * X ⟨(), t₀⟩ : MRing (dualBlocks T)) ∉ dualIdeal b' :=
     TopDualSimpleStacked.C_mul_X_not_mem hprime hP'.2.2.1 (ha t₀) ht₀
   have hform : ∀ q : Σ _ : Unit, T,
-      IsMultiHomog (linForm (stackedDiag a) q) ((fun _ _ => 1 : Unit → Unit → ℕ) q.1) := by
+      ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (stackedDiag a) q) ((fun _ _ => 1 : Unit → Unit → ℕ) q.1) := by
     rintro ⟨u, t⟩
     cases u
     rw [TopDualSimpleStacked.linForm_stackedDiag]
@@ -271,7 +271,7 @@ theorem fibre_deg (hGr : GraphStatement) (hDim : FibreDimStatement) {F F' : Herm
       simp
     rwa [he] at h
   have hΓ : IsArithVar (stackedGraph b' a) i :=
-    (hGr Unit (dualBlocks T) Unit (dualBlocks T) (dualIdeal b') i (linForm (stackedDiag a)) (fun _ _ => 1) hP'
+    (hGr Unit (dualBlocks T) Unit (dualBlocks T) (dualIdeal b') i (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (stackedDiag a)) (fun _ _ => 1) hP'
       hform (fun _ => ⟨t₀, by rw [TopDualSimpleStacked.linForm_stackedDiag]; exact hlin⟩)).1
   have hIm : IsArithVar (imageZ inrV (stackedGraph b' a)) i := by
     rw [image_eq hab]

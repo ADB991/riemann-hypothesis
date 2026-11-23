@@ -25,7 +25,7 @@ section Scale
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
-theorem aeval_scale (y : (Σ k, ι k) → Ω) (c : K → Ω) {u : MRing ι} {a : K → ℕ} (hu : IsMultiHomog u a) :
+theorem aeval_scale (y : (Σ k, ι k) → Ω) (c : K → Ω) {u : MRing ι} {a : K → ℕ} (hu : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog u a) :
     aeval (fun p => y p * c p.1) u = aeval y u * ∏ k, c k ^ a k := by
   conv_lhs => rw [u.as_sum]
   conv_rhs => rw [u.as_sum]
@@ -43,7 +43,7 @@ theorem aeval_scale (y : (Σ k, ι k) → Ω) (c : K → Ω) {u : MRing ι} {a :
   rw [Finset.prod_pow_eq_pow_sum, hu m hm k]
 
 theorem aeval_scale_div (y : (Σ k, ι k) → Ω) {c : K → Ω} (hc : ∀ k, c k ≠ 0) {u w : MRing ι} {a : K → ℕ}
-    (hu : IsMultiHomog u a) (hw : IsMultiHomog w a) :
+    (hu : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog u a) (hw : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog w a) :
     aeval (fun p => y p * c p.1) u / aeval (fun p => y p * c p.1) w = aeval y u / aeval y w := by
   rw [aeval_scale y c hu, aeval_scale y c hw,
     mul_div_mul_right _ _ (Finset.prod_ne_zero_iff.2 fun k _ => pow_ne_zero _ (hc k))]

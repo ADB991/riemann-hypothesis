@@ -76,7 +76,7 @@ theorem exists_chart {y : (Σ k, ι k) → Ω} {d : ℕ} (hY : IsArithVar (mCoor
   rw [RingHom.mem_ker]
   simp [mConeMap, h0]
 
-theorem norm_prod_le {P : Ideal (MRing ι)} {A : HermLine ι} {a : K → ℕ} (hM : MonomialsBounded P A a)
+theorem norm_prod_le {P : Ideal (MRing ι)} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {a : K → ℕ} (hM : MonomialsBounded P A a)
     (c : ∀ k, ι k) (j n : ℕ) {z : (Σ k, ι k) → ℂ} (hz : z ∈ mcPts P) :
     ‖∏ k, z ⟨k, c k⟩ ^ (j * a k + n)‖ ≤ A.h z ^ j * (fsH ι).h z ^ n := by
   classical
@@ -110,7 +110,7 @@ theorem norm_prod_le {P : Ideal (MRing ι)} {A : HermLine ι} {a : K → ℕ} (h
   gcongr
   exact pow_nonneg (A.pos z hz.1).le _
 
-theorem isSmoothHerm_zcomb_fsH {A : HermLine ι} (hA : IsSmoothHerm A) (q : ℕ) :
+theorem isSmoothHerm_zcomb_fsH {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA : IsSmoothHerm A) (q : ℕ) :
     IsSmoothHerm (HermLine.zcomb A (fsH ι) q 1) := by
   have hH : IsSmoothHerm (fsH ι) := GroundTheory.Heights₂.Heights.Inter.isSmoothHerm_ofMetrics_fs 1
   have hfun : (HermLine.zcomb A (fsH ι) q 1).h = fun z => A.h z ^ q * (fsH ι).h z := by
@@ -375,7 +375,7 @@ theorem proof : PullSectionIntegralInt.Statement := by
     simp only [Pi.smul_apply, smul_eq_mul]
     nlinarith
   obtain ⟨a, ha, hrelM⟩ := hdeg ((w + 1) • e) (xpow c ((w + 1) • e)) (isMultiHomog_xpow c _) hd
-  have ha' : ∀ i, IsMultiHomog (a i) (fun k => w * e k) := by
+  have ha' : ∀ i, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (a i) (fun k => w * e k) := by
     intro i
     convert ha i using 1
     ext k
