@@ -168,7 +168,8 @@ theorem log_endo (G : FGLaw C d) (lg : Pt C 1 d) (hlin : LinN lg)
     rw [e1, e2, e3, e4, hlgAB]
   have hQ := add_zero_of G (comp1 lg φ i - ∑ j, MvPowerSeries.C (linM φ i j) * lg j) (by
       rw [ev_sub hFz, ev_sub hP0, ev_sub hP1, ev_sum hFz, ev_sum hP0, ev_sum hP1, hcomp]
-      simp only [Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul hFz, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul hP0, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul hP1, ev_C, hF, mul_add, Finset.sum_add_distrib]
+      simp only [Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul hFz, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul hP0, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul hP1,
+        Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_C, hF, mul_add, Finset.sum_add_distrib]
       ring)
     (by
       intro k
