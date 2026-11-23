@@ -80,6 +80,7 @@ section Pack
 
 variable {R : Ranks} {H : Formalism.BasicNotions.Host R} (SQ : Finset (HeightOneSpectrum (𝓞 H.E))) {e : Fin R.m → R.Psi → ℚ}
 
+set_option maxSynthPendingDepth 2 in
 def trueDtPackQ (C : HFrame H e) : DtPack H :=
   letI := H.cmStar
   { Dt := DtQ H SQ

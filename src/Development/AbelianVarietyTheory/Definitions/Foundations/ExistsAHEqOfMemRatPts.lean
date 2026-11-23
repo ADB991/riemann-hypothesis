@@ -446,8 +446,8 @@ theorem ioH_mem_KAd {g g' : GAd σ J} :
   · rintro ⟨⟨h1, h2⟩, h3, h4⟩
     exact ⟨fun v => ⟨h1 v, h3 v⟩, fun w => ⟨h2 w, h4 w⟩⟩
 
-theorem isLatticeFrame_dbl (ha : IsLatticeFrame L a) :
-    IsLatticeFrame (sumLat finSumFinEquiv L L) (blkGL finSumFinEquiv (a, a)) := by
+theorem isLatticeFrame_dbl (ha : GlobalTheory.AdelicU.IsLatticeFrame L a) :
+    GlobalTheory.AdelicU.IsLatticeFrame (sumLat finSumFinEquiv L L) (blkGL finSumFinEquiv (a, a)) := by
   intro v y
   simp only [bc_blkGL, val_blkGL, latLoc_sumLat]
   rw [← pairVec_eta finSumFinEquiv y, blkMat_mulVec, pairVec_mem_sumLat, ← ha v, ← ha v]

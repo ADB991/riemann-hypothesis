@@ -121,15 +121,15 @@ variable {Xo : Moduli Dw l} {c : Coeff l}
 theorem comb_eq {S : Type} [CommRing S] {x : Sp S ⟶ Xo.X} {m : ℕ}
     {v : Fin m → (Sp (DualNumber S) ⟶ Xo.univ.t.G.left)} (hv : ∀ j, IsTanAt x (v j)) {a : Fin m → S}
     {w : Sp (DualNumber S) ⟶ Xo.univ.t.G.left} (h : IsCombAt x v a w) :
-    (combT x (fun j => ovT (t := Xo.univ.t) (hv j)) a).left = w :=
-  (isCombAtG_iff Xo.univ.t x (fun j => ovT (t := Xo.univ.t) (hv j)) _ _).1 h
+    (combT x (fun j => GlobalTheory.IntRebase.ovT (t := Xo.univ.t) (hv j)) a).left = w :=
+  (isCombAtG_iff Xo.univ.t x (fun j => GlobalTheory.IntRebase.ovT (t := Xo.univ.t) (hv j)) _ _).1 h
 
 theorem lieInt_change (T : CDVR) (io : c.F →+* T.Fr) {G : SAB H (Sp T.V)} {t' : SAB H (Sp T.Fr)}
     {x : Sp T.Fr ⟶ Xo.X} (m1 : SABMap t' Xo.univ.t x) (m2 : SABMap t' G (spMap (algebraMap T.V T.Fr)))
     (u : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Sp (DualNumber T.Fr) ⟶ Xo.univ.t.G.left))
     (hu : ∀ τ j, IsTanAt x (u τ j)) (h : LieInt T io m1 m2 u)
     (k : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) T.V) (hk : ∀ τ, IsUnit (k τ).det) :
-    LieInt T io m1 m2 (fun τ i => (combT x (fun j => ovT (t := Xo.univ.t) (hu τ j))
+    LieInt T io m1 m2 (fun τ i => (combT x (fun j => GlobalTheory.IntRebase.ovT (t := Xo.univ.t) (hu τ j))
       (fun j => algebraMap T.V T.Fr (k τ j i))).left) := by
   obtain ⟨ub, htan, heig, hbas, hlift⟩ := h
   let Ub : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (tEpsG (𝟙 (Sp T.V)) ⟶ G.G) := fun τ j => kap ≫ ub τ j
@@ -183,7 +183,7 @@ theorem lieInt_change (T : CDVR) (io : c.F →+* T.Fr) {G : SAB H (Sp T.V)} {t' 
       rw [Category.assoc, hov, spMap_comp', epsMul_comp_alg])
     refine ⟨(∏ j, Y j).left, ?_, ?_⟩
     · have hA := grpPull_prod m1.cart T' Finset.univ Y
-        (fun j => smT x (cf j) (ovT (t := Xo.univ.t) (hu τ j))) (fun j => by
+        (fun j => smT x (cf j) (GlobalTheory.IntRebase.ovT (t := Xo.univ.t) (hu τ j))) (fun j => by
           show spMap (epsMul (cf j)) ≫ u τ j = (spMap (epsMul (cf j)) ≫ u' j) ≫ m1.φ
           rw [Category.assoc, hu1])
       exact hA.symm

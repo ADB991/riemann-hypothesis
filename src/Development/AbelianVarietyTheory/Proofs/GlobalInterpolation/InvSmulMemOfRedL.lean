@@ -219,6 +219,7 @@ theorem redL_spec {x : Fin n → E} {s : 𝓞 E} (hs : s ∉ P.asIdeal) (hx : s 
 
 theorem redL_eq {x : Fin n → E} {s : 𝓞 E} (hs : s ∉ P.asIdeal) (hx : s • x ∈ M) {y : TDat.Red M P}
     (h : (Ideal.Quotient.mk P.asIdeal s : Res P) • y = Submodule.Quotient.mk (⟨_, hx⟩ : M)) : redL M P x = y :=
+  haveI : Module.IsTorsionFree (Res P) (TDat.Red M P) := DivisionSemiring.to_moduleIsTorsionFree
   smul_right_injective _ (show (Ideal.Quotient.mk P.asIdeal s : Res P) ≠ 0 from mk_ne_zero hs)
     ((redL_spec hs hx).trans h.symm)
 

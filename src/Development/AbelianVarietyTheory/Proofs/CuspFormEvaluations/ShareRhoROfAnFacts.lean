@@ -66,9 +66,9 @@ theorem shareRhoR_of_anFacts : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : Mod
   let p1 : Fin (WeightFamilies.dimY D j + 1) → MvPolynomial (Idx D j G.N) X.Forms := fun i =>
     ∑ k, MvPolynomial.X (i, k) * MvPolynomial.C (X.inc wL (G.w k))
   let pm : (Fin (WeightFamilies.dimY D j) → ℕ) → MvPolynomial (Idx D j G.N) X.Forms := fun α => ∏ i, p1 i.succ ^ α i
-  have pmK : ∀ α, toRp X la G.N (pm α) = secPow X la G.w α := by
+  have pmK : ∀ α, toRp X la G.N (pm α) = Formalism.MainNotions.Gaps.EtaleWeightGaps.secPow X la G.w α := by
     intro α
-    simp only [pm, map_prod, map_pow, secPow]
+    simp only [pm, map_prod, map_pow, Formalism.MainNotions.Gaps.EtaleWeightGaps.secPow]
     exact Finset.prod_congr rfl fun i _ => by rw [(d1 i.succ).1]
   have pmC : ∀ α, R.toFn t (pm α) = R.mon G.w t α := by
     intro α
@@ -105,7 +105,7 @@ theorem shareRhoR_of_anFacts : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : Mod
     rintro _ ⟨α, F, hα, -, rfl⟩
     have hF := emb_mem_Vw X la G.N _ F
     rw [Vw_eq_span_image X la G.N _ hb] at hF
-    have := Submodule.mem_map_of_mem (f := LinearMap.mulLeft (Kp X la G.N) (secPow X la G.w α)) hF
+    have := Submodule.mem_map_of_mem (f := LinearMap.mulLeft (Kp X la G.N) (Formalism.MainNotions.Gaps.EtaleWeightGaps.secPow X la G.w α)) hF
     rw [Submodule.map_span] at this
     refine Submodule.span_mono ?_ this
     rintro _ ⟨_, ⟨_, ⟨k, rfl⟩, rfl⟩, rfl⟩

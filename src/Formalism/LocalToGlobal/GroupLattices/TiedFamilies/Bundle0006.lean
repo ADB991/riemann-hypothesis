@@ -142,7 +142,7 @@ theorem latM_pf (H : CmpCore T Gt I) (hloc : ValIntRec T Gt I) (hsurj : SurjRat 
 
 theorem posCompat_rec (H : CmpCore T Gt I) (u : D.what₂.Word) (w : D.what₂.places.Pl)
     (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) :
-    PosCompat (D.gat u w hg) (I.embW u w hg) (locAt X u w hg I.B).iw
+    Formalism.L2.G.Cmp.PosCompat (D.gat u w hg) (I.embW u w hg) (locAt X u w hg I.B).iw
       (fun v s => tPos (sigD D) (tEL D) (Gt.gat_pos u w hg) v s) := by
   intro v s x
   rw [tPos_apply]

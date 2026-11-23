@@ -337,6 +337,7 @@ private theorem res_ne {l : ℕ} [hl : Fact l.Prime] (c : Coef l) {N : ℕ} [NeZ
   refine dyadic_character_power_ne_one ψ p o (hp.odd_of_ne_two hp2) hp.one_lt H.o_pos (H.R p hpT) u hu ?_
   rw [← pow_hom, ← teichmuller_power_eq hl.out H hψ, pow_hom, pow_mul, e2, one_pow]
 
+attribute [-instance] UpperTheory.V.Pr.IsCD.toIsDomain UpperTheory.V.Pr.IsCD.toIsDiscreteValuationRing in
 private theorem exists_dec (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] (l : ℕ) [hl : Fact l.Prime] (p : ℕ) (hp : p.Prime)
     (hpl : p = l ∨ (p ≠ l ∧ p ≡ 1 [MOD l])) (A : ValuationSubring Ω) (hA : A.valuation (p : Ω) < 1) :
     ∃ σ ∈ Dec (F := ℚ) A, (∀ m : ℕ, m.Coprime p → ∀ ζ : Ω, ζ ^ m = 1 → σ ζ = ζ ^ p) ∧
@@ -373,6 +374,7 @@ private theorem res_one (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] [IsLoca
   have h6 := (residue_eq_zero_iff _).2 (_root_.map_nonunit (algebraMap ℤ_[l] O) _ h5)
   rwa [map_sub, map_sub, map_one, map_one, sub_eq_zero] at h6
 
+attribute [-instance] UpperTheory.V.Pr.IsCD.toIsDomain UpperTheory.V.Pr.IsCD.toIsDiscreteValuationRing in
 theorem UpperTheory.V.UnitaryThreeInertia.exists_sigma :
     ∀ (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {l : ℕ} [Fact l.Prime] (c : Coef l) {N : ℕ} [NeZero N] (e : ℕ) (ψ : DirichletCharacter c.O N) (o₁ : ℕ), HostData l e ψ o₁ →
     ∀ (S : Finset Pl) (A : S → ValuationSubring Ω) (F : Frame c.O (Formalism.ConjugateSelfDual.G ℚ Ω) (Gam Ω S) S), IsHostFrame Ω c e ψ S A F →
@@ -408,6 +410,7 @@ theorem UpperTheory.V.UnitaryThreeInertia.exists_sigma :
     have h3 := res_ne c H p hp hp2 hpT (Chr.cls ℚ Ω N σ) (by rw [hu, ZMod.coe_unitOfCoprime])
     have h4 : residue c.O (UpperTheory.V.Base.chiO ℚ Ω l c.O σ : c.Oˣ) = 1 := by
       exact res_one l c.O (UpperTheory.V.Base.dvrFacts l c.O).2.2.1 _ h2
+    letI : CommGroup (Formalism.ConjugateSelfDual.G ℚ Ω →* c.Oˣ) := MonoidHom.instCommGroup
     rw [← residue_ne_zero_iff_isUnit, hF.Ψ, map_pow, Chr.Psi, zpow_natCast, MonoidHom.mul_apply, MonoidHom.pow_apply]
     simp only [Units.val_pow_eq_pow_val, Units.val_mul, map_sub, map_pow, map_mul, map_one, h4, one_pow, one_mul, ← pow_mul]
     exact sub_ne_zero.2 h3

@@ -94,7 +94,7 @@ theorem inContainMR_of_anFacts : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : M
     (fun i => Submodule.subset_span ⟨G.th' i, Set.mem_univ _, rfl⟩) hspan
 
   set Gen : Set (Rp X la G.N) := ({v | ∃ (al : Fin (WeightFamilies.dimY D j) → ℕ) (i : Fin G.del), ∑ i, al i < a0 D j T ∧
-          v = secPow X la G.w al * sec X la G.w 0 ^ (T - ∑ i, al i) * emb X la G.N (X.inc wF (G.th' i))} ∪
+          v = Formalism.MainNotions.Gaps.EtaleWeightGaps.secPow X la G.w al * sec X la G.w 0 ^ (T - ∑ i, al i) * emb X la G.N (X.inc wF (G.th' i))} ∪
        zAll G la S T) with hGen
   let Sp : Set (MvPolynomial (Idx D j G.N) X.Forms) := {p | OfWt X ka p ∧ toRp X la G.N p ∈ Gen}
   have hle : Submodule.span ℂ (Set.range (R.lead G.w t T (a0 D j T) fun i => R.ev (X.inc wF (G.th' i)))) ⊔
@@ -109,7 +109,7 @@ theorem inContainMR_of_anFacts : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : M
         have he : 0 + (T - ∑ k, al k) + ∑ k, al k = T := by
           unfold a0 at hal; omega
         rwa [he, hka] at h1
-      · simp only [map_mul, map_prod, map_pow, hs1, (hC _).1, secPow, mul_assoc]
+      · simp only [map_mul, map_prod, map_pow, hs1, (hC _).1, Formalism.MainNotions.Gaps.EtaleWeightGaps.secPow, mul_assoc]
       · simp only [map_mul, map_prod, map_pow, hs2, (hC _).2, Rdg.lead, Rdg.mon, mul_assoc]
     · rintro _ ⟨al, f, hal, hf, rfl⟩
       have hf' : f ∈ R.sp (X.wF0 wL wF)
@@ -128,7 +128,7 @@ theorem inContainMR_of_anFacts : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : M
           have he : WeightFamilies.dimY D j + ∑ k, al k = T := by
             unfold a0 at hal; omega
           rwa [he, hka] at h1
-        · simp only [map_mul, map_prod, map_pow, hs1, (hC _).1, secPow]
+        · simp only [map_mul, map_prod, map_pow, hs1, (hC _).1, Formalism.MainNotions.Gaps.EtaleWeightGaps.secPow]
         · simp only [map_mul, map_prod, map_pow, hs2, (hC _).2, Rdg.mon]
       | zero => rw [mul_zero]; exact Submodule.zero_mem _
       | add x y _ _ hx hy => rw [mul_add]; exact Submodule.add_mem _ hx hy

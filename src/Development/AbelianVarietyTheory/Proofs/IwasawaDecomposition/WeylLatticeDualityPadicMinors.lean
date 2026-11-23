@@ -28,7 +28,7 @@ theorem fock_reproducing_formula (N : ℕ) (Y : YoungDiagram) (hY : Y.colLen 0 �
         Formalism.GradedWeylDivisibility.fockQ (GlobalTheory.WeylMinorDual.colProd ℚ N Y hY J) f • GlobalTheory.WeylMinorDual.colProd ℚ N Y hY J =
       Formalism.GradedWeylDivisibility.fockQ (Formalism.GradedWeylDivisibility.hw ℚ (le_refl N) (fun r : Fin N => Y.rowLen r))
         (Formalism.GradedWeylDivisibility.hw ℚ (le_refl N) (fun r : Fin N => Y.rowLen r)) • f :=
-  _root_.GlobalTheory.WeylReproducingSym.reproducing_left N Y hY f hf
+  by convert _root_.GlobalTheory.WeylReproducingSym.reproducing_left N Y hY f hf
 
 theorem dualData (N : ℕ) (Y : YoungDiagram) (hY : Y.colLen 0 ≤ N)
     (hrep : ∀ f ∈ Formalism.GradedWeylDivisibility.dualWeyl ℚ N N (fun r : Fin N => Y.rowLen r),

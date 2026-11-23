@@ -142,7 +142,7 @@ theorem isThetaPtOver_of_iso {S : Scheme.{0}} (P : PolAV S) {k : ℕ} {T T₀ : 
     (H : IsThetaPtOver P k x₀ v₀) : IsThetaPtOver P k (fun i => β ≫ x₀ i) (fun i => β.left.appTop.hom (v₀ i)) := by
   have : IsMonHom (Iso.refl P.A).hom := inferInstanceAs (IsMonHom (𝟙 _))
   refine ThetaPtMove.isThetaPtOver_move β.left (isGrpPullback_of_iso (Iso.refl P.A))
-    (LBIso.symm (LBIso.chartPull (chartPullPull P.L _ (𝟙 _) rfl) (chartPullId _) (PolBaseChange.lbIso_refl P.isLB)))
+    (LBIso.symm (LBIso.chartPull (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull P.L _ (𝟙 _) rfl) (chartPullId _) (PolBaseChange.lbIso_refl P.isLB)))
     β.left (𝟙 T₀) (Category.comp_id _) ((Over.w β).trans (Category.comp_id _).symm) (fun th h s => ?_)
     (fun i => (Category.comp_id _).symm) (fun i => by rw [← MonObj.comp_pow, hk, MonObj.comp_one]) H
   obtain ⟨r, hr⟩ := h s

@@ -151,7 +151,7 @@ theorem exists_add_conj_eq_one (h : IsCMExt F E σ) (hu : Algebra.FormallyUnrami
 
 end Trace
 
-theorem lift_row : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (k r : ℕ) (J : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) E) (Λ : Submodule (𝓞 E) (Fin (2 * r + k + 1) → E)) (P : Matrix (Fin (2 * r + k + 1)) (Fin (r + 1)) E) (f : Matrix (Fin (2 * r + k + 1)) (Fin r) E) (T : F) (A : InfinitePlace E → Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) (s : Fin r → ℝ), IsVolData σ J Λ P f T A s → ∀ (a : Fin r) (l : InfinitePlace E → Fin (k + 1) → ℂ), l ∈ homLat (σ : E →+* E) J Λ P f A (dInv E (r - a.val)) (s a) → ∃ γ ∈ GN (σ : E →+* E) J Λ P, (∀ w, cM k r (.inr (.inl a)) (Matrix.of.symm (gM A γ w)) = l w) ∧ ∀ β : Bk r, β ≠ (.inr (.inl a)) → degB r β ≤ degB r (.inr (.inl a)) → ∀ w, cM k r β (Matrix.of.symm (gM A γ w)) = 0 := by
+theorem lift_row : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (k r : ℕ) (J : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) E) (Λ : Submodule (𝓞 E) (Fin (2 * r + k + 1) → E)) (P : Matrix (Fin (2 * r + k + 1)) (Fin (r + 1)) E) (f : Matrix (Fin (2 * r + k + 1)) (Fin r) E) (T : F) (A : InfinitePlace E → Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) (s : Fin r → ℝ), IsVolData σ J Λ P f T A s → ∀ (a : Fin r) (l : InfinitePlace E → Fin (k + 1) → ℂ), l ∈ homLat (σ : E →+* E) J Λ P f A (GlobalTheory.SgGlob.dInv E (r - a.val)) (s a) → ∃ γ ∈ GN (σ : E →+* E) J Λ P, (∀ w, cM k r (.inr (.inl a)) (Matrix.of.symm (gM A γ w)) = l w) ∧ ∀ β : Bk r, β ≠ (.inr (.inl a)) → degB r β ≤ degB r (.inr (.inl a)) → ∀ w, cM k r β (Matrix.of.symm (gM A γ w)) = 0 := by
   intro F E _ _ _ _ _ σ k r J Λ P f T A s hD a l hl
   obtain ⟨t₀, ⟨ht₀, htΛ⟩, hlt⟩ := hl
   have hD' := hD
@@ -173,13 +173,13 @@ theorem lift_row : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberF
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
-  have hyΛ : ∀ x ∈ (dInv E (r - a.val))⁻¹, x • y ∈ Λ := by
+  have hyΛ : ∀ x ∈ (GlobalTheory.SgGlob.dInv E (r - a.val))⁻¹, x • y ∈ Λ := by
     intro x hx
     have := Λ.neg_mem (htΛ x hx)
     rwa [← smul_neg] at this
-  have hDm : ((differentIdeal ℤ (𝓞 E) : FractionalIdeal (𝓞 E)⁰ E)) ^ (r - a.val) = (dInv E (r - a.val))⁻¹ := by
-    simp [dInv, inv_pow]
-  have hmem : c ∈ dInv E (2 * (r - a.val)) := by
+  have hDm : ((differentIdeal ℤ (𝓞 E) : FractionalIdeal (𝓞 E)⁰ E)) ^ (r - a.val) = (GlobalTheory.SgGlob.dInv E (r - a.val))⁻¹ := by
+    simp [GlobalTheory.SgGlob.dInv, inv_pow]
+  have hmem : c ∈ GlobalTheory.SgGlob.dInv E (2 * (r - a.val)) := by
     refine IntG.mem_dInv_two_mul te (fun x => hσσ x) _ c ?_
     intro x hx x' hx'
     rw [hDm] at hx hx'
@@ -192,9 +192,9 @@ theorem lift_row : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberF
       ring
     rwa [h3] at h2
   set t : E := -((θ : E) * c) with ht
-  have htm : t ∈ dInv E (2 * (r - a.val)) := by
-    have h1 : θ • c ∈ dInv E (2 * (r - a.val)) := Submodule.smul_mem (dInv E (2 * (r - a.val))).coeToSubmodule θ hmem
-    have h2 := Submodule.neg_mem (dInv E (2 * (r - a.val))).coeToSubmodule h1
+  have htm : t ∈ GlobalTheory.SgGlob.dInv E (2 * (r - a.val)) := by
+    have h1 : θ • c ∈ GlobalTheory.SgGlob.dInv E (2 * (r - a.val)) := Submodule.smul_mem (GlobalTheory.SgGlob.dInv E (2 * (r - a.val))).coeToSubmodule θ hmem
+    have h2 := Submodule.neg_mem (GlobalTheory.SgGlob.dInv E (2 * (r - a.val))).coeToSubmodule h1
     have h3 : -(θ • c) = t := by rw [ht, Algebra.smul_def]
     rw [h3] at h2
     exact h2

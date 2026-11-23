@@ -307,7 +307,7 @@ theorem main : Out.Laws → Out.Laws2 → ∀ (o : Type) [CommRing o] (g k : ℕ
   have hwL : LBIso t.L (P.L.pull w) :=
     hφL.trans t.isLB (LB.isLB_pull P'.isLB _) (LB.isLB_pull P.isLB _)
       (LBIso.chartPull (chartPullSame P'.L (fun _ : PUnit => φ) (fun _ : PUnit => χ) (fun _ => 1) w fun _ => w₁.symm)
-        (chartPullPull P.L w w rfl) ⟨c, hc⟩)
+        (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull P.L w w rfl) ⟨c, hc⟩)
   let d : P.A.left ⟶ pullback P'.A.hom (spMap (algebraMap R (Localization.Away f))) := pullback.lift χ P.A.hom hχ₀.w
   have d₁ : d ≫ pullback.fst _ _ = χ := pullback.lift_fst _ _ _
   let v' : Fin (2 * g) ⊕ J → (P.A ⟶ P.A) := fun i => Over.homMk (hχ₀.lift (d ≫ u' i) P.A.hom (by

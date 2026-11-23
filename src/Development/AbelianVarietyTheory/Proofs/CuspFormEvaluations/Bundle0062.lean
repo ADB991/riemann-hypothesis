@@ -137,7 +137,7 @@ theorem familyUnif_card_le : GlobalTheory.Published.HasseNormSt → ThetaUnifAV 
   intro hN hT hL E _ _ _ H D l Xo σ g ty h1 hσ hty U r hr ξ AA hξ hξ0 hfg hA0 hAA
   classical
   have hk : 0 < l.M' := Nat.lcm_pos (lt_of_lt_of_le (by norm_num) l.three_le) l.A_pos
-  obtain ⟨m, rep, hrep, hcls⟩ := exists_representatives U.Di
+  obtain ⟨m, rep, hrep, hcls⟩ := GlobalTheory.PeriodSpaceCount.exists_representatives U.Di
   have hm := _root_.GlobalTheory.card_nonisometric_data_le hN E H D.p D.q r hr ξ AA hξ hξ0 hfg hA0 hAA m (fun c => U.Di (rep c))
     (fun c => U.sig _) fun c d gam h => hrep c d ⟨gam, h⟩
   have hn : U.n ≤ m * l.M' ^ (2 * FD.fdeg E * r ^ 2) := by

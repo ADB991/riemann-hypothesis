@@ -305,7 +305,7 @@ theorem exists_finite_cosets {H : Type} [Group H] [TopologicalSpace H] [IsTopolo
 
 end Classes
 
-theorem exists_finset_classes : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (M : ℕ) (J : Matrix (Fin M) (Fin M) E), IsHermND σ J → ∀ K : Subgroup (HA (Af F) σ J), IsOpen (K : Set (HA (Af F) σ J)) → ∃ S : Finset (HA (Af F) σ J), ∀ g : HA (Af F) σ J, ∃ γ : HFinIn (Af F) σ J, ∃ s ∈ S, ∃ k ∈ K, g = γ • (s * k) := by
+theorem exists_finset_classes : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (M : ℕ) (J : Matrix (Fin M) (Fin M) E), IsHermND σ J → ∀ K : Subgroup (HA (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J), IsOpen (K : Set (HA (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J)) → ∃ S : Finset (HA (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J), ∀ g : HA (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J, ∃ γ : HFinIn (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ J, ∃ s ∈ S, ∃ k ∈ K, g = γ • (s * k) := by
   classical
   intro F E _ _ _ _ _ σ hσ M J hJ K hK
   obtain ⟨h1, h2, h3, h4⟩ := hσ

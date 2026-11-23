@@ -319,7 +319,7 @@ theorem smooth_Phi (i j : Fin (2 * r + k + 1)) : ContDiff ℝ 1 fun q : EE k r =
       · fun_prop
       · exact (smooth_star (by fun_prop)).neg
       · exact (Complex.ofRealCLM.contDiff.comp (by fun_prop)).mul contDiff_const
-    unfold pOf pEl herm Matrix.mulVec dotProduct
+    unfold pOf pEl herm; delta Matrix.mulVec dotProduct
     simp only [Pi.star_apply]
     split_ifs
     · exact contDiff_const

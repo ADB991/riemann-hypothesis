@@ -514,6 +514,7 @@ theorem exists_actions (K : FinExt l) {β : RA LL →+* ↥LL.1 ⊗[ℚ_[l]] P.R
     rw [WittVector.frobenius_eq_map_frobenius]
     rfl
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem exists_disc' (hT : LocTied l P AI) (h : Good K s LL) (Γ : GamS P K s LL) (R : WSer Γ) (I : IoS AI R)
     (hI : IoW I) {β : RA LL →+* ↥LL.1 ⊗[ℚ_[l]] P.R.B} (hβ : IsBeta AI β) :
     ∃ D : Disc R (β.comp I.io.toRingHom) ((((l : ℚ_[l]) ^ s)⁻¹) • P.ιB P.tB)

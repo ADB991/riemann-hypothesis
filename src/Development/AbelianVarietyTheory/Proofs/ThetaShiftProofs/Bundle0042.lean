@@ -344,7 +344,7 @@ theorem hasSum_evR_of_chart (hL : GlobalTheory.Reg.EvLaws Xo c) (σ : c.F →+* 
   let sA : A := ⟨s, hs.summable⟩
   obtain ⟨hu1, hu2⟩ := (frChg_exists_unique_units E H Dw l Xo c _ G s y₁).2.2.1 y hy
   have hdet : ∀ τ, ((GA τ).det : ℂ⸨X⸩) = (G τ).det := fun τ => A.val.map_det (GA τ)
-  obtain ⟨u₁, hu₁⟩ := hL.bc _ _ φA y₀
+  obtain ⟨u₁, hu₁⟩ := hL.bc R A φA y₀
   obtain ⟨u, hu⟩ := (frChg_exists_unique_units E H Dw l Xo c A GA sA u₁).1
     (fun τ => isUnit_ptRing σ hK hv _ (by rw [hdet]; exact (hu1 τ).ne_zero) (by rw [hdet]; exact hG' τ))
     (isUnit_ptRing σ hK hv sA hu2.ne_zero hs')

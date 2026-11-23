@@ -31,11 +31,13 @@ universe u v w
 section
 variable {O : Type} [CommRing O] {F : B.Fn O} {b : Base} {ht : b.t = 1} {κ : O →+* b.R ⧸ b.I}
 
+attribute [-instance] Formalism.BasicNotions.Examples₂.instIsEmptyClsEmptyColumnChain in
 theorem cr_s_eq_one (T : Thick (F.cr b ht κ)) : T.s = 1 := by
   have h := (Finset.prod_of_isEmpty (ι := Empty) _).symm.trans T.hs
   rw [ht, map_one, mul_one] at h
   exact Units.ext h.symm
 
+attribute [-instance] Formalism.BasicNotions.Examples₂.instIsEmptyClsEmptyColumnChain in
 def crHom {T T' : Thick (F.cr b ht κ)} (φ : T.B →+* T'.B) (comm : ∀ r, φ (T.i r) = T'.i r) (dp : IsDPMorphism T.δ T'.δ φ)
     (pt : ∀ h, F.Pt.map (CommRingCat.ofHom (Ideal.quotientMap T'.J φ h)) T.y.1.2 = T'.y.1.2) : T ⟶ T' where
   φ := φ

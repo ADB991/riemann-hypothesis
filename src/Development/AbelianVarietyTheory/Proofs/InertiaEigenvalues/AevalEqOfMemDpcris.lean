@@ -156,6 +156,8 @@ theorem prod_dvd_pow {R α β : Type} [CommRing R] [DecidableEq β] (M : Multise
     exact Finset.dvd_prod_of_mem (fun a => X - C (v a)) ha
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxSynthPendingDepth 2 in
 set_option maxHeartbeats 4000000 in
 open Classical in
 theorem main : ∀ (D : D7) (P : Pend D), TieInePoly D → InertEq D → ∀ (i : D.nd.Loc) (k : Fin 2), D.nd.l i = D.host.g k →

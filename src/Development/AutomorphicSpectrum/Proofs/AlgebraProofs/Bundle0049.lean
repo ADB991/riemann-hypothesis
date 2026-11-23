@@ -188,7 +188,7 @@ theorem divCycle_eq_of_unit_ratio : ∀ (K : Type) [Fintype K] (ι : K → Type)
     have hle1 := SectionOrderAtPoint.locLen_le_of_rel hP hfP hgP pW hPW h1 c hrel (locLen_ne_top hWg)
     have hle2 := SectionOrderAtPoint.locLen_le_of_rel hP hgP hfP pW hPW h1 c' hrel' (locLen_ne_top hWf)
     have := congrArg ENat.toNat (le_antisymm hle2 hle1)
-    simpa [multAt, hWp, locLen] using this
+    simpa [multAt, hWp, ReciprocityTheory.ChartRestriction.G.AI.locLen] using this
 
 end GlobalTheory.CompanionTheory.Ar.Giv
 end

@@ -376,7 +376,7 @@ theorem exists_smooth_weight_const_near_embeddings :
           have := h3 k
           simp [blockNormSq, hcon] at this
       rw [this]
-      exact ((isClosed_zeros _).inter (isClosed_liesOver y sg)).inter
+      exact ((isClosed_zeros _).inter (GroundTheory.Heights₂.Heights.HilbertSamuel.EmbeddingWeight.isClosed_liesOver y sg)).inter
         isCompact_sphere.isClosed
     have heq : C sg = projPt '' (S sg ∩ {z | ∀ k, blockNormSq z k = 1}) := by
       refine Subset.antisymm ?_ (image_mono inter_subset_left)

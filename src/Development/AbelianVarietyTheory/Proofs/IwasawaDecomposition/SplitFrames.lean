@@ -167,7 +167,7 @@ structure PairData {Wl : WeilTied D X T} (K : KfinTied Wl) (θ : InfF D) (Fr : S
     S (.inl v) →ₗ[ℂ] (Matrix (Fin V.rank) (Fin W.rank) (v.adicCompletion (FF D)) → ℂ)
   linM_inj : ∀ v w (hw : Over D w v), Split D v → Function.Injective (linM v w hw)
   linM_eq : ∀ χ χ' v w (hw : Over D w v), Splitting T V W χ χ' → Split D v →
-    ∀ g k : _, ∃ c : ℂ, c ≠ 0 ∧ ∀ φ, linM v w hw (omL χ χ' (.inl v) (g, k) φ) = c • fun Xm =>
+    ∀ g k : _, ∃ c : ℂ, c ≠ 0 ∧ ∀ φ, linM v w hw (omL χ χ' (.inl v) (g, k) φ) = c • fun (Xm : Matrix (Fin V.rank) (Fin W.rank) (v.adicCompletion (FF D))) =>
       linM v w hw φ (Units.val (Fr.gl V v w hw g)⁻¹ * Xm * (Units.val (Fr.gl W v w hw k)⁻¹).transpose)
 
 attribute [instance] PairData.sA PairData.sM
