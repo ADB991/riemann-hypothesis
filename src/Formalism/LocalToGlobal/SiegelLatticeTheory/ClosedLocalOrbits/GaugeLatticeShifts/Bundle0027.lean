@@ -39,7 +39,7 @@ theorem meas_invM : Measurable (invM : Mt k r → Mt k r) := by
       fun x : Mt k r => (Ring.inverse (Matrix.of x).det • (Matrix.of x).adjugate : Mt k r) := by
     funext x
     rw [Matrix.inv_def]
-  have hc' : Measurable fun x : Mt k r => ((Matrix.of x).adjugate : Mt k r) :=
+  have hc' : Measurable (β := Mt k r) fun x : Mt k r => ((Matrix.of x).adjugate : Mt k r) :=
     Measurable.of_eval fun i => Measurable.of_eval fun j =>
       ((continuous_apply j).comp ((continuous_apply i).comp hc)).measurable
   rw [he]
