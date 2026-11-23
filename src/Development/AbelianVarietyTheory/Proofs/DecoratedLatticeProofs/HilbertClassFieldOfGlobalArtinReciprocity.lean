@@ -199,6 +199,8 @@ theorem art_mem_of_class (ha : IsGlobalArtin art) (U : Subgroup (Gab E Ω)) (hU 
     · refine GlobalTheory.FrobDense.eq_one_of_local ψ hψ _ rfl fun v => ?_
       obtain ⟨A, hA⟩ := exists_isPlaceOver Ω v
       obtain ⟨σ, hσ, e⟩ := (ha.ine v A hA _).1 ⟨Units.map (GlobalTheory.Mem.LocTriv.ev v) (Units.map (finPart E) u), hu v, rfl⟩
+      change ψ (Neutral.B1.localIdele E v
+        (Units.map (GlobalTheory.Mem.LocTriv.ev v) (Units.map (finPart E) u))) = 1
       rw [hψU, ← e]
       exact hI A σ hσ
   · rintro _ ⟨k, rfl⟩
