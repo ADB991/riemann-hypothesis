@@ -26,15 +26,15 @@ section Cycle
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem divCycle_eq_zero_of_not {P W : Ideal (MRing ι)} (f : MRing ι)
-    (h : ¬ (W.IsPrime ∧ IsRelevant W ∧ P ≤ W)) : divCycle P f W = 0 := by
-  simp only [divCycle, Finsupp.ofSupportFinite_coe]
+    (h : ¬ (W.IsPrime ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W ∧ P ≤ W)) : ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f W = 0 := by
+  simp only [ReciprocityTheory.ChartRestriction.G.Geo.divCycle, Finsupp.ofSupportFinite_coe]
   rw [if_neg]
   intro hW
   simp only [divSupp, Set.mem_ofPred_eq] at hW
   exact h ⟨hW.1.1.1, hW.2, le_sup_left.trans hW.1.1.2⟩
 
 theorem divCycle_apply_eq_of_cross (P : Ideal (MRing ι)) {f g f' g' : MRing ι} {W : Ideal (MRing ι)} [hW : W.IsPrime]
-    (hf' : f' ∉ W) (hg' : g' ∉ W) (hrel : f * g' - f' * g ∈ P) : divCycle P f W = divCycle P g W := by
+    (hf' : f' ∉ W) (hg' : g' ∉ W) (hrel : f * g' - f' * g ∈ P) : ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f W = ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g W := by
   set J := P ⊔ Ideal.span {f * g'} with hJdef
   have hfg : f * g' ∈ J := Ideal.mem_sup_right (Ideal.mem_span_singleton_self _)
   have hIJ : P ≤ J := le_sup_left
@@ -65,7 +65,7 @@ theorem divCycle_apply_eq_of_cross (P : Ideal (MRing ι)) {f g f' g' : MRing ι}
   have e2 := SectionCycle.mem_minimalPrimes_iff h2 hf' hm2
   have l1 := SectionCycle.length_localized_eq h1 hg' hm1
   have l2 := SectionCycle.length_localized_eq h2 hf' hm2
-  simp only [divCycle, Finsupp.ofSupportFinite_coe]
+  simp only [ReciprocityTheory.ChartRestriction.G.Geo.divCycle, Finsupp.ofSupportFinite_coe]
   by_cases hc : W ∈ divSupp P f
   · have hc' : W ∈ divSupp P g := by
       simp only [divSupp, Set.mem_ofPred_eq] at hc ⊢
@@ -79,17 +79,17 @@ theorem divCycle_apply_eq_of_cross (P : Ideal (MRing ι)) {f g f' g' : MRing ι}
     rw [if_neg hc, if_neg hc']
 
 theorem divCycle_eq_of_forall_cross (P : Ideal (MRing ι)) {f g : MRing ι}
-    (h : ∀ W : Ideal (MRing ι), W.IsPrime → IsRelevant W → P ≤ W →
+    (h : ∀ W : Ideal (MRing ι), W.IsPrime → ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W → P ≤ W →
       ∃ f' g' : MRing ι, f' ∉ W ∧ g' ∉ W ∧ f * g' - f' * g ∈ P) :
-    divCycle P f = divCycle P g := by
+    ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f = ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g := by
   ext W
-  by_cases hW : W.IsPrime ∧ IsRelevant W ∧ P ≤ W
+  by_cases hW : W.IsPrime ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W ∧ P ≤ W
   · obtain ⟨hp, hr, hle⟩ := hW
     obtain ⟨f', g', hf', hg', hrel⟩ := h W hp hr hle
     exact divCycle_apply_eq_of_cross P hf' hg' hrel
   · rw [divCycle_eq_zero_of_not f hW, divCycle_eq_zero_of_not g hW]
 
-theorem mem_iff {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) {F : MRing ι} {d : K → ℕ} (hF : IsMultiHomog F d) :
+theorem mem_iff {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) {F : MRing ι} {d : K → ℕ} (hF : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog F d) :
     F ∈ mCoordIdeal y ↔ aeval y F = 0 := by
   show F ∈ RingHom.ker (mConeMap y) ↔ _
   rw [RingHom.mem_ker]
@@ -174,7 +174,7 @@ open AddBlockIsometric in
 theorem AddBlockIsometric.proof : AddBlockIsometric.Statement := by
   intro K _ _ ι _ Ω _ _ y D A m N v B L hY hm hv hgen hBa hLa hLh hBh
   classical
-  have hrel : IsRelevant (mCoordIdeal y) := hY.2.1.2.2
+  have hrel : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant (mCoordIdeal y) := hY.2.1.2.2
   obtain ⟨c₀, hc₀⟩ := SectionPointValue.exists_chart hrel
   obtain ⟨j, hj⟩ : ∃ j, v j ≠ 0 := by
     by_contra h
@@ -203,11 +203,11 @@ theorem AddBlockIsometric.proof : AddBlockIsometric.Statement := by
     rw [hBa, hLa]
     cases k with
     | none =>
-      simp [ReciprocityTheory.ChartRestriction.G.AI.I1.pullDeg, unitDeg]
+      simp [ReciprocityTheory.ChartRestriction.G.AI.I1.pullDeg, ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg]
     | some k =>
       simp only [Pi.add_apply, extend_some_some, ReciprocityTheory.ChartRestriction.G.AI.I1.pullDeg]
       have := hδ₀ k
-      simp [unitDeg]
+      simp [ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg]
       linarith
   ·
     refine divCycle_eq_of_forall_cross _ fun W hWp hWr hPW => ?_
