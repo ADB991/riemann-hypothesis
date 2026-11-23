@@ -340,7 +340,7 @@ theorem pullFib_finite (hIsol : FibreIsolFinite.Statement) (hv : IsBlockMap κ v
     (y : Fin n → ℂ) : (pullQ R v Ψ ⁻¹' {y} \ pullBad R v Ψ).Finite := by
   classical
   have hF := fibreFinite K ι (imageZ v P') n Ψ hP hΨ y
-  choose! uw huw using fun w (hw : w ∈ fibre (imageZ v P') Ψ y) => hw
+  choose! uw huw using fun w (hw : w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre (imageZ v P') Ψ y) => hw
   choose T hT using fun w => hIsol K ι K' ι' κ v P' n hv hP' (uw w)
   refine (hF.biUnion fun w _ => (T w).finite_toSet.biUnion fun t _ =>
     (orbit_subsingleton R t).finite).subset ?_
