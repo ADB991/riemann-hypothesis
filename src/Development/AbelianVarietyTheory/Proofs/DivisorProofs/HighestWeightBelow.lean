@@ -286,7 +286,7 @@ theorem inCoset_weightX {j : ℕ} : InCoset (1 / 2) ((Γ).weightX j) := by
 theorem rankX_even (j : ℕ) : Even (rankX D j) := even_rankX D j
 
 theorem isHC_top {j n : ℕ} (hj : j ≤ D.R.m) (hn : n = rankX D j) : IsHC n (Node.par D C (.top j) τ) := by
-  have he : entries (Node.par D C (.top j) τ) = (Γ).weightX j := GlobalTheory.SignedHC.entries_plus _
+  have he : GlobalTheory.SignedHC.entries (Node.par D C (.top j) τ) = (Γ).weightX j := GlobalTheory.SignedHC.entries_plus _
   have hr : IsRegular (Node.par D C (.top j) τ) := isRegular_plus _
   refine ⟨hr, ?_, ?_⟩
   · rw [← hr.card_entries, he, card_weightX D C τ hj, hn]
@@ -307,7 +307,7 @@ variable (D : D7) (C : ℝ) (τ : D.what₂.Tau)
 
 local notation "Γ" => num D C τ
 
-theorem entries_shift (h : ℚ) (S : SPar) : entries (shift h S) = (entries S).image (· + h) := by
+theorem entries_shift (h : ℚ) (S : SPar) : GlobalTheory.SignedHC.entries (shift h S) = (GlobalTheory.SignedHC.entries S).image (· + h) := by
   simp only [GlobalTheory.SignedHC.entries, shift, image_image]
   rfl
 
@@ -411,7 +411,7 @@ theorem disj_lows_Ms : Disjoint (Γ).lows ((Icc 1 (Γ).m).biUnion (Γ).blockM) :
   · linarith [num_be D C τ hu.1 hu.2, num_b_le D C τ h1 h hu.2]
   · linarith [num_eb D C τ (l := u) hu.1 (by omega), num_b_le D C τ (i := u + 1) (j := l) (by omega) (by omega) (by omega)]
 
-theorem card_entries_parD {i : ℕ} (hi : i ≤ D.R.m) : (entries ((Γ).parD i (Γ).m)).card = rankV D i D.R.m := by
+theorem card_entries_parD {i : ℕ} (hi : i ≤ D.R.m) : (GlobalTheory.SignedHC.entries ((Γ).parD i (Γ).m)).card = rankV D i D.R.m := by
   have d1 : Disjoint (Γ).cloud (Γ).lows := disjoint_left.2 fun x h1 h2 => by
     linarith [(cloud_gt D C τ h1).1, lows_le D C τ h2]
   have d2 : Disjoint ((Γ).cloud ∪ (Γ).lows) ((Icc 1 (Γ).m).biUnion (Γ).blockM) := by
@@ -457,7 +457,7 @@ theorem card_parD {i : ℕ} (hi : i ≤ D.R.m) : ((Γ).parD i (Γ).m).card = ran
 theorem isRegular_parD {i : ℕ} (hi : i ≤ D.R.m) : IsRegular ((Γ).parD i (Γ).m) :=
   isRegular_iff_card.2 ((card_entries_parD D C τ hi).trans (card_parD D C τ hi).symm)
 
-theorem entries_parD_int {i j : ℕ} {x : ℚ} (hx : x ∈ entries ((Γ).parD i j)) : ∃ z : ℤ, x = z := by
+theorem entries_parD_int {i j : ℕ} {x : ℚ} (hx : x ∈ GlobalTheory.SignedHC.entries ((Γ).parD i j)) : ∃ z : ℤ, x = z := by
   have hb : ∀ (c : ℤ) (n : ℕ) (y : ℚ), Odd n → y ∈ TPar.block (c : ℚ) n → ∃ z : ℤ, y = z := by
     intro c n y hn hy
     obtain ⟨a, -, rfl⟩ := mem_block.1 hy
@@ -483,7 +483,7 @@ theorem isHC_grid {i n : ℕ} (hi : i ≤ D.R.m) (hn : n = rankV D i D.R.m) : Is
   refine ⟨isRegular_shift (isRegular_parD D C τ hi), ?_, ?_⟩
   · exact (card_shift _ _).trans ((card_parD D C τ hi).trans hn.symm)
   · intro x hx
-    have hx' : x ∈ entries (shift (if Odd (i + D.R.m) then -(1 / 2) else 0) ((Γ).parD i (Γ).m)) := hx
+    have hx' : x ∈ GlobalTheory.SignedHC.entries (shift (if Odd (i + D.R.m) then -(1 / 2) else 0) ((Γ).parD i (Γ).m)) := hx
     rw [entries_shift] at hx'
     obtain ⟨y, hy, rfl⟩ := mem_image.1 hx'
     obtain ⟨z, rfl⟩ := entries_parD_int D C τ hy
@@ -501,7 +501,7 @@ theorem isHC_grid {i n : ℕ} (hi : i ≤ D.R.m) (hn : n = rankV D i D.R.m) : Is
       ring
 
 theorem entries_parD_succ {i j : ℕ} (hi : i + 1 ≤ D.R.m) :
-    entries ((Γ).parD (i + 1) j) = entries ((Γ).parD i j) ∪ (Γ).blockC ((Γ).m - i) := by
+    GlobalTheory.SignedHC.entries ((Γ).parD (i + 1) j) = GlobalTheory.SignedHC.entries ((Γ).parD i j) ∪ (Γ).blockC ((Γ).m - i) := by
   have hm : (Γ).m = D.R.m := rfl
   have e : Icc ((Γ).m - (i + 1) + 1) (Γ).m = insert ((Γ).m - i) (Icc ((Γ).m - i + 1) (Γ).m) := by
     ext l
@@ -510,7 +510,7 @@ theorem entries_parD_succ {i j : ℕ} (hi : i + 1 ≤ D.R.m) :
   rw [GridData.entries_parD, GridData.entries_parD, e, biUnion_insert, union_comm ((Γ).blockC _)]
   simp only [union_assoc]
 
-theorem parD_below {i : ℕ} (hi : i + 1 ≤ D.R.m) {x y : ℚ} (hx : x ∈ entries ((Γ).parD i (Γ).m)) (hy : y ∈ (Γ).blockC ((Γ).m - i)) :
+theorem parD_below {i : ℕ} (hi : i + 1 ≤ D.R.m) {x y : ℚ} (hx : x ∈ GlobalTheory.SignedHC.entries ((Γ).parD i (Γ).m)) (hy : y ∈ (Γ).blockC ((Γ).m - i)) :
     x < y := by
   have hm : (Γ).m = D.R.m := rfl
   have hb := (blockC_bd D C τ (by omega) (by omega) hy).1
@@ -625,8 +625,8 @@ theorem step_top {j : ℕ} (hj : j + 1 ≤ D.R.m) (τ : D.what₂.Tau) (r : Fin 
   have h1 := isHC_top D sc.cGap τ hj r1
   have hE := h0.1.card_entries.trans h0.2.1
   have hF := h1.1.card_entries.trans h1.2.1
-  have e0 : entries (Node.par D sc.cGap (.top j) τ) = (num D sc.cGap τ).weightX j := GlobalTheory.SignedHC.entries_plus _
-  have e1 : entries (Node.par D sc.cGap (.top (j + 1)) τ) = (num D sc.cGap τ).weightX (j + 1) := GlobalTheory.SignedHC.entries_plus _
+  have e0 : GlobalTheory.SignedHC.entries (Node.par D sc.cGap (.top j) τ) = (num D sc.cGap τ).weightX j := GlobalTheory.SignedHC.entries_plus _
+  have e1 : GlobalTheory.SignedHC.entries (Node.par D sc.cGap (.top (j + 1)) τ) = (num D sc.cGap τ).weightX (j + 1) := GlobalTheory.SignedHC.entries_plus _
   refine natW_step (t := D.R.t + 1) ?_ (r0 ▸ rankX_pos D j) 0 (-((num D sc.cGap τ).e (j + 1) : ℚ)) hE ?_ ?_ hF _ _
     (fun r => wtOf_cast hE h0.2.2 r) (fun r => wtOf_cast hF h1.2.2 r) r
   · rw [r0, r1]
@@ -651,16 +651,16 @@ theorem step_grid {i : ℕ} (hi : i + 1 ≤ D.R.m) (τ : D.what₂.Tau) (r : Fin
   have h1 := isHC_grid D sc.cGap τ hi r1
   have hA := h0.1.card_entries.trans h0.2.1
   have hA' := h1.1.card_entries.trans h1.2.1
-  have hE : ((entries (Node.par D sc.cGap (.grid i D.R.m) τ)).image Neg.neg).card = (G.V (.grid i D.R.m)).rank := by
+  have hE : ((GlobalTheory.SignedHC.entries (Node.par D sc.cGap (.grid i D.R.m) τ)).image Neg.neg).card = (G.V (.grid i D.R.m)).rank := by
     rw [card_image_of_injective _ neg_injective, hA]
-  have hF : ((entries (Node.par D sc.cGap (.grid (i + 1) D.R.m) τ)).image Neg.neg).card = (G.V (.grid (i + 1) D.R.m)).rank := by
+  have hF : ((GlobalTheory.SignedHC.entries (Node.par D sc.cGap (.grid (i + 1) D.R.m) τ)).image Neg.neg).card = (G.V (.grid (i + 1) D.R.m)).rank := by
     rw [card_image_of_injective _ neg_injective, hA']
-  obtain ⟨sh, hsh⟩ : ∃ sh : ℚ, entries (Node.par D sc.cGap (.grid i D.R.m) τ) =
-      (entries ((num D sc.cGap τ).parD i (num D sc.cGap τ).m)).image (· + sh) := ⟨_, entries_shift _ _⟩
-  obtain ⟨sh', hsh'⟩ : ∃ sh' : ℚ, entries (Node.par D sc.cGap (.grid (i + 1) D.R.m) τ) =
-      (entries ((num D sc.cGap τ).parD (i + 1) (num D sc.cGap τ).m)).image (· + sh') := ⟨_, entries_shift _ _⟩
-  have hsucc : entries ((num D sc.cGap τ).parD (i + 1) (num D sc.cGap τ).m) =
-      entries ((num D sc.cGap τ).parD i (num D sc.cGap τ).m) ∪
+  obtain ⟨sh, hsh⟩ : ∃ sh : ℚ, GlobalTheory.SignedHC.entries (Node.par D sc.cGap (.grid i D.R.m) τ) =
+      (GlobalTheory.SignedHC.entries ((num D sc.cGap τ).parD i (num D sc.cGap τ).m)).image (· + sh) := ⟨_, entries_shift _ _⟩
+  obtain ⟨sh', hsh'⟩ : ∃ sh' : ℚ, GlobalTheory.SignedHC.entries (Node.par D sc.cGap (.grid (i + 1) D.R.m) τ) =
+      (GlobalTheory.SignedHC.entries ((num D sc.cGap τ).parD (i + 1) (num D sc.cGap τ).m)).image (· + sh') := ⟨_, entries_shift _ _⟩
+  have hsucc : GlobalTheory.SignedHC.entries ((num D sc.cGap τ).parD (i + 1) (num D sc.cGap τ).m) =
+      GlobalTheory.SignedHC.entries ((num D sc.cGap τ).parD i (num D sc.cGap τ).m) ∪
         TPar.block ((num D sc.cGap τ).cen ((num D sc.cGap τ).m - i) : ℚ) (num D sc.cGap τ).s :=
     entries_parD_succ D sc.cGap τ (j := (num D sc.cGap τ).m) hi
   refine natW_step (t := (num D sc.cGap τ).s) ?_ (r0 ▸ rankV_pos D i D.R.m) (sh - sh')
@@ -682,13 +682,13 @@ theorem step_grid {i : ℕ} (hi : i + 1 ≤ D.R.m) (τ : D.what₂.Tau) (r : Fin
     have := parD_below D sc.cGap τ hi hx₀ hy'
     show y < -(x₀ + sh) + (sh - sh')
     linarith
-  · have e : ((wt G (.grid i D.R.m) τ).w r : ℚ) = -(((wtOf _ (entries (Node.par D sc.cGap (.grid i D.R.m) τ))).w r.rev : ℤ) : ℚ) := by
-      show (((-(wtOf _ (entries (Node.par D sc.cGap (.grid i D.R.m) τ))).w r.rev : ℤ)) : ℚ) = _
+  · have e : ((wt G (.grid i D.R.m) τ).w r : ℚ) = -(((wtOf _ (GlobalTheory.SignedHC.entries (Node.par D sc.cGap (.grid i D.R.m) τ))).w r.rev : ℤ) : ℚ) := by
+      show (((-(wtOf _ (GlobalTheory.SignedHC.entries (Node.par D sc.cGap (.grid i D.R.m) τ))).w r.rev : ℤ)) : ℚ) = _
       push_cast
       rfl
     rw [e, wtOf_cast hA h0.2.2, highestWeight_neg hA hE]
-  · have e : ((wt G (.grid (i + 1) D.R.m) τ).w r : ℚ) = -(((wtOf _ (entries (Node.par D sc.cGap (.grid (i + 1) D.R.m) τ))).w r.rev : ℤ) : ℚ) := by
-      show (((-(wtOf _ (entries (Node.par D sc.cGap (.grid (i + 1) D.R.m) τ))).w r.rev : ℤ)) : ℚ) = _
+  · have e : ((wt G (.grid (i + 1) D.R.m) τ).w r : ℚ) = -(((wtOf _ (GlobalTheory.SignedHC.entries (Node.par D sc.cGap (.grid (i + 1) D.R.m) τ))).w r.rev : ℤ) : ℚ) := by
+      show (((-(wtOf _ (GlobalTheory.SignedHC.entries (Node.par D sc.cGap (.grid (i + 1) D.R.m) τ))).w r.rev : ℤ)) : ℚ) = _
       push_cast
       rfl
     rw [e, wtOf_cast hA' h1.2.2, highestWeight_neg hA' hF]
