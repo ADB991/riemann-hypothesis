@@ -179,26 +179,26 @@ theorem prod_Iic_fin {M : Type} [CommMonoid M] {m : ℕ} (f : Fin m → M) (j : 
   · intro a _; rfl
 
 theorem flag_mem (F : Type) [Field F] {K : Type} [Field K] [Algebra F K] {m : ℕ} (g : Matrix (Fin m) (Fin m) K)
-    (A : IntermediateField F K) (hL : ∀ a, leadMinor g a ≠ 0)
-    (hA : ∀ (a : Fin (m - 1)) (b : Fin m), (a : ℕ) < b → pivotMinor g a b / leadMinor g a ∈ A)
-    (j : Fin (m - 1)) (S : PluckerBlocks m m j) : flagMinor g j S / leadMinor g j ∈ A := by
+    (A : IntermediateField F K) (hL : ∀ a, GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g a ≠ 0)
+    (hA : ∀ (a : Fin (m - 1)) (b : Fin m), (a : ℕ) < b → pivotMinor g a b / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g a ∈ A)
+    (j : Fin (m - 1)) (S : PluckerBlocks m m j) : flagMinor g j S / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g j ∈ A := by
   have hj : (j : ℕ) + 1 ≤ m := by have := j.2; omega
-  have hent : ∀ (a : Fin (m - 1)) (b : Fin m), pivotMinor g a b / leadMinor g a ∈ A := by
+  have hent : ∀ (a : Fin (m - 1)) (b : Fin m), pivotMinor g a b / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g a ∈ A := by
     intro a b
     rcases lt_trichotomy (b : ℕ) a with h | h | h
     · rw [pivotMinor_eq_zero g a b h, zero_div]
       exact A.zero_mem
     · have e : b = Fin.castLE (Nat.sub_le m 1) a := Fin.ext h
       subst e
-      show leadMinor g a / leadMinor g a ∈ A
+      show GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g a / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g a ∈ A
       rw [div_self (hL a)]
       exact A.one_mem
     · exact hA a b h
   let U : Matrix (Fin (j + 1)) (Fin (j + 1)) K := Matrix.of fun r s =>
     pivotMinor g ⟨r, by have := r.2; have := j.2; omega⟩ (S.1.orderEmbOfFin S.2 s) /
-      leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩
+      GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩
   have hP : (pivotMatrix g).submatrix (Fin.castLE hj) (S.1.orderEmbOfFin S.2) =
-      Matrix.diagonal (fun r : Fin (j + 1) => leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩) * U := by
+      Matrix.diagonal (fun r : Fin (j + 1) => GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩) * U := by
     ext r s
     rw [Matrix.diagonal_mul]
     simp only [Matrix.submatrix_apply, pivotMatrix, Matrix.of_apply, U]
@@ -206,14 +206,14 @@ theorem flag_mem (F : Type) [Field F] {K : Type} [Field K] [Algebra F K] {m : �
     rw [mul_div_cancel₀ _ (hL _)]
     rfl
   have hdet : flagMinor (pivotMatrix g) j S =
-      (∏ r : Fin (j + 1), leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩) * U.det := by
+      (∏ r : Fin (j + 1), GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩) * U.det := by
     unfold flagMinor
     rw [hP, Matrix.det_mul, Matrix.det_diagonal]
   have hid := FlagPivotIdentity.proof K m g j S
   rw [prod_Iic_fin, hdet] at hid
-  have hne : (∏ r : Fin (j + 1), leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩) ≠ 0 :=
+  have hne : (∏ r : Fin (j + 1), GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g ⟨r, by have := r.2; have := j.2; omega⟩) ≠ 0 :=
     Finset.prod_ne_zero_iff.2 fun r _ => hL _
-  have hU : flagMinor g j S / leadMinor g j = U.det := by
+  have hU : flagMinor g j S / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor g j = U.det := by
     rw [div_eq_iff (hL j)]
     apply mul_right_cancel₀ hne
     linear_combination hid
@@ -223,7 +223,7 @@ theorem flag_mem (F : Type) [Field F] {K : Type} [Field K] [Algebra F K] {m : �
   exact zsmul_mem (A.prod_mem fun r _ => hent _ _) _
 
 theorem card_pivotIdx (Ψ : Type) [Fintype Ψ] (n : ℕ) :
-    Fintype.card (PivotIdx Ψ n) = Fintype.card Ψ * flagDim n := by
+    Fintype.card (PivotIdx Ψ n) = Fintype.card Ψ * GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.flagDim n := by
   rw [Fintype.card_prod, Fintype.card_sigma]
   congr 1
   have h1 : ∀ a : Fin (n - 1), Fintype.card {b : Fin n // (a : ℕ) < b} = n - 1 - a := by
@@ -246,7 +246,7 @@ theorem card_pivotIdx (Ψ : Type) [Fintype Ψ] (n : ℕ) :
       rw [add_mul, ih]
       ring
   have h3 := h2 (n - 1)
-  unfold flagDim
+  unfold GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.flagDim
   rcases Nat.eq_zero_or_pos n with h | h
   · subst h
     simp
@@ -285,7 +285,7 @@ theorem proof : FlagRatioTrdeg.Statement := by
     simp only [Function.comp_apply, hne, if_false]
     rfl
   have hpr : AlgebraicIndependent F (pivotRatio F Ψ n) := hrat ▸ hz.comp incl hincl
-  have hL : ∀ (τ : Ψ) (a : Fin (n - 1)), leadMinor (genMatFr F Ψ n τ) a ≠ 0 := fun τ a =>
+  have hL : ∀ (τ : Ψ) (a : Fin (n - 1)), GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (genMatFr F Ψ n τ) a ≠ 0 := fun τ a =>
     hy.ne_zero (τ, ⟨a, ⟨Fin.castLE (Nat.sub_le n 1) a, by simp⟩⟩)
   have hadj : IntermediateField.adjoin F (Set.range (flagMinorRatio F Ψ n)) =
       IntermediateField.adjoin F (Set.range (pivotRatio F Ψ n)) := by
