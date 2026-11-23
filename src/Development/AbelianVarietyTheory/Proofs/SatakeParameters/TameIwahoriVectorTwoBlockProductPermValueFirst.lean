@@ -186,7 +186,7 @@ theorem exists_isIwVec_fst : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologi
   have tor : ∀ τ ∈ torusO k (Fin r),
       LinearMap.rTensor W (σ₁ (GlobalTheory.Parabolic.permGL k s * diagT k (Fin r) τ * (GlobalTheory.Parabolic.permGL k s)⁻¹))
         (f.1.1 (GlobalTheory.Parabolic.permGL k w)) =
-        (torusChar (fun i => θ (w.symm (Fin.castAdd t (s i)))) τ : ℂ) • f.1.1 (GlobalTheory.Parabolic.permGL k w) := by
+        (GlobalTheory.SmGL.torusChar (fun i => θ (w.symm (Fin.castAdd t (s i)))) τ : ℂ) • f.1.1 (GlobalTheory.Parabolic.permGL k w) := by
     intro τ hτ
     have hm : GlobalTheory.Parabolic.permGL k s * diagT k (Fin r) τ * (GlobalTheory.Parabolic.permGL k s)⁻¹ ∈ KO k (Fin r) :=
       mul_mem (mul_mem hSK (iwahori_le_KO k (Fin r) (diagT_mem_iwahori hτ))) (inv_mem hSK)
@@ -227,8 +227,8 @@ theorem exists_isIwVec_fst : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologi
         · rw [if_neg hab, if_neg]
           intro h
           exact hab (Sum.inr_injective ((stdSum (rfl : r + t = r + t)).injective (w.symm.injective h)))
-    have hc : torusChar θ τ' = torusChar (fun i => θ (w.symm (Fin.castAdd t (s i)))) τ := by
-      rw [torusChar_apply, torusChar_apply]
+    have hc : GlobalTheory.SmGL.torusChar θ τ' = GlobalTheory.SmGL.torusChar (fun i => θ (w.symm (Fin.castAdd t (s i)))) τ := by
+      rw [GlobalTheory.SmGL.torusChar_apply, GlobalTheory.SmGL.torusChar_apply]
       calc ∏ p, θ p (τ' p)
           = ∏ a : Fin r ⊕ Fin t, θ (w.symm (stdSum (rfl : r + t = r + t) a))
               (τ' (w.symm (stdSum (rfl : r + t = r + t) a))) :=
@@ -258,7 +258,7 @@ theorem exists_isIwVec_fst : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologi
     rw [hy₀, ← Stages.coord_rTensor, fix g hg hlow hdiag]
   have tor0 : ∀ τ ∈ torusO k (Fin r),
       σ₁ (GlobalTheory.Parabolic.permGL k s * diagT k (Fin r) τ * (GlobalTheory.Parabolic.permGL k s)⁻¹) y₀ =
-        (torusChar (fun i => θ (w.symm (Fin.castAdd t (s i)))) τ : ℂ) • y₀ := by
+        (GlobalTheory.SmGL.torusChar (fun i => θ (w.symm (Fin.castAdd t (s i)))) τ : ℂ) • y₀ := by
     intro τ hτ
     rw [hy₀, ← Stages.coord_rTensor, tor τ hτ, map_smul, Finsupp.smul_apply]
   have hback : ∀ (g : GL (Fin r) k) (v : V), σ₁ g (σ₁ (GlobalTheory.Parabolic.permGL k s)⁻¹ v) =
