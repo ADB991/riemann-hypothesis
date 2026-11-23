@@ -21,8 +21,8 @@ namespace ThmISymm
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem smooth_snoc {n : ℕ} {L : Fin n → HermLine ι} {X : HermLine ι} (hL : ∀ j, IsSmoothHerm (L j))
-    (hX : IsSmoothHerm X) : ∀ j, IsSmoothHerm ((Fin.snoc L X : Fin (n + 1) → HermLine ι) j) := by
+theorem smooth_snoc {n : ℕ} {L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {X : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hL : ∀ j, IsSmoothHerm (L j))
+    (hX : IsSmoothHerm X) : ∀ j, IsSmoothHerm ((Fin.snoc L X : Fin (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) j) := by
   intro j
   refine Fin.lastCases ?_ (fun j => ?_) j
   · simpa using hX
@@ -32,7 +32,7 @@ theorem geoNum_comp_perm
     (hEU : ∀ (p : ℕ) [Fact p.Prime], ReciprocityTheory.ChartRestriction.G.AI.I1.ExistsUniqueStatement (ZMod p) ι)
     (hSy : ∀ (p : ℕ) [Fact p.Prime], ReciprocityTheory.ChartRestriction.G.AI.I1.SymmStatement (ZMod p) ι)
     (hGN : ReciprocityTheory.ChartRestriction.G.AI.I1.GeoNumStatement ι) (hFC : FibreCompStatement)
-    {P : Ideal (MRing ι)} {n : ℕ} {A : HermLine ι} {s : MRing ι} {W : Ideal (MRing ι)}
+    {P : Ideal (MRing ι)} {n : ℕ} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {s : MRing ι} {W : Ideal (MRing ι)}
     (hP : IsArithVar P (n + 1)) (hs : IsSectionOn P A s) (hW : W ∈ divSupp P s)
     (hv : ¬ IsHorizontal W) (a : Fin n → K → ℤ) (τ : Equiv.Perm (Fin n)) :
     geoNum n W (a ∘ τ) = geoNum n W a := by
@@ -46,8 +46,8 @@ theorem recR_comp_perm
     (hEU : ∀ (p : ℕ) [Fact p.Prime], ReciprocityTheory.ChartRestriction.G.AI.I1.ExistsUniqueStatement (ZMod p) ι)
     (hSy : ∀ (p : ℕ) [Fact p.Prime], ReciprocityTheory.ChartRestriction.G.AI.I1.SymmStatement (ZMod p) ι)
     (hGN : ReciprocityTheory.ChartRestriction.G.AI.I1.GeoNumStatement ι) (hFC : FibreCompStatement)
-    (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) {P : Ideal (MRing ι)} {n : ℕ}
-    (hP : IsArithVar P (n + 1)) (L : Fin n → HermLine ι) (B : HermLine ι) {s : MRing ι}
+    (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ) {P : Ideal (MRing ι)} {n : ℕ}
+    (hP : IsArithVar P (n + 1)) (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) {s : MRing ι}
     (hs : IsSectionOn P B s) (τ : Equiv.Perm (Fin n))
     (hI : ∀ W, IsArithVar W n → I W n (L ∘ τ) = I W n L) :
     recR I P (L ∘ τ) B s = recR I P L B s := by
@@ -78,9 +78,9 @@ theorem recR_comp_perm
 
 section Main
 
-variable (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ)
+variable (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ)
 
-theorem rAt (hR : IsRFamily I) {P : Ideal (MRing ι)} {n : ℕ} {L : Fin n → HermLine ι} {A : HermLine ι}
+theorem rAt (hR : IsRFamily I) {P : Ideal (MRing ι)} {n : ℕ} {L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι}
     {s : MRing ι} (hP : IsArithVar P (n + 1)) (hL : ∀ j, IsSmoothHerm (L j)) (hA : IsSmoothHerm A)
     (hs : IsSectionOn P A s) : I P (n + 1) (Fin.snoc L A) = recR I P L A s := by
   obtain ⟨a, ha, has, hsP⟩ := hs
@@ -91,16 +91,16 @@ theorem lastFix
     (hSy : ∀ (p : ℕ) [Fact p.Prime], ReciprocityTheory.ChartRestriction.G.AI.I1.SymmStatement (ZMod p) ι)
     (hGN : ReciprocityTheory.ChartRestriction.G.AI.I1.GeoNumStatement ι) (hFC : FibreCompStatement)
     (hR : IsRFamily I) {P : Ideal (MRing ι)} {m : ℕ} (hP : IsArithVar P (m + 1 + 1))
-    (ih : ∀ W, IsArithVar W (m + 1) → ∀ L : Fin (m + 1) → HermLine ι, (∀ j, IsSmoothHerm (L j)) →
+    (ih : ∀ W, IsArithVar W (m + 1) → ∀ L : Fin (m + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι, (∀ j, IsSmoothHerm (L j)) →
       ∀ τ : Equiv.Perm (Fin (m + 1)), I W (m + 1) (L ∘ τ) = I W (m + 1) L)
-    (L : Fin (m + 1) → HermLine ι) (hL : ∀ j, IsSmoothHerm (L j)) (A : HermLine ι) (hA : IsSmoothHerm A)
+    (L : Fin (m + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hL : ∀ j, IsSmoothHerm (L j)) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hA : IsSmoothHerm A)
     (τ : Equiv.Perm (Fin (m + 1))) :
     I P (m + 1 + 1) (Fin.snoc (L ∘ τ) A) = I P (m + 1 + 1) (Fin.snoc L A) := by
-  set H : HermLine ι := ThmIExists.segreLine (ThmIExists.shift A)
+  set H : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := ThmIExists.segreLine (ThmIExists.shift A)
   have hH : IsSmoothHerm H := ThmIExists.isSmoothHerm_segreLine _
   have ht := ThmIExists.isSectionOn_up hP A
   have hu := ThmIExists.isSectionOn_segre hP (ThmIExists.shift A)
-  have key : ∀ L' : Fin (m + 1) → HermLine ι, (∀ j, IsSmoothHerm (L' j)) →
+  have key : ∀ L' : Fin (m + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι, (∀ j, IsSmoothHerm (L' j)) →
       I P (m + 1 + 1) (Fin.snoc L' A) =
         recR I P L' (A.tensor H) (ThmIExists.secOf P (ThmIExists.upDeg A)) -
           recR I P L' H (ThmIExists.secOf P fun _ => ThmIExists.shift A) := by
@@ -113,8 +113,8 @@ theorem lastFix
     recR_comp_perm hEU hSy hGN hFC I hP L _ hu τ (fun W hW => ih W hW L hL τ)]
 
 theorem addX_sec (hR : IsRFamily I) (hRS : RPositionAdd.Statement) {P : Ideal (MRing ι)} {m : ℕ}
-    (hP : IsArithVar P (m + 1 + 1)) {L : Fin m → HermLine ι} (hL : ∀ j, IsSmoothHerm (L j))
-    {A C Y : HermLine ι} (hA : IsSmoothHerm A) (hC : IsSmoothHerm C) (hY : IsSmoothHerm Y) {y : MRing ι}
+    (hP : IsArithVar P (m + 1 + 1)) {L : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hL : ∀ j, IsSmoothHerm (L j))
+    {A C Y : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA : IsSmoothHerm A) (hC : IsSmoothHerm C) (hY : IsSmoothHerm Y) {y : MRing ι}
     (hy : IsSectionOn P Y y) :
     I P (m + 1 + 1) (Fin.snoc (Fin.snoc L (A.tensor C)) Y) =
       I P (m + 1 + 1) (Fin.snoc (Fin.snoc L A) Y) + I P (m + 1 + 1) (Fin.snoc (Fin.snoc L C) Y) := by
@@ -124,11 +124,11 @@ theorem addX_sec (hR : IsRFamily I) (hRS : RPositionAdd.Statement) {P : Ideal (M
     hP hL hA hC hY hy
 
 theorem addX (hR : IsRFamily I) (hRS : RPositionAdd.Statement) {P : Ideal (MRing ι)} {m : ℕ}
-    (hP : IsArithVar P (m + 1 + 1)) {L : Fin m → HermLine ι} (hL : ∀ j, IsSmoothHerm (L j))
-    {A C Y : HermLine ι} (hA : IsSmoothHerm A) (hC : IsSmoothHerm C) (hY : IsSmoothHerm Y) :
+    (hP : IsArithVar P (m + 1 + 1)) {L : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hL : ∀ j, IsSmoothHerm (L j))
+    {A C Y : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA : IsSmoothHerm A) (hC : IsSmoothHerm C) (hY : IsSmoothHerm Y) :
     I P (m + 1 + 1) (Fin.snoc (Fin.snoc L (A.tensor C)) Y) =
       I P (m + 1 + 1) (Fin.snoc (Fin.snoc L A) Y) + I P (m + 1 + 1) (Fin.snoc (Fin.snoc L C) Y) := by
-  set H : HermLine ι := ThmIExists.segreLine (ThmIExists.shift Y)
+  set H : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := ThmIExists.segreLine (ThmIExists.shift Y)
   have hH : IsSmoothHerm H := ThmIExists.isSmoothHerm_segreLine _
   have ht := ThmIExists.isSectionOn_up hP Y
   have hu := ThmIExists.isSectionOn_segre hP (ThmIExists.shift Y)
@@ -143,8 +143,8 @@ theorem addX (hR : IsRFamily I) (hRS : RPositionAdd.Statement) {P : Ideal (MRing
   linarith
 
 theorem swap_sec (hR : IsRFamily I) (hSwap : Swap.Statement) {P : Ideal (MRing ι)} {m : ℕ}
-    (hP : IsArithVar P (m + 1 + 1)) {L : Fin m → HermLine ι} (hL : ∀ j, IsSmoothHerm (L j))
-    {X Y : HermLine ι} (hX : IsSmoothHerm X) (hY : IsSmoothHerm Y) {x y : MRing ι}
+    (hP : IsArithVar P (m + 1 + 1)) {L : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hL : ∀ j, IsSmoothHerm (L j))
+    {X Y : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hX : IsSmoothHerm X) (hY : IsSmoothHerm Y) {x y : MRing ι}
     (hx : IsSectionOn P X x) (hy : IsSectionOn P Y y) (hd : ∀ W, W ∈ divSupp P y → W ∉ divSupp P x) :
     I P (m + 1 + 1) (Fin.snoc (Fin.snoc L X) Y) = I P (m + 1 + 1) (Fin.snoc (Fin.snoc L Y) X) := by
   rw [rAt I hR hP (smooth_snoc hL hX) hY hy, rAt I hR hP (smooth_snoc hL hY) hX hx]
@@ -152,8 +152,8 @@ theorem swap_sec (hR : IsRFamily I) (hSwap : Swap.Statement) {P : Ideal (MRing �
     hP hL hY hX hy hx hd
 
 theorem swap_half (hR : IsRFamily I) (hRS : RPositionAdd.Statement) (hSwap : Swap.Statement)
-    {P : Ideal (MRing ι)} {m : ℕ} (hP : IsArithVar P (m + 1 + 1)) {L : Fin m → HermLine ι}
-    (hL : ∀ j, IsSmoothHerm (L j)) {X Y : HermLine ι} (hX : IsSmoothHerm X) (hY : IsSmoothHerm Y)
+    {P : Ideal (MRing ι)} {m : ℕ} (hP : IsArithVar P (m + 1 + 1)) {L : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι}
+    (hL : ∀ j, IsSmoothHerm (L j)) {X Y : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hX : IsSmoothHerm X) (hY : IsSmoothHerm Y)
     {y : MRing ι} (hy : IsSectionOn P Y y) :
     I P (m + 1 + 1) (Fin.snoc (Fin.snoc L X) Y) = I P (m + 1 + 1) (Fin.snoc (Fin.snoc L Y) X) := by
   classical
@@ -181,7 +181,7 @@ theorem swap_half (hR : IsRFamily I) (hRS : RPositionAdd.Statement) (hSwap : Swa
       · exact ((divSuppArith K ι P (m + 1) Y y W hP hy hW).2 hh).1
   obtain ⟨d₀, hd₀⟩ := Choice.exists_form_avoid (R := ℤ) S hS hS'
   set k : ℕ := ThmIExists.shift X + ∑ l, d₀ l
-  set HK : HermLine ι := ThmIExists.segreLine k
+  set HK : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := ThmIExists.segreLine k
   have hHK : IsSmoothHerm HK := ThmIExists.isSmoothHerm_segreLine k
   have hle : ∀ l, d₀ l ≤ ∑ l, d₀ l := fun l =>
     Finset.single_le_sum (f := d₀) (fun _ _ => Nat.zero_le _) (Finset.mem_univ l)
@@ -208,10 +208,10 @@ theorem swap_half (hR : IsRFamily I) (hRS : RPositionAdd.Statement) (hSwap : Swa
   linarith
 
 theorem swap_last (hR : IsRFamily I) (hRS : RPositionAdd.Statement) (hSwap : Swap.Statement)
-    {P : Ideal (MRing ι)} {m : ℕ} (hP : IsArithVar P (m + 1 + 1)) {L : Fin m → HermLine ι}
-    (hL : ∀ j, IsSmoothHerm (L j)) {X Y : HermLine ι} (hX : IsSmoothHerm X) (hY : IsSmoothHerm Y) :
+    {P : Ideal (MRing ι)} {m : ℕ} (hP : IsArithVar P (m + 1 + 1)) {L : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι}
+    (hL : ∀ j, IsSmoothHerm (L j)) {X Y : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hX : IsSmoothHerm X) (hY : IsSmoothHerm Y) :
     I P (m + 1 + 1) (Fin.snoc (Fin.snoc L X) Y) = I P (m + 1 + 1) (Fin.snoc (Fin.snoc L Y) X) := by
-  set H : HermLine ι := ThmIExists.segreLine (ThmIExists.shift Y)
+  set H : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := ThmIExists.segreLine (ThmIExists.shift Y)
   have hH : IsSmoothHerm H := ThmIExists.isSmoothHerm_segreLine _
   have ht := ThmIExists.isSectionOn_up hP Y
   have hu := ThmIExists.isSectionOn_segre hP (ThmIExists.shift Y)
@@ -227,8 +227,8 @@ section Perm
 
 omit [∀ k, Fintype (ι k)]
 
-theorem snoc_comp_swap {n : ℕ} (L : Fin n → HermLine ι) (A : HermLine ι) (a b : Fin n) :
-    (Fin.snoc L A : Fin (n + 1) → HermLine ι) ∘ Equiv.swap a.castSucc b.castSucc =
+theorem snoc_comp_swap {n : ℕ} (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (a b : Fin n) :
+    (Fin.snoc L A : Fin (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) ∘ Equiv.swap a.castSucc b.castSucc =
       Fin.snoc (L ∘ Equiv.swap a b) A := by
   funext j
   refine Fin.lastCases ?_ (fun j => ?_) j
@@ -241,8 +241,8 @@ theorem snoc_comp_swap {n : ℕ} (L : Fin n → HermLine ι) (A : HermLine ι) (
     rw [Function.comp_apply, h]
     simp
 
-theorem snoc_snoc_comp_swap {m : ℕ} (L : Fin m → HermLine ι) (X Y : HermLine ι) :
-    (Fin.snoc (Fin.snoc L X) Y : Fin (m + 1 + 1) → HermLine ι) ∘
+theorem snoc_snoc_comp_swap {m : ℕ} (L : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (X Y : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) :
+    (Fin.snoc (Fin.snoc L X) Y : Fin (m + 1 + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) ∘
         Equiv.swap (Fin.last m).castSucc (Fin.last (m + 1)) =
       Fin.snoc (Fin.snoc L Y) X := by
   funext j
@@ -268,7 +268,7 @@ theorem ThmISymm.proof (hSwap : Swap.Statement) (hRS : RPositionAdd.Statement) (
       ReciprocityTheory.ChartRestriction.G.AI.I1.GeoNumStatement ι) :
     ThmISymm.Statement := by
   intro K _ ι _ I hR
-  suffices h : ∀ n P, IsArithVar P n → ∀ L : Fin n → HermLine ι, (∀ j, IsSmoothHerm (L j)) →
+  suffices h : ∀ n P, IsArithVar P n → ∀ L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι, (∀ j, IsSmoothHerm (L j)) →
       ∀ σ : Equiv.Perm (Fin n), I P n (L ∘ σ) = I P n L from
     fun P n L σ hP hL => h n P hP L hL σ
   intro n
@@ -289,7 +289,7 @@ theorem ThmISymm.proof (hSwap : Swap.Statement) (hRS : RPositionAdd.Statement) (
       intro P hP
       suffices hc : ∀ σ ∈ Submonoid.closure
           (Set.range fun i : Fin (m + 1) => Equiv.swap i.castSucc i.succ),
-          ∀ L : Fin (m + 1 + 1) → HermLine ι, (∀ j, IsSmoothHerm (L j)) →
+          ∀ L : Fin (m + 1 + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι, (∀ j, IsSmoothHerm (L j)) →
             I P (m + 1 + 1) (L ∘ σ) = I P (m + 1 + 1) L by
         intro L hL σ
         refine hc σ ?_ L hL
