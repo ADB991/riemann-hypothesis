@@ -67,8 +67,8 @@ def cr (b : Base) (ht : b.t = 1) (κ : O →+* b.R ⧸ b.I) : b.Fun where
   f_eq i := i.elim
   g_self i := i.elim
   g_comp i := i.elim
-  prod_f {_ _ y} _ := by simp [ht]
-  prod_g _ _ := by simp
+  prod_f {_ _ y} _ := by simp only [Fintype.univ_empty, Finset.prod_empty, ht, map_one]
+  prod_g _ _ := by simp only [Fintype.univ_empty, Finset.prod_empty]
 
 structure Sub (F : Fn O) where
   In : ∀ {B : CommRingCat.{0}}, F.Pt.obj B → Prop
