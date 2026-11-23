@@ -87,8 +87,8 @@ theorem smul_mem_cocycles₂ (c : cocycles₂ (Rep.trivial ℤ G ℤ)) (a : A.ρ
   rw [map_zsmul, ha, ← add_zsmul, ← add_zsmul, hc]
 
 theorem H0Iso_inv_apply (a : A.ρ.invariants) :
-    (H0Iso A).inv.hom a = (π A 0).hom ((cocyclesIso₀ A).inv.hom a) := by
-  have e : (cocyclesIso₀ A).inv ≫ π A 0 = (H0Iso A).inv := by
+    (groupCohomology.H0Iso A).inv.hom a = (π A 0).hom ((groupCohomology.cocyclesIso₀ A).inv.hom a) := by
+  have e : (groupCohomology.cocyclesIso₀ A).inv ≫ π A 0 = (groupCohomology.H0Iso A).inv := by
     rw [Iso.inv_comp_eq, ← π_comp_H0Iso_hom, Category.assoc, Iso.hom_inv_id, Category.comp_id]
   rw [← e]
   rfl
@@ -97,10 +97,10 @@ theorem cupCharClass_apply (χ : Additive G →+ AddCircle (1 : ℚ))
     (c : cocycles₂ (Rep.trivial ℤ G ℤ)) (hc : charClass χ = H2π _ c) (a : A.ρ.invariants) :
     (cupCharClass A χ).hom a = H2π A ⟨fun p => c p • (a : A), smul_mem_cocycles₂ c a⟩ := by
   change (map (MonoidHom.id G) (ρ_ A).hom 2).hom
-    (cupH (A := A) (B := 𝟙_ (Rep ℤ G)) (zero_add 2) ((H0Iso A).inv.hom a) (charClass χ)) = _
+    (cupH (A := A) (B := 𝟙_ (Rep ℤ G)) (zero_add 2) ((groupCohomology.H0Iso A).inv.hom a) (charClass χ)) = _
   rw [H0Iso_inv_apply, hc]
   change map (MonoidHom.id G) (ρ_ A).hom 2 (cupH (A := A) (B := 𝟙_ (Rep ℤ G)) (zero_add 2)
-    (π A 0 ((cocyclesIso₀ A).inv a))
+    (π A 0 ((groupCohomology.cocyclesIso₀ A).inv a))
     (π (𝟙_ (Rep ℤ G)) 2 ((isoCocycles₂ (𝟙_ (Rep ℤ G))).inv c))) =
     π A 2 ((isoCocycles₂ A).inv ⟨fun p => c p • (a : A), smul_mem_cocycles₂ c a⟩)
   rw [cupH_π]
