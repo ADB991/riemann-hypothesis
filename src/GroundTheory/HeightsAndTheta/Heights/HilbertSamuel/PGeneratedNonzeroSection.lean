@@ -372,7 +372,7 @@ def ratChart (c : ∀ k, ι k) : Submodule ℚ Ω where
 theorem mem_ratChart_of_mem {c : ∀ k, ι k} {w : Ω} (hw : w ∈ chartRingZ y c) : w ∈ ratChart y c :=
   ⟨1, one_pos, by simpa using hw⟩
 
-theorem aeval_homog_mem (c : ∀ k, ι k) {p : MRingOver ℚ ι} {d : K → ℕ} (hp : IsMultiHomog p d) :
+theorem aeval_homog_mem (c : ∀ k, ι k) {p : MRingOver ℚ ι} {d : K → ℕ} (hp : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p d) :
     aeval y p * ∏ k, y ⟨k, c k⟩ ^ (-(d k : ℤ)) ∈ ratChart y c := by
   classical
   set_option synthInstance.maxHeartbeats 100000 in
@@ -433,14 +433,14 @@ theorem mem_cellMon_chart {c : ∀ k, ι k} {t : MRingOver ℚ ι} (ht : t ∈ K
     exact ⟨e + e', by simp only [Pi.add_apply, pow_add, Finset.prod_mul_distrib]⟩
 
 theorem homog_prod_X (c : ∀ k, ι k) (e : K → ℕ) :
-    IsMultiHomog (∏ k, (X ⟨k, c k⟩ : MRingOver ℚ ι) ^ e k) e := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (∏ k, (X ⟨k, c k⟩ : MRingOver ℚ ι) ^ e k) e := by
   have := GenOnFibres.homog_map (Int.castRingHom ℚ) (GenOnFibres.homog_cmon c e)
   simpa [GenOnFibres.cmon, map_prod] using this
 
 theorem prod_X_ne_zero (c : ∀ k, ι k) (e : K → ℕ) : (∏ k, (X ⟨k, c k⟩ : MRingOver ℚ ι) ^ e k) ≠ 0 :=
   Finset.prod_ne_zero_iff.mpr fun _ _ => pow_ne_zero _ (X_ne_zero _)
 
-theorem eq_of_homog {f : MRingOver ℚ ι} {a b : K → ℕ} (ha : IsMultiHomog f a) (hb : IsMultiHomog f b)
+theorem eq_of_homog {f : MRingOver ℚ ι} {a b : K → ℕ} (ha : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) (hb : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f b)
     (hf : f ≠ 0) : a = b := by
   obtain ⟨m, hm⟩ : f.support.Nonempty := by
     rw [Finset.nonempty_iff_ne_empty, Ne, MvPolynomial.support_eq_empty]

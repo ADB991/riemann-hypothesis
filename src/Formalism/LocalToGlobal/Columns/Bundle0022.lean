@@ -96,10 +96,10 @@ section RhoScal
 variable {K : Type} [Field K] {ι : Type} [Fintype ι] {n : ℕ}
 
 theorem tensorWeights_scalar_action (lam : ι → DomWeight n) (t : ι → Kˣ) :
-    rhoK lam (fun τ => (brpSc K (t τ) : GL (Fin n) K)) =
+    Formalism.L2.DIV.rhoK lam (fun τ => (brpSc K (t τ) : GL (Fin n) K)) =
       (∏ τ, ((t τ : K) ^ (∑ i, (lam τ).w i))) • (1 : Module.End K (VV K lam)) := by
   classical
-  have key : ∀ S : Finset ι, rhoK lam (fun τ => if τ ∈ S then (brpSc K (t τ) : GL (Fin n) K) else 1) =
+  have key : ∀ S : Finset ι, Formalism.L2.DIV.rhoK lam (fun τ => if τ ∈ S then (brpSc K (t τ) : GL (Fin n) K) else 1) =
       (∏ τ ∈ S, ((t τ : K) ^ (∑ i, (lam τ).w i))) • (1 : Module.End K (VV K lam)) := by
     intro S
     refine Finset.induction_on S ?_ (fun a S ha ih => ?_)

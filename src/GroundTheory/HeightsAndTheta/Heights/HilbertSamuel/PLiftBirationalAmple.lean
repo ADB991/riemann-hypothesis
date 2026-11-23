@@ -81,7 +81,7 @@ theorem chartLat_var [DecidableEq K] (p : Σ k, ι k) : y p ∈ chartLat y (Pi.s
 
 
 open Classical in
-theorem chartLat_form {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) :
+theorem chartLat_form {g : MRing ι} {d : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) :
     aeval y g ∈ chartLat y (fun k => (d k : ℤ)) 1 := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [g.as_sum, map_sum]
@@ -110,10 +110,10 @@ section Ratios
 variable {Ω : Type} [Field Ω] {J : Type} [Fintype J] (z : (Σ _ : Unit, J) → Ω)
 
 def IsRatio (w : Ω) : Prop :=
-  ∃ (d : Unit → ℕ) (g h : MRing (fun _ : Unit => J)), IsMultiHomog g d ∧ IsMultiHomog h d ∧
+  ∃ (d : Unit → ℕ) (g h : MRing (fun _ : Unit => J)), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h d ∧
     aeval z h ≠ 0 ∧ aeval z g = w * aeval z h
 
-theorem homog_X_unit (j : J) : IsMultiHomog (X ⟨(), j⟩ : MRing (fun _ : Unit => J)) (fun _ => 1) := by
+theorem homog_X_unit (j : J) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (X ⟨(), j⟩ : MRing (fun _ : Unit => J)) (fun _ => 1) := by
   have h := GenOnFibres.homog_X (R := ℤ) (ι := fun _ : Unit => J) () j
   intro m hm k
   rw [h m hm k]

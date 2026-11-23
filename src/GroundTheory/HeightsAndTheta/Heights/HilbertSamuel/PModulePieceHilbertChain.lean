@@ -23,14 +23,14 @@ attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
 theorem exists_rel_colon_prime (J₁ J : Ideal (MRing ι)) (hJ₁ : IsMultiHomogIdeal J₁)
     (hJ : IsMultiHomogIdeal J) (hle : J ≤ J₁) (hne : J ≠ J₁) :
-    ∃ (f : MRing ι) (c : K → ℕ), IsMultiHomog f c ∧ f ∈ J₁ ∧ f ∉ J ∧
+    ∃ (f : MRing ι) (c : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f c ∧ f ∈ J₁ ∧ f ∉ J ∧
       (J.colon {f}).IsPrime ∧ IsMultiHomogIdeal (J.colon {f}) := by
   classical
   set e := Fintype.equivFin K
   let 𝒜 := weightedHomogeneousSubmodule ℤ (lexW (ι := ι) e)
   have hJh : J.IsHomogeneous 𝒜 := (isHomogeneous_lex_iff e J).mpr hJ
   let S : Set (Ideal (MRing ι)) :=
-    {I | ∃ f, (∃ c, IsMultiHomog f c) ∧ f ∈ J₁ ∧ f ∉ J ∧ I = J.colon {f}}
+    {I | ∃ f, (∃ c, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f c) ∧ f ∈ J₁ ∧ f ∉ J ∧ I = J.colon {f}}
   have hS : S.Nonempty := by
     obtain ⟨T, hT, hJ₁T⟩ := hJ₁
     by_contra hemp
@@ -85,7 +85,7 @@ theorem exists_relFiltration (J₁ : Ideal (MRing ι)) (hJ₁ : IsMultiHomogIdea
     ∃ (N : ℕ) (F : Fin (N + 1) → Ideal (MRing ι)) (f : Fin N → MRing ι) (c : Fin N → K → ℕ)
       (q : Fin N → Ideal (MRing ι)),
       F 0 = J ∧ F (Fin.last N) = J₁ ∧ ∀ j : Fin N,
-        IsMultiHomog (f j) (c j) ∧ f j ∈ J₁ ∧ F j.succ = F j.castSucc ⊔ Ideal.span {f j} ∧
+        ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f j) (c j) ∧ f j ∈ J₁ ∧ F j.succ = F j.castSucc ⊔ Ideal.span {f j} ∧
         (q j).IsPrime ∧ IsMultiHomogIdeal (q j) ∧
         ∀ g, g ∈ q j ↔ g * f j ∈ F j.castSucc := by
   induction J using IsNoetherian.induction with
@@ -121,7 +121,7 @@ theorem relIndex_toAddSubgroup {V : Type*} [AddCommGroup V] (A B : Submodule ℤ
     A.toAddSubgroup.relIndex B.toAddSubgroup = Nat.card (B ⧸ A.comap B.subtype) := rfl
 
 theorem relIndex_piece_step {F q : Ideal (MRing ι)} (hF : IsMultiHomogIdeal F) {f : MRing ι}
-    {c : K → ℕ} (hf : IsMultiHomog f c) (hq : ∀ g, g ∈ q ↔ g * f ∈ F) {a : K → ℕ}
+    {c : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f c) (hq : ∀ g, g ∈ q ↔ g * f ∈ F) {a : K → ℕ}
     (hca : ∀ k, c k ≤ a k) :
     (F.restrictScalars ℤ ⊓ mHom ι a).toAddSubgroup.relIndex
       ((F ⊔ Ideal.span {f}).restrictScalars ℤ ⊓ mHom ι a).toAddSubgroup =
@@ -190,7 +190,7 @@ theorem relIndex_piece_step {F q : Ideal (MRing ι)} (hF : IsMultiHomogIdeal F) 
 theorem modPieceCard_chain (a : K → ℕ) (J₁ : Ideal (MRing ι)) :
     ∀ (N : ℕ) (F : Fin (N + 1) → Ideal (MRing ι)) (f : Fin N → MRing ι) (c : Fin N → K → ℕ)
       (q : Fin N → Ideal (MRing ι)), IsMultiHomogIdeal (F 0) → F (Fin.last N) = J₁ →
-      (∀ j, IsMultiHomog (f j) (c j) ∧ F j.succ = F j.castSucc ⊔ Ideal.span {f j} ∧
+      (∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f j) (c j) ∧ F j.succ = F j.castSucc ⊔ Ideal.span {f j} ∧
         ∀ g, g ∈ q j ↔ g * f j ∈ F j.castSucc) →
       (∀ j k, c j k ≤ a k) →
       modPieceCard J₁ (F 0) a = ∏ j, Nat.card (mPiece (q j) (a - c j)) := by
@@ -207,7 +207,7 @@ theorem modPieceCard_chain (a : K → ℕ) (J₁ : Ideal (MRing ι)) :
     have h0' : IsMultiHomogIdeal (F (Fin.succ 0)) := by
       rw [hF1]
       exact isMultiHomogIdeal_sup_span h0 hf0
-    have hs' : ∀ j : Fin N, IsMultiHomog (f j.succ) (c j.succ) ∧
+    have hs' : ∀ j : Fin N, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f j.succ) (c j.succ) ∧
         F j.succ.succ = F j.succ.castSucc ⊔ Ideal.span {f j.succ} ∧
         ∀ g, g ∈ q j.succ ↔ g * f j.succ ∈ F j.succ.castSucc := fun j => hs j.succ
     have htail := ih (fun i => F i.succ) (fun j => f j.succ) (fun j => c j.succ)

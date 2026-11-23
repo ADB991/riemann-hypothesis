@@ -319,9 +319,9 @@ theorem SectionOrderAtPoint.proof : SectionOrderAtPoint.Statement := by
     omega
   set A : MRing ι := (∏ k, (X ⟨k, c k⟩ : MRing ι) ^ em k) * G
   set B : MRing ι := (∏ k, (X ⟨k, c k⟩ : MRing ι) ^ ep k) * H
-  have hA : IsMultiHomog A (em + dg) :=
+  have hA : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog A (em + dg) :=
     LocalRep.isMultiHomog_mul (LocalRep.isMultiHomog_chartMono c em) hG
-  have hB : IsMultiHomog B (em + dg) :=
+  have hB : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog B (em + dg) :=
     hdeg' ▸ LocalRep.isMultiHomog_mul (LocalRep.isMultiHomog_chartMono c ep) hH
   set t := s * ∏ k, y ⟨k, c k⟩ ^ (-((τ : ℤ) * a k))
   have ht : IsIntegral (chartRingZ y c) t := hs c hyc

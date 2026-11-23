@@ -458,7 +458,7 @@ theorem ellMap_cancel {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Ho
   subst h₁
   refine ⟨l, ⟨hω ▸ kω, ⟨kg.trans hg.symm, hp.cancel kp h₂, ?_⟩, ?_, fun a => ?_⟩, rfl⟩
   · have e : LBIso (C.P.L.pull (l ≫ φ)) (C'.P.L.pull l) :=
-      LBIso.chartPull (chartPullSame C.P.L _ _ _ l fun _ => rfl) (chartPullPull C'.P.L l l rfl) hL
+      LBIso.chartPull (chartPullSame C.P.L _ _ _ l fun _ => rfl) (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull C'.P.L l l rfl) hL
     exact LBIso.trans (pull_isLB C'.P.isLB _) (pull_isLB C.P.isLB _) C''.P.isLB e.symm kL
   · unfold IsVecOver at hv kv ⊢
     apply hp.1.hom_ext

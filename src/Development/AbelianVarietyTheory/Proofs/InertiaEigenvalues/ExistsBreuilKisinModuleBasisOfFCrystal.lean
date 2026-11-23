@@ -340,6 +340,7 @@ theorem ev_injective (t : Wq l a →ₐ[ℤ_[l]] O) (K : Type) [NormedField K] [
   exact mul_ne_zero (pow_ne_zero m (Nat.cast_ne_zero.2 hl.out.ne_zero))
     ((u.isUnit.map t).map (algebraMap O K)).ne_zero h2.symm
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem exists_basis {V : Type} [AddCommGroup V] [Module (OW l O) V] [Module (WCb l) V]
     (hW : ∀ (w : WCb l) (x : V), w • x = ((1 : O) ⊗ₜ[ℤ_[l]] w) • x) {n q : ℕ}
     (v : Module.Basis (Fin n) (OW l O) V) (c : Module.Basis (Fin q) (WCb l) V) (N : AddSubgroup V)

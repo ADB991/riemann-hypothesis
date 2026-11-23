@@ -38,7 +38,7 @@ theorem weight_blockWt_apply (d : (Σ k, ι k) →₀ ℕ) (k : K) :
   · simp
 
 theorem isMultiHomog_iff (f : MRingOver R ι) (a : K → ℕ) :
-    IsMultiHomog f a ↔ IsWeightedHomogeneous blockWt f a := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a ↔ IsWeightedHomogeneous blockWt f a := by
   constructor
   · intro h d hd
     funext k
@@ -80,7 +80,7 @@ theorem map_monomial_one (d : (Σ k, ι k) →₀ ℕ) :
   rw [map_monomial, map_one]
 
 theorem homog_monomial_one_of_zmod [Fact p.Prime] {d : (Σ k, ι k) →₀ ℕ} {e : K → ℕ}
-    (h : IsMultiHomog (monomial d 1 : MRingOver (ZMod p) ι) e) : IsMultiHomog (monomial d 1 : MRingOver ℤ ι) e :=
+    (h : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (monomial d 1 : MRingOver (ZMod p) ι) e) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (monomial d 1 : MRingOver ℤ ι) e :=
   by
   classical
   exact GenOnFibres.homog_monomial d 1 e fun k => h d (by rw [mem_support_iff, coeff_monomial, if_pos rfl]; exact one_ne_zero) k
@@ -105,8 +105,8 @@ theorem map_liftPoly [NeZero p] (F : MRingOver (ZMod p) ι) :
   rw [coeff_map, coeff_liftPoly]
   simp
 
-theorem homog_liftPoly {F : MRingOver (ZMod p) ι} {a : K → ℕ} (hF : IsMultiHomog F a) :
-    IsMultiHomog (liftPoly p F) a := fun d hd => by
+theorem homog_liftPoly {F : MRingOver (ZMod p) ι} {a : K → ℕ} (hF : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog F a) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (liftPoly p F) a := fun d hd => by
   refine hF d (mem_support_iff.mpr fun h0 => mem_support_iff.mp hd ?_)
   rw [coeff_liftPoly, h0]
   simp
@@ -135,7 +135,7 @@ theorem liftOfLE_mk {S : Type} [CommRing S] {M : Type} [AddCommGroup M] [Module 
   rw [IsLocalizedModule.mk_eq_mk', IsLocalizedModule.liftOfLE_mk', ← IsLocalizedModule.mk_eq_mk']
 
 theorem mk_mem_locPart {S : Type} [CommRing S] {V : Ideal (MRingOver S ι)} {T : Submonoid (MRingOver S ι)}
-    {c : K → ℤ} {m : MRingOver S ι ⧸ V} {t : T} {e : K → ℕ} (ht : IsMultiHomog (t : MRingOver S ι) e)
+    {c : K → ℤ} {m : MRingOver S ι ⧸ V} {t : T} {e : K → ℕ} (ht : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (t : MRingOver S ι) e)
     (hm : m ∈ KH.quotPart S V (c + fun k => (e k : ℤ))) :
     LocalizedModule.mk m t ∈ KH.locPart ι (KH.quotPart S V) T c :=
   Submodule.subset_span ⟨m, t, e, ht, hm, rfl⟩
@@ -222,7 +222,7 @@ section Kernel
 variable (y : (Σ k, ι k) → Ω) (p : ℕ)
 
 def ZeroOrHomog (c : K → ℤ) (F : MRingOver ℤ ι) : Prop :=
-  F = 0 ∨ ((∀ k, 0 ≤ c k) ∧ IsMultiHomog F fun k => (c k).toNat)
+  F = 0 ∨ ((∀ k, 0 ≤ c k) ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog F fun k => (c k).toNat)
 
 variable {y p}
 
@@ -240,7 +240,7 @@ theorem ZeroOrHomog.neg {c : K → ℤ} {F : MRingOver ℤ ι} (hF : ZeroOrHomog
   have h := GenOnFibres.homog_sub (GenOnFibres.homog_zero _) hF
   rwa [zero_sub] at h
 
-theorem ZeroOrHomog.mul {c : K → ℤ} {F t : MRingOver ℤ ι} {e : K → ℕ} (ht : IsMultiHomog t e) (hF : ZeroOrHomog c F) :
+theorem ZeroOrHomog.mul {c : K → ℤ} {F t : MRingOver ℤ ι} {e : K → ℕ} (ht : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog t e) (hF : ZeroOrHomog c F) :
     ZeroOrHomog (c + fun k => (e k : ℤ)) (t * F) := by
   rcases hF with rfl | ⟨hc, hF⟩
   · left; exact mul_zero t
@@ -270,10 +270,10 @@ theorem quotPart_normal {c : K → ℤ} {m : MRingOver ℤ ι ⧸ GenOnFibres.id
 theorem locPart_normal {T : Submonoid (MRingOver ℤ ι)} {a : K → ℤ}
     {x : LocalizedModule T (MRingOver ℤ ι ⧸ GenOnFibres.idealOver y ℤ)}
     (hx : x ∈ KH.locPart ι (KH.quotPart ℤ (GenOnFibres.idealOver y ℤ)) T a) :
-    ∃ (F t : MRingOver ℤ ι) (e : K → ℕ) (ht : t ∈ T), IsMultiHomog t e ∧ ZeroOrHomog (a + fun k => (e k : ℤ)) F ∧
+    ∃ (F t : MRingOver ℤ ι) (e : K → ℕ) (ht : t ∈ T), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog t e ∧ ZeroOrHomog (a + fun k => (e k : ℤ)) F ∧
       x = LocalizedModule.mk (Ideal.Quotient.mk _ F) ⟨t, ht⟩ := by
   refine span_int_induction _ (P := fun x => ∃ (F t : MRingOver ℤ ι) (e : K → ℕ) (ht : t ∈ T),
-      IsMultiHomog t e ∧ ZeroOrHomog (a + fun k => (e k : ℤ)) F ∧
+      ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog t e ∧ ZeroOrHomog (a + fun k => (e k : ℤ)) F ∧
         x = LocalizedModule.mk (Ideal.Quotient.mk _ F) ⟨t, ht⟩) ?_ ?_ ?_ ?_ hx
   · rintro _ ⟨m, t, e, hte, hm, rfl⟩
     obtain ⟨F, hF, rfl⟩ := quotPart_normal y hm
@@ -320,7 +320,7 @@ theorem ker_locPart [Fact p.Prime] (hP : IsMultiHomogIdeal (mCoordIdeal y)) (I :
       exact Ideal.mem_bot.mp (Ideal.mem_comap.mp hg0)
     rwa [MvPolynomial.ker_map, ZMod.ker_intCastRingHom, Ideal.map_span, Set.image_singleton] at h1
   obtain ⟨g, rfl⟩ := Ideal.mem_span_singleton'.mp hg0'
-  have hU : IsMultiHomog (monomial d 1 : MRingOver ℤ ι) fun k => ∑ i, d ⟨k, i⟩ := by
+  have hU : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (monomial d 1 : MRingOver ℤ ι) fun k => ∑ i, d ⟨k, i⟩ := by
     classical
     exact GenOnFibres.homog_monomial d 1 _ fun k => rfl
   have hUF := GenOnFibres.homog_mul hU hF
@@ -330,7 +330,7 @@ theorem ker_locPart [Fact p.Prime] (hP : IsMultiHomogIdeal (mCoordIdeal y)) (I :
     weightedHomogeneousComponent_eq_self ((isMultiHomog_iff _ _).mp hUF)] at hcomp
   have hq' := comp_mem hP hq D
   set g' := weightedHomogeneousComponent blockWt D g
-  have hg' : IsMultiHomog g' D := (isMultiHomog_iff _ _).mpr (weightedHomogeneousComponent_isWeightedHomogeneous _ _)
+  have hg' : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g' D := (isMultiHomog_iff _ _).mpr (weightedHomogeneousComponent_isWeightedHomogeneous _ _)
   have hD : D = fun k => ((a + fun k => (((fun k => ∑ i, d ⟨k, i⟩) + e) k : ℤ)) k).toNat := by
     funext k
     have := hc k

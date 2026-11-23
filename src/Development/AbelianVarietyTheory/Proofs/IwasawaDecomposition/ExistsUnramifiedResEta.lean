@@ -272,7 +272,7 @@ theorem exists_unramified_resEta : ∀ (F L : Type) [Field F] [NumberField F] [F
     show ψ (freeHom _ (Multiplicative.ofAdd (Multiplicative.toAdd m))) = 1
     rw [freeHom_apply, map_prod]
     exact Finset.prod_eq_one fun v _ => by rw [map_zpow, hψF, one_zpow]
-  obtain ⟨χ, hχc, hχu, hχU, hχA⟩ := GlobalTheory.exists_unitary_char_of_open_subgroup_and_hom (Ideles L)
+  obtain ⟨χ, hχc, hχu, hχU, hχA⟩ := GlobalTheory.exists_unitary_char_of_open_subgroup_and_hom (Neutral.B1.Ideles L)
     (Lˣ × Multiplicative (HeightOneSpectrum (𝓞 F) →₀ ℤ)) (unitIdl L)
     (GlobalTheory.Mem.UnitOpen.unit_open_and_congr_open L).1 ((Neutral.B1.diagUnits L).coprod β) (MonoidHom.coprod 1 b) ψ hψc hψu
     (fun y => by

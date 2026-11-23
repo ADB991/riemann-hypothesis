@@ -106,7 +106,7 @@ theorem ProjAvoidingForm.proof (hSeg : SegreArith.Statement) : ProjAvoidingForm.
     ring
   choose n hn using hden
   let L : Fin (D + 1) → MRing ι := fun j => segreSub (∑ i, C (n j i) * X i)
-  have hLhom : ∀ j, IsMultiHomog (L j) (fun _ => 1) := fun j => isMultiHomog_segreSub_linear (n j)
+  have hLhom : ∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (L j) (fun _ => 1) := fun j => isMultiHomog_segreSub_linear (n j)
   have hLz : ∀ (z : (Σ k, ι k) → ℂ) j,
       eval z (map (Int.castRingHom ℂ) (L j)) = (N : ℂ) * aeval (segreCoords z) (ℓq j) := by
     intro z j

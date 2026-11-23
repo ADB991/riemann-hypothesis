@@ -142,9 +142,9 @@ theorem mem_map_of_jetCoeff {R : Type} [CommRing R] (p : Ideal R) (d n : ℕ) {a
   let π := Ideal.Quotient.mkₐ R (p.map (algebraMap R (ReciprocityTheory.ChartRestriction.G.Chart.JetR R (Fin d) n)))
   have hJ : ((RingHom.ker (jetAug R (Fin d) n)).map π) ^ (n + 1) = ⊥ := by
     rw [← Ideal.map_pow, ker_jetAug_pow, Ideal.map_bot]
-  let g := jetLift (R ⧸ p) _ hJ (fun j => π (zR n j)) (fun j => Ideal.mem_map_of_mem _ (zR_mem_ker n j))
+  let g := jetLift (R ⧸ p) _ hJ (fun j => π (ReciprocityTheory.ChartRestriction.G.Chart.zR n j)) (fun j => Ideal.mem_map_of_mem _ (zR_mem_ker n j))
   have e : (g.restrictScalars R).comp (jetCoeff R (R ⧸ p) (Fin d) n) = π := jet_ext fun j => by
-    show g (jetCoeff R (R ⧸ p) (Fin d) n (zR n j)) = _
+    show g (jetCoeff R (R ⧸ p) (Fin d) n (ReciprocityTheory.ChartRestriction.G.Chart.zR n j)) = _
     rw [jetCoeff_zR, jetLift_zR]
   have := AlgHom.congr_fun e a
   rw [AlgHom.comp_apply, ha, map_zero] at this
@@ -249,7 +249,7 @@ theorem ker_jetAug_eq (k : Type) [CommRing k] (hk : IsField k) (X : Type) [AddCo
       (y : sp (R₀ := k) (DualNumber k) ⟶ splitTorus (Spec (CommRingCat.of k)) X), Chart.spMap φ ≫ x n = y ≫ i → ∀ j,
       (Scheme.ΓSpecIso (CommRingCat.of (DualNumber k))).inv.hom (1 + φ (T j)) =
         y.left.appTop.hom (charUnit (Spec (CommRingCat.of k)) X (b j)).val) :
-    RingHom.ker (jetAug k (Fin d) n) = Ideal.span (Set.range T ∪ Set.range fun l => ψ (zR n l)) := by
+    RingHom.ker (jetAug k (Fin d) n) = Ideal.span (Set.range T ∪ Set.range fun l => ψ (ReciprocityTheory.ChartRestriction.G.Chart.zR n l)) := by
   letI := hk.toField
   exact ker_jetAug_eq_span_torus_union_quotient k X r b G B q i hq hi hpb d g n x xB hx hxB ψ hψ T hT h
 
@@ -320,8 +320,8 @@ theorem torus_jets (hk : IsField (R ⧸ I ^ (e + 1))) (c : D.toPre.P.A.left → 
   have hfa : ∀ s, jetAug _ (Fin d) n (f s) = algebraMap R _ (jetAug R (Fin g) n s) := fun s =>
     AlgHom.congr_fun (jet_ext (ψ₁ := ((jetAug _ (Fin d) n).restrictScalars R).comp fa)
       (ψ₂ := (Algebra.ofId R _).comp (jetAug R (Fin g) n)) fun j => by
-        show (jetAug _ (Fin d) n).comp ψ (jetCoeff R (R ⧸ I ^ (e + 1)) (Fin g) n (zR n j)) =
-          algebraMap R _ (jetAug R (Fin g) n (zR n j))
+        show (jetAug _ (Fin d) n).comp ψ (jetCoeff R (R ⧸ I ^ (e + 1)) (Fin g) n (ReciprocityTheory.ChartRestriction.G.Chart.zR n j)) =
+          algebraMap R _ (jetAug R (Fin g) n (ReciprocityTheory.ChartRestriction.G.Chart.zR n j))
         rw [hψa, jetCoeff_zR, jetAug_zR, jetAug_zR, map_zero]) s
   have hfl : IsLocalHom f := ⟨fun s hs => isUnit_of_aug _ (ker_jetAug_pow (R := R) (Fin g) n)
     (hmk.1 _ (hfa s ▸ hs.map (jetAug _ (Fin d) n)))⟩
@@ -371,7 +371,7 @@ theorem torus_jets (hk : IsField (R ⧸ I ^ (e + 1))) (c : D.toPre.P.A.left → 
     · rintro _ (⟨j, rfl⟩ | ⟨l, rfl⟩)
       · obtain ⟨s, hs⟩ := hconst (w j)⁻¹.val
         exact Or.inr ⟨j, s, -1, by rw [hs, f.map_neg, f.map_one, ← sub_eq_add_neg]⟩
-      · exact Or.inl ⟨zR n l, congrArg ψ (jetCoeff_zR n l).symm⟩
+      · exact Or.inl ⟨ReciprocityTheory.ChartRestriction.G.Chart.zR n l, congrArg ψ (jetCoeff_zR n l).symm⟩
     · obtain ⟨u, hu⟩ := exists_unit_prod f v hmul b a
       rw [← hu, mul_comm (v _).val, ← _root_.mul_assoc, ← map_mul]
       exact hN a ha _

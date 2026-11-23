@@ -121,7 +121,7 @@ theorem cf_mem_HHa {φ : K' →+ K} (hφ : ∀ a x, φ (j a * x) = a * φ x) {T 
 theorem polyAction_map {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeight n) (g : ι → GL (Fin n) K)
     (g' : ι → GL (Fin n) K')
     (h : ∀ t, (g' t : Matrix (Fin n) (Fin n) K') = (g t : Matrix (Fin n) (Fin n) K).map j) (F : Pol K ι n) :
-    actP lam g' (map j F) = map j (actP lam g F) := by
+    Formalism.L2.DIV.actP lam g' (map j F) = map j (Formalism.L2.DIV.actP lam g F) := by
   have h1 : detTwK lam g' = j (detTwK lam g) := by
     simp only [detTwK, detPow, map_prod, Units.val_zpow_eq_zpow_val, map_zpow₀,
       Matrix.GeneralLinearGroup.val_det_apply, h, RingHom.map_det, RingHom.mapMatrix_apply]
@@ -133,7 +133,7 @@ theorem polyAction_map {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeigh
       simp only [map_mul, hp, map_X]
       congr 1
       simp [trAct, Formalism.GradedWeylDivisibility.blockAct, h]
-  simp only [actP, LinearMap.smul_apply, AlgHom.toLinearMap_apply, map_smul', h1, h2]
+  simp only [Formalism.L2.DIV.actP, LinearMap.smul_apply, AlgHom.toLinearMap_apply, map_smul', h1, h2]
 
 end Coef
 
@@ -260,7 +260,7 @@ theorem rhoM_map {Ix : Type} [Fintype Ix] (pl : Ix → (E →+* ℂ)) (lam : Ix 
       map (incF c c' hle) (rhoM c (fun t => embF c (pl t)) lam ga v : Pol c.F Ix n) := by
   unfold rhoM
   split_ifs with hg
-  · show actP lam _ (v' : Pol c'.F Ix n) = map _ (actP lam _ (v : Pol c.F Ix n))
+  · show Formalism.L2.DIV.actP lam _ (v' : Pol c'.F Ix n) = map _ (Formalism.L2.DIV.actP lam _ (v : Pol c.F Ix n))
     rw [h]
     refine polyAction_map _ lam _ _ (fun t => ?_) _
     rfl

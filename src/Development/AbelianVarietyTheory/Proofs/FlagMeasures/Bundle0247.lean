@@ -270,8 +270,8 @@ theorem differentIdeal_eq_map_of_unramified (hu : Algebra.FormallyUnramified (�
     (GlobalTheory.formallyUnramified_ringOfIntegers_iff_differentIdeal_eq_top F E).1 hu, Ideal.top_mul]
 
 theorem dInv_eq_inv_coe (K : Type) [Field K] [NumberField K] (j : ℕ) :
-    dInv K j = ((↑(differentIdeal ℤ (𝓞 K) ^ j) : FractionalIdeal (𝓞 K)⁰ K))⁻¹ := by
-  rw [dInv, FractionalIdeal.coeIdeal_pow, inv_pow]
+    GlobalTheory.SgGlob.dInv K j = ((↑(differentIdeal ℤ (𝓞 K) ^ j) : FractionalIdeal (𝓞 K)⁰ K))⁻¹ := by
+  rw [GlobalTheory.SgGlob.dInv, FractionalIdeal.coeIdeal_pow, inv_pow]
 
 theorem algebraMap_mem_inv_map_iff (I : Ideal (𝓞 F)) (hI : I ≠ ⊥) (y : F) :
     algebraMap F E y ∈ ((↑(I.map (algebraMap (𝓞 F) (𝓞 E))) : FractionalIdeal (𝓞 E)⁰ E))⁻¹ ↔
@@ -365,10 +365,10 @@ end Fixed
 
 theorem mem_dInv_imV_iff : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → Algebra.FormallyUnramified (𝓞 F) (𝓞 E) →
-    ∀ (j : ℕ) (x : E), (x ∈ dInv E j ∧ imV x = 0) ↔ ∃ y ∈ dInv F j, algebraMap F E y = x := by
+    ∀ (j : ℕ) (x : E), (x ∈ GlobalTheory.SgGlob.dInv E j ∧ imV x = 0) ↔ ∃ y ∈ GlobalTheory.SgGlob.dInv F j, algebraMap F E y = x := by
   intro F E _ _ _ _ _ σ h hu j x
   have hIne : differentIdeal ℤ (𝓞 F) ^ j ≠ ⊥ := pow_ne_zero _ differentIdeal_ne_bot
-  have hE : dInv E j = ((↑((differentIdeal ℤ (𝓞 F) ^ j).map (algebraMap (𝓞 F) (𝓞 E))) :
+  have hE : GlobalTheory.SgGlob.dInv E j = ((↑((differentIdeal ℤ (𝓞 F) ^ j).map (algebraMap (𝓞 F) (𝓞 E))) :
       FractionalIdeal (𝓞 E)⁰ E))⁻¹ := by
     rw [dInv_eq_inv_coe, differentIdeal_eq_map_of_unramified hu, Ideal.map_pow]
   constructor

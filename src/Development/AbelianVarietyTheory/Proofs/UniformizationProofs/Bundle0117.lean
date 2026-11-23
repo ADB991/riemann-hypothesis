@@ -234,7 +234,7 @@ theorem triv_lam_pull {B : Over S} {B' : Over S'} [GrpObj B] [IsCommMonObj B] [G
       (fun I => (psum B (x2 B) I.down).left) (fun I => (-1) ^ (2 - I.down.card)) U.left
       fun I => psum_push hb x (x2 B) U hx I.down
   exact triv_of_lbIso l₂ (pull_isLB l₃ _)
-    (LBIso.chartPull c (chartPullPull (abelian₂ B O) U.left U.left rfl) (GtBaseChange.lbIso_refl l₃)) t₂
+    (LBIso.chartPull c (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull (abelian₂ B O) U.left U.left rfl) (GtBaseChange.lbIso_refl l₃)) t₂
 
 theorem isGrpPullback_thickMap {R : Type} [CommRing R] (I : Ideal R) (G : Over (Spec (CommRingCat.of R))) [GrpObj G]
     (e : ℕ) : IsGrpPullback (thickObj R I e G) (thickObj R I (e + 1) G) (thickTrans R I e) (thickMap R I e G) :=

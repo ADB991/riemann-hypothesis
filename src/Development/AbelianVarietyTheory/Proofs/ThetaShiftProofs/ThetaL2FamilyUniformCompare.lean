@@ -167,9 +167,9 @@ theorem fibLift_fst (x : Sp ℂ ⟶ Xo.X) (e : Sp ℂ ⟶ Xo.univ.t.G.left) (he 
     fibLift x e he ≫ Formalism.L2.PjFree.gxFst x = e := pullback.lift_snd _ _ _
 
 theorem fibLift_snd (x : Sp ℂ ⟶ Xo.X) (e : Sp ℂ ⟶ Xo.univ.t.G.left) (he : e ≫ Xo.univ.t.G.hom = x) :
-    fibLift x e he ≫ gxSnd x = 𝟙 _ := pullback.lift_fst _ _ _
+    fibLift x e he ≫ Formalism.L2.PjFree.gxSnd x = 𝟙 _ := pullback.lift_fst _ _ _
 
-theorem isPullback_gx (x : Sp ℂ ⟶ Xo.X) : IsPullback (gxSnd x) (Formalism.L2.PjFree.gxFst x) x Xo.univ.t.G.hom :=
+theorem isPullback_gx (x : Sp ℂ ⟶ Xo.X) : IsPullback (Formalism.L2.PjFree.gxSnd x) (Formalism.L2.PjFree.gxFst x) x Xo.univ.t.G.hom :=
   IsPullback.of_hasPullback x Xo.univ.t.G.hom
 
 theorem isHolTo_fibLift {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] (x : Sp ℂ ⟶ Xo.X)
@@ -181,7 +181,7 @@ theorem isHolTo_fibLift {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] (x
   · simp only [fibLift_fst]
     exact hol
 
-theorem over_of_snd (x : Sp ℂ ⟶ Xo.X) (pt : Sp ℂ ⟶ Gx x) (h : pt ≫ gxSnd x = 𝟙 _) :
+theorem over_of_snd (x : Sp ℂ ⟶ Xo.X) (pt : Sp ℂ ⟶ Gx x) (h : pt ≫ Formalism.L2.PjFree.gxSnd x = 𝟙 _) :
     (pt ≫ Formalism.L2.PjFree.gxFst x) ≫ Xo.univ.t.G.hom = x := by
   rw [Category.assoc, ← (isPullback_gx x).w, ← Category.assoc, h, Category.id_comp]
 

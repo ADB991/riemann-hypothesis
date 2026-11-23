@@ -39,7 +39,7 @@ theorem ordF_of_span (v v' w : HeightOneSpectrum (𝓞 L)) (j : ℕ) (a : 𝓞 L
     FractionalIdeal.count_mul L w (h3 v) (pow_ne_zero _ (h3 v')), FractionalIdeal.count_pow, h2, h2]
   split_ifs <;> simp
 
-theorem prod_rule_two (χ : HChar L) (S : Finset (HeightOneSpectrum (𝓞 L))) (hS : ∀ v, v ∉ S → χ.UnrAt v)
+theorem prod_rule_two (χ : Formalism.L2.Host.HChar L) (S : Finset (HeightOneSpectrum (𝓞 L))) (hS : ∀ v, v ∉ S → χ.UnrAt v)
     (v v' : HeightOneSpectrum (𝓞 L)) (hv : v ∉ S) (hv' : v' ∉ S) (j : ℕ) (a : 𝓞 L) (ha : a ≠ 0)
     (h : Ideal.span {a} = v.asIdeal * v'.asIdeal ^ j) :
     χ.inf (uOf a ha) * (∏ w ∈ S, χ.locK w (uOf a ha)) * (χ.val v * χ.val v' ^ j) = 1 := by
@@ -73,7 +73,7 @@ theorem prod_rule_two (χ : HChar L) (S : Finset (HeightOneSpectrum (𝓞 L))) (
     by_contra h1
     exact hx (if_neg fun e => h1 e.symm)
 
-theorem locK_pow (χ : HChar L) (w : HeightOneSpectrum (𝓞 L)) :
+theorem locK_pow (χ : Formalism.L2.Host.HChar L) (w : HeightOneSpectrum (𝓞 L)) :
     ∃ N : ℕ, 0 < N ∧ ∀ (a : 𝓞 L) (ha : a ≠ 0), a ∉ w.asIdeal → χ.locK w (uOf a ha) ^ N = 1 := by
   obtain ⟨n, hn⟩ := (GlobalTheory.T.heckeCharacter_unramified_ae_and_exists_level L χ).2 w
   have : Finite (𝓞 L ⧸ w.asIdeal ^ n) := Ideal.finiteQuotientOfFreeOfNeBot _ (pow_ne_zero _ w.ne_bot)
@@ -123,7 +123,7 @@ theorem absNorm_eq (hL : IsTotallyComplex L) {I : Type} [Fintype I] (φ : I → 
   simp [Nat.cast_natAbs]
 
 theorem valTw_two_mem (hL : IsTotallyComplex L) {I : Type} [Fintype I] (φ : I → L →+* ℂ)
-    (hφ : Function.Bijective fun i => InfinitePlace.mk (φ i)) (χ : HChar L) (n : I → ℤ) (r : ℤ)
+    (hφ : Function.Bijective fun i => InfinitePlace.mk (φ i)) (χ : Formalism.L2.Host.HChar L) (n : I → ℤ) (r : ℤ)
     (hinf : χ.HasInf φ n) (hev : ∀ i, Even (n i - r))
     (S : Finset (HeightOneSpectrum (𝓞 L))) (hS : ∀ v, v ∉ S → χ.UnrAt v)
     (M : IntermediateField ℚ ℂ) (hM : ∀ (f : L →+* ℂ) (x : L), f x ∈ M)
@@ -167,7 +167,7 @@ theorem valTw_two_mem (hL : IsTotallyComplex L) {I : Type} [Fintype I] (φ : I �
     ring
   have hc : χ.valTw ((r : ℝ) / 2) v * χ.valTw ((r : ℝ) / 2) v' ^ j =
       ((χ.val v : ℂˣ) : ℂ) * ((χ.val v' : ℂˣ) : ℂ) ^ j * ∏ i, ((‖φ i k‖ : ℝ) : ℂ) ^ (-r) := by
-    unfold HChar.valTw
+    unfold Formalism.L2.Host.HChar.valTw
     rw [hpow, hpow, mul_pow, mul_mul_mul_comm, ← Complex.ofReal_pow, ← Complex.ofReal_mul, hreal, Finset.prod_zpow,
       Complex.ofReal_zpow, Complex.ofReal_prod]
   rw [hc, eq_inv_of_mul_eq_one_right hp, mul_inv, mul_right_comm]
@@ -226,7 +226,7 @@ theorem exists_span_eq {v v' : HeightOneSpectrum (𝓞 L)} (h : clsOf v = clsOf 
   obtain ⟨a, ha⟩ := h1
   exact ⟨a, ha.symm⟩
 
-theorem values_in_numberField : ∀ (F L : Type) [Field F] [NumberField F] [Field L] [NumberField L] [Algebra F L] (c : L ≃ₐ[F] L) (I : Type) [Fintype I] (φ : I → L →+* ℂ), CMData F c φ → ∀ (χ : HChar L) (n : I → ℤ) (r : ℤ), χ.HasInf φ n → (∀ i, Even (n i - r)) → ∃ M : IntermediateField ℚ ℂ, FiniteDimensional ℚ M ∧ χ.ValuesIn ((r : ℝ) / 2) M.val.toRingHom := by
+theorem values_in_numberField : ∀ (F L : Type) [Field F] [NumberField F] [Field L] [NumberField L] [Algebra F L] (c : L ≃ₐ[F] L) (I : Type) [Fintype I] (φ : I → L →+* ℂ), CMData F c φ → ∀ (χ : Formalism.L2.Host.HChar L) (n : I → ℤ) (r : ℤ), χ.HasInf φ n → (∀ i, Even (n i - r)) → ∃ M : IntermediateField ℚ ℂ, FiniteDimensional ℚ M ∧ χ.ValuesIn ((r : ℝ) / 2) M.val.toRingHom := by
   intro F L _ _ _ _ _ c I _ φ hcm χ n r hinf hev
   set S := (GlobalTheory.T.heckeCharacter_unramified_ae_and_exists_level L χ).1.toFinset with hSdef
   have hS : ∀ v, v ∉ S ↔ χ.UnrAt v := fun v => by simp [hSdef]

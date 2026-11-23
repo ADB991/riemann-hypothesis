@@ -116,7 +116,7 @@ theorem minor_bound : ∀ (D : D7) (a d : ℕ) (n : D.what₂.Tau → ℕ) (G : 
     exact Finset.prod_le_prod' fun τ _ => Nat.pow_le_pow_left (card_strictMono_le a d) _
   · intro T
     obtain ⟨L, hL1, hL2⟩ := sum_coeff_monomial
-      (fun α : Mono D a d => (α.prod fun _ n => (n.factorial : ℂ)) * taylor D G α)
+      (fun α : Mono D a d => (α.prod fun _ n => (n.factorial : ℂ)) * Formalism.MainNotions.TaylorLogMetric.taylor D G α)
     have h0 : GL3Theta.applyAt0 D (minorPol D T) G = L (minorPol D T) := by
       rw [hL2]; simp only [GL3Theta.applyAt0, mul_assoc]
     set M := S * (2 * Real.exp 1 * Real.pi * B / A) ^ (a * ∑ τ, n τ) with hM
