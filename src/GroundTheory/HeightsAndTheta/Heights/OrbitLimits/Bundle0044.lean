@@ -134,7 +134,7 @@ namespace CurveVerticalPointMultiplicity
 variable {K : Type} {ι : K → Type}
 
 theorem aeval_mul_of_homog [Fintype K] [∀ k, Fintype (ι k)] {S : Type*} [CommRing S] [Algebra ℤ S] (r : (Σ k, ι k) → S) (t : K → S) {f : MRing ι}
-    {d : K → ℕ} (hf : IsMultiHomog f d) :
+    {d : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f d) :
     aeval (fun p => r p * t p.1) f = aeval r f * ∏ k, t k ^ d k := by
   classical
   set_option synthInstance.maxHeartbeats 100000 in
@@ -327,23 +327,23 @@ theorem CurveVertPointSurj.proof (hFin : CurveRingFinite.Statement) (hC : CurveC
   choose α β hβ hαβ using hrat
   let ρ : (Σ k, ι k) → L := fun p => IsLocalization.mk' L (α p) (⟨β p, hβ p⟩ : m.primeCompl)
   have hφρ : ∀ p, φ (ρ p) = y p / y ⟨p.1, c p.1⟩ := fun p => (hφmk _ _ _).mpr (hαβ p).symm
-  have hφev : ∀ {g : MRing ι} {e : K → ℕ}, IsMultiHomog g e →
+  have hφev : ∀ {g : MRing ι} {e : K → ℕ}, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g e →
       φ (aeval ρ g) = aeval y g * (∏ k, y ⟨k, c k⟩ ^ e k)⁻¹ := by
     intro g e hg
     rw [ringHom_aeval φ ρ g, show (fun p => φ (ρ p)) = fun p => y p / y ⟨p.1, c p.1⟩ from funext hφρ]
     exact CurveVerticalPointResidue.aeval_div y c g e hg
-  have hevB : ∀ {g : MRing ι} {e : K → ℕ} (x : curveRing y), IsMultiHomog g e →
+  have hevB : ∀ {g : MRing ι} {e : K → ℕ} (x : curveRing y), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g e →
       aeval y g = (x : Ω) * ∏ k, y ⟨k, c k⟩ ^ e k → aeval ρ g = algebraMap _ L x := by
     intro g e x hg hgx
     apply hφinj
     rw [hφev hg, hφB, hgx, mul_assoc, mul_inv_cancel₀ (hYne e), mul_one]
 
   let r : (Σ k, ι k) → IsLocalRing.ResidueField L := fun p => IsLocalRing.residue L (ρ p)
-  have hWform : ∀ {g : MRing ι} {e : K → ℕ}, IsMultiHomog g e →
+  have hWform : ∀ {g : MRing ι} {e : K → ℕ}, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g e →
       (g ∈ mCoordIdeal r ↔ aeval ρ g ∈ IsLocalRing.maximalIdeal L) := by
     intro g e hg
-    rw [mem_mCoordIdeal_iff r hg, ← IsLocalRing.residue_eq_zero_iff, ringHom_aeval]
-  have hWB : ∀ {g : MRing ι} {e : K → ℕ} (x : curveRing y), IsMultiHomog g e →
+    rw [GroundTheory.Heights₂.Heights.Targets.CurveVerticalPointSurjective.mem_mCoordIdeal_iff r hg, ← IsLocalRing.residue_eq_zero_iff, ringHom_aeval]
+  have hWB : ∀ {g : MRing ι} {e : K → ℕ} (x : curveRing y), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g e →
       aeval y g = (x : Ω) * ∏ k, y ⟨k, c k⟩ ^ e k → (g ∈ mCoordIdeal r ↔ x ∈ m) := by
     intro g e x hg hgx
     rw [hWform hg, hevB x hg hgx]
@@ -363,7 +363,7 @@ theorem CurveVertPointSurj.proof (hFin : CurveRingFinite.Statement) (hC : CurveC
     obtain ⟨e, he⟩ := hS f hf
     have hfP' : f ∈ mCoordIdeal y := by rw [hPS]; exact Ideal.subset_span hf
     have hf0 : aeval y f = ((0 : curveRing y) : Ω) * ∏ k, y ⟨k, c k⟩ ^ e k := by
-      rw [(mem_mCoordIdeal_iff y he).mp hfP']
+      rw [(GroundTheory.Heights₂.Heights.Targets.CurveVerticalPointSurjective.mem_mCoordIdeal_iff y he).mp hfP']
       simp
     exact (hWB 0 he hf0).mpr m.zero_mem
 
@@ -405,13 +405,13 @@ theorem CurveVertPointSurj.proof (hFin : CurveRingFinite.Statement) (hC : CurveC
       have hval : (x : Ω) * aeval y (chartMon c e) = aeval y g := by
         rw [aeval_chartMon, hgx]
       have key : x ∈ {b : curveRing y | ∃ (d : K → ℕ) (g h : MRing ι),
-          IsMultiHomog g d ∧ IsMultiHomog h d ∧ g ∈ mCoordIdeal r ∧ h ∉ mCoordIdeal r ∧
+          ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h d ∧ g ∈ mCoordIdeal r ∧ h ∉ mCoordIdeal r ∧
             (b : Ω) * aeval y h = aeval y g} :=
         ⟨e, g, chartMon c e, hg, homog_chartMon c e, hgW, hXW, hval⟩
       exact Ideal.subset_span key
   have ha0 : a ≠ 0 := by
     intro h0
-    have hx0 : aeval y s ≠ 0 := fun h => hsP ((mem_mCoordIdeal_iff y hs).mpr h)
+    have hx0 : aeval y s ≠ 0 := fun h => hsP ((GroundTheory.Heights₂.Heights.Targets.CurveVerticalPointSurjective.mem_mCoordIdeal_iff y hs).mpr h)
     have hb0 : ((b : curveRing y) : Ω) ≠ 0 := by
       intro h
       apply b.2
@@ -420,7 +420,7 @@ theorem CurveVertPointSurj.proof (hFin : CurveRingFinite.Statement) (hC : CurveC
     have h2 := hbx
     rw [h0, ZeroMemClass.coe_zero, zero_mul] at h2
     exact mul_ne_zero hb0 hx0 h2
-  have hWfrac : ∀ {f : MRing ι} {n : K → ℕ}, IsMultiHomog f n → f ∈ mCoordIdeal r →
+  have hWfrac : ∀ {f : MRing ι} {n : K → ℕ}, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f n → f ∈ mCoordIdeal r →
       ∃ a' b' : curveRing y, a' ∈ m ∧ b' ∉ m ∧
         (b' : Ω) * aeval y f = (a' : Ω) * ∏ k, y ⟨k, c k⟩ ^ n k := by
     intro f n hf hfW
