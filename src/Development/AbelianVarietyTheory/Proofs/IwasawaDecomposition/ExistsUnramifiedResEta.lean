@@ -66,8 +66,8 @@ theorem mem_aboveF (v : HeightOneSpectrum (𝓞 F)) (Q : HeightOneSpectrum (𝓞
 open Classical in
 theorem valAt_locF (hord : ∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), ordF P (upF F k) = ordF (P.under (𝓞 F)) k)
     (P : HeightOneSpectrum (𝓞 L)) (v : HeightOneSpectrum (𝓞 F)) (k : Fˣ) :
-    valAt P (locF F v k) = WithZero.exp (-(if P.under (𝓞 F) = v then ordF v k else 0)) := by
-  unfold locF
+    valAt P (GlobalTheory.Mem.Chr.locF F v k) = WithZero.exp (-(if P.under (𝓞 F) = v then ordF v k else 0)) := by
+  unfold GlobalTheory.Mem.Chr.locF
   rw [map_prod]
   split_ifs with hw
   · rw [Finset.prod_eq_single P (fun Q _ hQ => valAt_localIdele_ne hQ.symm _)
@@ -80,7 +80,7 @@ theorem valAt_locF (hord : ∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), ordF 
 
 theorem valAt_free (hord : ∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), ordF P (upF F k) = ordF (P.under (𝓞 F)) k)
     (P : HeightOneSpectrum (𝓞 L)) (m : HeightOneSpectrum (𝓞 F) →₀ ℤ) :
-    valAt P (freeHom (fun v => locF (L := L) F v (unif v)) (Multiplicative.ofAdd m)) =
+    valAt P (freeHom (fun v => GlobalTheory.Mem.Chr.locF (L := L) F v (unif v)) (Multiplicative.ofAdd m)) =
       WithZero.exp (-m (P.under (𝓞 F))) := by
   classical
   rw [freeHom_apply, map_prod, Finset.prod_eq_single (P.under (𝓞 F))]
@@ -258,15 +258,15 @@ theorem exists_unramified_resEta : ∀ (F L : Type) [Field F] [NumberField F] [F
   have := h.real
   obtain ⟨ψ, hψc, hψu, hψi, -, hψl, hψd⟩ := GlobalTheory.ModelChar.exists_modelChar L I φ h.bij n ∅ (fun _ => 1) (by simp)
   have hψl' : ∀ v x, ψ (localIdele L v x) = 1 := fun v x => hψl v (by simp) x
-  have hψF : ∀ v k, ψ (locF F v k) = 1 := fun v k => by
-    unfold locF
+  have hψF : ∀ v k, ψ (GlobalTheory.Mem.Chr.locF F v k) = 1 := fun v k => by
+    unfold GlobalTheory.Mem.Chr.locF
     rw [map_prod]
     exact Finset.prod_eq_one fun Q _ => hψl' _ _
   have hψinf : ∀ k : Lˣ, ((ψ (infDiag k) : ℂˣ) : ℂ) = ∏ i, (φ i (k : L) / ((‖φ i (k : L)‖ : ℝ) : ℂ)) ^ n i := fun k => by
     rw [infDiag_eq, map_prod, Units.coe_prod]
     symm
     exact Fintype.prod_bijective _ h.bij _ _ fun i => (hψi i k).symm
-  let β := freeHom fun v => locF (L := L) F v (unif v)
+  let β := freeHom fun v => GlobalTheory.Mem.Chr.locF (L := L) F v (unif v)
   let b := freeHom fun v => etaFin (L := L) F v (unif v)
   have hψβ : ∀ m, ψ (β m) = 1 := fun m => by
     show ψ (freeHom _ (Multiplicative.ofAdd (Multiplicative.toAdd m))) = 1
@@ -300,13 +300,13 @@ theorem exists_unramified_resEta : ∀ (F L : Type) [Field F] [NumberField F] [F
     by_cases e : w = v
     · subst e; rw [valAt_localIdele_self]; exact hx
     · exact valAt_localIdele_ne e x
-  · have e : HChar.resFin ⟨χ, hχc, hχd⟩ v k = χ (locF F v k) := by
+  · have e : HChar.resFin ⟨χ, hχc, hχd⟩ v k = χ (GlobalTheory.Mem.Chr.locF F v k) := by
       rw [HChar.resFin_apply]
-      unfold locF
+      unfold GlobalTheory.Mem.Chr.locF
       rw [map_prod]
       rfl
     have h1 := hχβ (Multiplicative.ofAdd (Finsupp.single v (ordF v k)))
-    have h2 := hχU (locF F v k * (β (Multiplicative.ofAdd (Finsupp.single v (ordF v k))))⁻¹) fun P => by
+    have h2 := hχU (GlobalTheory.Mem.Chr.locF F v k * (β (Multiplicative.ofAdd (Finsupp.single v (ordF v k))))⁻¹) fun P => by
       show valAt P _ = 1
       rw [map_mul, map_inv, valAt_locF hord, valAt_free hord, Finsupp.single_apply]
       simp only [eq_comm (a := v)]

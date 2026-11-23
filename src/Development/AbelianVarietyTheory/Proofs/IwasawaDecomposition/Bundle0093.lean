@@ -376,9 +376,9 @@ theorem tendsto_localIdele (x : ∀ v : HeightOneSpectrum (𝓞 L), (v.adicCompl
   have h2 := tendsto_finSingle (fun v => (((x v)⁻¹ : (v.adicCompletion L)ˣ) : v.adicCompletion L)) fun v => by
     have h : Valued.v (x v : v.adicCompletion L) = 1 := hx v
     rw [Units.val_inv_eq_inv_val, map_inv₀, h, inv_one]
-  have h3 : Tendsto (fun v => ((Neutral.B1.localIdele L v (x v) : Ideles L) : AdeleRing (𝓞 L) L)) cofinite (𝓝 1) :=
+  have h3 : Tendsto (fun v => ((Neutral.B1.localIdele L v (x v) : Neutral.B1.Ideles L) : AdeleRing (𝓞 L) L)) cofinite (𝓝 1) :=
     (tendsto_const_nhds (x := (1 : InfiniteAdeleRing L))).prodMk_nhds h1
-  have h4 : Tendsto (fun v => (((Neutral.B1.localIdele L v (x v))⁻¹ : Ideles L) : AdeleRing (𝓞 L) L)) cofinite (𝓝 1) :=
+  have h4 : Tendsto (fun v => (((Neutral.B1.localIdele L v (x v))⁻¹ : Neutral.B1.Ideles L) : AdeleRing (𝓞 L) L)) cofinite (𝓝 1) :=
     (tendsto_const_nhds (x := (1 : InfiniteAdeleRing L))).prodMk_nhds h2
   exact h3.prodMk_nhds ((MulOpposite.continuous_op.tendsto _).comp h4)
 
@@ -396,7 +396,7 @@ theorem finite_ramified (χ : HChar L) : {v | ¬ χ.UnrAt v}.Finite := by
     rw [← Units.val_pow_eq_pow_val, ← map_pow]
     exact (hc _ (isUnitAt_pow hx m)).1
   choose x hx hx' using h
-  have hc : Continuous fun a : Ideles L => ‖((χ.1 a : ℂˣ) : ℂ) - 1‖ :=
+  have hc : Continuous fun a : Neutral.B1.Ideles L => ‖((χ.1 a : ℂˣ) : ℂ) - 1‖ :=
     ((Units.continuous_val.comp χ.2.1).sub continuous_const).norm
   have h1 := (hc.tendsto 1).comp (tendsto_localIdele x hx)
   have h2 := h1.eventually_lt_const (u := 1 / 2) (by simp)

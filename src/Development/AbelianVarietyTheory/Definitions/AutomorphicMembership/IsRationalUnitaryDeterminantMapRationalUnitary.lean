@@ -24,7 +24,7 @@ def congQ : Set (Neutral.B1.Ideles H.E) :=
     ∀ v, AtQ H SQ v → Valued.v ((a : AdeleRing (𝓞 H.E) H.E).2 v - 1) < 1}
 
 def KDq : Subgroup (Neutral.B1.Ideles H.E) :=
-  Subgroup.closure (congQ H SQ ∪ {a | ∃ v k, a = locF H.F v k})
+  Subgroup.closure (congQ H SQ ∪ {a | ∃ v k, a = GlobalTheory.Mem.Chr.locF H.F v k})
 
 abbrev DtQ : Type := Neutral.B1.Ideles H.E ⧸ KDq H SQ
 
@@ -55,11 +55,11 @@ theorem congQ_subset_congG : congQ H SQ ⊆ congG H := fun _ h => ⟨h.1, h.2.1�
 theorem mem_KDq_of_congQ {a : Neutral.B1.Ideles H.E} (h : a ∈ congQ H SQ) : a ∈ KDq H SQ :=
   Subgroup.subset_closure (Or.inl h)
 
-theorem locF_mem_KDq (v : HeightOneSpectrum (𝓞 H.F)) (k : (H.F)ˣ) : locF H.F v k ∈ KDq H SQ :=
+theorem locF_mem_KDq (v : HeightOneSpectrum (𝓞 H.F)) (k : (H.F)ˣ) : GlobalTheory.Mem.Chr.locF H.F v k ∈ KDq H SQ :=
   Subgroup.subset_closure (Or.inr ⟨v, k, rfl⟩)
 
 theorem KDq_le_iff {B : Subgroup (Neutral.B1.Ideles H.E)} :
-    KDq H SQ ≤ B ↔ (∀ a ∈ congQ H SQ, a ∈ B) ∧ ∀ v k, locF H.F v k ∈ B := by
+    KDq H SQ ≤ B ↔ (∀ a ∈ congQ H SQ, a ∈ B) ∧ ∀ v k, GlobalTheory.Mem.Chr.locF H.F v k ∈ B := by
   refine ⟨fun h => ⟨fun a ha => h (mem_KDq_of_congQ H SQ ha), fun v k => h (locF_mem_KDq H SQ v k)⟩, fun h => ?_⟩
   refine (Subgroup.closure_le _).2 ?_
   rintro a (ha | ⟨v, k, rfl⟩)
@@ -156,8 +156,8 @@ variable (F : Type) [Field F] [NumberField F] [Algebra F L]
 
 open Classical in
 theorem compAt_locF (w : HeightOneSpectrum (𝓞 L)) (v : HeightOneSpectrum (𝓞 F)) (k : Fˣ) :
-    compAt w (locF F v k) = if w.under (𝓞 F) = v then compAt w (Neutral.B1.diagUnits L (upF F k)) else 1 := by
-  unfold locF
+    compAt w (GlobalTheory.Mem.Chr.locF F v k) = if w.under (𝓞 F) = v then compAt w (Neutral.B1.diagUnits L (upF F k)) else 1 := by
+  unfold GlobalTheory.Mem.Chr.locF
   rw [map_prod]
   split_ifs with h
   · rw [Finset.prod_eq_single_of_mem w (show w ∈ aboveF F v from (finite_aboveF F v).mem_toFinset.2 h)
@@ -169,12 +169,12 @@ theorem compAt_locF (w : HeightOneSpectrum (𝓞 L)) (v : HeightOneSpectrum (�
 
 theorem exists_diag_upF_eq (k : Fˣ) {T : Set (HeightOneSpectrum (𝓞 L))} (hT : T.Finite) :
     ∃ (S : Finset (HeightOneSpectrum (𝓞 F))) (u : Neutral.B1.Ideles L), u ∈ unitIdl L ∧ (∀ w ∈ T, compAt w u = 1) ∧
-      Neutral.B1.diagUnits L (upF F k) = (∏ v ∈ S, locF F v k) * u := by
+      Neutral.B1.diagUnits L (upF F k) = (∏ v ∈ S, GlobalTheory.Mem.Chr.locF F v k) * u := by
   classical
   set d := Neutral.B1.diagUnits L (upF F k) with hd
   have hfin := hT.union (IdlFact.finite_valAt_ne_one d)
   set S := hfin.toFinset.image fun w => w.under (𝓞 F) with hS
-  set P := ∏ v ∈ S, locF (L := L) F v k with hP
+  set P := ∏ v ∈ S, GlobalTheory.Mem.Chr.locF (L := L) F v k with hP
   have hc : ∀ w, compAt w P = if w.under (𝓞 F) ∈ S then compAt w d else 1 := fun w => by
     rw [hP, map_prod, Finset.prod_congr rfl fun v _ => compAt_locF F w v k, Finset.prod_ite_eq]
   have h1 : ∀ w, w.under (𝓞 F) ∈ S → compAt w (P⁻¹ * d) = 1 := fun w hw => by

@@ -180,7 +180,7 @@ theorem GlobalTheory.UCls.exists_special_reduction : ∀ (E : Type) [Field E] [N
       (k i)⁻¹ * (g0⁻¹ * κ * g0) * k j, ?_, ?_⟩
     · rw [ratM_mul, ratM_mul]
       exact isUA_mul _ G (isUA_mul _ G (hRA _ hγjU) hδ.1) (hRA _ (hU hγiU))
-    · exact isKM_mul _ G _ M (isKM_mul _ G _ M (GlobalTheory.UCls.KGrp.isKM_inv _ G _ M hki) (isKM_conj _ G _ _ M hg0 hLhat hκ)) hkj
+    · exact GlobalTheory.UCls.KGrp.isKM_mul _ G _ M (GlobalTheory.UCls.KGrp.isKM_mul _ G _ M (GlobalTheory.UCls.KGrp.isKM_inv _ G _ M hki) (isKM_conj _ G _ _ M hg0 hLhat hκ)) hkj
     · have hdj : g j = ratM (maximalRealSubfield E) (γ j : Matrix (Fin r) (Fin r) E) *
           (ratM (maximalRealSubfield E) (((γ j)⁻¹ : GL (Fin r) E) : Matrix (Fin r) (Fin r) E) * g j *
             (k j)⁻¹ * g0⁻¹) * g0 * k j := by
