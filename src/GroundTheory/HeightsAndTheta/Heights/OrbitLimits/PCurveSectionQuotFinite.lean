@@ -48,7 +48,7 @@ theorem aeval_ne_zero (y : (Σ k, ι k) → Ω) {s : MRing ι} {d : K → ℕ} (
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem mem_ratioField [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) {b : Ω}
-    (hb : b ∈ chartRingZ y c) : b ∈ ratioField y c := by
+    (hb : b ∈ chartRingZ y c) : b ∈ GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField y c := by
   induction hb using Algebra.adjoin_induction with
   | mem x hx => exact IntermediateField.subset_adjoin _ _ hx
   | algebraMap r => rw [eq_intCast]; exact intCast_mem _ r
@@ -56,16 +56,16 @@ theorem mem_ratioField [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k)
   | mul x z _ _ hx hz => exact mul_mem hx hz
 
 theorem isAlgebraic_of_mem [CharZero Ω] (y : (Σ k, ι k) → Ω) (hP : IsArithVar (mCoordIdeal y) 1)
-    (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {x : Ω} (hx : x ∈ ratioField y c) : IsAlgebraic ℚ x := by
-  have htr := LowerBoundFree.FnFieldTrdeg.full K ι (ratioField y c) (ratioPtL y c) 0 (birational y c hc)
+    (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {x : Ω} (hx : x ∈ GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField y c) : IsAlgebraic ℚ x := by
+  have htr := LowerBoundFree.FnFieldTrdeg.full K ι (GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField y c) (ratioPtL y c) 0 (birational y c hc)
     (by rw [mCoordIdeal_ratioPtL y c hc]; exact hP)
-  have halg : Algebra.IsAlgebraic ℤ (ratioField y c) := trdeg_eq_zero_iff.mp htr
-  have h1 : IsAlgebraic ℚ (⟨x, hx⟩ : ratioField y c) :=
+  have halg : Algebra.IsAlgebraic ℤ (GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField y c) := trdeg_eq_zero_iff.mp htr
+  have h1 : IsAlgebraic ℚ (⟨x, hx⟩ : GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField y c) :=
     (halg.isAlgebraic _).extendScalars (algebraMap ℤ ℚ).injective_int
   exact IntermediateField.isAlgebraic_iff.mp h1
 
 theorem exists_nat_mul_mem_chartRingZ [CharZero Ω] (y : (Σ k, ι k) → Ω) (hP : IsArithVar (mCoordIdeal y) 1)
-    (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {q : Ω} (hq : q ∈ ratioField y c) :
+    (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {q : Ω} (hq : q ∈ GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField y c) :
     ∃ n : ℕ, n ≠ 0 ∧ (n : Ω) * q ∈ chartRingZ y c := by
   have hq' : q ∈ Algebra.adjoin ℚ (coneRatios y c) := by
     rw [← IntermediateField.adjoin_toSubalgebra_of_isAlgebraic
@@ -77,8 +77,8 @@ theorem exists_nat_mul_mem_chartRingZ [CharZero Ω] (y : (Σ k, ι k) → Ω) (h
 omit [∀ k, Fintype (ι k)] in
 theorem div_mem_ratioField [CharZero Ω] (y : (Σ k, ι k) → Ω) (a : K → ℤ) (c : ∀ k, ι k)
     (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {m x : Ω} (hm : m ∈ chartLat y a 1) (hx : x ∈ chartLat y a 1) :
-    m / x ∈ ratioField y c := by
-  have key : ∀ p : Ω, p ≠ 0 → m * p ∈ ratioField y c → x * p ∈ ratioField y c → m / x ∈ ratioField y c :=
+    m / x ∈ GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField y c := by
+  have key : ∀ p : Ω, p ≠ 0 → m * p ∈ GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField y c → x * p ∈ GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField y c → m / x ∈ GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField y c :=
     fun p hp h1 h2 => by rw [← mul_div_mul_right m x hp]; exact div_mem h1 h2
   exact key _ (Finset.prod_ne_zero_iff.mpr fun k _ => zpow_ne_zero _ (hc k))
     (mem_ratioField y c (hm c hc)) (mem_ratioField y c (hx c hc))
