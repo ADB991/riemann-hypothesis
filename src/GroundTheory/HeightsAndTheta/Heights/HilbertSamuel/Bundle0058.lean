@@ -79,7 +79,7 @@ def vertCycleNum (P : Ideal (MRing ι)) (s : MRing ι) {n : ℕ} (e : Fin n → 
   ∑ᶠ W ∈ divSupp P s, (multAt (P ⊔ Ideal.span {s}) W : ℝ) *
     (if IsHorizontal W then 0 else (geoNum n W e : ℝ) * Real.log (charOf W))
 
-theorem vertR_eq_vertCycleNum (P : Ideal (MRing ι)) {n : ℕ} (L : Fin n → HermLine ι) (s : MRing ι) :
+theorem vertR_eq_vertCycleNum (P : Ideal (MRing ι)) {n : ℕ} (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) :
     ReciprocityTheory.ChartRestriction.G.AI.I2.vertR P L s = vertCycleNum P s (fun j => (L j).a) :=
   rfl
 

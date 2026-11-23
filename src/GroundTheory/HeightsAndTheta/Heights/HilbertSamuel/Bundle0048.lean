@@ -50,7 +50,7 @@ theorem mul_mem_chartLat {y : (Σ k, ι k) → Ω} {a : K → ℤ} {n j : ℕ} {
       (s * ∏ k, y ⟨k, c k⟩ ^ (-((n : ℤ) * a k))) * (t * ∏ k, y ⟨k, c k⟩ ^ (-((j : ℤ) * a k))) by ring]
   exact mul_mem (hs c hc) (ht c hc)
 
-theorem isBoundedH_mono {P : Ideal (MRing ι)} {y : (Σ k, ι k) → Ω} {A : HermLine ι} {τ : ℕ} {s : Ω}
+theorem isBoundedH_mono {P : Ideal (MRing ι)} {y : (Σ k, ι k) → Ω} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {τ : ℕ} {s : Ω}
     {c c' : ℝ} (hs : IsBoundedH P y A τ c s) (hc : c ≤ c') : IsBoundedH P y A τ c' s := by
   intro dg dh g h z hg hh hd he hz
   refine (hs dg dh g h z hg hh hd he hz).trans ?_
@@ -379,7 +379,7 @@ noncomputable section
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem nefOnGenericDeg_of_semipos (hN : NefOnGenericOfSemipos.Statement)
-    (hD : GroundTheory.Heights₂.Heights.Inter.DegreeGeneric.Statement) {P P0 : Ideal (MRing ι)} {M : HermLine ι}
+    (hD : GroundTheory.Heights₂.Heights.Inter.DegreeGeneric.Statement) {P P0 : Ideal (MRing ι)} {M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι}
     (hP0 : P0 ≤ P) (hs : IsSemipositiveRel P0 P M) : NefOnGenericDeg P M.a := by
   classical
   intro W hW hPW
@@ -391,7 +391,7 @@ theorem nefOnGenericDeg_of_semipos (hN : NefOnGenericOfSemipos.Statement)
     rfl
   exact_mod_cast h3 ▸ h1
 
-theorem continuousOn_zcomb_fsH {M : HermLine ι} (hM : IsSmoothHerm M) (k : ℤ) :
+theorem continuousOn_zcomb_fsH {M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hM : IsSmoothHerm M) (k : ℤ) :
     ContinuousOn (HermLine.zcomb M (fsH ι) k (-1)).h {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
   have hH : ContinuousOn (fsH ι).h {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} :=
     (GroundTheory.Heights₂.Heights.Inter.isSmoothHerm_ofMetrics_fs (ι := ι) 1).continuousOn
@@ -438,7 +438,7 @@ theorem ReductionToProjectiveBlock.proof (hRP : ReductionToProjective.Statement)
 
   have h2 := (hRP D Ω (Fin r) I d' hI).2
 
-  have hdeg : d₀.A.a = unitDeg d.k₀ := hk ▸ d₀.deg
+  have hdeg : d₀.A.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀ := hk ▸ d₀.deg
   have htop : I K ι (mCoordIdeal d₀.y) (D + 1) (fun _ => d₀.A) = top I d'.x d'.m D := by
     rw [hy]
     exact hTop D K ι Ω (Fin r) I d.y d.k₀ d₀.A M N d'.x d'.m hI d.arith d.birat d'.arith hB hdeg

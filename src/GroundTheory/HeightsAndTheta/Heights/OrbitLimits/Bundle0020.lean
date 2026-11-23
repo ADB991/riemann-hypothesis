@@ -63,7 +63,7 @@ open GroundTheory.Heights₂.Heights (varInt localMult IsDegZeroSmooth segreChar
 def ChartDivisorCompare.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (P : Ideal (MRing ι)) (n m : ℕ) (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k)
-    (L : Fin n → HermLine ι) (A : HermLine ι) (s : MRing ι) (g : ((Σ k, ι k) → ℂ) → ℝ) (δ : ℝ)
+    (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) (g : ((Σ k, ι k) → ℂ) → ℝ) (δ : ℝ)
     (G : (Fin m → ℂ) → ℝ) (Φ : Fin n → (Fin m → ℂ) → ℝ),
     IsArithVar P (n + 2) → (∀ j, IsSmoothHerm (L j)) → IsSectionOn P A s →
     IsDegZeroSmooth g → 0 < δ → (∀ z, ‖segre z i‖ < δ * ‖segre z‖ → g z = 0) →
@@ -96,7 +96,7 @@ open GroundTheory.Heights₂.Heights (segreChartComponents localMult)
 open Classical in
 def ChartDivisorLength.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (n m : ℕ)
-    (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k) (A : HermLine ι) (s : MRing ι),
+    (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι),
     IsArithVar P (n + 2) → IsSectionOn P A s →
       ∀ W, W ∈ divSupp P s → IsHorizontal W → ∀ W' ∈ segreChartComponents W σ i,
         ∑ J ∈ (segreChartComponents P σ i).filter (fun J => J ≤ W'),
@@ -121,7 +121,7 @@ open GroundTheory.Heights₂.Heights (segreChartIdeal segreChartComponents local
 
 def ChartSectionLength.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (n m : ℕ)
-    (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k) (A : HermLine ι) (s : MRing ι),
+    (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι),
     IsArithVar P (n + 2) → IsSectionOn P A s →
       ∀ W, W ∈ divSupp P s → IsHorizontal W → ∀ W' ∈ segreChartComponents W σ i,
         localMult (segreChartIdeal P σ i ⊔ Ideal.span {chartSection σ i s}) W' =
@@ -146,9 +146,9 @@ def PtsGenericCount.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (e : ℕ)
     (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)),
     IsArithVar P (e + 1) → IsGoodProj P Ψ →
-      ∃ d : ℕ, (∀ y, (fibre P Ψ y).encard ≤ d) ∧
-        volume {y : Fin e → ℂ | ¬ ((fibre P Ψ y).encard = d ∧
-          ∀ w ∈ fibre P Ψ y, ∃ γ, IsSheet P Ψ y w γ)} = 0
+      ∃ d : ℕ, (∀ y, (ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y).encard ≤ d) ∧
+        volume {y : Fin e → ℂ | ¬ ((ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y).encard = d ∧
+          ∀ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, ∃ γ, IsSheet P Ψ y w γ)} = 0
 
 end GroundTheory.Heights₂.Heights
 end
@@ -167,7 +167,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsAri
 
 def PtsPosDensIntegrable.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (e : ℕ)
-    (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (L : Fin e → HermLine ι)
+    (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι)
     (g : ((Σ k, ι k) → ℂ) → ℝ),
     IsArithVar P (e + 1) → IsGoodProj P Ψ → (∀ j, IsSmoothHerm (L j)) → IsDegZeroSmooth g →
       Integrable (ptsPosDens P Ψ (pot L) g)
@@ -189,7 +189,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsAri
 
 def PtsPosDensMeasurable.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (e : ℕ)
-    (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (L : Fin e → HermLine ι)
+    (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι)
     (g : ((Σ k, ι k) → ℂ) → ℝ),
     IsArithVar P (e + 1) → IsGoodProj P Ψ → (∀ j, IsSmoothHerm (L j)) → Measurable g →
     (∀ (c : K → ℂ) (z : (Σ k, ι k) → ℂ), (∀ k, c k ≠ 0) → g (fun p => c p.1 * z p) = g z) →
@@ -213,7 +213,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsAri
 
 def PtsPosPartLocal.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (e : ℕ)
-    (Ψ Ψ' : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (L : Fin e → HermLine ι)
+    (Ψ Ψ' : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι)
     (g : ((Σ k, ι k) → ℂ) → ℝ) (z : (Σ k, ι k) → ℂ),
     IsArithVar P (e + 1) → IsGoodProj P Ψ → IsGoodProj P Ψ' → (∀ j, IsSmoothHerm (L j)) →
     Measurable g → (∀ (c : K → ℂ) (z' : (Σ k, ι k) → ℂ), (∀ k, c k ≠ 0) → g (fun p => c p.1 * z' p) = g z') →
@@ -247,7 +247,7 @@ open ComplexSets
 def PtsSegreChartFibreSum.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (P : Ideal (MRing ι)) (e m : ℕ) (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k)
-    (L : Fin e → HermLine ι) (g : ((Σ k, ι k) → ℂ) → ℝ)
+    (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (g : ((Σ k, ι k) → ℂ) → ℝ)
     (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)),
     IsArithVar P (e + 1) → (∀ j, IsSmoothHerm (L j)) → IsDegZeroSmooth g →
     IsGoodProj P Ψ → (∀ w, Ψ w 0 = w i) →
@@ -274,7 +274,7 @@ def PtsSheetOnlyNull.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (e : ℕ)
     (Ψ Ψ' : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)),
     IsArithVar P (e + 1) → IsGoodProj P Ψ → IsGoodProj P Ψ' →
-      volume {y : Fin e → ℂ | ∃ w ∈ fibre P Ψ y, IsSimpleSheetPt P Ψ w ∧
+      volume {y : Fin e → ℂ | ∃ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, IsSimpleSheetPt P Ψ w ∧
         ¬ IsSimpleSheetPt P Ψ' ((Ψ' w 0)⁻¹ • w)} = 0
 
 end GroundTheory.Heights₂.Heights
@@ -296,7 +296,7 @@ open ComplexSets
 def SegreChartAbsIntegrable.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (P : Ideal (MRing ι)) (e m : ℕ) (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k)
-    (L : Fin e → HermLine ι) (g : ((Σ k, ι k) → ℂ) → ℝ),
+    (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (g : ((Σ k, ι k) → ℂ) → ℝ),
     IsArithVar P (e + 1) → (∀ j, IsSmoothHerm (L j)) → IsDegZeroSmooth g →
       ∀ J ∈ segreChartComponents P σ i, ∀ A : Matrix (Fin e) (Fin m) ℂ, IsFiniteProjection J A →
         Integrable (chartAbsDens J A (chartWeight σ i g) (chartPot σ i L))

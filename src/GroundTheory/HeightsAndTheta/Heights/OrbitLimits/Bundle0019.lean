@@ -154,7 +154,7 @@ theorem PtsSumMeasurable.proof : PtsSumMeasurable.Statement := by
           simp only
           rw [Set.indicator_of_notMem hmS]
       · rfl
-  have hsum : ∑ᶠ w ∈ fibre P Ψ y, sheetDensity P Ψ (pot L) (logNorm A s) y w =
+  have hsum : ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, sheetDensity P Ψ (pot L) (logNorm A s) y w =
       ∑ w ∈ (hfin y).toFinset, sheetDensity P Ψ (pot L) (logNorm A s) y w :=
     finsum_mem_eq_finite_toFinset_sum _ (hfin y)
   refine tendsto_const_nhds.congr' ?_
@@ -473,7 +473,7 @@ open GroundTheory.Heights₂.Heights (segreChartComponents)
 
 def ChartDivisorComponents.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (n m : ℕ)
-    (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k) (A : HermLine ι) (s : MRing ι),
+    (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι),
     IsArithVar P (n + 2) → IsSectionOn P A s →
       (∀ J ∈ segreChartComponents P σ i, ∀ W' : Ideal (MvPolynomial (Fin m) ℂ),
         W' ∈ (J ⊔ Ideal.span {chartSection σ i s}).minimalPrimes ↔
