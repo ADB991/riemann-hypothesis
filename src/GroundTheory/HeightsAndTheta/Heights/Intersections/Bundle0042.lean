@@ -162,7 +162,7 @@ end Loc
 theorem PFFibreBij.proof : PFFibreBij.Statement := by
   intro K _ ι _ K' _ ι' _ κ v P' d e G s hv hP' hP
   classical
-  have hPrel : IsRelevant (imageZ v P') := hP.2.1.2.2
+  have hPrel : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant (imageZ v P') := hP.2.1.2.2
   have hPhor : IsHorizontal (imageZ v P') := hP.2.2.1
   have hfib : ∀ {W : Ideal (MRing ι')}, P' ≤ W → ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G ≤ fibreOf κ G W := by
     intro W hW c hc
@@ -342,10 +342,10 @@ theorem ker_baseSubst_le (hv : IsBlockMap κ v) (G : GenFibre v P') : RingHom.ke
 
 omit [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem fibreIdeal_eq_map (hv : IsBlockMap κ v) (G : GenFibre v P') :
-    fibreIdeal κ G = P'.map (baseSubst κ G) := by
+    ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G = P'.map (baseSubst κ G) := by
   apply le_antisymm
   · intro g hg
-    rw [fibreIdeal, RingHom.mem_ker] at hg
+    rw [ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal, RingHom.mem_ker] at hg
     obtain ⟨t, f, ht, e⟩ := exists_baseSubst_mul hv G g
     have hf : f ∈ P' := by
       rw [← G.genericFibre_ker_target, RingHom.mem_ker, ← aeval_baseSubst hv, ← e, map_mul, hg, mul_zero]
@@ -353,7 +353,7 @@ theorem fibreIdeal_eq_map (hv : IsBlockMap κ v) (G : GenFibre v P') :
     exact Ideal.mem_map_of_mem _ hf
   · rw [Ideal.map_le_iff_le_comap]
     intro a ha
-    rw [Ideal.mem_comap, fibreIdeal, RingHom.mem_ker, aeval_baseSubst hv, ← RingHom.mem_ker, G.genericFibre_ker_target]
+    rw [Ideal.mem_comap, ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal, RingHom.mem_ker, aeval_baseSubst hv, ← RingHom.mem_ker, G.genericFibre_ker_target]
     exact ha
 
 
@@ -471,9 +471,9 @@ theorem PFFibreMult.proof : PFFibreMult.Statement := by
     change IsLocalization.mk' (Localization.AtPrime W) a w ∈ _
     rw [IsLocalization.mk'_eq_mul_mk'_one]
     exact Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ haJ)
-  have hJ : (fibreIdeal κ G ⊔ Ideal.span {φ s}).map (algebraMap _ (Localization.AtPrime (fibreOf κ G W))) =
+  have hJ : (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G ⊔ Ideal.span {φ s}).map (algebraMap _ (Localization.AtPrime (fibreOf κ G W))) =
       ((P' ⊔ Ideal.span {s}).map (algebraMap (MRing ι') (Localization.AtPrime W))).map θ := by
-    have hJ0 : fibreIdeal κ G ⊔ Ideal.span {φ s} = (P' ⊔ Ideal.span {s}).map φ := by
+    have hJ0 : ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G ⊔ Ideal.span {φ s} = (P' ⊔ Ideal.span {s}).map φ := by
       rw [fibreIdeal_eq_map hv G, Ideal.map_sup, Ideal.map_span, Set.image_singleton]
     rw [hJ0, Ideal.map_map, Ideal.map_map, hcomp]
   unfold multAt

@@ -144,7 +144,7 @@ theorem ChartFiniteIrrel.proof : ChartFiniteIrrel.Statement.{u, v, w} := by
     rw [← Ideal.sInf_minimalPrimes]
     refine le_sInf fun W hW => Ideal.span_le.mpr fun x hx => ?_
     have h := hirr W hW
-    simp only [IsRelevant, not_forall, not_exists, not_not] at h
+    simp only [ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant, not_forall, not_exists, not_not] at h
     obtain ⟨k, hk⟩ := h
     exact weighted_le_of_irrel (e := fun _ => 1) hk le_rfl hx
   obtain ⟨N, hN⟩ := Ideal.exists_pow_le_of_le_radical_of_fg hMrad (IsNoetherian.noetherian M)
@@ -155,8 +155,8 @@ theorem ChartFiniteIrrel.proof : ChartFiniteIrrel.Statement.{u, v, w} := by
     obtain ⟨S₀, hS₀, rfl⟩ := hV
     exact Ideal.homogeneous_span _ S₀ fun x hx =>
       let ⟨a, ha⟩ := hS₀ x hx; ⟨a, mem_weighted_of_isMultiHomog ha⟩
-  let π := (Ideal.Quotient.mkₐ F (chartIdeal V i)).toLinearMap
-  let B : ℕ → Submodule F (MRingOver F ι ⧸ chartIdeal V i) := fun t =>
+  let π := (Ideal.Quotient.mkₐ F (ReciprocityTheory.ChartRestriction.G.AI.I1.chartIdeal V i)).toLinearMap
+  let B : ℕ → Submodule F (MRingOver F ι ⧸ ReciprocityTheory.ChartRestriction.G.AI.I1.chartIdeal V i) := fun t =>
     (weightedHomogeneousSubmodule F (mw (ι := ι)) (fun _ => t)).map π
   have hmono : ∀ t, B t ≤ B (t + 1) := by
     rintro t _ ⟨h, hh, rfl⟩
@@ -171,7 +171,7 @@ theorem ChartFiniteIrrel.proof : ChartFiniteIrrel.Statement.{u, v, w} := by
       show ((fun _ : K => t + 1) - fun _ => 1) = fun _ => t from funext fun _ => by simp] at h2
     obtain ⟨v, ⟨-, hv⟩, _, ⟨g, hg, rfl⟩, rfl⟩ := Submodule.mem_sup.mp h2
     refine ⟨π g, ⟨g, hg, rfl⟩, ?_⟩
-    have hv0 : Ideal.Quotient.mk (chartIdeal V i) v = 0 :=
+    have hv0 : Ideal.Quotient.mk (ReciprocityTheory.ChartRestriction.G.AI.I1.chartIdeal V i) v = 0 :=
       Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.mem_sup_left hv)
     simp [π, hv0]
   have heq : ∀ t, N ≤ t → B t = B (t + 1) := fun t ht =>
