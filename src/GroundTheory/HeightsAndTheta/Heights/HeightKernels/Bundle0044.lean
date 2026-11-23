@@ -114,10 +114,10 @@ theorem biEval_eq_zero [Fintype T] [DecidableEq T] (b : Module.Basis T ℤ (dual
     Ideal.Quotient.lift (dualIdeal b')
       (mConeMap (dualLatticeCoord b') : MRing (dualBlocks T) →+* MvPolynomial Unit (ProjField K i))
       (fun g hg => RingHom.mem_ker.mp hg)
-  have hg : ∀ t : T, linForm (ι := dualBlocks T) (ι₂ := dualBlocks T) (stackedDiag a) ⟨(), t⟩ =
+  have hg : ∀ t : T, ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι := dualBlocks T) (ι₂ := dualBlocks T) (stackedDiag a) ⟨(), t⟩ =
       C (a t) * X ⟨(), t⟩ := fun t => by
-    simp [linForm, stackedDiag, apply_ite C, ite_mul, Finset.sum_ite_eq]
-  have hcomp : (map Q).comp (graphMap (dualIdeal b') (linForm (stackedDiag a))) = biEval b b' := by
+    simp [ReciprocityTheory.ChartRestriction.G.AI.I4.linForm, stackedDiag, apply_ite C, ite_mul, Finset.sum_ite_eq]
+  have hcomp : (map Q).comp (graphMap (dualIdeal b') (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (stackedDiag a))) = biEval b b' := by
     apply MvPolynomial.ringHom_ext
     · intro n
       simp [biEval]
@@ -131,7 +131,7 @@ theorem biEval_eq_zero [Fintype T] [DecidableEq T] (b : Module.Basis T ℤ (dual
           Ideal.Quotient.lift_mk, biEval, secW, h2] at *
         simp [mConeMap, map_mul]
         ring
-  have hf0 : graphMap (dualIdeal b') (linForm (stackedDiag a)) f = 0 := RingHom.mem_ker.mp hf
+  have hf0 : graphMap (dualIdeal b') (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (stackedDiag a)) f = 0 := RingHom.mem_ker.mp hf
   rw [← hcomp, RingHom.comp_apply, hf0, map_zero]
 
 end Eval
