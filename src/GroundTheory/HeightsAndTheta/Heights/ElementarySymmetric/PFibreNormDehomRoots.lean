@@ -29,7 +29,7 @@ theorem eval_mConeMap (y : (Σ k, ι k) → Ω) (t : K → Ω) (f : MRing ι) :
   · funext p
     simp
 
-theorem aeval_scale {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) (y : (Σ k, ι k) → Ω) (t : K → Ω) :
+theorem aeval_scale {g : MRing ι} {d : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) (y : (Σ k, ι k) → Ω) (t : K → Ω) :
     aeval (fun p => y p * t p.1) g = aeval y g * ∏ k, t k ^ d k := by
   rw [← eval_mConeMap, ProjLine.mConeMap_eq_of_isMultiHomog y hg, map_mul, eval_C, map_prod]
   simp only [map_pow, eval_X]
@@ -43,7 +43,7 @@ theorem aeval_eq_zero_of_mem {y : (Σ k, ι k) → Ω} {f : MRing ι} (hf : f �
 
 omit [Fintype K] in
 theorem isMultiHomog_monomial {ν : (Σ k, ι k) →₀ ℕ} {d : K → ℕ} (h : ∀ k, ∑ i, ν ⟨k, i⟩ = d k) :
-    IsMultiHomog (monomial ν (1 : ℤ)) d := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (monomial ν (1 : ℤ)) d := by
   intro m hm k
   rw [Finset.mem_singleton.1 (support_monomial_subset hm)]
   exact h k
@@ -63,7 +63,7 @@ theorem sum_single_block (k : K) (i₀ i₁ : ι k) (k' : K) :
       exact h (congrArg Sigma.fst h')
     simp only [h0, Finset.sum_const_zero]
 
-theorem aeval_mem_chartLatNm {y : (Σ k, ι k) → Ω} {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) :
+theorem aeval_mem_chartLatNm {y : (Σ k, ι k) → Ω} {g : MRing ι} {d : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) :
     aeval y g ∈ chartLatNm y (fun k => ((1 * d k : ℕ) : ℤ)) 1 := by
   intro c _
   have hprod : ∏ k, y ⟨k, c k⟩ ^ (-(((1 : ℕ) : ℤ) * ((1 * d k : ℕ) : ℤ))) =
@@ -138,13 +138,13 @@ theorem proof (hG : PullFormsGeneric.Statement) (hS : PullSectionIntegral.Statem
   obtain ⟨ψ, hψl, hψu⟩ := hR Ω D (fun i => aeval y (L i)) (pullField y L) rfl hgen j (q * τ) s c hLj hc0
     hhom hchar a hu ζ ha w hw
 
-  have memM : ∀ g : MRing ι, IsMultiHomog g e → aeval y g / aeval y (L a) ^ (1 * 1) ∈ chartClosure y L a :=
+  have memM : ∀ g : MRing ι, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g e → aeval y g / aeval y (L a) ^ (1 * 1) ∈ chartClosure y L a :=
     fun g hg => hS K ι Ω y D e L 1 hA hB he hLe hnz 1 (aeval y g) (aeval_mem_chartLatNm hg) a hla
   have memL : ∀ b, aeval y (L b) / aeval y (L a) ∈ chartClosure y L a := fun b =>
     (mem_integralClosure_iff _ _).2 (isIntegral_algebraMap
       (x := (⟨_, Algebra.subset_adjoin ⟨b, rfl⟩⟩ : Algebra.adjoin ℚ (Set.range fun k => aeval y (L k) / aeval y (L a)))))
 
-  have hsplit : ∀ (g : MRing ι) (hg : IsMultiHomog g e),
+  have hsplit : ∀ (g : MRing ι) (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g e),
       (⟨aeval y g / aeval y (L a) ^ (1 * 1), memM g hg⟩ : chartClosure y L a) =
         ∑ x ∈ g.support.attach, ((AddMonoidAlgebra.coeff g x.1 : ℤ) : chartClosure y L a) *
           ⟨aeval y (monomial x.1 (1 : ℤ)) / aeval y (L a) ^ (1 * 1), memM _ (isMultiHomog_monomial (hg x.1 x.2))⟩ := by

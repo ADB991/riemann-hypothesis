@@ -249,8 +249,8 @@ theorem prodCochain_mem (hW : W ≤ Module.annihilator (MRingOver S ι) M) {𝓜
   simp only [prodCochain, cellRes_locMul, hu', hz', sub_self]
   exact zsmul_zero σ
 
-theorem isMultiHomog_pow {p : MRingOver S ι} {a : K → ℕ} (hp : IsMultiHomog p a) (m : ℕ) :
-    IsMultiHomog (p ^ m) (m • a) := by
+theorem isMultiHomog_pow {p : MRingOver S ι} {a : K → ℕ} (hp : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p a) (m : ℕ) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (p ^ m) (m • a) := by
   induction m with
   | zero => simpa using GenTwistGenerated.isMultiHomog_one (S := S) (ι := ι) 0 fun _ => rfl
   | succ m ih =>
@@ -263,7 +263,7 @@ def chartExpOf (c : ∀ k, ι k) (e : K → ℕ) : (Σ k, ι k) →₀ ℕ :=
 def chartMon (c : ∀ k, ι k) (e : K → ℕ) : MRingOver S ι :=
   monomial (chartExpOf c e) 1
 
-theorem chartMon_homog (c : ∀ k, ι k) (e : K → ℕ) : IsMultiHomog (chartMon (S := S) c e) e :=
+theorem chartMon_homog (c : ∀ k, ι k) (e : K → ℕ) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (chartMon (S := S) c e) e :=
   GenTwistGenerated.isMultiHomog_monomial _ _ _ fun k => by simp [chartExpOf]
 
 theorem chartMon_mem {I : ∀ k, Finset (ι k)} {c : ∀ k, ι k} (hc : ∀ k, c k ∈ I k) (e : K → ℕ) :
@@ -282,8 +282,8 @@ theorem chartMon_mem {I : ∀ k, Finset (ι k)} {c : ∀ k, ι k} (hc : ∀ k, c
 
 theorem exists_div (hW : W ≤ Module.annihilator (MRingOver S ι) M) {𝓜 : (K → ℤ) → Submodule S M}
     (h𝓜 : KH.IsMGraded S ι 𝓜) {d n : K → ℤ} (I : ∀ k, Finset (ι k)) (P N : MRingOver S ι)
-    (hP : P ∈ KH.cellMon S I) (hN : N ∈ KH.cellMon S I) (hPh : IsMultiHomog P fun k => (n k).toNat)
-    (hNh : IsMultiHomog N fun k => (-n k).toNat) {x : LocalizedModule (KH.cellMon S I) M}
+    (hP : P ∈ KH.cellMon S I) (hN : N ∈ KH.cellMon S I) (hPh : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog P fun k => (n k).toNat)
+    (hNh : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog N fun k => (-n k).toNat) {x : LocalizedModule (KH.cellMon S I) M}
     (hx : x ∈ KH.locPart ι 𝓜 (KH.cellMon S I) (d + n)) :
     ∃ y ∈ KH.locPart ι 𝓜 (KH.cellMon S I) d,
       locMul _ hW (LocalizedModule.mk (Ideal.Quotient.mk W P) ⟨N, hN⟩) y = x := by

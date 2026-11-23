@@ -52,8 +52,8 @@ theorem chartMon_mem (c : ∀ k, ι k) (e : K → ℕ) : chartMon (S := S) c e �
       apply Submonoid.subset_closure
       exact ⟨k, c k, Finset.mem_singleton_self _, rfl⟩) _
 
-theorem isMultiHomog_pow {p : MRingOver S ι} {a : K → ℕ} (hp : IsMultiHomog p a) (n : ℕ) :
-    IsMultiHomog (p ^ n) (n • a) := by
+theorem isMultiHomog_pow {p : MRingOver S ι} {a : K → ℕ} (hp : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p a) (n : ℕ) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (p ^ n) (n • a) := by
   induction n with
   | zero =>
     rw [pow_zero, zero_smul]
@@ -63,7 +63,7 @@ theorem isMultiHomog_pow {p : MRingOver S ι} {a : K → ℕ} (hp : IsMultiHomog
     exact GenSESStep.isMultiHomog_mul ih hp
 
 theorem isMultiHomog_prod {β : Type} (s : Finset β) (f : β → MRingOver S ι) (a : β → K → ℕ)
-    (h : ∀ i ∈ s, IsMultiHomog (f i) (a i)) : IsMultiHomog (∏ i ∈ s, f i) (∑ i ∈ s, a i) := by
+    (h : ∀ i ∈ s, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f i) (a i)) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (∏ i ∈ s, f i) (∑ i ∈ s, a i) := by
   classical
   induction s using Finset.induction_on with
   | empty =>
@@ -74,7 +74,7 @@ theorem isMultiHomog_prod {β : Type} (s : Finset β) (f : β → MRingOver S ι
     exact GenSESStep.isMultiHomog_mul (h b (Finset.mem_insert_self b s))
       (ih fun i hi => h i (Finset.mem_insert_of_mem hi))
 
-theorem isMultiHomog_chartMon (c : ∀ k, ι k) (e : K → ℕ) : IsMultiHomog (chartMon (S := S) c e) e := by
+theorem isMultiHomog_chartMon (c : ∀ k, ι k) (e : K → ℕ) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (chartMon (S := S) c e) e := by
   classical
   have h := isMultiHomog_prod (S := S) Finset.univ (fun k => (X ⟨k, c k⟩ : MRingOver S ι) ^ e k)
     (fun k => e k • fun l => if l = k then 1 else 0)
