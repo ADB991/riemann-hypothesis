@@ -24,7 +24,8 @@ def IsChar (T : Γ → L) : Prop :=
   ∃ (ι : Type) (_ : Fintype ι) (_ : DecidableEq ι) (σ : Γ →* Matrix ι ι L), ∀ g, T g = (σ g).trace
 
 theorem IsChar.zero : IsChar (fun _ : Γ => (0 : L)) :=
-  ⟨Empty, inferInstance, inferInstance, 1, fun g => by simp [Matrix.trace]⟩
+  ⟨Empty, inferInstance, inferInstance, 1, fun g => by
+    simp only [Matrix.trace, Fintype.univ_empty, Finset.sum_empty]⟩
 
 theorem IsChar.add {S T : Γ → L} (hS : IsChar S) (hT : IsChar T) : IsChar (fun g => S g + T g) := by
   obtain ⟨ι, _, _, σ, hσ⟩ := hS
