@@ -169,8 +169,8 @@ theorem actB_jB_of_mem_L {ι : Type} [Fintype ι] [DecidableEq ι] {P : PhiMod O
     {γ : TameGal K l e a} (hc : Covers K t ϖ (sQ l g) γ) {v v' : Vec K a ι} (hv : v ∈ P.L) (hv' : v' ∈ P.L)
     (hvv : v' = Δ.act γ v) (hS : v ∈ P.MMl) (hS' : v' ∈ P.MMl) :
     actB (sQ l) T g (jB (toBcris t ϖ P ⟨v, hS⟩)) = jB (toBcris t ϖ P ⟨v', hS'⟩) := by
-  set c : ι → OA l O := fun i => ϖ.iTot t K (GlobalTheory.BKReal.coordL P _ ⟨v, hv⟩ i) with hc_def
-  set c' : ι → OA l O := fun i => ϖ.iTot t K (GlobalTheory.BKReal.coordL P _ ⟨v', hv'⟩ i) with hc'_def
+  set c : ι → OA l O := fun i => ϖ.iTot t K (GlobalTheory.BKReal.coordL P (A O K) ⟨v, hv⟩ i) with hc_def
+  set c' : ι → OA l O := fun i => ϖ.iTot t K (GlobalTheory.BKReal.coordL P (A O K) ⟨v', hv'⟩ i) with hc'_def
   have hW : toW t ϖ P ⟨v, mem_ME_of_mem_L hv⟩ = inclL t ϖ P c :=
     (toW_toCris_of_mem_L t ϖ P hv (P.ext_mono (A_le_S l e) hv)).1
   have hW' : toW t ϖ P ⟨v', mem_ME_of_mem_L hv'⟩ = inclL t ϖ P c' :=
