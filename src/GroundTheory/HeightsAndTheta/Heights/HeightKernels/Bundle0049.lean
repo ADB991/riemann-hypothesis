@@ -251,14 +251,14 @@ theorem DualStackedExcReduced.proof (hC : DualStackedExcCoords.Statement) (hB : 
   have hEp : (linPrime α M).IsPrime := RingHom.ker_isPrime _
   have hXv : graphFirst v ∉ linPrime α M := graphFirst_not_mem hv
   have hYu : graphSecond u ∉ linPrime α M := graphSecond_not_mem hu
-  have hrel : IsRelevant (linPrime α M) := by
+  have hrel : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant (linPrime α M) := by
     rintro (⟨⟩ | ⟨⟩)
     · exact ⟨v, hXv⟩
     · exact ⟨u, hYu⟩
   have hsub : ∀ w : T, stackedGraph b' a ⊔ Ideal.span {C (a w) * graphFirst w} ≤ stackedBase b' a :=
     fun w => sup_le le_sup_left ((Ideal.span_singleton_le_iff_mem _).mpr (first_mem_base b' a w))
 
-  have hkey : ∀ W : Ideal (MRing (stackedBlocks T)), W.IsPrime → IsRelevant W → stackedBase b' a ≤ W →
+  have hkey : ∀ W : Ideal (MRing (stackedBlocks T)), W.IsPrime → ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W → stackedBase b' a ≤ W →
       linPrime α M ≤ W := by
     intro W hW hWr hBW e he
     obtain ⟨v', hv'⟩ : ∃ v' : T, graphFirst v' ∉ W := hWr (Sum.inl ())

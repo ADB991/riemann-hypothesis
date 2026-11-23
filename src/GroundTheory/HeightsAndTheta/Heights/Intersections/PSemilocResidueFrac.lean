@@ -87,7 +87,7 @@ theorem evLoc_spec (P W : Ideal (MRing ι)) [P.IsPrime] [W.IsPrime] (hPW : P ≤
   exact (congrArg (· * aeval x w) (rfl : evLoc P W hPW x hx z = evAt P W hPW x hx ⟨z, locRing_le P W hPW z.2⟩)).trans h
 
 theorem isUnit_of_rep (P W : Ideal (MRing ι)) [P.IsPrime] (hPW : P ≤ W) {z : locRing P W} {u w : MRing ι}
-    {a : K → ℕ} (hu : IsMultiHomog u a) (hw : IsMultiHomog w a) (huW : u ∉ W)
+    {a : K → ℕ} (hu : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog u a) (hw : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog w a) (huW : u ∉ W)
     (e : (z : FractionRing (MRing ι ⧸ P)) * regularityLocalResidue_holds.frHom P w = regularityLocalResidue_holds.frHom P u) : IsUnit z := by
   have hu0 : regularityLocalResidue_holds.frHom P u ≠ 0 := fun h => huW (hPW (regularityLocalResidue_holds.frHom_eq_zero_iff.1 h))
   refine IsUnit.of_mul_eq_one (⟨_, regularityLocalResidue_holds.mem_locRing_of_form hPW hw hu huW⟩ : locRing P W) (Subtype.ext ?_)

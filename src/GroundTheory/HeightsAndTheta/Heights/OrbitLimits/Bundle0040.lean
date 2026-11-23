@@ -309,7 +309,7 @@ theorem CurveFieldNumber.proof (hR1 : RegularityFunctionFieldNumber.Statement) :
     (IsFractionRing.lift_algebraMap hj _).trans (congrArg (algebraMap (MvPolynomial K Ω) L)
       (RingHom.kerLift_mk (mConeMap y : MRing ι →+* MvPolynomial K Ω) f))
 
-  have hform : ∀ {g : MRing ι} {a : K → ℕ}, IsMultiHomog g a →
+  have hform : ∀ {g : MRing ι} {a : K → ℕ}, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a →
       Φ (algebraMap _ _ (Ideal.Quotient.mk P g)) = c (aeval y g) * algebraMap _ L (∏ k, (X k : MvPolynomial K Ω) ^ a k) := by
     intro g a hg
     rw [hΦ, LowerBoundFree.mConeMap_of_isMultiHomog y hg, map_mul]; rfl
@@ -317,7 +317,7 @@ theorem CurveFieldNumber.proof (hR1 : RegularityFunctionFieldNumber.Statement) :
     (map_ne_zero_iff _ (IsFractionRing.injective _ L)).2 (Finset.prod_ne_zero_iff.2 fun k _ =>
       pow_ne_zero _ (X_ne_zero k))
 
-  have hmem : ∀ {g : MRing ι} {a : K → ℕ}, IsMultiHomog g a → aeval y g = 0 → g ∈ P := by
+  have hmem : ∀ {g : MRing ι} {a : K → ℕ}, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a → aeval y g = 0 → g ∈ P := by
     intro g a hg h0
     show mConeMap y g = 0
     rw [LowerBoundFree.mConeMap_of_isMultiHomog y hg, h0, map_zero, zero_mul]
