@@ -585,7 +585,7 @@ theorem sec_id (I : Ideal (MvPolynomial (Fin d) R)) (hI : Ideal.span (Set.range 
     (hg : g ≫ pullback.fst (wb d R) (pr d R).hom = sch.map (off (MvPolynomial (Fin d) R) I).ι ≫ wa d R) :
     g ≫ rX I hI = 𝟙 _ :=
   abs_cancel g (rX I hI) (sch.map (off (MvPolynomial (Fin d) R) I).ι) (pullback.fst (wb d R) (pr d R).hom) (wa d R)
-    (rW d R) (opn_mono (off (MvPolynomial (Fin d) R) I)) (rX_comp I hI) hg wa_rW
+    (rW d R) (LateralTheory.CohomologicalPurity.Thom.ExcP.Chart.opn_mono (off (MvPolynomial (Fin d) R) I)) (rX_comp I hI) hg wa_rW
 
 end WeightedBlowupChartPointUnits.Cb.etale_weighted_blowup_exceptional_chart_torsor_of_equivalence
 

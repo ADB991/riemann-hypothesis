@@ -140,9 +140,9 @@ theorem wRowOf_eq (hW : WRowIso D) {u u' : D.what₂.Word} (p : D.s.Pair u u') :
   refine (hW (W.δ u) (W.isom u) (X.Fu u) _).trans ?_
   rw [tc_pfst]
 
-theorem jtOf_eq {u u' : D.what₂.Word} (t : D.s.Term u u') (s : TT Y u u') (hs : s.toTerm = tc hI t) :
+theorem jtOf_eq {u u' : D.what₂.Word} (t : D.s.Term u u') (s : Formalism.L2.SG.PackageTie2.TT Y u u') (hs : s.toTerm = tc hI t) :
     ∃ g : fib Y (tc hI t), JtOf hI t = amp Y g.1 := by
-  have h : ∃ s : TT Y u u', s.toTerm = tc hI t := ⟨s, hs⟩
+  have h : ∃ s : Formalism.L2.SG.PackageTie2.TT Y u u', s.toTerm = tc hI t := ⟨s, hs⟩
   exact ⟨⟨h.choose, h.choose_spec⟩, by unfold JtOf; rw [dite_eq_left h]⟩
 
 theorem pair_form (hW : WRowIso D) (hC : AmpCov Y) (hK : PairAmpConst Y) (hN : FibreCountEq hF)

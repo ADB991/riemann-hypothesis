@@ -212,7 +212,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem FiC_comp (S : StepLevel F E σ J T f bad) (emb : Tau → E →+* ℂ) (lam : Tau → DomWeight n) {c c' : Type}
     (yc : c → UPts σ J (FiniteAdeleRing (𝓞 F) F)) (r : c' → c) (hr : Function.Surjective r)
-    (ψ : c → Frames (gramC J emb) → ℂ) :
+    (ψ : c → Formalism.L2.Forms.Frames (gramC J emb) → ℂ) :
     (fun a => ψ (r a)) ∈ FiC S emb lam (fun a => yc (r a)) ↔ ψ ∈ FiC S emb lam yc := by
   unfold FiC
   constructor

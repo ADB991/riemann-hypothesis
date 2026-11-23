@@ -92,14 +92,14 @@ theorem PullbackDegreeCount.proof (hDim : FibreDimStatement) (hRank : ChartRankA
     PullbackDegreeCount.Statement := by
   intro K _ ι _ K' _ ι' _ κ v P' J' n G J R Ψ hv hP' hP hJ hΨ
   classical
-  have hfib : IsProjVarF (fibreIdeal κ G) 0 := hDim K ι K' ι' κ v P' (n + 1) 0 G hv hP' hP
+  have hfib : IsProjVarF (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G) 0 := hDim K ι K' ι' κ v P' (n + 1) 0 G hv hP' hP
   choose i hi using hfib.1.2.2
   have hz : ∀ k : FibreBlock κ, G.x' ⟨k.1, i k⟩ ≠ 0 := by
     intro k h0
     apply hi k
-    rw [fibreIdeal, RingHom.mem_ker, aeval_X]
+    rw [ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal, RingHom.mem_ker, aeval_X]
     exact h0
-  have he : J (fibreIdeal κ G) 0 Fin.elim0 = (Module.finrank G.Φ (IntermediateField.adjoin G.Φ
+  have he : J (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G) 0 Fin.elim0 = (Module.finrank G.Φ (IntermediateField.adjoin G.Φ
       (Set.range fun q : Σ k : FibreBlock κ, ι' k.1 => G.x' ⟨q.1.1, q.2⟩ / G.x' ⟨q.1.1, i q.1⟩)) : ℤ) := by
     rw [hJ.1 _ Fin.elim0 i hfib hi]
     exact congrArg _ (hRank (FibreBlock κ) (fibreIdx ι' κ) G.Φ G.Φ' (fun q => G.x' ⟨q.1.1, q.2⟩) i hz hfib.1.2.1)

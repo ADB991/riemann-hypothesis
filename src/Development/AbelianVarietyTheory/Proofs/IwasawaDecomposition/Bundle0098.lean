@@ -322,16 +322,16 @@ theorem infEv_local (w : InfinitePlace L) (v : HeightOneSpectrum (𝓞 L)) (x : 
     Units.map (infEv w) (Neutral.B1.localIdele L v x) = 1 := Units.ext rfl
 
 theorem finEv_inf (v : HeightOneSpectrum (𝓞 L)) (w : InfinitePlace L) (x : (w.Completion)ˣ) :
-    Units.map (finEv v) (infIdele L w x) = 1 := Units.ext rfl
+    Units.map (finEv v) (ReciprocityTheory.Neutral.Bridge.HCFR.infIdele L w x) = 1 := Units.ext rfl
 
 theorem infEv_inf_self (w : InfinitePlace L) (x : (w.Completion)ˣ) :
-    Units.map (infEv w) (infIdele L w x) = x := by
+    Units.map (infEv w) (ReciprocityTheory.Neutral.Bridge.HCFR.infIdele L w x) = x := by
   classical
   apply Units.ext
   exact Pi.mulSingle_eq_same (M := fun w : InfinitePlace L => w.Completion) w (x : w.Completion)
 
 theorem infEv_inf_ne {w u : InfinitePlace L} (h : u ≠ w) (x : (w.Completion)ˣ) :
-    Units.map (infEv u) (infIdele L w x) = 1 := by
+    Units.map (infEv u) (ReciprocityTheory.Neutral.Bridge.HCFR.infIdele L w x) = 1 := by
   classical
   apply Units.ext
   exact Pi.mulSingle_eq_of_ne (M := fun w : InfinitePlace L => w.Completion) h (x : w.Completion)
@@ -376,7 +376,7 @@ theorem continuous_of_tameLoc {v : HeightOneSpectrum (𝓞 L)} {θ : (v.adicComp
 
 
 open Classical in
-theorem exists_modelChar : ∀ (L : Type) [Field L] [NumberField L] (I : Type) [Fintype I] (φ : I → L →+* ℂ), (Function.Bijective fun i => InfinitePlace.mk (φ i)) → ∀ (n : I → ℤ) (S : Finset (HeightOneSpectrum (𝓞 L))) (θ : ∀ v : HeightOneSpectrum (𝓞 L), (v.adicCompletion L)ˣ →* ℂˣ), (∀ v ∈ S, TameLoc v (θ v)) → ∃ ψ : Ideles L →* ℂˣ, Continuous ψ ∧ (∀ x, ‖((ψ x : ℂˣ) : ℂ)‖ = 1) ∧ (∀ i (k : Lˣ), ((ψ (infIdele L (InfinitePlace.mk (φ i)) (atInf _ k)) : ℂˣ) : ℂ) = (φ i (k : L) / ((‖φ i (k : L)‖ : ℝ) : ℂ)) ^ n i) ∧ (∀ v ∈ S, ∀ x, ψ (Neutral.B1.localIdele L v x) = θ v x) ∧ (∀ v ∉ S, ∀ x, ψ (Neutral.B1.localIdele L v x) = 1) ∧ ∀ k : Lˣ, ψ (diagUnits L k) = ψ (infDiag k) * ∏ v ∈ S, θ v (atFin v k) := by
+theorem exists_modelChar : ∀ (L : Type) [Field L] [NumberField L] (I : Type) [Fintype I] (φ : I → L →+* ℂ), (Function.Bijective fun i => InfinitePlace.mk (φ i)) → ∀ (n : I → ℤ) (S : Finset (HeightOneSpectrum (𝓞 L))) (θ : ∀ v : HeightOneSpectrum (𝓞 L), (v.adicCompletion L)ˣ →* ℂˣ), (∀ v ∈ S, TameLoc v (θ v)) → ∃ ψ : Ideles L →* ℂˣ, Continuous ψ ∧ (∀ x, ‖((ψ x : ℂˣ) : ℂ)‖ = 1) ∧ (∀ i (k : Lˣ), ((ψ (ReciprocityTheory.Neutral.Bridge.HCFR.infIdele L (InfinitePlace.mk (φ i)) (atInf _ k)) : ℂˣ) : ℂ) = (φ i (k : L) / ((‖φ i (k : L)‖ : ℝ) : ℂ)) ^ n i) ∧ (∀ v ∈ S, ∀ x, ψ (Neutral.B1.localIdele L v x) = θ v x) ∧ (∀ v ∉ S, ∀ x, ψ (Neutral.B1.localIdele L v x) = 1) ∧ ∀ k : Lˣ, ψ (diagUnits L k) = ψ (infDiag k) * ∏ v ∈ S, θ v (atFin v k) := by
   intro L _ _ I _ φ hφ n S θ hθ
   choose e hec he using fun i => GlobalTheory.InfTypeLocal.exists_ext (φ i)
   obtain ⟨ψ, hψ⟩ : ∃ ψ : Ideles L →* ℂˣ, ∀ a, ψ a =

@@ -42,7 +42,7 @@ theorem nu_zero (U : URep k r) {Ws : List (List (Formalism.FourierDecayAlt.Three
   simpa using this
 
 theorem ent_bdd {X Y : Obj k r} {f : M X →ₗ[ℂ] M Y} (hf : IsHom X Y f) (e : Y.1.ι) (c : X.1.ι) :
-    Bdd (GG k r) (InLieHpk k r) X.2.R.σ (ent f e c) := by
+    Bdd (GG k r) (PI.UpqRep.InLieHpk k r) X.2.R.σ (ent f e c) := by
   obtain ⟨C, Ws, hW, hb⟩ := hf.cont [] (by simp [LieWd])
   refine ⟨C, Ws, hW, fun v hv => ?_⟩
   rw [ent_coe f e c ⟨v, hv⟩]
@@ -60,7 +60,7 @@ theorem apply_eq_ent {X Y : Obj k r} (f : M X →ₗ[ℂ] M Y) (x : M X) (e : Y.
     conv_lhs => rw [← Finset.univ_sum_single x, map_sum, Finset.sum_apply, Submodule.coe_sum]
   exact Finset.sum_congr rfl fun c _ => (ent_coe f e c (x c)).symm
 
-theorem hasDerivAt_rho {F : FRep k r} (hF : F.OK) {Z : Formalism.FourierDecayAlt.ThreeDimData.Mx k r} (hZ : InLieHpk k r Z) (c d : F.ι) :
+theorem hasDerivAt_rho {F : FRep k r} (hF : F.OK) {Z : Formalism.FourierDecayAlt.ThreeDimData.Mx k r} (hZ : PI.UpqRep.InLieHpk k r Z) (c d : F.ι) :
     HasDerivAt (fun t => F.ρ (ex Z t) c d) (F.dR Z c d) 0 := by
   obtain ⟨U, Φ, hU, h1U, hΦ, hf⟩ := (show SmOn (GG k r) fun g => F.ρ g c d from hF.smooth c d) 1 (hGG k r).2.1
   exact (hasDerivAt_local (f := fun g => F.ρ g c d) (hLie Z hZ) (ex_zero Z) (hasDerivAt_matrix_exp_zero Z)
@@ -68,7 +68,7 @@ theorem hasDerivAt_rho {F : FRep k r} (hF : F.OK) {Z : Formalism.FourierDecayAlt
 
 def LR (X : Obj k r) (Z : Formalism.FourierDecayAlt.ThreeDimData.Mx k r) : Module.End ℂ (M X) := dOp X.1.ι (X.2.dsig Z) + mAct (X.1.dR Z)
 
-theorem LR_coe (X : Obj k r) {Z : Formalism.FourierDecayAlt.ThreeDimData.Mx k r} (hZ : InLieHpk k r Z) (x : M X) (c : X.1.ι) :
+theorem LR_coe (X : Obj k r) {Z : Formalism.FourierDecayAlt.ThreeDimData.Mx k r} (hZ : PI.UpqRep.InLieHpk k r Z) (x : M X) (c : X.1.ι) :
     (LR X Z x c : X.2.R.H) = ds X.2.R.σ Z (x c) + ∑ d, X.1.dR Z c d • (x d : X.2.R.H) := by
   simp only [LR, mAct, dOp, LinearMap.add_apply, Pi.add_apply, LinearMap.pi_apply, LinearMap.sum_apply,
     LinearMap.smul_apply, LinearMap.proj_apply, LinearMap.compLeft_apply, Function.comp_apply, Submodule.coe_add,
@@ -76,8 +76,8 @@ theorem LR_coe (X : Obj k r) {Z : Formalism.FourierDecayAlt.ThreeDimData.Mx k r}
   rfl
 
 theorem hasDerivAt_lin {X : Obj k r} (hX : X.1.OK) {H' : Type} [NormedAddCommGroup H'] [InnerProductSpace ℂ H']
-    [CompleteSpace H'] {T : X.2.R.H → H'} (hl : Lin (GG k r) X.2.R.σ T) (hb : Bdd (GG k r) (InLieHpk k r) X.2.R.σ T)
-    {Z : Formalism.FourierDecayAlt.ThreeDimData.Mx k r} (hZ : InLieHpk k r Z) (x : M X) (c : X.1.ι) :
+    [CompleteSpace H'] {T : X.2.R.H → H'} (hl : Lin (GG k r) X.2.R.σ T) (hb : Bdd (GG k r) (PI.UpqRep.InLieHpk k r) X.2.R.σ T)
+    {Z : Formalism.FourierDecayAlt.ThreeDimData.Mx k r} (hZ : PI.UpqRep.InLieHpk k r Z) (x : M X) (c : X.1.ι) :
     HasDerivAt (fun t => T (act X (ex Z t) x c)) (T (LR X Z x c)) 0 := by
   let Tl : X.2.R.smSub →ₗ[ℂ] H' :=
     { toFun := fun v => T v
@@ -113,7 +113,7 @@ theorem hasDerivAt_lin {X : Obj k r} (hX : X.1.OK) {H' : Type} [NormedAddCommGro
   rfl
 
 theorem comm_LR {X Y : Obj k r} {f : M X →ₗ[ℂ] M Y} (hX : X.1.OK) (hY : Y.1.OK) (hf : IsHom X Y f) {Z : Formalism.FourierDecayAlt.ThreeDimData.Mx k r}
-    (hZ : InLieHpk k r Z) : f ∘ₗ LR X Z = LR Y Z ∘ₗ f := by
+    (hZ : PI.UpqRep.InLieHpk k r Z) : f ∘ₗ LR X Z = LR Y Z ∘ₗ f := by
   refine LinearMap.ext fun x => funext fun e => Subtype.ext ?_
   have h1 := HasDerivAt.fun_sum (u := Finset.univ) fun c _ =>
     hasDerivAt_lin hX (ent_lin f e c) (ent_bdd hf e c) hZ x c
@@ -125,7 +125,7 @@ theorem comm_LR {X Y : Obj k r} {f : M X →ₗ[ℂ] M Y} (hX : X.1.OK) (hY : Y.
   rw [e1] at h1
   exact h1.unique h2
 
-theorem inLie_reH (Y : Formalism.FourierDecayAlt.ThreeDimData.Mx k r) : InLieHpk k r (reH k r Y) := by
+theorem inLie_reH (Y : Formalism.FourierDecayAlt.ThreeDimData.Mx k r) : PI.UpqRep.InLieHpk k r (reH k r Y) := by
   have h1 : Formalism.QuantumDeterminants.Hpk k r * Formalism.QuantumDeterminants.Hpk k r = 1 := PI.HwUniqW.Hpk_mul_self
   have h2 : (Formalism.QuantumDeterminants.Hpk k r)ᴴ = Formalism.QuantumDeterminants.Hpk k r := PI.HwUniqW.Hpk_conjTranspose
   show (reH k r Y)ᴴ * Formalism.QuantumDeterminants.Hpk k r + Formalism.QuantumDeterminants.Hpk k r * reH k r Y = 0
@@ -140,7 +140,7 @@ theorem inLie_reH (Y : Formalism.FourierDecayAlt.ThreeDimData.Mx k r) : InLieHpk
     Matrix.add_mul, Matrix.mul_add, Matrix.neg_mul, Matrix.mul_neg, e1, e2, ← smul_add]
   simp
 
-theorem inLie_imH (Y : Formalism.FourierDecayAlt.ThreeDimData.Mx k r) : InLieHpk k r (imH k r Y) := by
+theorem inLie_imH (Y : Formalism.FourierDecayAlt.ThreeDimData.Mx k r) : PI.UpqRep.InLieHpk k r (imH k r Y) := by
   have h1 : Formalism.QuantumDeterminants.Hpk k r * Formalism.QuantumDeterminants.Hpk k r = 1 := PI.HwUniqW.Hpk_mul_self
   have h2 : (Formalism.QuantumDeterminants.Hpk k r)ᴴ = Formalism.QuantumDeterminants.Hpk k r := PI.HwUniqW.Hpk_conjTranspose
   show (imH k r Y)ᴴ * Formalism.QuantumDeterminants.Hpk k r + Formalism.QuantumDeterminants.Hpk k r * imH k r Y = 0

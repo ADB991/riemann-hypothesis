@@ -310,7 +310,7 @@ theorem ptsIntegral_eq_zero {e : ℕ} (P : Ideal (MRing ι)) (φ : Fin e → ((�
 theorem snoc_invTensor (II : IntersectionSystem) (hII : IsIntersectionSystem II) (P : Ideal (MRing ι)) (n : ℕ)
     (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hP : IsArithVar P (n + 1)) (hL : ∀ j, IsSmoothHerm (L j)) :
     II K ι P (n + 1) (Fin.snoc L (invTensor ι)) = 0 := by
-  have h1 : IsMultiHomog (1 : MRing ι) (0 : K → ℕ) := by
+  have h1 : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (1 : MRing ι) (0 : K → ℕ) := by
     classical
     intro m hm k
     rw [MvPolynomial.mem_support_iff, MvPolynomial.coeff_one] at hm

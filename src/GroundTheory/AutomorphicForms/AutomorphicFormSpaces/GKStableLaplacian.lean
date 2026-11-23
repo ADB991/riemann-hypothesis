@@ -147,7 +147,7 @@ theorem rtInf_mem_archKSpan (k : archCompact K n) {ψ : archSmooth K n} (hψ : �
 
 theorem finiteDimensional_archKSpan (hK : IsKFinite (φ : AdelicGLn.AdelicGL K n → ℂ)) :
     FiniteDimensional ℂ (archKSpan φ) := by
-  set Wf := Submodule.span ℂ (range fun k : (maxCompact : Subgroup (AdelicGLn.AdelicGL K n)) =>
+  set Wf := Submodule.span ℂ (range fun k : (GroundTheory.Automorphic.Reduction.maxCompact : Subgroup (AdelicGLn.AdelicGL K n)) =>
     rightTranslate (k : AdelicGLn.AdelicGL K n) (φ : AdelicGLn.AdelicGL K n → ℂ))
   have : FiniteDimensional ℂ Wf := hK
   have hW : ∀ w : archKSpan φ, ((w : archSmooth K n) : AdelicGLn.AdelicGL K n → ℂ) ∈ Wf := by

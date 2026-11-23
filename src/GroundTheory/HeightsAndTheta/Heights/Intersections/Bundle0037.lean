@@ -68,7 +68,7 @@ def FibreDimensionZero.Statement : Prop :=
     IsBlockMap κ v → ((p : ℕ) : MRing ι') ∈ W' →
     IsProjVarF (W'.map (MvPolynomial.map (Int.castRingHom (ZMod p)))) n →
     IsProjVarF (imageVar (ZMod p) v (W'.map (MvPolynomial.map (Int.castRingHom (ZMod p))))) n →
-    ∀ G' : GenFibre v W', IsProjVarF (fibreIdeal κ G') 0
+    ∀ G' : GenFibre v W', IsProjVarF (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G') 0
 
 section Inhabitants
 

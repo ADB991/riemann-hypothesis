@@ -150,17 +150,17 @@ def blockCChi (d : HSMBlockDatum D K ι Ω) (n : ℕ) : ℝ :=
     -(1 / 2) * Real.log (blockCGram d n h.choose.2).det.re
   else 0
 
-def blockInterpPot (d : HSMBlockDatum D K ι Ω) (A A' : HermLine ι) (t : ℝ) : LocPot d.R.X where
+def blockInterpPot (d : HSMBlockDatum D K ι Ω) (A A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (t : ℝ) : LocPot d.R.X where
   U := d.R.U
   isOpen_U := d.R.isOpen_U
   mem_U := d.R.mem_U
   φ x y := (1 - t) * Real.log (A.h (d.R.lift x y)) + t * Real.log (A'.h (d.R.lift x y))
 
-def blockMetricInt (d : HSMBlockDatum D K ι Ω) (A' : HermLine ι) : ℝ :=
+def blockMetricInt (d : HSMBlockDatum D K ι Ω) (A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) : ℝ :=
   ∫ t in (0 : ℝ)..1, mInt d.R.A (fun _ => blockInterpPot d d.A A' t)
     fun x => Real.log (A'.h (blockPt d x) / d.A.h (blockPt d x))
 
-def blockMixPot (A A' : HermLine ι) (D i : ℕ) : Fin D → ((Σ k, ι k) → ℂ) → ℝ :=
+def blockMixPot (A A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (D i : ℕ) : Fin D → ((Σ k, ι k) → ℂ) → ℝ :=
   fun j z => if j.val < i then Real.log (A'.h z) else Real.log (A.h z)
 
 end

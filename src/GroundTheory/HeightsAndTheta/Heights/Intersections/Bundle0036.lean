@@ -480,7 +480,7 @@ def PullbackEliminationOfVariable.Statement : Prop :=
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (P' J' : Ideal (MRing ι')) (n : ℕ),
     IsBlockMap κ v → IsArithVar P' (n + 1) → IsArithVar (imageZ v P') (n + 1) →
     IsMultiHomogIdeal J' → ¬ J' ≤ P' →
-    ∃ (h : MRing ι) (a : K → ℕ), IsMultiHomog h a ∧ h ∉ imageZ v P' ∧
+    ∃ (h : MRing ι) (a : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h a ∧ h ∉ imageZ v P' ∧
       ∀ z' ∈ mcPts P', z' ∈ mcPts J' → eval (fun p => z' (v p)) (map (Int.castRingHom ℂ) h) = 0
 
 section Inhabitants
