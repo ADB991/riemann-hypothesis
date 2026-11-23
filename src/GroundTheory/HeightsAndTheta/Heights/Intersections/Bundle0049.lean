@@ -40,7 +40,7 @@ theorem fracHom_ne_zero {w : MRing ι} (hw : w ∉ P) : fracHom P w ≠ 0 :=
   fun h => hw (fracHom_eq_zero_iff.mp h)
 
 theorem exists_frac (h𝒲 : ∀ W ∈ 𝒲, W.IsPrime) (x : semiLocRing P 𝒲) :
-    ∃ (u w : MRing ι) (a : K → ℕ), IsMultiHomog u a ∧ IsMultiHomog w a ∧ w ∉ P ∧ (∀ W ∈ 𝒲, w ∉ W) ∧
+    ∃ (u w : MRing ι) (a : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog u a ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog w a ∧ w ∉ P ∧ (∀ W ∈ 𝒲, w ∉ W) ∧
       (x : FractionRing (MRing ι ⧸ P)) * fracHom P w = fracHom P u := by
   obtain ⟨x, hx⟩ := x
   induction hx using Subring.closure_induction with
@@ -74,7 +74,7 @@ theorem exists_frac (h𝒲 : ∀ W ∈ 𝒲, W.IsPrime) (x : semiLocRing P 𝒲)
     rw [← hx, ← hy]
     ring
 
-theorem frac_mem {u w : MRing ι} {a : K → ℕ} (hu : IsMultiHomog u a) (hw : IsMultiHomog w a) (hwP : w ∉ P)
+theorem frac_mem {u w : MRing ι} {a : K → ℕ} (hu : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog u a) (hw : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog w a) (hwP : w ∉ P)
     (hwW : ∀ W ∈ 𝒲, w ∉ W) : fracHom P u / fracHom P w ∈ semiLocRing P 𝒲 := by
   have hw' : Ideal.Quotient.mk P w ∈ nonZeroDivisors (MRing ι ⧸ P) :=
     mem_nonZeroDivisors_of_ne_zero (by rwa [Ne, Ideal.Quotient.eq_zero_iff_mem])
@@ -83,24 +83,24 @@ theorem frac_mem {u w : MRing ι} {a : K → ℕ} (hu : IsMultiHomog u a) (hw : 
   rfl
 
 theorem mem_semiMaxIdeal_iff {W' : Ideal (MRing ι)} [W'.IsPrime] (hW' : W' ∈ 𝒲) (hPW : P ≤ W')
-    [IsLocalRing (locRing P W')] (b : semiLocRing P 𝒲) {u w : MRing ι} {a : K → ℕ} (hu : IsMultiHomog u a)
-    (hw : IsMultiHomog w a) (hwW : w ∉ W')
+    [IsLocalRing (locRing P W')] (b : semiLocRing P 𝒲) {u w : MRing ι} {a : K → ℕ} (hu : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog u a)
+    (hw : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog w a) (hwW : w ∉ W')
     (hb : (b : FractionRing (MRing ι ⧸ P)) * fracHom P w = fracHom P u) :
     b ∈ semiMaxIdeal P 𝒲 W' hW' ↔ u ∈ W' := by
   unfold semiMaxIdeal
   rw [Ideal.mem_comap]
   exact mem_maximalIdeal_iff hPW _ hu hw hwW (by rw [semiToLoc_coe]; exact hb)
 
-theorem isUnit_of (b : semiLocRing P 𝒲) {u w : MRing ι} {a : K → ℕ} (hu : IsMultiHomog u a)
-    (hw : IsMultiHomog w a) (huP : u ∉ P) (huW : ∀ W ∈ 𝒲, u ∉ W)
+theorem isUnit_of (b : semiLocRing P 𝒲) {u w : MRing ι} {a : K → ℕ} (hu : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog u a)
+    (hw : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog w a) (huP : u ∉ P) (huW : ∀ W ∈ 𝒲, u ∉ W)
     (hb : (b : FractionRing (MRing ι ⧸ P)) * fracHom P w = fracHom P u) : IsUnit b := by
   refine IsUnit.of_mul_eq_one (⟨_, frac_mem P 𝒲 hw hu huP huW⟩ : semiLocRing P 𝒲) (Subtype.ext ?_)
   change (b : FractionRing (MRing ι ⧸ P)) * (fracHom P w / fracHom P u) = 1
   rw [mul_div_assoc', hb, div_self (fracHom_ne_zero P huP)]
 
 theorem exists_scale (hfin : 𝒲.Finite) (h𝒲 : ∀ W ∈ 𝒲, IsMultiProjPrime W) (a : K → ℕ) {W' : Ideal (MRing ι)}
-    (hr : IsRelevant W') (hp : W'.IsPrime) :
-    ∃ (t h : MRing ι) (d : K → ℕ), IsMultiHomog t d ∧ IsMultiHomog h (a + d) ∧ t ∉ W' ∧ ∀ W ∈ 𝒲, h ∉ W := by
+    (hr : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W') (hp : W'.IsPrime) :
+    ∃ (t h : MRing ι) (d : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog t d ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h (a + d) ∧ t ∉ W' ∧ ∀ W ∈ 𝒲, h ∉ W := by
   obtain ⟨d₀, hd₀⟩ := AvoidRing.exists_form_avoid 𝒲 hfin h𝒲
   obtain ⟨h, hh, hhW⟩ := hd₀ (a + d₀) le_add_self
   obtain ⟨t, ht, htW⟩ := exists_form_notMem hr hp d₀
@@ -263,7 +263,7 @@ def SemilocChartRatio.Statement : Prop :=
     (K' : Type) [Fintype K'] (ι' : K' → Type) [∀ k, Fintype (ι' k)]
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (n : ℕ) (s : MRing ι) (α : K → ℕ)
     (W : Ideal (MRing ι)) (i' : ∀ k', ι' k'), IsBlockMap κ v → IsArithVar P' (n + 1) →
-    IsArithVar (imageZ v P') (n + 1) → IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
+    IsArithVar (imageZ v P') (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
     (∀ k', (X ⟨k', i' k'⟩ : MRing ι') ∉ P') →
     ∀ q : Σ k', ι' k', ∃ b b' : semiLocRing P' (fibreOver v P' W),
       (b' : FractionRing (MRing ι' ⧸ P')) ≠ 0 ∧
@@ -289,14 +289,14 @@ def SemilocResidueDeg.Statement : Prop :=
     (K' : Type) [Fintype K'] (ι' : K' → Type) [∀ k, Fintype (ι' k)]
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (n : ℕ) (s : MRing ι) (α : K → ℕ)
     (W : Ideal (MRing ι)) (hv : IsBlockMap κ v) (hP' : IsArithVar P' (n + 1)),
-    IsArithVar (imageZ v P') (n + 1) → IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
+    IsArithVar (imageZ v P') (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
     ∀ (W' : Ideal (MRing ι')) (hW' : W' ∈ fibreOver v P' W) [IsLocalRing (locRing P' W')]
       (G' : GenFibre v W') (J' : IFamily G'.Φ (fibreIdx ι' κ)), IsFieldIntersection J' →
     haveI := hP'.2.1.1
     letI := (locToSemiloc hv P' W).toAlgebra
     ∃ d : ℕ, Module.length (locRing (imageZ v P') W)
         (semiLocRing P' (fibreOver v P' W) ⧸ semiMaxIdeal P' (fibreOver v P' W) W' hW') = d ∧
-      (d : ℤ) = J' (fibreIdeal κ G') 0 Fin.elim0
+      (d : ℤ) = J' (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G') 0 Fin.elim0
 
 end GroundTheory.Heights₂.Heights.Inter
 end

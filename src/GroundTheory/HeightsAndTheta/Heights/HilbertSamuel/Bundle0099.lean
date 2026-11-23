@@ -43,7 +43,7 @@ set_option linter.unusedSectionVars false
 variable {S : Type} [CommRing S] {K : Type} [Fintype K] [LinearOrder K] {ι : K → Type}
   [∀ k, Fintype (ι k)] [∀ k, LinearOrder (ι k)]
 
-theorem homog_unique {p : MRingOver S ι} {a b : K → ℕ} (ha : IsMultiHomog p a) (hb : IsMultiHomog p b)
+theorem homog_unique {p : MRingOver S ι} {a b : K → ℕ} (ha : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p a) (hb : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p b)
     (h0 : p ≠ 0) : a = b := by
   obtain ⟨μ, hμ⟩ := Finset.nonempty_iff_ne_empty.mpr (mt MvPolynomial.support_eq_empty.mp h0)
   funext k
@@ -90,10 +90,10 @@ theorem exists_kill_of_res_eq_zero {M : Type} [AddCommGroup M] [Module (MRingOve
 
 theorem genNear_of_chart [Nontrivial S] {M : Type} [AddCommGroup M] [Module (MRingOver S ι) M] [Module S M]
     [IsScalarTower S (MRingOver S ι) M] {𝓜 : (K → ℤ) → Submodule S M} {d : K → ℤ} (h𝓜 : KH.IsMGraded S ι 𝓜)
-    (c : ∀ k, ι k) {f₀ : MRingOver S ι} {δ₀ : K → ℕ} (hf₀ : IsMultiHomog f₀ δ₀)
+    (c : ∀ k, ι k) {f₀ : MRingOver S ι} {δ₀ : K → ℕ} (hf₀ : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f₀ δ₀)
     (hloc : ∀ x ∈ KH.locPart ι 𝓜 (KH.cellMon S (chart c).1) d, ∃ (t : MRingOver S ι) (a : K → ℕ) (r : ℕ)
         (p : Fin r → MRingOver S ι) (z : Fin r → KH.CechC S ι M 0),
-        t ∈ KH.cellMon S (chart c).1 ∧ IsMultiHomog t a ∧ (∀ j, IsMultiHomog (p j) (a + δ₀)) ∧
+        t ∈ KH.cellMon S (chart c).1 ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog t a ∧ (∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (p j) (a + δ₀)) ∧
         (∀ j, z j ∈ KH.cechZc ι 𝓜 d 0) ∧ (f₀ * t) • x = ∑ j, p j • z j (chart c)) :
     GenNear S ι 𝓜 d (f₀ * chartMon c (fun _ => 1)) (δ₀ + fun _ => 1) := by
   intro J
@@ -317,7 +317,7 @@ theorem chartMono_exponent (c : ∀ k, ι k) (d : K → ℕ) :
     rw [h, map_monomial, eval_monomial, Finsupp.prod_fintype _ _ (fun i => by simp)] at e1
     simpa using e1
 
-theorem smallGen_of_monomialsBounded (y : (Σ k, ι k) → Ω) (A : HermLine ι) (a : K → ℕ)
+theorem smallGen_of_monomialsBounded (y : (Σ k, ι k) → Ω) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (a : K → ℕ)
     (ha : A.a = fun k => (a k : ℤ)) (hB : MonomialsBounded (mCoordIdeal y) A a) : SmallGen y A := by
   classical
   set e := Fintype.equivFin (∀ k, ι k) with he_def
@@ -344,8 +344,8 @@ theorem smallGen_of_monomialsBounded (y : (Σ k, ι k) → Ω) (A : HermLine ι)
       simp only [ha, Nat.cast_one, one_mul] at this
       simp only [Pi.add_apply]
       omega
-    have hF : IsMultiHomog (g - chartMono (e.symm j) a * h) dg :=
-      isMultiHomog_sub hg (by rw [hd]; exact isMultiHomog_mul (isMultiHomog_chartMono _ a) hh)
+    have hF : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (g - chartMono (e.symm j) a * h) dg :=
+      isMultiHomog_sub hg (by rw [hd]; exact GroundTheory.Heights₂.Heights.HilbertSamuel.SectionBoundedMul.isMultiHomog_mul (isMultiHomog_chartMono _ a) hh)
     have h0 : aeval y (g - chartMono (e.symm j) a * h) = 0 := by
       rw [map_sub, map_mul, he, sub_self]
     have hz0 := hz.2 _ (mem_mCoordIdeal_of_aeval_eq_zero y hF h0)
@@ -454,9 +454,9 @@ noncomputable section
 def PullSectionIntegralInt.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
     (y : (Σ k, ι k) → Ω) (D : ℕ) (e : K → ℕ) (L : Fin (D + 1) → MRing ι) (q N M : ℕ),
-    (∀ k, ∃ i, y ⟨k, i⟩ ≠ 0) → (∀ k, 1 ≤ e k) → (∀ j, IsMultiHomog (L j) e) → (M : Ω) ≠ 0 →
-    (∀ (d : K → ℕ) (g : MRing ι), IsMultiHomog g d → (∀ k, e k + N * Fintype.card (ι k) ≤ d k) →
-      ∃ a : Fin (D + 1) → MRing ι, (∀ j, IsMultiHomog (a j) (d - e)) ∧
+    (∀ k, ∃ i, y ⟨k, i⟩ ≠ 0) → (∀ k, 1 ≤ e k) → (∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (L j) e) → (M : Ω) ≠ 0 →
+    (∀ (d : K → ℕ) (g : MRing ι), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d → (∀ k, e k + N * Fintype.card (ι k) ≤ d k) →
+      ∃ a : Fin (D + 1) → MRing ι, (∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (a j) (d - e)) ∧
         (M : Ω) * aeval y g = ∑ j, aeval y (a j) * aeval y (L j)) →
     ∀ τ : ℕ, ∀ s ∈ chartLatNm y (fun k => ((q * e k : ℕ) : ℤ)) τ, ∀ j : Fin (D + 1), aeval y (L j) ≠ 0 →
       s / aeval y (L j) ^ (q * τ) ∈
