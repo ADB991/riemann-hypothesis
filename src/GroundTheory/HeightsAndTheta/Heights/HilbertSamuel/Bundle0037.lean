@@ -225,7 +225,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo
 
 def MixedKleiman.AtDim (d : ℕ) : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P P0 : Ideal (MRing ι))
-    (M A : HermLine ι) (a : K → ℕ) (II : IntersectionSystem),
+    (M A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (a : K → ℕ) (II : IntersectionSystem),
     IsIntersectionSystem II → 1 ≤ d → IsArithVar P d → P0 ≤ P →
     ReciprocityTheory.ChartRestriction.G.Geo.IsSemipositiveRel P0 P M → NefOnFibres P M.a → IsConjInvariantH M →
     (∀ W, IsArithVar W 1 → P ≤ W → 0 ≤ II K ι W 1 ![M]) →
@@ -234,7 +234,7 @@ def MixedKleiman.AtDim (d : ℕ) : Prop :=
 
 def MixedKleiman.LowAt (d : ℕ) : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P P0 : Ideal (MRing ι))
-    (M A : HermLine ι) (a : K → ℕ) (II : IntersectionSystem),
+    (M A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (a : K → ℕ) (II : IntersectionSystem),
     IsIntersectionSystem II → 1 ≤ d → IsArithVar P d → P0 ≤ P →
     ReciprocityTheory.ChartRestriction.G.Geo.IsSemipositiveRel P0 P M → NefOnFibres P M.a → IsConjInvariantH M →
     (∀ W, IsArithVar W 1 → P ≤ W → 0 ≤ II K ι W 1 ![M]) →
@@ -243,7 +243,7 @@ def MixedKleiman.LowAt (d : ℕ) : Prop :=
 
 def MixedKleiman.TopAt (d : ℕ) : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P P0 : Ideal (MRing ι))
-    (M : HermLine ι) (II : IntersectionSystem),
+    (M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (II : IntersectionSystem),
     IsIntersectionSystem II → 1 ≤ d → IsArithVar P d → P0 ≤ P →
     ReciprocityTheory.ChartRestriction.G.Geo.IsSemipositiveRel P0 P M → NefOnFibres P M.a → IsConjInvariantH M →
     (∀ W, IsArithVar W 1 → P ≤ W → 0 ≤ II K ι W 1 ![M]) →

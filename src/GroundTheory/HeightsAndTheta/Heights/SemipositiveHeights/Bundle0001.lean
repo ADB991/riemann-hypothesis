@@ -39,16 +39,16 @@ namespace MetricLocalB
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem induct (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ)
+theorem induct (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ)
     (hI : IsIntersectionFamily I) :
-    ∀ (n : ℕ) (P : Ideal (MRing ι)) (L L' : Fin n → HermLine ι),
+    ∀ (n : ℕ) (P : Ideal (MRing ι)) (L L' : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι),
       IsArithVar P n → (∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm (L j)) → (∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm (L' j)) →
       (∀ j, (L j).a = (L' j).a) → (∀ j, ∀ z ∈ mcPts P, (L j).h z = (L' j).h z) →
       I P n L = I P n L'
   | 0, P, L, L', _, _, _, _, _ => by rw [Subsingleton.elim L L']
   | n + 1, P, L, L', hP, hL, hL', ha, hh => by
 
-    have key : ∀ (C C' : HermLine ι) (b : K → ℕ), (∀ k, C.a k = b k) → (∀ k, C'.a k = b k) →
+    have key : ∀ (C C' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (b : K → ℕ), (∀ k, C.a k = b k) → (∀ k, C'.a k = b k) →
         ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm C → ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm C' → (∀ z ∈ mcPts P, C.h z = C'.h z) →
         I P (n + 1) (Fin.snoc (Fin.init L) C) = I P (n + 1) (Fin.snoc (Fin.init L') C') := by
       intro C C' b hC hC' hCs hC's hCC'
@@ -86,7 +86,7 @@ theorem induct (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) �
     set A := L (Fin.last n) with hA
     set A' := L' (Fin.last n) with hA'
     let b : K → ℕ := fun k => (A.a k).natAbs
-    let B : HermLine ι := HermLine.sqMetric b
+    let B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := HermLine.sqMetric b
     have hB : ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm B := isSmoothHerm_sqMetric b
     let c : K → ℕ := fun k => (A.a k + (A.a k).natAbs).toNat
     have hBa : ∀ k, B.a k = b k := fun k => rfl

@@ -148,7 +148,7 @@ noncomputable section
 
 def ArithmeticVolumeDimensionOne.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] [CharZero Ω]
-    (y : (Σ k, ι k) → Ω) (M : HermLine ι) (P0 : Ideal (MRing ι)) (II : IntersectionSystem),
+    (y : (Σ k, ι k) → Ω) (M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (P0 : Ideal (MRing ι)) (II : IntersectionSystem),
     IsIntersectionSystem II → IsArithVar (mCoordIdeal y) 1 → Birational y →
     GroundTheory.Heights₂.Heights.HilbertSamuel.IsNefBigDatum P0 y 0 M → 0 < II K ι (mCoordIdeal y) 1 (fun _ => M) →
     ∃ (n : ℕ) (s : Ω), 1 ≤ n ∧ s ∈ chartLat y M.a n ∧ s ≠ 0 ∧
@@ -232,14 +232,14 @@ theorem chartLat_mul {y : (Σ k, ι k) → Ω} {a : K → ℤ} {n m : ℕ} {s t 
   rw [key]
   exact mul_mem (hs c hc) (ht c hc)
 
-theorem isBoundedH_mono {P : Ideal (MRing ι)} {y : (Σ k, ι k) → Ω} {A : HermLine ι} {τ : ℕ} {C C' : ℝ} {s : Ω}
+theorem isBoundedH_mono {P : Ideal (MRing ι)} {y : (Σ k, ι k) → Ω} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {τ : ℕ} {C C' : ℝ} {s : Ω}
     (h : IsBoundedH P y A τ C s) (hC : C ≤ C') : IsBoundedH P y A τ C' s := by
   intro dg dh g h' z hg hh hdeg he hz
   refine (h dg dh g h' z hg hh hdeg he hz).trans ?_
   rw [mul_assoc, mul_assoc]
   exact mul_le_mul_of_nonneg_right hC (mul_nonneg (norm_nonneg _) (pow_nonneg (le_of_lt (A.pos z hz.1)) _))
 
-theorem mul_monomial_bounded (hMul : SectionBoundedMul.Statement) {y : (Σ k, ι k) → Ω} {A : HermLine ι} {q : ℕ}
+theorem mul_monomial_bounded (hMul : SectionBoundedMul.Statement) {y : (Σ k, ι k) → Ω} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {q : ℕ}
     {w : Fin q → Ω} (hw : ∀ j, w j ∈ chartLat y A.a 1)
     (hsmall : ∀ j, IsSmallH (mCoordIdeal y) y A 1 (w j)) {x : Ω} {n : ℕ} {C : ℝ}
     (hx : x ∈ chartLat y A.a n) (hb : IsBoundedH (mCoordIdeal y) y A n C x) (μ : Fin q → ℕ) :
@@ -406,31 +406,31 @@ section Objects
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
-def IsBoundedAt (y : (Σ k, ι k) → Ω) (A : HermLine ι) (τ : ℕ) (c : ℝ) (s : Ω) (z : (Σ k, ι k) → ℂ) : Prop :=
+def IsBoundedAt (y : (Σ k, ι k) → Ω) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (τ : ℕ) (c : ℝ) (s : Ω) (z : (Σ k, ι k) → ℂ) : Prop :=
   ∀ (dg dh : K → ℕ) (g h : MRing ι),
     IsMultiHomog g dg → IsMultiHomog h dh → (∀ k, (dg k : ℤ) = dh k + τ * A.a k) →
     aeval y g = s * aeval y h →
     ‖eval z (map (Int.castRingHom ℂ) g)‖ ≤ c * ‖eval z (map (Int.castRingHom ℂ) h)‖ * A.h z ^ τ
 
-def secNormAt (y : (Σ k, ι k) → Ω) (A : HermLine ι) (τ : ℕ) (s : Ω) (z : (Σ k, ι k) → ℂ) : ℝ :=
+def secNormAt (y : (Σ k, ι k) → Ω) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (τ : ℕ) (s : Ω) (z : (Σ k, ι k) → ℂ) : ℝ :=
   sInf {c : ℝ | 0 ≤ c ∧ IsBoundedAt y A τ c s z}
 
-def sectionL2Norm (μ : Measure ((Σ k, ι k) → ℂ)) (y : (Σ k, ι k) → Ω) (A : HermLine ι) (τ : ℕ) (s : Ω) : ℝ :=
+def sectionL2Norm (μ : Measure ((Σ k, ι k) → ℂ)) (y : (Σ k, ι k) → Ω) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (τ : ℕ) (s : Ω) : ℝ :=
   Real.sqrt (∫ z, secNormAt y A τ s z ^ 2 ∂μ)
 
 def IsZariskiDenseMeasure (P : Ideal (MRing ι)) (μ : Measure ((Σ k, ι k) → ℂ)) : Prop :=
   ∀ (d : K → ℕ) (f : MRingOver ℂ ι), IsMultiHomog f d → (∀ᵐ z ∂μ, eval z f = 0) →
     ∀ z ∈ mcPts P, eval z f = 0
 
-theorem isBoundedAt_of_isBoundedH {P : Ideal (MRing ι)} {y : (Σ k, ι k) → Ω} {A : HermLine ι} {τ : ℕ} {c : ℝ}
+theorem isBoundedAt_of_isBoundedH {P : Ideal (MRing ι)} {y : (Σ k, ι k) → Ω} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {τ : ℕ} {c : ℝ}
     {s : Ω} (hs : IsBoundedH P y A τ c s) {z : (Σ k, ι k) → ℂ} (hz : z ∈ mcPts P) : IsBoundedAt y A τ c s z :=
   fun dg dh g h hg hh hd he => hs dg dh g h z hg hh hd he hz
 
-theorem secNormAt_le {y : (Σ k, ι k) → Ω} {A : HermLine ι} {τ : ℕ} {c : ℝ} {s : Ω} {z : (Σ k, ι k) → ℂ}
+theorem secNormAt_le {y : (Σ k, ι k) → Ω} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {τ : ℕ} {c : ℝ} {s : Ω} {z : (Σ k, ι k) → ℂ}
     (hc : 0 ≤ c) (hs : IsBoundedAt y A τ c s z) : secNormAt y A τ s z ≤ c :=
   csInf_le ⟨0, fun _ hx => hx.1⟩ ⟨hc, hs⟩
 
-theorem secNormAt_nonneg (y : (Σ k, ι k) → Ω) (A : HermLine ι) (τ : ℕ) (s : Ω) (z : (Σ k, ι k) → ℂ) :
+theorem secNormAt_nonneg (y : (Σ k, ι k) → Ω) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (τ : ℕ) (s : Ω) (z : (Σ k, ι k) → ℂ) :
     0 ≤ secNormAt y A τ s z := by
   rcases Set.eq_empty_or_nonempty {c : ℝ | 0 ≤ c ∧ IsBoundedAt y A τ c s z} with h | h
   · simp [secNormAt, h]
@@ -440,7 +440,7 @@ end Objects
 
 def SectionL2Lattice.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] [CharZero Ω]
-    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : HermLine ι),
+    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι),
     IsArithVar (mCoordIdeal y) (D + 1) → Birational y → ContinuousOn A.h {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} →
     ∀ μ : Measure ((Σ k, ι k) → ℂ), IsProbabilityMeasure μ → μ (mcPts (mCoordIdeal y))ᶜ = 0 →
       IsZariskiDenseMeasure (mCoordIdeal y) μ →

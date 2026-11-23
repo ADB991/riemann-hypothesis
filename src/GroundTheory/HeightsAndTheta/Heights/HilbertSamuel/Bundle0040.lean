@@ -175,7 +175,7 @@ set_option linter.unusedSectionVars false
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem HermLine.zcomb_isConjInvariantH {A B : HermLine ι} (hA : ReciprocityTheory.ChartRestriction.G.Geo.IsConjInvariantH A) (hB : ReciprocityTheory.ChartRestriction.G.Geo.IsConjInvariantH B)
+theorem HermLine.zcomb_isConjInvariantH {A B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA : ReciprocityTheory.ChartRestriction.G.Geo.IsConjInvariantH A) (hB : ReciprocityTheory.ChartRestriction.G.Geo.IsConjInvariantH B)
     (p q : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.IsConjInvariantH (HermLine.zcomb A B p q) := fun z => by
   show A.h _ ^ p * B.h _ ^ q = A.h z ^ p * B.h z ^ q
   rw [hA z, hB z]

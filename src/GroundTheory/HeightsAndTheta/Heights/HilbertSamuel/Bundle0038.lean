@@ -243,7 +243,7 @@ noncomputable section
 
 def ShiftIntersectionPolynomial.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (II : IntersectionSystem) (P : Ideal (MRing ι))
-    (n : ℕ) (A B : HermLine ι),
+    (n : ℕ) (A B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι),
     IsIntersectionSystem II → IsArithVar P n → ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm A → ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm B →
     ∃ p : Polynomial ℝ, p.natDegree ≤ n ∧ p.coeff n = II K ι P n (fun _ => A) ∧
       ∀ q : ℕ, II K ι P n (fun _ => HermLine.zcomb A B (q : ℤ) 1) = p.eval (q : ℝ)
@@ -265,7 +265,7 @@ noncomputable section
 
 def ShiftNefBig.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : HermLine ι) (P0 : Ideal (MRing ι)),
+    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (P0 : Ideal (MRing ι)),
     1 ≤ D → IsArithVar (mCoordIdeal y) (D + 1) → Birational y →
     P0 ≤ mCoordIdeal y → IsSemipositiveRel P0 (mCoordIdeal y) A → NefOnFibres (mCoordIdeal y) A.a →
     IsConjInvariantH A →

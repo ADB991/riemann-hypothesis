@@ -25,7 +25,7 @@ noncomputable section
 
 def ShiftVolumeBound.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : HermLine ι) (P0 : Ideal (MRing ι)),
+    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (P0 : Ideal (MRing ι)),
     1 ≤ D → IsArithVar (mCoordIdeal y) (D + 1) → Birational y →
     P0 ≤ mCoordIdeal y → ReciprocityTheory.ChartRestriction.G.Geo.IsSemipositiveRel P0 (mCoordIdeal y) A → NefOnFibres (mCoordIdeal y) A.a →
     IsConjInvariantH A →
@@ -51,7 +51,7 @@ noncomputable section
 
 def SmallSectionsSeparated.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : HermLine ι),
+    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι),
     IsArithVar (mCoordIdeal y) (D + 1) → Birational y → IsSmoothHerm A →
     ∃ C : ℝ, 0 ≤ C ∧ ∀ τ : ℕ, ∃ (Z : Finset ((Σ k, ι k) → ℂ)) (ev : chartLatNm y A.a τ →+ (Z → ℂ)),
       (∀ z ∈ Z, z ∈ mcPts (mCoordIdeal y)) ∧
@@ -172,7 +172,7 @@ noncomputable section
 def TwistIntersectionAnyDegree.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
     (F : Type) [Field F] [NumberField F] [Algebra F Ω]
-    (y : (Σ k, ι k) → Ω) (D : ℕ) (A B : HermLine ι) (II : IntersectionSystem)
+    (y : (Σ k, ι k) → Ω) (D : ℕ) (A B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (II : IntersectionSystem)
     (Λ : (F →+* ℂ) → ℝ),
     1 ≤ D → IsIntersectionSystem II → IsArithVar (mCoordIdeal y) (D + 1) → Birational y →
     IsSmoothHerm A → B.a = 0 → IsSmoothHerm B → (∀ sg, 0 < Λ sg) →
@@ -207,7 +207,7 @@ noncomputable section
 def TwistIntersectionInt.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
     (F : Type) [Field F] [NumberField F] [Algebra F Ω]
-    (y : (Σ k, ι k) → Ω) (D : ℕ) (A B : HermLine ι) (II : IntersectionSystem)
+    (y : (Σ k, ι k) → Ω) (D : ℕ) (A B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (II : IntersectionSystem)
     (Λ : (F →+* ℂ) → ℝ),
     1 ≤ D → IsIntersectionSystem II → IsArithVar (mCoordIdeal y) (D + 1) → Birational y →
     IsSmoothHerm A → B.a = 0 → IsSmoothHerm B → (∀ sg, 0 < Λ sg) →

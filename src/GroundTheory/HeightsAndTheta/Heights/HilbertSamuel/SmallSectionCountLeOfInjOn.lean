@@ -31,7 +31,7 @@ theorem isOpen_relevant : IsOpen {z : (Σ k, ι k) → ℂ | ∀ k, ∃ i, z ⟨
   exact isOpen_iInter_of_finite fun k => isOpen_iUnion fun i =>
     isOpen_ne_fun (continuous_apply _) continuous_const
 
-theorem continuousAt_h {A : HermLine ι} (hA : ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm A) {z : (Σ k, ι k) → ℂ}
+theorem continuousAt_h {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA : ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm A) {z : (Σ k, ι k) → ℂ}
     (hz : ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) : ContinuousAt A.h z :=
   hA.continuousOn.continuousAt (isOpen_relevant.mem_nhds hz)
 
@@ -51,7 +51,7 @@ theorem eval_eq_of_aeval_eq {y : (Σ k, ι k) → Ω} {d : K → ℕ} {g g' : MR
   rw [map_sub, map_sub, sub_eq_zero] at h0
   exact h0
 
-theorem bound_of_ptBoundOn (hLR : LocalRep.Statement) {y : (Σ k, ι k) → Ω} {M L : HermLine ι} {n : ℕ}
+theorem bound_of_ptBoundOn (hLR : LocalRep.Statement) {y : (Σ k, ι k) → Ω} {M L : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {n : ℕ}
     {U : Set ((Σ k, ι k) → ℂ)} {c : ℝ} {f f' : Ω}
     (hL : ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm L) (hf : f ∈ chartLat y M.a n) (hf' : f' ∈ chartLat y L.a n)
     (hsm : IsSmallH (mCoordIdeal y) y M n f)
@@ -148,7 +148,7 @@ theorem card_eq_of_iff {La La' : AddSubgroup Ω} {Q Q' : Ω → Prop}
   Nat.card_congr ((Equiv.subtypeSubtypeEquivSubtypeInter (· ∈ La) Q).trans
     ((Equiv.subtypeEquivRight h).trans (Equiv.subtypeSubtypeEquivSubtypeInter (· ∈ La') Q').symm))
 
-theorem chartLat_hermZpow (y : (Σ k, ι k) → Ω) (M : HermLine ι) (a m : ℕ) :
+theorem chartLat_hermZpow (y : (Σ k, ι k) → Ω) (M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (a m : ℕ) :
     chartLat y (Inter.hermZpow M a).a m = chartLat y M.a (a * m) := by
   have e : ∀ k, -((m : ℤ) * (Inter.hermZpow M a).a k) = -(((a * m : ℕ) : ℤ) * M.a k) := by
     intro k
@@ -162,7 +162,7 @@ theorem chartLat_hermZpow (y : (Σ k, ι k) → Ω) (M : HermLine ι) (a m : ℕ
       s * ∏ k, y ⟨k, c k⟩ ^ (-(((a * m : ℕ) : ℤ) * M.a k)) ∈ chartRingZ y c)
   simp only [e]
 
-theorem isSmallH_hermZpow_iff (P : Ideal (MRing ι)) (y : (Σ k, ι k) → Ω) (M : HermLine ι) (a m : ℕ)
+theorem isSmallH_hermZpow_iff (P : Ideal (MRing ι)) (y : (Σ k, ι k) → Ω) (M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (a m : ℕ)
     (s : Ω) : IsSmallH P y (Inter.hermZpow M a) m s ↔ IsSmallH P y M (a * m) s := by
   have h1 : ∀ k, (m : ℤ) * (Inter.hermZpow M a).a k = ((a * m : ℕ) : ℤ) * M.a k := by
     intro k
@@ -176,13 +176,13 @@ theorem isSmallH_hermZpow_iff (P : Ideal (MRing ι)) (y : (Σ k, ι k) → Ω) (
   unfold IsSmallH
   simp only [h1, h2]
 
-theorem smallSectionCount_tensorPower (y : (Σ k, ι k) → Ω) (M : HermLine ι) (a m : ℕ) :
+theorem smallSectionCount_tensorPower (y : (Σ k, ι k) → Ω) (M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (a m : ℕ) :
     smallSectionCount (IsSmallH (mCoordIdeal y) y (Inter.hermZpow M a)) (chartLat y (Inter.hermZpow M a).a) m =
       smallSectionCount (IsSmallH (mCoordIdeal y) y M) (chartLat y M.a) (a * m) := by
   unfold smallSectionCount
   rw [card_eq_of_iff (fun s => by rw [chartLat_hermZpow, isSmallH_hermZpow_iff])]
 
-theorem semipos_hermZpow {P0 P : Ideal (MRing ι)} {M : HermLine ι} (h : IsSemipositiveRel P0 P M) (a : ℕ) :
+theorem semipos_hermZpow {P0 P : Ideal (MRing ι)} {M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (h : IsSemipositiveRel P0 P M) (a : ℕ) :
     IsSemipositiveRel P0 P (Inter.hermZpow M a) := by
   refine ⟨Inter.isSmoothHerm_hermZpow h.1 _, fun z hz w hw => ?_⟩
   have hf : (fun z => Real.log ((Inter.hermZpow M a).h z)) = (a : ℝ) • fun z => Real.log (M.h z) := by
@@ -209,23 +209,23 @@ theorem geoNum_one_smul (W : Ideal (MRing ι)) (c : ℤ) (b : K → ℤ) :
     ring
   · simp
 
-theorem nef_hermZpow {P : Ideal (MRing ι)} {M : HermLine ι} (h : NefOnFibres P M.a) (a : ℕ) :
+theorem nef_hermZpow {P : Ideal (MRing ι)} {M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (h : NefOnFibres P M.a) (a : ℕ) :
     NefOnFibres P (Inter.hermZpow M a).a := by
   intro W h1 h2 h3 h4
   show 0 ≤ geoNum 1 W (fun _ => (a : ℤ) • M.a)
   rw [geoNum_one_smul]
   exact mul_nonneg (Nat.cast_nonneg _) (h W h1 h2 h3 h4)
 
-theorem conj_hermZpow {M : HermLine ι} (h : IsConjInvariantH M) (a : ℕ) :
+theorem conj_hermZpow {M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (h : IsConjInvariantH M) (a : ℕ) :
     IsConjInvariantH (Inter.hermZpow M a) := fun z => by
   show M.h _ ^ (a : ℤ) = M.h z ^ (a : ℤ)
   rw [h z]
 
-theorem fam_hermZpow {I : Ideal (MRing ι) → (m : ℕ) → (Fin m → HermLine ι) → ℝ} (hI : IsIntersectionFamily I)
-    {P : Ideal (MRing ι)} {D : ℕ} (hP : IsArithVar P (D + 1)) {M : HermLine ι} (hM : ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm M) (a : ℕ) :
+theorem fam_hermZpow {I : Ideal (MRing ι) → (m : ℕ) → (Fin m → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ} (hI : IsIntersectionFamily I)
+    {P : Ideal (MRing ι)} {D : ℕ} (hP : IsArithVar P (D + 1)) {M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hM : ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm M) (a : ℕ) :
     I P (D + 1) (fun _ => Inter.hermZpow M a) = (a : ℝ) ^ (D + 1) * I P (D + 1) (fun _ => M) := by
   have hZ := Inter.isSmoothHerm_hermZpow hM (a : ℤ)
-  let Lj : ℕ → Fin (D + 1) → HermLine ι := fun j i => if (i : ℕ) < j then Inter.hermZpow M a else M
+  let Lj : ℕ → Fin (D + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := fun j i => if (i : ℕ) < j then Inter.hermZpow M a else M
   have hs : ∀ j i, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm (Lj j i) := fun j i => by
     simp only [Lj]
     split_ifs
@@ -270,16 +270,16 @@ theorem fam_hermZpow {I : Ideal (MRing ι) → (m : ℕ) → (Fin m → HermLine
     simp [Lj, i.2]
   rw [← hD, hall (D + 1) le_rfl, h0]
 
-theorem constShift_a (A : HermLine ι) (t : ℝ) : (HermLine.constShift A t).a = A.a := by
+theorem constShift_a (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (t : ℝ) : (HermLine.constShift A t).a = A.a := by
   show A.a + 0 = A.a
   exact add_zero _
 
-theorem constShift_h (A : HermLine ι) (t : ℝ) (z : (Σ k, ι k) → ℂ) :
+theorem constShift_h (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (t : ℝ) (z : (Σ k, ι k) → ℂ) :
     (HermLine.constShift A t).h z = Real.exp (-t) * A.h z := by
   show A.h z * Real.exp (-t) = _
   ring
 
-theorem semipos_constShift {P0 P : Ideal (MRing ι)} {A : HermLine ι} (h : IsSemipositiveRel P0 P A) (t : ℝ) :
+theorem semipos_constShift {P0 P : Ideal (MRing ι)} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (h : IsSemipositiveRel P0 P A) (t : ℝ) :
     IsSemipositiveRel P0 P (HermLine.constShift A t) := by
   have hh : (HermLine.constShift A t).h = fun z => Real.exp (-t) * A.h z := funext (constShift_h A t)
   refine ⟨?_, fun z hz w hw => ?_⟩
@@ -300,11 +300,11 @@ theorem semipos_constShift {P0 P : Ideal (MRing ι)} {A : HermLine ι} (h : IsSe
     rw [h2]
     exact h.2 z hz w hw
 
-theorem conj_constShift {A : HermLine ι} (h : IsConjInvariantH A) (t : ℝ) :
+theorem conj_constShift {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (h : IsConjInvariantH A) (t : ℝ) :
     IsConjInvariantH (HermLine.constShift A t) := fun z => by
   rw [constShift_h, constShift_h, h z]
 
-theorem smallGen_constShift {P0 : Ideal (MRing ι)} {y : (Σ k, ι k) → Ω} {D : ℕ} {L : HermLine ι}
+theorem smallGen_constShift {P0 : Ideal (MRing ι)} {y : (Σ k, ι k) → Ω} {D : ℕ} {L : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι}
     (h : IsSmallGeneratedDatum P0 y D L) {t : ℝ} (ht : t ≤ 0) :
     IsSmallGeneratedDatum P0 y D (HermLine.constShift L t) := by
   obtain ⟨q, w, hw, hgen, hsmall⟩ := h.gen

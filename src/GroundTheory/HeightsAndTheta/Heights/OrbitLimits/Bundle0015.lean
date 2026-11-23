@@ -58,7 +58,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo Filter Topology
 
 def LelongChartLimit.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (n : ℕ)
-    (L : Fin n → HermLine ι) (A : HermLine ι) (s : MRing ι) (g : ((Σ k, ι k) → ℂ) → ℝ)
+    (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) (g : ((Σ k, ι k) → ℂ) → ℝ)
     (i : (k : K) → ι k) (δ : ℝ),
     IsArithVar P (n + 2) → (∀ j, IsSmoothHerm (L j)) → IsSmoothHerm A → IsSectionOn P A s →
     IsDegZeroSmooth g → 0 < δ → (∀ z, ‖segre z i‖ < δ * ‖segre z‖ → g z = 0) →
@@ -86,7 +86,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo Filter Topology
 
 def LelongSectionLimit.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (n : ℕ)
-    (L : Fin n → HermLine ι) (A B : HermLine ι) (s : MRing ι),
+    (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι),
     IsArithVar P (n + 2) → (∀ j, IsSmoothHerm (L j)) → IsSmoothHerm A → IsSmoothHerm B →
     B.a = 0 → IsSectionOn P A s →
     Tendsto (fun ε : ℝ =>
