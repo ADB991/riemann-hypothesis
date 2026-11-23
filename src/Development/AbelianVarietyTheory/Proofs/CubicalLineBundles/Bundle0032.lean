@@ -329,6 +329,7 @@ theorem exists_kForm : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
     set_option synthInstance.maxHeartbeats 100000 in
       conv_lhs => rw [← ha, ← Finset.univ_sum_single (s a), map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
+    letI : SMul (OK H) (Fin n → OK H) := ⟨fun c v j => c * v j⟩
     rw [← hy, ← map_smul, ← Pi.single_smul, smul_eq_mul, _root_.mul_one]
     rfl
 
