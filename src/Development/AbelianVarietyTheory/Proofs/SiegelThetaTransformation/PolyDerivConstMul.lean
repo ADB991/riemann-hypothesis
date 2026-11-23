@@ -246,8 +246,8 @@ private theorem kZero_quad_expansion {E : Type} [Field E] [NumberField E] [IsCMF
     rw [quadPoint, sgnM, diagonal_neg]
     rfl
   rw [h, quadMatrix]
-  change ((τ.1 X.κ0 / 2) • ((_ *ᵥ KernSym.mixV X idx τ (w k) (z k)) ᵥ* _)) ⬝ᵥ _ *ᵥ
-    ((-(τ.1 X.κ0 / 2)) • (_ *ᵥ _ *ᵥ KernSym.mixV X idx τ (z k) (w k))) = _
+  change ((τ.1 X.κ0 / 2) • (((_ : Matrix (Fin r) (Fin r) ℂ) *ᵥ KernSym.mixV X idx τ (w k) (z k)) ᵥ* (_ : Matrix (Fin r) (Fin r) ℂ))) ⬝ᵥ (_ : Matrix (Fin r) (Fin r) ℂ) *ᵥ
+    ((-(τ.1 X.κ0 / 2)) • ((_ : Matrix (Fin r) (Fin r) ℂ) *ᵥ (_ : Matrix (Fin r) (Fin r) ℂ) *ᵥ KernSym.mixV X idx τ (z k) (w k))) = _
   rw [smul_dotProduct, mulVec_smul, dotProduct_smul, smul_mulVec, dotProduct_smul, smul_smul,
     mul_comm, ← vecMul_transpose, ← dotProduct_mulVec, ← dotProduct_mulVec]
   simp only [mulVec_mulVec, Matrix.mul_assoc]
