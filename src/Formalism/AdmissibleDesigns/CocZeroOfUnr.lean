@@ -93,7 +93,7 @@ theorem coc_NS (c : coZ1s (qzE i e)) (hc : IsLocallyConstant (c : GE D.nd → Fo
     simp only [Set.mem_iUnion, Set.mem_ofPred_eq] at hσ
     obtain ⟨v, hv, A, hA, hσA⟩ := hσ
     obtain ⟨τ, hτ⟩ := exists_smul_eq_of_isPlaceOver (D.nd.plOm.2 v) hA
-    have h1 : τ⁻¹ * σ * τ⁻¹⁻¹ ∈ Ine (F := D.host.E) (τ⁻¹ • A) := conj_mem_Ine_smul (γ := τ⁻¹) hσA
+    have h1 : τ⁻¹ * σ * τ⁻¹⁻¹ ∈ Ine (F := D.host.E) (τ⁻¹ • A) := ReciprocityTheory.Gal.conj_mem_Ine_smul (γ := τ⁻¹) hσA
     rw [← hτ, inv_smul_smul, inv_inv] at h1
     have hn : τ⁻¹ * σ * τ ∈ NS D.nd.Om (SS i) := by
       have := hNSn.conj_mem σ hNS τ⁻¹

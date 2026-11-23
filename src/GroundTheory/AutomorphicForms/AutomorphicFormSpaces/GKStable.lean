@@ -227,7 +227,7 @@ theorem IsAutomorphicForm.uAction_ι {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ 
     (X : (isExpLieAlgebra K n).lieSubalgebra) :
     IsAutomorphicForm (AutomorphicForm.uAction (UniversalEnvelopingAlgebra.ι ℝ X)
       ⟨φ, hφ.isSmooth.1⟩ : AdelicGLn.AdelicGL K n → ℂ) := by
-  let _ : MeasurableSpace (archGroup K n) := borel _
+  let _ : MeasurableSpace (archGroup K n) := GroundTheory.Automorphic.Iwasawa.borel _
   have _ : BorelSpace (archGroup K n) := ⟨rfl⟩
   obtain ⟨D, hD, hDc, hrep⟩ := exists_integral_uAction_ι hφ.isSmoothKZ Measure.haar X
   rw [isAutomorphicForm_iff]
@@ -237,7 +237,7 @@ theorem mem_cuspForms_uAction_ι {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ : φ
     (X : (isExpLieAlgebra K n).lieSubalgebra) :
     (AutomorphicForm.uAction (UniversalEnvelopingAlgebra.ι ℝ X) ⟨φ, hφ.1.isSmooth.1⟩ :
       AdelicGLn.AdelicGL K n → ℂ) ∈ cuspForms K n := by
-  let _ : MeasurableSpace (archGroup K n) := borel _
+  let _ : MeasurableSpace (archGroup K n) := GroundTheory.Automorphic.Iwasawa.borel _
   have _ : BorelSpace (archGroup K n) := ⟨rfl⟩
   obtain ⟨D, hD, hDc, hrep⟩ := exists_integral_uAction_ι hφ.1.isSmoothKZ Measure.haar X
   exact ⟨hφ.1.uAction_ι X, IsCuspidal.of_eq_integral hφ.1.continuous hφ.2 Measure.haar hD hDc hrep⟩

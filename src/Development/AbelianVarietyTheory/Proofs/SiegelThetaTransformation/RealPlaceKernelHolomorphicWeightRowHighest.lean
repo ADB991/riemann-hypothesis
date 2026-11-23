@@ -328,7 +328,7 @@ theorem differentiableOn_kRed {x₂ : Frame X.Ψ r} (h₂ : x₂ ∈ X.dom) :
       split_ifs <;> fun_prop
 
 def inner₂ (Q : Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)) (x₁ x₂ : Frame X.Ψ r) (z : Fin n → Fin g → ℂ) : ℂ :=
-  polyDeriv Q (letterDir X hr idx) (kRed X idx x₁ x₂ z) 0
+  ReciprocityTheory.ChartRestriction.G.I2.polyDeriv Q (letterDir X hr idx) (kRed X idx x₁ x₂ z) 0
 
 theorem differentiableOn_inner₂ (Q : Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)) {x₂ : Frame X.Ψ r}
     (h₂ : x₂ ∈ X.dom) : DifferentiableOn ℂ
@@ -349,8 +349,8 @@ theorem differentiable_kRed {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁ ∈ X.dom) (
 
 theorem polyDeriv_bal {Q : Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)} (hQ : Harm.IsHarmonic Q)
     (γ : X.Ψ → Fin q0 → Fin X.p0 → ℂ) {F : (Fin n → Fin g → ℂ) → ℂ} (hF : Differentiable ℂ F) :
-    polyDeriv Q (letterDir X hr idx) (fun w => cexp (bal X hr idx γ w) * F w) 0 =
-      polyDeriv Q (letterDir X hr idx) F 0 := by
+    ReciprocityTheory.ChartRestriction.G.I2.polyDeriv Q (letterDir X hr idx) (fun w => cexp (bal X hr idx γ w) * F w) 0 =
+      ReciprocityTheory.ChartRestriction.G.I2.polyDeriv Q (letterDir X hr idx) F 0 := by
   have an {F : (Fin n → Fin g → ℂ) → ℂ} (hF : Differentiable ℂ F) : AnalyticAt ℂ F 0 :=
     SCV.analyticAt_of_differentiableOn hF.differentiableOn Filter.univ_mem
   refine GaussGauge.polyDeriv_exp_balanced_mul_dir hQ γ _ (an ?_) (fun z => ?_) (an hF)
@@ -375,7 +375,7 @@ theorem polyDeriv_bal {Q : Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)} (hQ : Harm.IsHarm
 theorem kern_eq {J : Type} [Fintype J] {P : J → Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)}
     (hP : ∀ j, Harm.IsHarmonic (P j)) {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁ ∈ X.dom) (h₂ : x₂ ∈ X.dom) :
     kern X hr idx P x₁ x₂ =
-      ∑ j, polyDeriv (P j) (letterDir X hr idx) (inner₂ X hr idx (barP (P j)) x₁ x₂) 0 := by
+      ∑ j, ReciprocityTheory.ChartRestriction.G.I2.polyDeriv (P j) (letterDir X hr idx) (inner₂ X hr idx (barP (P j)) x₁ x₂) 0 := by
   obtain ⟨γ, γ', h⟩ := kZero_eq (n := n) X hr idx h₁ h₂
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← polyDeriv_bal X hr idx (hP j) γ' (differentiable_inner₂ X hr idx _ h₁ h₂)]
@@ -524,8 +524,8 @@ theorem outer_rmul {c : X.Ψ → Fin q0 → ℕ} {c' : X.Ψ → Fin X.p0 → ℕ
     {P : Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)} (hP : P ∈ Harm.rowHighest ℂ c c')
     (Q : Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)) {x x₂ u : Frame X.Ψ r} (hx : x ∈ X.dom) (h₂ : x₂ ∈ X.dom)
     (hu : u ∈ Bor X.Ψ r) :
-    polyDeriv P (letterDir X hr idx) (inner₂ X hr idx Q (rmul x u) x₂) 0 =
-      bchar (wtOf X hr c c' n) u * polyDeriv P (letterDir X hr idx) (inner₂ X hr idx Q x x₂) 0 := by
+    ReciprocityTheory.ChartRestriction.G.I2.polyDeriv P (letterDir X hr idx) (inner₂ X hr idx Q (rmul x u) x₂) 0 =
+      bchar (wtOf X hr c c' n) u * ReciprocityTheory.ChartRestriction.G.I2.polyDeriv P (letterDir X hr idx) (inner₂ X hr idx Q x x₂) 0 := by
   have hF := differentiable_inner₂ X hr idx Q (PerMove.rmul_mem_GG hx hu) h₂
   let φ : (Fin n → Fin g → ℂ) →L[ℂ] (Fin n → Fin g → ℂ) := LinearMap.toContinuousLinearMap
     (LinearMap.pi fun k => ((borMat X u).submatrix idx idx).mulVecLin ∘ₗ LinearMap.proj k)
@@ -534,7 +534,7 @@ theorem outer_rmul {c : X.Ψ → Fin q0 → ℕ} {c' : X.Ψ → Fin X.p0 → ℕ
     funext z
     refine Eq.trans ?_ (CanTh.polyDeriv_const_mul _ _ isOpen_univ
       (differentiable_kRed X idx hx h₂ z).differentiableOn _ trivial)
-    exact congrArg (polyDeriv Q (letterDir X hr idx) · 0) (funext (kRed_rmul idx hu x x₂ z))
+    exact congrArg (ReciprocityTheory.ChartRestriction.G.I2.polyDeriv Q (letterDir X hr idx) · 0) (funext (kRed_rmul idx hu x x₂ z))
   have h2 : φ ∘ letterDir X hr idx = fun l => ∑ i, borMat X u (rowOf X hr i)
       (rowOf X hr (l.1, l.2.1)) • letterDir X hr idx (i.1, i.2, l.2.2) := by
     funext l k j

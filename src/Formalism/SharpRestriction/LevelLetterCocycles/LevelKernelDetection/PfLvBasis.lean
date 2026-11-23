@@ -112,7 +112,7 @@ theorem lvBasis_letter_le {π' : LetA O n} (hP3 : Formalism.MainNotions.DeltaInv
   have hb : ∀ j, ∃ g : Fin r → PowerSeries O,
       (letE i : LetA O n) • b j = ∑ l, (baseIdOf hR).d (g l) • C.t i (e l) := fun j =>
     lvBasis_expand hBasis hBasis_e ((W.N T).smul_mem _ (hbN j).1) (lvBasis_letE_idem i _)
-      (fun δ hδ => by rw [γD_smulA W, γA_letE W, (hbN j).2 δ hδ])
+      (fun δ hδ => by rw [Formalism.MainNotions.WachCoordinates.Br.γD_smulA W, γA_letE W, (hbN j).2 δ hδ])
   choose g hg using hb
   have hm := lvBasis_e_mem hBasis hBasis_e
   refine Submodule.span_le.2 ?_ (lvBasis_letter_span hP3.2.1 i hd)
@@ -170,7 +170,7 @@ theorem lvBasis_kernel {π' : LetA O n} (hP3 : Formalism.MainNotions.DeltaInvari
   have hG : ∀ j, ∃ g : Fin r → PowerSeries O,
       (letE i : LetA O n) • b j = ∑ l, (baseIdOf hR).d (g l) • C.t i (e l) := fun j =>
     lvBasis_expand hBasis hBasis_e ((W.N T).smul_mem _ (hbN j).1) (lvBasis_letE_idem i _)
-      (fun δ hδ => by rw [γD_smulA W, γA_letE W, (hbN j).2 δ hδ])
+      (fun δ hδ => by rw [Formalism.MainNotions.WachCoordinates.Br.γD_smulA W, γA_letE W, (hbN j).2 δ hδ])
   choose g hg using hG
   have hid : ∀ k l, ∑ j, PowerSeries.constantCoeff (β k j i) * PowerSeries.constantCoeff (g j l) =
       if k = l then 1 else 0 := by

@@ -168,7 +168,7 @@ theorem isOpen_nbhd (x : d.R.X) : IsOpen (nbhd d x) := (d.R.isOpen_U x).inter (d
 
 theorem mem_nbhd (x : d.R.X) : x ∈ nbhd d x := ⟨d.R.mem_U x, Classical.choose_spec (d.R.A.cover x)⟩
 
-theorem isPotential_blockInterpPot {A' : HermLine ι} (hA' : IsSmoothHerm A') (t : ℝ) :
+theorem isPotential_blockInterpPot {A' : HermLine ι} (hA' : ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm A') (t : ℝ) :
     IsPotential d.R.A (blockInterpPot d d.A A' t) := by
   have h₀ := isPotentialRsmul d.R.A (1 - t) _ (AnResBridge.isPotential_potOf d.R d.semipos.1)
   have h₁ := isPotentialRsmul d.R.A t _ (AnResBridge.isPotential_potOf d.R hA')
@@ -245,7 +245,7 @@ def bundle : HolLineBundle (atlas d pt hcov) where
       blockRatio_eq_div (sameOrbit_lift d pt hcov hi hk) hkp, blockRatio_eq_div hkl hp]
     field_simp
 
-theorem contDiffAt_weight (A : HermLine ι) (hs : IsSmoothHerm A) (i l : Fin r) {y : Fin D → ℂ}
+theorem contDiffAt_weight (A : HermLine ι) (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm A) (i l : Fin r) {y : Fin D → ℂ}
     (hy : y ∈ ((atlas d pt hcov).chart l).target) (hU : ((atlas d pt hcov).chart l).symm y ∈ d.R.U (pt i)) :
     ContDiffAt ℝ ∞ (fun y => 2 * Real.log (A.h (d.R.lift (pt i) (((atlas d pt hcov).chart l).symm y)))) y := by
   have hG := analyticAt_lift d pt hcov i l hy hU
@@ -258,7 +258,7 @@ theorem contDiffAt_weight (A : HermLine ι) (hs : IsSmoothHerm A) (i l : Fin r) 
   have := hu.comp y (hG.contDiffAt.restrict_scalars ℝ)
   exact this
 
-def weight (A : HermLine ι) (hA : A.a = unitDeg d.k₀) (hs : IsSmoothHerm A) : Weight (bundle d pt hcov) where
+def weight (A : HermLine ι) (hA : A.a = unitDeg d.k₀) (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm A) : Weight (bundle d pt hcov) where
   φ i x := 2 * Real.log (A.h (d.R.lift (pt i) x))
   smooth i l := fun y hy =>
     (contDiffAt_weight d pt hcov A hs i l hy.1 (mem_atlas_source d pt hcov hy.2)).contDiffWithinAt
@@ -339,7 +339,7 @@ theorem lift_chartIdx (y : d.R.X) :
     Classical.choose_spec ((atlas d pt hcov).cover y)
   exact d.R.compat _ _ y ⟨mem_atlas_source d pt hcov hx, d.R.mem_U y⟩
 
-theorem locDens_eq_chernTopDens (A' : HermLine ι) (hA' : A'.a = unitDeg d.k₀) (hs : IsSmoothHerm A') (t : ℝ)
+theorem locDens_eq_chernTopDens (A' : HermLine ι) (hA' : A'.a = unitDeg d.k₀) (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm A') (t : ℝ)
     (j : Fin r) {y : Fin D → ℂ} (hy : y ∈ ((atlas d pt hcov).chart j).target) :
     locDens (atlas d pt hcov) (fun _ => blockInterpPot d d.A A' t) j y =
       chernTopDens ((weight d pt hcov d.A d.deg d.semipos.1).lerp (weight d pt hcov A' hA' hs) t) j y := by

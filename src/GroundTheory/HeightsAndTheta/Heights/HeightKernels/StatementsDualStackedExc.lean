@@ -22,7 +22,7 @@ def stackedBase {K : Type} [Field K] [NumberField K] {i : ℕ} {F' : HermLattice
 def IsStackedExc {K : Type} [Field K] [NumberField K] {i : ℕ} {F' : HermLattice K i} {T : Type} [Fintype T]
     [DecidableEq T] (b' : Module.Basis T ℤ (dualLattice F')) (a : T → ℤ) (E : Ideal (MRing (stackedBlocks T))) :
     Prop :=
-  E ∈ (stackedBase b' a).minimalPrimes ∧ IsRelevant E
+  E ∈ (stackedBase b' a).minimalPrimes ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant E
 
 def DualStackedExcCycle.Statement : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (i : ℕ) (F F' : HermLattice K i) (T : Type) [Fintype T]

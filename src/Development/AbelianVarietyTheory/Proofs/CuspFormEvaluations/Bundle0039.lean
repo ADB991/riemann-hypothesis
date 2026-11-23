@@ -128,7 +128,7 @@ theorem not_im_neg (H : Host E) (D : Datum H) {r : ℕ} (hr : 1 ≤ r) (ξ : E) 
 
 variable {H : Host E} {Dw : Datum H} {l : Level H}
 
-theorem exists_idx {c : Coeff l} {σ : c.F →+* ℂ} (hσ : GoodEmb c σ) {r g : ℕ} (hr : r = Dw.p + Dw.q)
+theorem exists_idx {c : Coeff l} {σ : c.F →+* ℂ} (hσ : Formalism.L2.PjFree.GoodEmb c σ) {r g : ℕ} (hr : r = Dw.p + Dw.q)
     (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ)) (X : Data E r) (hp0 : X.p0 = Dw.q)
     (hty : ∀ τ : E →+* ℂ, τ ∈ X.Ψ ↔ τ (H.rt : E) = H.rt0) :
     ∃ idx : Fin g ≃ X.Ψ × Fin r, (∀ j, relab c σ (e j).1 =
@@ -164,7 +164,7 @@ theorem exists_idx {c : Coeff l} {σ : c.F →+* ℂ} (hσ : GoodEmb c σ) {r g 
       rw [dite_eq_right a, dite_eq_left (show conjEmb (relab c σ (e j).1) ∈ X.Ψ from hτ), dite_eq_left hn]
       rfl
 
-theorem exists_frame {c : Coeff l} {σ : c.F →+* ℂ} (hσ : GoodEmb c σ) {r g : ℕ} (h1 : 1 ≤ r)
+theorem exists_frame {c : Coeff l} {σ : c.F →+* ℂ} (hσ : Formalism.L2.PjFree.GoodEmb c σ) {r g : ℕ} (h1 : 1 ≤ r)
     (hr : r = Dw.p + Dw.q) (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ)) (X : Data E r) (hp0 : X.p0 = Dw.q)
     (hty : ∀ τ : E →+* ℂ, τ ∈ X.Ψ ↔ τ (H.rt : E) = H.rt0) (D : Datum H) (hp : D.p = Dw.p) (hq : D.q = Dw.q)
     (φ : D.La ≃ₗ[𝓞 E] X.Λ)

@@ -57,7 +57,7 @@ theorem levelMaps_closed : Out.Laws → ∀ (E : Type) [Field E] [NumberField E]
   have hsim := SimAlg.sim_group
   have hact := Moduli.LevelAction.similitude_acts hsm hid hlow hrep
     (exists_obj_twist_by_similitude hsim) hsim
-  exact levelMaps_of_parts (exists_levelMap hsm hid hlow hrep) hact
+  exact levelMaps_of_parts (GlobalTheory.exists_levelMap hsm hid hlow hrep) hact
     (LevCover.levelMap_finite_etale_surjective_of_laws hL)
     (levelMap_fibre_orbit hL obj_pull hid obj_isAbelianScheme_dim_rigidified_sym hlow
       (obj_rigid_closed hL) hrep tateIso_differ_by_similitude hsim hact)

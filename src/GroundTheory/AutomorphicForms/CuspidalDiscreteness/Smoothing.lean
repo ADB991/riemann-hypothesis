@@ -25,7 +25,7 @@ variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 variable (K n) in
 abbrev ArchUnits : Type _ := (ArchMatrix K n)ˣ
 
-instance : MeasurableSpace (ArchUnits K n) := borel _
+instance : MeasurableSpace (ArchUnits K n) := GroundTheory.Automorphic.Iwasawa.borel _
 
 instance : BorelSpace (ArchUnits K n) := ⟨rfl⟩
 
