@@ -346,14 +346,14 @@ theorem witt_R {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] 
   let sE : E →+* E := σ
   have hTH : IsHerm sE T := by
     ext i j; exact hT i j
-  have hh : PI.UnitaryGroupMassFormula.HermConj.IsHermForm sE (hform sE T) :=
+  have hh : PI.UnitaryGroupMassFormula.HermConj.IsHermForm sE (Formalism.UG.hform sE T) :=
     { add := fun x y z => by
         rw [PIW.AdelicOrbitU.hform_eq_dot, PIW.AdelicOrbitU.hform_eq_dot,
           PIW.AdelicOrbitU.hform_eq_dot, mulVec_add, dotProduct_add]
       smul := fun x c y => PIW.AdelicOrbitU.hform_smul_right sE T c x y
       herm := fun x y => (PIW.AdelicOrbitU.hform_conj sE T hinv hTH x y).symm }
   obtain ⟨v, hvli, hvo⟩ := PI.UnitaryGroupMassFormula.HermConj.exists_orthogonal_family sE a (Fin a → E)
-    (by simp) (hform sE T) hh
+    (by simp) (Formalism.UG.hform sE T) hh
   set P : Matrix (Fin a) (Fin a) E := tM v with hP
   have hPu : IsUnit P.det := by
     have h1 : IsUnit (Matrix.of v) := Matrix.linearIndependent_rows_iff_isUnit.mp hvli
@@ -361,7 +361,7 @@ theorem witt_R {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] 
     rw [h2, det_transpose]
     exact (Matrix.isUnit_iff_isUnit_det _).mp h1
   set D := cT sE P * T * P with hD
-  have hDv : ∀ j k, hform sE T (v j) (v k) = D j k := fun j k => gram_tM sE T v j k
+  have hDv : ∀ j k, Formalism.UG.hform sE T (v j) (v k) = D j k := fun j k => gram_tM sE T v j k
   have hDoff : ∀ j k, j ≠ k → D j k = 0 := fun j k hjk => by rw [← hDv]; exact hvo j k hjk
   have hDdiag : D = Matrix.diagonal fun j => D j j := by
     ext j k
@@ -399,7 +399,7 @@ theorem witt_R {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] 
     ext i j; rw [← gram_tM]; exact congrFun (congrFun hy i) j
   let x' : Fin a → Fin M → R ⊗[F] E := fun j r => (Xm * Pm) r j
   let y' : Fin a → Fin M → R ⊗[F] E := fun j r => (tM y * Pm) r j
-  have hGx : ∀ j k, hform sS JS (x' j) (x' k) = inclR (F := F) R (D j k) := by
+  have hGx : ∀ j k, Formalism.UG.hform sS JS (x' j) (x' k) = inclR (F := F) R (D j k) := by
     intro j k
     rw [gram_tM]
     have e : tM x' = Xm * Pm := rfl
@@ -408,7 +408,7 @@ theorem witt_R {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] 
       (tM X0).map (inclR (F := F) R)) * P.map (inclR (F := F) R)) j k = _
     rw [← Matrix.map_mul, ← Matrix.map_mul, ← Matrix.map_mul, ← Matrix.map_mul, hTg]
     rfl
-  have hGy : ∀ j k, hform sS JS (y' j) (y' k) = inclR (F := F) R (D j k) := by
+  have hGy : ∀ j k, Formalism.UG.hform sS JS (y' j) (y' k) = inclR (F := F) R (D j k) := by
     intro j k
     rw [gram_tM]
     have e : tM y' = tM y * Pm := rfl
