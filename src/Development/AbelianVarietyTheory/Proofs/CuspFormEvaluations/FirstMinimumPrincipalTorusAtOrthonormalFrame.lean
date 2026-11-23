@@ -16,7 +16,7 @@ open NumberField Matrix Complex
 open scoped ComplexConjugate Real
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.FD
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor (hermForm)
-open ReciprocityTheory.ChartRestriction.G.I2 (polyDeriv GT lat Hf)
+open ReciprocityTheory.ChartRestriction.G.I2 (GT lat Hf)
 
 namespace GlobalTheory.ThFr
 
@@ -299,7 +299,7 @@ def orthoDir (l : Harm.Var X.Ψ q0 X.p0 (Fin n)) : Fin n → EuclideanSpace ℂ 
 
 variable (X bas) in
 def orthoJet (P : Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)) (x : Frame X.Ψ r) : ℂ :=
-  polyDeriv P (orthoDir X idx hr) (fun w => ∏ k, canSec X bas idx (a k) (b k) x (w k)) 0
+  ReciprocityTheory.ChartRestriction.G.I2.polyDeriv P (orthoDir X idx hr) (fun w => ∏ k, canSec X bas idx (a k) (b k) x (w k)) 0
 
 theorem thFr_eq_orthoJet (hs : IsSympl X bas) (hP : P ∈ Harm.rowHighest ℂ c c') {x : Frame X.Ψ r}
     (hx : x ∈ X.dom) :

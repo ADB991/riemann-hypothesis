@@ -13,7 +13,6 @@ open NumberField Matrix Complex
 open scoped ComplexConjugate
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.FD
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor (thetaChar omegaStd)
-open ReciprocityTheory.ChartRestriction.G.I2 (polyDeriv)
 open GlobalTheory.LagSplit
 
 namespace GlobalTheory.ThFr
@@ -275,8 +274,8 @@ theorem IsBalanced.dot_mulVec {M : Matrix (Fin g) (Fin g) ℂ} (hM : IsBalanced 
 theorem IsBalanced.polyDeriv_exp_mul {M : Matrix (Fin g) (Fin g) ℂ} (hM : IsBalanced X idx M)
     {n : ℕ} {P : Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)} (hP : Harm.IsHarmonic P) (c : ℂ)
     {G : (Fin n → Fin g → ℂ) → ℂ} (hG : AnalyticAt ℂ G 0) :
-    polyDeriv P (letterDir X hr idx) (fun z => cexp (∑ k, c * (z k ⬝ᵥ M *ᵥ z k)) * G z) 0 =
-      polyDeriv P (letterDir X hr idx) G 0 := by
+    ReciprocityTheory.ChartRestriction.G.I2.polyDeriv P (letterDir X hr idx) (fun z => cexp (∑ k, c * (z k ⬝ᵥ M *ᵥ z k)) * G z) 0 =
+      ReciprocityTheory.ChartRestriction.G.I2.polyDeriv P (letterDir X hr idx) G 0 := by
   refine GaussGauge.polyDeriv_exp_balanced_mul_dir hP (fun t a b => c *
     (M (idx.symm (rowOf X hr (t, .inl a))) (idx.symm (rowOf X hr (t, .inr b))) +
       M (idx.symm (rowOf X hr (t, .inr b))) (idx.symm (rowOf X hr (t, .inl a)))))
@@ -375,7 +374,7 @@ theorem isBalanced_sub_splitMat : IsBalanced X idx
 theorem thFr_eq_splitMat {q0 : ℕ} (hr : X.p0 + q0 = r) (n : ℕ) (a b : Fin n → Fin g → ℝ)
     {P : Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)} (hP : Harm.IsHarmonic P) :
     thFr X hr bas idx n a b P x = (hMat X bas idx x).det ^ (n / 2) *
-      polyDeriv P (letterDir X hr idx) (fun z => ∏ k,
+      ReciprocityTheory.ChartRestriction.G.I2.polyDeriv P (letterDir X hr idx) (fun z => ∏ k,
         cexp (Real.pi / 2 * (z k ⬝ᵥ splitMat X bas idx x *ᵥ z k)) *
           thetaChar (tauMat X bas idx x) (fun i => (a k i : ℂ)) (fun i => (b k i : ℂ))
             (hMat X bas idx x *ᵥ z k)) 0 := by
