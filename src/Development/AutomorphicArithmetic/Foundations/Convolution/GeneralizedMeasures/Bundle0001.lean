@@ -265,7 +265,11 @@ theorem UpperTheory.ConvolutionTheory.GM.avgE :
     exact h3
   have hcs : HasCompactSupport e₀ := by
     obtain ⟨C, hC, hsub⟩ := e_compact S φ fun v hv => (hS v hv).2
-    refine HasCompactSupport.of_support_subset_isCompact hC fun x hx => ?_
+    have hsupp : IsClosed (Function.support e₀) := isClosed_compl_iff.mpr (hlc.isOpen_fiber 0)
+    refine IsCompact.of_isClosed_subset hC (isClosed_tsupport e₀) ?_
+    change closure (Function.support e₀) ⊆ C
+    rw [hsupp.closure_eq]
+    intro x hx
     have hx' : e₀ x ≠ 0 := hx
     rw [hform] at hx'
     have hU : x ∈ U (E := E) (n := n) S := by
