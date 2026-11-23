@@ -36,6 +36,7 @@ variable {O : Type} [CommRing O] {J : Type} [Fintype J] (b : Basis J ℤ O)
 
 abbrev eigSpan : Submodule K V := ⨆ a : O, LinearMap.range (ρ a - χ a • LinearMap.id)
 
+attribute [-instance] Formalism.L2.Pj.rulesSMul in
 theorem exists_quot_basis {r : ℕ} (x : Fin r → V)
     (hli : LinearIndependent K fun q : Fin r × J => ρ (b q.2) (x q.1))
     (hsp : Submodule.span K (Set.range fun q : Fin r × J => ρ (b q.2) (x q.1)) = ⊤) :
