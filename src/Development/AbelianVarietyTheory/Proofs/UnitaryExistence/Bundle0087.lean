@@ -148,7 +148,7 @@ theorem differentiableOn_rdU : Out.SecBaseChangeSt → Out.SecTwistSt → ∀ (E
     (((differentiableOn_const _).mul (differentiableOn_det fun i j => (T.hol i j).1)).pow m).mul hth
   have hcomp := hΦ.comp T.co.symm.differentiableOn (fun x hx => by simpa using hx)
   refine hcomp.congr fun x hx => ?_
-  unfold rdU unfOf
+  unfold Formalism.L2.PjFree.rdU unfOf
   simp only [LinearMap.coe_mk, AddHom.coe_mk, dif_pos hx]
   exact key x hx
 
