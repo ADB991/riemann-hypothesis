@@ -116,6 +116,8 @@ private theorem px_coef {O : Type} [CommRing O] [Algebra O A] (B : Subalgebra O 
 
 end Gen
 
+attribute [local instance] IsCO.toIsLocalRing
+
 section Tw
 
 variable {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsLocalRing O] [Algebra ℤ_[l] O]
