@@ -295,9 +295,11 @@ def P1' (S : Space O F n) (M : Ideal S.B) : Prop :=
     ∀ P : Ideal L.R, P.IsPrime → P ≤ p → M ≤ L.π P
 
 def P23' (S : Space O F 3) (M : Ideal S.B) : Prop :=
-  ∀ (x : Ideal S.A) (L : S.Loc x) (p q : Ideal L.R), Nice L.ρ p → L.ρ.TE p → Relation.ReflTransGen (ThickLink L.ρ) p q →
-    (∃ P : Ideal L.R, P.IsPrime ∧ P ≤ p ∧ L.ρ.TI P ∧ M ≤ L.π P) →
-    ∀ P' : Ideal L.R, P'.IsPrime → P' ≤ q → L.ρ.TI P' → M ≤ L.π P'
+  ∀ (x : Ideal S.A) (L : S.Loc x),
+    letI : IsLocalRing L.R := IsCO.toIsLocalRing L.O'
+    ∀ (p q : Ideal L.R), Nice L.ρ p → L.ρ.TE p → Relation.ReflTransGen (ThickLink L.ρ) p q →
+      (∃ P : Ideal L.R, P.IsPrime ∧ P ≤ p ∧ L.ρ.TI P ∧ M ≤ L.π P) →
+      ∀ P' : Ideal L.R, P'.IsPrime → P' ≤ q → L.ρ.TI P' → M ≤ L.π P'
 
 def SeedIn (S : Space O F n) (M : Ideal S.B) : Prop :=
   ∃ (ξ : Ideal S.A) (Z : Ideal S.B), ξ.IsPrime ∧ S.u.TI ξ ∧ Z.IsPrime ∧ M ≤ Z ∧ Z ≤ S.π ξ ∧
