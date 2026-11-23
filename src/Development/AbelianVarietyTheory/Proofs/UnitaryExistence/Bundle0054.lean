@@ -40,9 +40,9 @@ theorem exists_isUnivChart {R : Type} [CommRing R] [IsLocalRing R] (G : Over (Sp
     fun J m hJ a ha => ⟨m + 1, by
       have := Ideal.pow_mem_pow ha (m + 1)
       rwa [hJ, Ideal.mem_bot] at this⟩
-  have hz : ∀ m (i : Fin g), IsNilpotent (zR (R := R) m i) := fun m i =>
+  have hz : ∀ m (i : Fin g), IsNilpotent (ReciprocityTheory.ChartRestriction.G.Chart.zR (R := R) m i) := fun m i =>
     nil _ m (Chart.ker_jetAug_pow (Fin g) m) _ (Chart.zR_mem_ker m i)
-  refine ⟨fun m => X _ (zR m), fun m => hnat _ _ _ _ (hz _), fun m => ?_, fun A _ _ aug m hJ y hy => ?_⟩
+  refine ⟨fun m => X _ (ReciprocityTheory.ChartRestriction.G.Chart.zR m), fun m => hnat _ _ _ _ (hz _), fun m => ?_, fun A _ _ aug m hJ y hy => ?_⟩
   · rw [hnat _ _ _ _ (hz _), ← h0]
     congr 1
     funext i

@@ -143,10 +143,10 @@ theorem VerticalDegree.proof (h₁ : FibreDimensionZero.Statement) (h₂ : Chart
       rw [← G'.genericFibre_ker_target, RingHom.mem_ker, aeval_X]
       exact h0
     simpa using Ideal.mem_map_of_mem (MvPolynomial.map (Int.castRingHom (ZMod p))) hX
-  have hj : IsChart (fibreIdeal κ G') (fun k => i' k.1) := by
+  have hj : IsChart (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G') (fun k => i' k.1) := by
     intro k hk
     apply hz k
-    rw [fibreIdeal, RingHom.mem_ker, aeval_X] at hk
+    rw [ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal, RingHom.mem_ker, aeval_X] at hk
     exact hk
   rw [hJ.1 _ Fin.elim0 _ hfib hj, h₃ K ι K' ι' κ v p W' n i' hv hp hW hV hch G']
   congr 1

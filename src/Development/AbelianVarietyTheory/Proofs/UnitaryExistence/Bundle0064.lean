@@ -268,7 +268,7 @@ theorem sec_eq_scal_of_values (hT : Out.SecTwistSt) {E : Type} [Field E] [Number
     {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {V : Type}
     (x : Sp ℂ ⟶ Xo.X) (ex : V → (Over.mk x ⟶ Xo.univ.t.G)) (hex : Function.Surjective ex)
     (s s' : LB.Sec (PPx x)) (hs : SecGen x s) (t : ℂ)
-    (hv : ∀ j z (pt : Sp ℂ ⟶ Gx x), pt ≫ gxFst x = (ex z).left → pt ≫ gxSnd x = 𝟙 (Sp ℂ) →
+    (hv : ∀ j z (pt : Sp ℂ ⟶ Gx x), pt ≫ Formalism.L2.PjFree.gxFst x = (ex z).left → pt ≫ gxSnd x = 𝟙 (Sp ℂ) →
       ⊤ ≤ (ex z).left ⁻¹ᵁ Xo.univ.t.PP.L.U j →
       valAt' pt ((PPx x).U (fun _ => j)) (s'.f (fun _ => j)) =
         t * valAt' pt ((PPx x).U (fun _ => j)) (s.f (fun _ => j))) :
@@ -278,11 +278,11 @@ theorem sec_eq_scal_of_values (hT : Out.SecTwistSt) {E : Type} [Field E] [Number
   obtain ⟨i, pt, hp, hne⟩ := h2.1 hs
   have hi : i = fun _ => i (0 : Fin 1) := funext fun k => congrArg i (Subsingleton.elim _ _)
   obtain ⟨j, rfl⟩ : ∃ j, i = fun _ => j := ⟨_, hi⟩
-  have cond : gxFst x ≫ Xo.univ.t.G.hom = gxSnd x ≫ x := pullback.condition.symm
-  obtain ⟨z, hz⟩ := hex (Over.homMk (pt ≫ gxFst x) (by
-    show (pt ≫ gxFst x) ≫ Xo.univ.t.G.hom = x
+  have cond : Formalism.L2.PjFree.gxFst x ≫ Xo.univ.t.G.hom = gxSnd x ≫ x := pullback.condition.symm
+  obtain ⟨z, hz⟩ := hex (Over.homMk (pt ≫ Formalism.L2.PjFree.gxFst x) (by
+    show (pt ≫ Formalism.L2.PjFree.gxFst x) ≫ Xo.univ.t.G.hom = x
     rw [Category.assoc, cond, ← Category.assoc, hp, Category.id_comp]))
-  have hz' : pt ≫ gxFst x = (ex z).left := by rw [hz]; rfl
+  have hz' : pt ≫ Formalism.L2.PjFree.gxFst x = (ex z).left := by rw [hz]; rfl
   have hU : ⊤ ≤ pt ⁻¹ᵁ (PPx x).U (fun _ => j) := by
     by_contra h
     exact hne (by unfold valAt'; rw [dite_eq_right h])

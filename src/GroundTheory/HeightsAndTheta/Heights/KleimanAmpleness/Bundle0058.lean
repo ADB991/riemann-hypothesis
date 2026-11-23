@@ -248,7 +248,7 @@ theorem aeval_ratioPt_mem (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (R : MRing
   exact ⟨R, rfl⟩
 
 theorem aeval_eq_ratioPt (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0)
-    {F : MRingOver S ι} {d : K → ℕ} (hF : IsMultiHomog F d) :
+    {F : MRingOver S ι} {d : K → ℕ} (hF : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog F d) :
     aeval y F = aeval (ratioPt y c) F * ∏ k, y ⟨k, c k⟩ ^ d k := by
   classical
   conv_lhs => rw [F.as_sum]

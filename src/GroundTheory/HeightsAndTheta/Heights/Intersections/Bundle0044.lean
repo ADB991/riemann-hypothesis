@@ -66,7 +66,7 @@ def SemilocLengthSum.Statement : Prop :=
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (n : ℕ) (s t : MRing ι) (α : K → ℕ)
     (W : Ideal (MRing ι)) (E : Ideal (MRing ι') → ℤ) (hv : IsBlockMap κ v) (hP' : IsArithVar P' (n + 1))
     (y : locRing (imageZ v P') W),
-    IsArithVar (imageZ v P') (n + 1) → IsMultiHomog s α → IsMultiHomog t α → s ∉ imageZ v P' →
+    IsArithVar (imageZ v P') (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s α → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog t α → s ∉ imageZ v P' →
     W ∈ divSupp (imageZ v P') s → t ∉ W →
     (y : FractionRing (MRing ι ⧸ imageZ v P')) * algebraMap _ _ (Ideal.Quotient.mk (imageZ v P') t) =
       algebraMap _ _ (Ideal.Quotient.mk (imageZ v P') s) →

@@ -67,13 +67,13 @@ theorem exists_gen (hT : Out.SecTwistSt) (y : Sp ℂ ⟶ Xo.X) {Z : Type} (ex : 
         valAt' x ((Xo.univ.t.PP.L.pull (pullback.fst Xo.univ.t.G.hom y)).U (fun _ => j))
           (s.f (fun _ => j)) = θ z * fr j z) :
     ∃ t : LB.Sec (PPx y), SecGen y t ∧
-      ∀ j z (pt : Sp ℂ ⟶ Gx y), pt ≫ gxFst y = (ex z).left → pt ≫ gxSnd y = 𝟙 (Sp ℂ) →
+      ∀ j z (pt : Sp ℂ ⟶ Gx y), pt ≫ Formalism.L2.PjFree.gxFst y = (ex z).left → pt ≫ gxSnd y = 𝟙 (Sp ℂ) →
         ⊤ ≤ (ex z).left ⁻¹ᵁ Xo.univ.t.PP.L.U j →
         valAt' pt ((PPx y).U (fun _ => j)) (t.f (fun _ => j)) = κ * θ z * fr j z := by
   obtain ⟨s', hs'⟩ := _root_.GlobalTheory.FibreSection.exists_sec_same_values E H Dw l Xo y s
   have hw : ∀ z, (ex z).left ≫ Xo.univ.t.G.hom = 𝟙 (Sp ℂ) ≫ y := fun z =>
     (Over.w (ex z)).trans (Category.id_comp y).symm
-  have key : ∀ j z (pt : Sp ℂ ⟶ Gx y), pt ≫ gxFst y = (ex z).left → pt ≫ gxSnd y = 𝟙 (Sp ℂ) →
+  have key : ∀ j z (pt : Sp ℂ ⟶ Gx y), pt ≫ Formalism.L2.PjFree.gxFst y = (ex z).left → pt ≫ gxSnd y = 𝟙 (Sp ℂ) →
       ⊤ ≤ (ex z).left ⁻¹ᵁ Xo.univ.t.PP.L.U j →
       valAt' pt ((PPx y).U (fun _ => j)) ((SecPull.scalSec y κ s').f (fun _ => j)) = κ * θ z * fr j z := by
     intro j z pt h1 h2 h3
@@ -88,7 +88,7 @@ theorem exists_gen (hT : Out.SecTwistSt) (y : Sp ℂ ⟶ Xo.X) {Z : Type} (ex : 
   obtain ⟨z, hz⟩ := hθ
   obtain ⟨j, hj⟩ := exists_chart_top Xo.univ.t.PP.isLB (ex z).left
   let pt : Sp ℂ ⟶ Gx y := pullback.lift (f := (Over.mk y).hom) (g := Xo.univ.t.G.hom) (𝟙 _) (ex z).left (hw z).symm
-  have h1 : pt ≫ gxFst y = (ex z).left := pullback.lift_snd _ _ _
+  have h1 : pt ≫ Formalism.L2.PjFree.gxFst y = (ex z).left := pullback.lift_snd _ _ _
   have h2 : pt ≫ gxSnd y = 𝟙 (Sp ℂ) := pullback.lift_fst _ _ _
   refine (_root_.GlobalTheory.sec_values_complex_fibre hT E H Dw l Xo y _).2.1.2 ⟨fun _ => j, pt, h2, ?_⟩
   rw [key j z pt h1 h2 hj]
