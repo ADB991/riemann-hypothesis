@@ -134,7 +134,7 @@ theorem siegPre_pullback : ∀ (h M : ℕ) (o : Type) [CommRing o] (ζ : o) (S S
       rig₁ := p.rig₁
       rig₂ := p.rig₂
       symm := p.symm
-      lev := fun a => secPull p.pb (c.lev a)
+      lev := fun a => GlobalTheory.SiegelPull.secPull p.pb (c.lev a)
       lev_add := fun a b => push_injective p.pb _ (by
         rw [map_mul, push_secPull', push_secPull', push_secPull', c.lev_add, MonObj.comp_mul])
       lev_tors := fun a => push_injective p.pb _ (by

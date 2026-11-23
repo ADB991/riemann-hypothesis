@@ -55,7 +55,7 @@ theorem ordF_mul (P : HeightOneSpectrum (𝓞 L)) (k k' : Lˣ) : ordF P (k * k')
   omega
 
 theorem valAt_diag (P : HeightOneSpectrum (𝓞 L)) (k : Lˣ) :
-    valAt P (diagUnits L k) = WithZero.exp (-ordF P k) := by
+    valAt P (Neutral.B1.diagUnits L k) = WithZero.exp (-ordF P k) := by
   rw [← valuation_eq_exp]
   exact HeightOneSpectrum.valuedAdicCompletion_eq_valuation' P _
 
@@ -274,7 +274,7 @@ theorem exists_unramified_resEta : ∀ (F L : Type) [Field F] [NumberField F] [F
     exact Finset.prod_eq_one fun v _ => by rw [map_zpow, hψF, one_zpow]
   obtain ⟨χ, hχc, hχu, hχU, hχA⟩ := GlobalTheory.exists_unitary_char_of_open_subgroup_and_hom (Ideles L)
     (Lˣ × Multiplicative (HeightOneSpectrum (𝓞 F) →₀ ℤ)) (unitIdl L)
-    (GlobalTheory.Mem.UnitOpen.unit_open_and_congr_open L).1 ((diagUnits L).coprod β) (MonoidHom.coprod 1 b) ψ hψc hψu
+    (GlobalTheory.Mem.UnitOpen.unit_open_and_congr_open L).1 ((Neutral.B1.diagUnits L).coprod β) (MonoidHom.coprod 1 b) ψ hψc hψu
     (fun y => by
       show ‖((1 * freeHom _ (Multiplicative.ofAdd (Multiplicative.toAdd y.2)) : ℂˣ) : ℂ)‖ = 1
       rw [one_mul, freeHom_apply, Units.coe_prod, norm_prod]
@@ -283,15 +283,15 @@ theorem exists_unramified_resEta : ∀ (F L : Type) [Field F] [NumberField F] [F
       split_ifs <;> simp)
     (fun y hy => by
       obtain ⟨k, m⟩ := y
-      show 1 * freeHom _ (Multiplicative.ofAdd (Multiplicative.toAdd m)) = ψ (diagUnits L k * β m)
+      show 1 * freeHom _ (Multiplicative.ofAdd (Multiplicative.toAdd m)) = ψ (Neutral.B1.diagUnits L k * β m)
       rw [one_mul, map_mul, hψβ, mul_one, hψd, Finset.prod_empty, mul_one, freeHom_eq_finprod]
       apply Units.ext
       rw [hψinf]
       refine compat h hord hprod hn hroot k _ fun P => ?_
-      have h1 : valAt P (diagUnits L k * freeHom _ (Multiplicative.ofAdd (Multiplicative.toAdd m))) = 1 := hy P
+      have h1 : valAt P (Neutral.B1.diagUnits L k * freeHom _ (Multiplicative.ofAdd (Multiplicative.toAdd m))) = 1 := hy P
       rw [map_mul, valAt_diag, valAt_free hord, ← WithZero.exp_add, ← WithZero.exp_zero, WithZero.exp_inj] at h1
       omega)
-  have hχd : ∀ k : Lˣ, χ (diagUnits L k) = 1 := fun k => by simpa using hχA (k, 1)
+  have hχd : ∀ k : Lˣ, χ (Neutral.B1.diagUnits L k) = 1 := fun k => by simpa using hχA (k, 1)
   have hχβ : ∀ m, χ (β m) = b m := fun m => by simpa using hχA (1, m)
   refine ⟨⟨χ, hχc, hχd⟩, hχu, fun v x hx => ?_, ⟨fun v k => ?_, fun w k => ?_⟩, fun k => ?_⟩
   · show χ (localIdele L v x) = 1

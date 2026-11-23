@@ -22,10 +22,10 @@ noncomputable section
 def BlockResolutionDegreeIntegral.Statement : Prop :=
   ∀ (D : ℕ) (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
     [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A₀ A₁ : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι),
-    A₀.a = unitDeg d.k₀ → A₁.a = unitDeg d.k₀ → IsSmoothHerm A₀ → IsSmoothHerm A₁ →
+    A₀.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀ → A₁.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀ → IsSmoothHerm A₀ → IsSmoothHerm A₁ →
     ∀ t ∈ Set.Icc (0 : ℝ) 1,
       mInt d.R.A (fun _ => blockInterpPot d A₀ A₁ t) (fun _ => 1) =
-        (genDeg (mCoordIdeal d.y) D (unitDeg d.k₀) : ℝ)
+        (genDeg (mCoordIdeal d.y) D (ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀) : ℝ)
 
 end
 
@@ -66,7 +66,7 @@ noncomputable section
 
 def BlockResolutionInterpIntegral.Statement : Prop :=
   ∀ (D : ℕ) (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι), A'.a = unitDeg d.k₀ → IsSmoothHerm A' →
+    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι), A'.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀ → IsSmoothHerm A' →
     ((D : ℝ) + 1) * blockMetricInt d A' =
       ∑ i ∈ Finset.range (D + 1),
         mInt d.R.A
@@ -91,7 +91,7 @@ noncomputable section
 def BlockResolutionMetricPair.Statement : Prop :=
   ∀ (D : ℕ) (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
     [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (P0' : Ideal (MRing ι)),
-    A'.a = unitDeg d.k₀ → P0' ≤ mCoordIdeal d.y → IsSemipositiveRel P0' (mCoordIdeal d.y) A' →
+    A'.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀ → P0' ≤ mCoordIdeal d.y → IsSemipositiveRel P0' (mCoordIdeal d.y) A' →
     ∃ (A : FinHolAtlas D d.R.X) (L : HolLineBundle A) (W₀ W₁ : Weight L) (dV : SmoothVolume A)
       (σ : ℕ → MvPolynomial (Σ k, ι k) ℚ → Fin A.n → d.R.X → ℂ),
       A.Compatible d.R.A ∧ W₀.IsSemipositive ∧ W₁.IsSemipositive ∧ dV.μ = d.dV ∧
@@ -123,7 +123,7 @@ noncomputable section
 def BlockResolutionMixedBridge.Statement : Prop :=
   ∀ (D : ℕ) (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
     [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (L : Fin D → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A₁ : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι),
-    (∀ j, IsSmoothHerm (L j)) → A₁.a = unitDeg d.k₀ → IsSmoothHerm A₁ →
+    (∀ j, IsSmoothHerm (L j)) → A₁.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀ → IsSmoothHerm A₁ →
     ptsIntegral (mCoordIdeal d.y) (fun j z => Real.log ((L j).h z)) (fun z => Real.log (A₁.h z / d.A.h z)) =
       mInt d.R.A (fun j => AnResBridge.potOf d.R (L j))
         (fun x => Real.log (A₁.h (blockPt d x) / d.A.h (blockPt d x)))
@@ -145,7 +145,7 @@ noncomputable section
 
 def BlockResolutionMixedIntegral.Statement : Prop :=
   ∀ (D : ℕ) (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι), A'.a = unitDeg d.k₀ → IsSmoothHerm A' →
+    [CharZero Ω] (d : HSMBlockDatum D K ι Ω) (A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι), A'.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg d.k₀ → IsSmoothHerm A' →
     ∑ i ∈ Finset.range (D + 1),
         ptsIntegral (mCoordIdeal d.y) (blockMixPot d.A A' D i) (fun z => Real.log (A'.h z / d.A.h z)) =
       ((D : ℝ) + 1) * blockMetricInt d A'

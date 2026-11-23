@@ -340,7 +340,7 @@ theorem pullFib_finite (hIsol : FibreIsolFinite.Statement) (hv : IsBlockMap κ v
     (y : Fin n → ℂ) : (pullQ R v Ψ ⁻¹' {y} \ pullBad R v Ψ).Finite := by
   classical
   have hF := fibreFinite K ι (imageZ v P') n Ψ hP hΨ y
-  choose! uw huw using fun w (hw : w ∈ fibre (imageZ v P') Ψ y) => hw
+  choose! uw huw using fun w (hw : w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre (imageZ v P') Ψ y) => hw
   choose T hT using fun w => hIsol K ι K' ι' κ v P' n hv hP' (uw w)
   refine (hF.biUnion fun w _ => (T w).finite_toSet.biUnion fun t _ =>
     (orbit_subsingleton R t).finite).subset ?_
@@ -448,12 +448,12 @@ theorem FibreDimensionZero.proof (h₁ : ArithmeticIntersectionFibreMultiHomogen
   refine ⟨⟨RingHom.ker_isPrime _, h₁ K ι K' ι' κ v p W' hv hp hW.1.2.1 G', fun k => ?_⟩, ?_⟩
   · obtain ⟨i, hi⟩ := hW.1.2.2 k.1
     refine ⟨i, fun h => hi ?_⟩
-    rw [fibreIdeal, RingHom.mem_ker, aeval_X] at h
+    rw [ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal, RingHom.mem_ker, aeval_X] at h
     have hX : (X ⟨k.1, i⟩ : MRing ι') ∈ W' := by
       rw [← G'.genericFibre_ker_target, RingHom.mem_ker, aeval_X]
       exact h
     simpa using Ideal.mem_map_of_mem (MvPolynomial.map (Int.castRingHom (ZMod p))) hX
-  · rw [fibreIdeal, h₂ (FibreBlock κ) (fibreIdx ι' κ) G'.Φ G'.Φ', h₃ K ι K' ι' κ v p W' n hv hp hW hV G']
+  · rw [ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal, h₂ (FibreBlock κ) (fibreIdx ι' κ) G'.Φ G'.Φ', h₃ K ι K' ι' κ v p W' n hv hp hW hV G']
     simp
 
 end GroundTheory.Heights₂.Heights.Inter

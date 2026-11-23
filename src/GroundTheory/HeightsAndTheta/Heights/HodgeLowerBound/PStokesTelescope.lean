@@ -86,7 +86,7 @@ theorem ptsIntegral_scale (P : Ideal (MRing ι)) {e : ℕ} (φ : Fin e → ((Σ 
     simp only [sheetDensity_scale]
   · simp
 
-def blockInd : HermLine ι where
+def blockInd : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι where
   a := 0
   h z := if ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0 then 1 else 0
   pos z hz := by simp [hz]
@@ -101,7 +101,7 @@ theorem blockInd_smooth : IsSmoothHerm (blockInd (ι := ι)) := by
   show (if ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0 then (1 : ℝ) else 0) = 1
   rw [if_pos hz]
 
-def ratio (A A' : HermLine ι) (ha : A'.a = A.a) : HermLine ι where
+def ratio (A A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (ha : A'.a = A.a) : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι where
   a := 0
   h z := A'.h z / A.h z
   pos z hz := div_pos (A'.pos z hz) (A.pos z hz)
@@ -112,14 +112,14 @@ def ratio (A A' : HermLine ι) (ha : A'.a = A.a) : HermLine ι where
     rw [mul_div_mul_left _ _ hne]
     simp
 
-theorem ratio_smooth {A A' : HermLine ι} (ha : A'.a = A.a) (hA : IsSmoothHerm A) (hA' : IsSmoothHerm A') :
+theorem ratio_smooth {A A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (ha : A'.a = A.a) (hA : IsSmoothHerm A) (hA' : IsSmoothHerm A') :
     IsSmoothHerm (ratio A A' ha) :=
   hA'.div hA fun z hz => (A.pos z hz).ne'
 
-variable {I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ}
+variable {I : Ideal (MRing ι) → (n : ℕ) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) → ℝ}
 
 theorem fam_degZero (hI : IsIntersectionFamily I) {P : Ideal (MRing ι)} {n : ℕ} (hP : IsArithVar P (n + 1))
-    (L : Fin n → HermLine ι) (hL : ∀ j, IsSmoothHerm (L j)) (B : HermLine ι) (hB : IsSmoothHerm B)
+    (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hL : ∀ j, IsSmoothHerm (L j)) (B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hB : IsSmoothHerm B)
     (hB0 : B.a = 0) :
     I P (n + 1) (Fin.snoc L B) =
       ptsIntegral P (fun j z => Real.log ((L j).h z)) fun z => Real.log (B.h z) := by
@@ -136,7 +136,7 @@ theorem fam_degZero (hI : IsIntersectionFamily I) {P : Ideal (MRing ι)} {n : �
   rw [hl, tele_ptsIntegral_neg, neg_neg]
 
 theorem fam_congr_blocks (hI : IsIntersectionFamily I) {P : Ideal (MRing ι)} {n : ℕ} (hP : IsArithVar P (n + 1))
-    (L : Fin n → HermLine ι) (hL : ∀ j, IsSmoothHerm (L j)) {X Y : HermLine ι} (hX : IsSmoothHerm X)
+    (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hL : ∀ j, IsSmoothHerm (L j)) {X Y : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hX : IsSmoothHerm X)
     (hY : IsSmoothHerm Y) (ha : X.a = Y.a) (hh : ∀ z, (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → X.h z = Y.h z) :
     I P (n + 1) (Fin.snoc L X) = I P (n + 1) (Fin.snoc L Y) := by
   have hT : I P (n + 1) (Fin.snoc L blockInd) = 0 := by
@@ -158,10 +158,10 @@ theorem fam_congr_blocks (hI : IsIntersectionFamily I) {P : Ideal (MRing ι)} {n
   rw [hT, add_zero] at hy
   rw [← hx, hy]
 
-def fam (A A' : HermLine ι) (N i : ℕ) : Fin N → HermLine ι :=
+def fam (A A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (N i : ℕ) : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι :=
   fun j => if j.val < i then A' else A
 
-theorem fam_succAbove (A A' : HermLine ι) (D i : ℕ) (hi : i < D + 1) (k : ℕ) (hk : k = i ∨ k = i + 1) :
+theorem fam_succAbove (A A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (D i : ℕ) (hi : i < D + 1) (k : ℕ) (hk : k = i ∨ k = i + 1) :
     fam A A' (D + 1) k ∘ (⟨i, hi⟩ : Fin (D + 1)).succAbove = fam A A' D i := by
   funext j
   simp only [Function.comp_apply, fam]
@@ -180,7 +180,7 @@ theorem fam_succAbove (A A' : HermLine ι) (D i : ℕ) (hi : i < D + 1) (k : ℕ
       show ¬ j.val + 1 < k
       omega), if_neg h]
 
-theorem fam_smooth {A A' : HermLine ι} (hA : IsSmoothHerm A) (hA' : IsSmoothHerm A') (N i : ℕ) (j : Fin N) :
+theorem fam_smooth {A A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA : IsSmoothHerm A) (hA' : IsSmoothHerm A') (N i : ℕ) (j : Fin N) :
     IsSmoothHerm (fam A A' N i j) := by
   unfold fam
   split_ifs
@@ -188,7 +188,7 @@ theorem fam_smooth {A A' : HermLine ι} (hA : IsSmoothHerm A) (hA' : IsSmoothHer
   · exact hA
 
 theorem top_sub_top (hI : IsIntersectionFamily I) {P : Ideal (MRing ι)} {n : ℕ} (hP : IsArithVar P (n + 1))
-    {A A' : HermLine ι} (hA : IsSmoothHerm A) (hA' : IsSmoothHerm A') (ha : A'.a = A.a) :
+    {A A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA : IsSmoothHerm A) (hA' : IsSmoothHerm A') (ha : A'.a = A.a) :
     I P (n + 1) (fun _ => A') - I P (n + 1) (fun _ => A) = ∑ i ∈ Finset.range (n + 1),
       ptsIntegral P (stokesMixPot A A' n i) (fun z => Real.log (A'.h z) - Real.log (A.h z)) := by
   classical
@@ -240,7 +240,7 @@ theorem top_sub_top (hI : IsIntersectionFamily I) {P : Ideal (MRing ι)} {n : �
   rw [Real.log_div (A'.pos z hz.1).ne' (A.pos z hz.1).ne']
 
 theorem top_sub_top_le (hS : StokesStep.Statement) (hI : IsIntersectionFamily I) {P : Ideal (MRing ι)} {n : ℕ}
-    (hP : IsArithVar P (n + 1)) {A A' : HermLine ι} (hA : IsSemipositiveH P A) (hA' : IsSemipositiveH P A')
+    (hP : IsArithVar P (n + 1)) {A A' : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA : IsSemipositiveH P A) (hA' : IsSemipositiveH P A')
     (ha : A'.a = A.a) :
     I P (n + 1) (fun _ => A') - I P (n + 1) (fun _ => A) ≤ ((n + 1 : ℕ) : ℝ) *
       ptsIntegral P (fun (_ : Fin n) z => Real.log (A.h z)) (fun z => Real.log (A'.h z) - Real.log (A.h z)) := by

@@ -151,6 +151,7 @@ theorem mem_of_completion {V K : Type} [CommRing V] [IsDomain V] [IsDiscreteValu
   rw [← inv_inv d, ← hv]
   simp
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem TraitCmp.det_mem [IsDomain R] [IsNoetherianRing R] [IsIntegrallyClosed R] [CharZero R] {b' : Fin n → P.F}
     (h : TraitCmp x b b') {M} (hM : Rel (spMap (algebraMap R (FractionRing R)) ≫ x) b' M b) :
     ∃ a, algebraMap R (FractionRing R) a = M.det := by

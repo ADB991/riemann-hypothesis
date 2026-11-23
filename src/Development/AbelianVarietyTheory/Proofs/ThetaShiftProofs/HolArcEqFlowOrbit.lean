@@ -31,10 +31,10 @@ section Frames
 variable {r : ℕ} (X : Data E r)
 
 lemma perFr_smul (x : Frame X.Ψ r) (a : E) (v : Fin r → E) (τ : E →+* ℂ) (i : ℕ) :
-    perFr X x (a • v) τ i = τ a * perFr X x v τ i := by
+    Formalism.L2.PjFree.perFr X x (a • v) τ i = τ a * Formalism.L2.PjFree.perFr X x v τ i := by
   have hemb : ∀ ρ : E →+* ℂ, Data.emb ρ (a • v) = ρ a • Data.emb ρ v := fun ρ => by
     funext k; simp [Data.emb]
-  unfold perFr
+  unfold Formalism.L2.PjFree.perFr
   split_ifs
   · rw [hemb, Matrix.mulVec_smul]; rfl
   · simp
@@ -124,10 +124,10 @@ lemma exists_comb_single {T : Type} {m : T → ℕ} {g : ℕ} (e : Fin g ≃ Σ 
     · rw [Pi.single_eq_of_ne h, Pi.single_eq_of_ne fun hh => h (by simpa using hh)]
 
 variable {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
-  {σ : c.F →+* ℂ} {r : ℕ} {U : Unf Xo c σ r} (Uw : UnfWit U)
+  {σ : c.F →+* ℂ} {r : ℕ} {U : Formalism.L2.PjFree.Unf Xo c σ r} (Uw : UnfWit U)
 
 lemma exists_comp (hL : Out.Laws) (hU : IsUnf U) (i : Fin Uw.F.n) (P : (Uw.F.Di i).La →+ (Fin Uw.g → ℂ))
-    (hP : IsPeriod (Uw.F.Di i) (fun j => relab c σ (Uw.e j).1) P) :
+    (hP : IsPeriod (Uw.F.Di i) (fun j => Formalism.L2.PjFree.relab c σ (Uw.e j).1) P) :
     ∃ k, Uw.ik k = i ∧ Nonempty (U.X k).dom := by
   obtain ⟨u, -, h2, h3, h4⟩ := GlobalTheory.LieFrame.exists_eigenbasis E H Dw l Xo c σ Uw.g Uw.e Uw.F i P hP
   obtain ⟨g, hg, θ, hθ⟩ := GlobalTheory.Frames.exists_local_generator hL.secBaseChange E H Dw l Xo ℂ (Uw.F.u i P)
@@ -147,12 +147,12 @@ lemma exists_comp (hL : Out.Laws) (hU : IsUnf U) (i : Fin Uw.F.n) (P : (Uw.F.Di 
   obtain ⟨k, x, t, ht⟩ := hU.2.2.1 y
   exact ⟨k, Uw.F.disj _ _ _ _ (Uw.period k x) hP ((Uw.lie k x).1.symm.trans ht.1.symm), ⟨x⟩⟩
 
-lemma exists_idx (hσ : GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) :
+lemma exists_idx (hσ : Formalism.L2.PjFree.GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) :
     ∃ idx : Fin Uw.g ≃ (U.X k).Ψ × Fin r,
-      (∀ j, relab c σ (Uw.e j).1 =
+      (∀ j, Formalism.L2.PjFree.relab c σ (Uw.e j).1 =
         if ((idx j).2 : ℕ) < Dw.q then ComplexEmbedding.conjugate (idx j).1.1 else (idx j).1.1) ∧
       (∀ j, ((idx j).2 : ℕ) < Dw.q → ((Uw.e j).2 : ℕ) < Dw.q) ∧
-      ∀ (x : Frame (U.X k).Ψ r) (v : Fin r → E) j, perFr (U.X k) x v (relab c σ (Uw.e j).1) (Uw.e j).2 =
+      ∀ (x : Frame (U.X k).Ψ r) (v : Fin r → E) j, Formalism.L2.PjFree.perFr (U.X k) x v (Formalism.L2.PjFree.relab c σ (Uw.e j).1) (Uw.e j).2 =
         if ((idx j).2 : ℕ) < Dw.q then
           hermC (idx j).1.1 (U.X k).Gm (FD.col (mat x (idx j).1) (idx j).2) (Data.emb (idx j).1.1 v)
         else ((mat x (idx j).1)⁻¹ *ᵥ Data.emb (idx j).1.1 v) (idx j).2 := by
@@ -160,13 +160,13 @@ lemma exists_idx (hσ : GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) :
   obtain ⟨hp0, hty⟩ := hU.2.1 k
   have hcc : ∀ τ : E →+* ℂ, ComplexEmbedding.conjugate (ComplexEmbedding.conjugate τ) = τ := fun τ =>
     ComplexEmbedding.involutive_conjugate E τ
-  obtain ⟨f, hf⟩ := GlobalTheory.FrameUnif.exists_letter_equiv (U.X k).Ψ (U.X k).cmType Dw.p Dw.q r hU.1 (relab c σ) hbij
+  obtain ⟨f, hf⟩ := GlobalTheory.FrameUnif.exists_letter_equiv (U.X k).Ψ (U.X k).cmType Dw.p Dw.q r hU.1 (Formalism.L2.PjFree.relab c σ) hbij
     Dw.mult (fun τ h => by unfold Datum.mult; rw [if_pos ((hrt τ).1 ((hty _).1 h))])
       (fun τ h => by unfold Datum.mult; rw [if_neg (fun h' => h ((hty _).2 ((hrt τ).2 h')))])
   obtain ⟨idx, hi⟩ : ∃ idx : Fin Uw.g ≃ (U.X k).Ψ × Fin r, ∀ j,
-      (relab c σ (Uw.e j).1 ∈ (U.X k).Ψ ∧ (idx j).1.1 = relab c σ (Uw.e j).1 ∧
+      (Formalism.L2.PjFree.relab c σ (Uw.e j).1 ∈ (U.X k).Ψ ∧ (idx j).1.1 = Formalism.L2.PjFree.relab c σ (Uw.e j).1 ∧
         ((idx j).2 : ℕ) = Dw.q + (Uw.e j).2) ∨
-      (relab c σ (Uw.e j).1 ∉ (U.X k).Ψ ∧ (idx j).1.1 = ComplexEmbedding.conjugate (relab c σ (Uw.e j).1) ∧
+      (Formalism.L2.PjFree.relab c σ (Uw.e j).1 ∉ (U.X k).Ψ ∧ (idx j).1.1 = ComplexEmbedding.conjugate (Formalism.L2.PjFree.relab c σ (Uw.e j).1) ∧
         ((idx j).2 : ℕ) = Dw.q - 1 - (Uw.e j).2 ∧ ((Uw.e j).2 : ℕ) < Dw.q) :=
     ⟨Uw.e.trans f, fun j => hf (Uw.e j)⟩
   refine ⟨idx, fun j => ?_, fun j hj => ?_, fun x v j => ?_⟩
@@ -183,16 +183,16 @@ lemma exists_idx (hσ : GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) :
     rw [← hp0] at h ⊢
     rcases h with ⟨a, rfl, rfl⟩ | ⟨a, rfl, rfl, d⟩
     · rw [if_neg (by omega)]
-      unfold perFr
+      unfold Formalism.L2.PjFree.perFr
       rw [dite_eq_left a, dite_eq_left hn]
     · rw [if_pos (by omega)]
-      unfold perFr
-      rw [dite_eq_right a, dite_eq_left (show conjEmb (relab c σ (Uw.e j).1) ∈ (U.X k).Ψ from hτ), dite_eq_left hn]
+      unfold Formalism.L2.PjFree.perFr
+      rw [dite_eq_right a, dite_eq_left (show conjEmb (Formalism.L2.PjFree.relab c σ (Uw.e j).1) ∈ (U.X k).Ψ from hτ), dite_eq_left hn]
       rfl
 
-lemma exists_frame (hσ : GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) (hκ : (U.X k).κ0 = 2 * (U.X k).ξ0)
+lemma exists_frame (hσ : Formalism.L2.PjFree.GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) (hκ : (U.X k).κ0 = 2 * (U.X k).ξ0)
     (P : (Uw.F.Di (Uw.ik k)).La →+ (Fin Uw.g → ℂ))
-    (hP : IsPeriod (Uw.F.Di (Uw.ik k)) (fun j => relab c σ (Uw.e j).1) P) : ∃ x, Uw.Pm k x = P := by
+    (hP : IsPeriod (Uw.F.Di (Uw.ik k)) (fun j => Formalism.L2.PjFree.relab c σ (Uw.e j).1) P) : ∃ x, Uw.Pm k x = P := by
   obtain ⟨idx, hty, -, hper⟩ := exists_idx Uw hσ hU k
   obtain ⟨hp, hq⟩ := Uw.F.sig (Uw.ik k)
   obtain ⟨hp0, hΨ⟩ := hU.2.1 k
@@ -212,13 +212,13 @@ lemma exists_frame (hσ : GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) (hκ : (U.X 
   exact ⟨⟨x, hx⟩, AddMonoidHom.ext fun v => funext fun j =>
     (Uw.Pm_eq k _ v j).trans ((hper x _ j).trans (h v j).symm)⟩
 
-lemma flow_period (hσ : GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) (hκ : (U.X k).κ0 = 2 * (U.X k).ξ0)
+lemma flow_period (hσ : Formalism.L2.PjFree.GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) (hκ : (U.X k).κ0 = 2 * (U.X k).ξ0)
     (nn : (Uw.F.Di (Uw.ik k)).La → (Uw.F.Di (Uw.ik k)).La) (ξ' : Fin r → E) (hξ' : herm (U.X k).Gm ξ' ξ' = 0)
     (sE : E) (hs : cc sE = sE)
     (hnn : ∀ v, (Uw.φ k (nn v) : Fin r → E) =
       (-(sE * (U.X k).κ0 * herm (U.X k).Gm (Uw.φ k v : Fin r → E) ξ')) • ξ')
     (x : (U.X k).dom) (d : ℂ) (P : (Uw.F.Di (Uw.ik k)).La →+ (Fin Uw.g → ℂ))
-    (hP : IsPeriod (Uw.F.Di (Uw.ik k)) (fun j => relab c σ (Uw.e j).1) P)
+    (hP : IsPeriod (Uw.F.Di (Uw.ik k)) (fun j => Formalism.L2.PjFree.relab c σ (Uw.e j).1) P)
     (hPx : ∀ v, P v = Uw.Pm k x v + d • Uw.Pm k x (nn v)) :
     ∃ hx : (U.X k).flow ξ' (fun τ => d * ((τ.1 sE).re : ℂ)) x.1 ∈ (U.X k).dom, Uw.Pm k ⟨_, hx⟩ = P := by
   obtain ⟨idx, hty, hlt, hper⟩ := exists_idx Uw hσ hU k
@@ -227,8 +227,8 @@ lemma flow_period (hσ : GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) (hκ : (U.X k
     have := map_cc τ sE
     rw [hs] at this
     exact Complex.conj_eq_iff_re.1 this.symm
-  have key : ∀ v j, perFr (U.X k) ((U.X k).flow ξ' (fun τ => d * ((τ.1 sE).re : ℂ)) x.1)
-      (Uw.φ k v : Fin r → E) (relab c σ (Uw.e j).1) (Uw.e j).2 = P v j := by
+  have key : ∀ v j, Formalism.L2.PjFree.perFr (U.X k) ((U.X k).flow ξ' (fun τ => d * ((τ.1 sE).re : ℂ)) x.1)
+      (Uw.φ k v : Fin r → E) (Formalism.L2.PjFree.relab c σ (Uw.e j).1) (Uw.e j).2 = P v j := by
     intro v j
     rw [hPx, Pi.add_apply, Pi.smul_apply, Uw.Pm_eq, Uw.Pm_eq, hnn, perFr_smul, hty j]
     split_ifs with hj
@@ -236,8 +236,8 @@ lemma flow_period (hσ : GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) (hκ : (U.X k
         (idx j).1 (Uw.e j).2 (hp0 ▸ hlt j hj)
       have h2 : conjEmb (idx j).1.1 sE = (((idx j).1.1 sE).re : ℂ) := by
         rw [← hre (conjEmb (idx j).1.1)]; simp [conjEmb]
-      change perFr _ _ _ (conjEmb (idx j).1.1) _ = perFr _ _ _ (conjEmb (idx j).1.1) _ +
-        d • (conjEmb (idx j).1.1 _ * perFr _ _ _ (conjEmb (idx j).1.1) _)
+      change Formalism.L2.PjFree.perFr _ _ _ (conjEmb (idx j).1.1) _ = Formalism.L2.PjFree.perFr _ _ _ (conjEmb (idx j).1.1) _ +
+        d • (conjEmb (idx j).1.1 _ * Formalism.L2.PjFree.perFr _ _ _ (conjEmb (idx j).1.1) _)
       rw [h, mul_assoc sE, map_neg, map_mul _ sE, h2, smul_eq_mul]
       ring
     · rw [GlobalTheory.PerFlow.flow_mem (U.X k) hξ', mul_assoc sE, map_neg, map_mul _ sE, hre, smul_eq_mul]
@@ -251,11 +251,11 @@ lemma flow_period (hσ : GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) (hκ : (U.X k
     simpa only [Equiv.apply_symm_apply, if_pos ha, LinearEquiv.apply_symm_apply] using h1
   exact ⟨hx, AddMonoidHom.ext fun v => funext fun j => (Uw.Pm_eq k _ v j).trans (key v j)⟩
 
-lemma orbit (hL : Out.Laws) (hσ : GoodEmb c σ) (hU : IsUnf U) {Y : Type} [AddCommGroup Y] [Module (𝓞 E) Y]
+lemma orbit (hL : Out.Laws) (hσ : Formalism.L2.PjFree.GoodEmb c σ) (hU : IsUnf U) {Y : Type} [AddCommGroup Y] [Module (𝓞 E) Y]
     [Module.Finite ℤ Y] (hY : Module.finrank (𝓞 E) Y = 1) (be : LinearMap.BilinForm ℤ Y)
     (hsym : ∀ a b, be a b = be b a) (hpos : ∀ a, a ≠ 0 → 0 < be a a) (i : Fin Uw.F.n) (T : ℝ)
     (Pw : ℂ → ((Uw.F.Di i).La →+ (Fin Uw.g → ℂ))) (y : (Uw.F.Di i).La →ₗ[𝓞 E] Y) (hy : Function.Surjective y)
-    (hPw : ∀ w : ℂ, T < w.im → IsPeriod (Uw.F.Di i) (fun j => relab c σ (Uw.e j).1) (Pw w))
+    (hPw : ∀ w : ℂ, T < w.im → IsPeriod (Uw.F.Di i) (fun j => Formalism.L2.PjFree.relab c σ (Uw.e j).1) (Pw w))
     (nn : (Uw.F.Di i).La →ₗ[𝓞 E] (Uw.F.Di i).La)
     (hlin : ∀ w w₁ v, Pw w v = Pw w₁ v + (w - w₁) • Pw w₁ (nn v))
     (hnn : ∀ v v', -(Uw.F.Di i).EF (nn v) v' = be (y v) (y v'))
@@ -293,7 +293,7 @@ lemma orbit (hL : Out.Laws) (hσ : GoodEmb c σ) (hU : IsUnf U) {Y : Type} [AddC
   have hVz : ∀ τ i, V *ᵥ z τ i = Pi.single (Uw.e.symm ⟨τ, i⟩) 1 := fun τ i => by
     have := hVw (Uw.e.symm ⟨τ, i⟩)
     rwa [Equiv.apply_symm_apply] at this
-  have hP' : ∀ w : ℂ, T < w.im → ∃ P', IsPeriod (Uw.F.Di (Uw.ik k)) (fun j => relab c σ (Uw.e j).1) P' ∧
+  have hP' : ∀ w : ℂ, T < w.im → ∃ P', IsPeriod (Uw.F.Di (Uw.ik k)) (fun j => Formalism.L2.PjFree.relab c σ (Uw.e j).1) P' ∧
       ∀ a, P' a = V *ᵥ Pw w a := fun w hw =>
     GlobalTheory.PeriodLin.exists_period_mulVec E H _ _ _ _ V (hPw w hw) hVu (fun j j' h => by rw [hVt j j' h])
   obtain ⟨P₁, hP₁, hP₁e⟩ := hP' w₁ hw₁
@@ -315,7 +315,7 @@ lemma orbit (hL : Out.Laws) (hσ : GoodEmb c σ) (hU : IsUnf U) {Y : Type} [AddC
   rw [Matrix.mulVecLin_apply, hVz]
   exact hlie.2 τ i
 
-theorem holArc_eq_flow_orbit : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (r : ℕ) (U : Unf Xo c σ r) (Uw : UnfWit U) [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (a : ArcIn Dw l β ℂ (σ.comp β)) (χ : Sp (PowerSeries ℂ) ⟶ Y.X) (W : Wit Y a χ) (Ha : HolArc Y σ a χ W Uw.F), GoodEmb c σ → IsUnf U → Module.finrank (𝓞 E) a.D₀.X = 1 → ∀ ξ : Module.Dual ℤ a.D₀.X, ξ ≠ 0 → ∀ w₁ : ℂ, Ha.T < w₁.im → ∃ (k : U.Comp) (ξ' : Fin r → E) (sE : E), (U.X k).IsIso ξ' ∧ IsBePar ξ a.be sE ∧ (∀ τ : (U.X k).Ψ, 0 < (τ.1 sE).re) ∧ (∀ (N : ℕ) (s : E), LevelPar ξ N s → ∀ v ∈ (U.X k).Λ, ∃ u ∈ (U.X k).Λ, (transvMat (U.X k).Gm ξ' (s * (U.X k).κ0)).mulVec v - v = (N : E) • u) ∧ ∀ (z : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Fin Uw.g → ℂ)), (∀ τ, LinearIndependent ℂ (z τ) ∧ ∀ i jj, z τ i jj ≠ 0 → (Uw.e jj).1 = τ) → ∃ x ∈ (U.X k).dom, ∃ (L : (Fin Uw.g → ℂ) ≃ₗ[ℂ] (Fin Uw.g → ℂ)) (γ : (Uw.F.Di Ha.i).La ≃ₗ[𝓞 E] (Uw.F.Di (Uw.ik k)).La), (∀ v v', (Uw.F.Di (Uw.ik k)).EF (γ v) (γ v') = (Uw.F.Di Ha.i).EF v v') ∧ (∀ τ i, L (z τ i) = Pi.single (Uw.e.symm ⟨τ, i⟩) 1) ∧ (∃ t, (∀ v', -(Uw.F.Di Ha.i).EF t v' = ξ (Ha.y v')) ∧ (Uw.φ k (γ t) : Fin r → E) = ξ') ∧ ∀ w : ℂ, Ha.T < w.im → ∃ hx : (U.X k).flow ξ' (fun τ => (w - w₁) * ((τ.1 sE).re : ℂ)) x ∈ (U.X k).dom, (∀ v, Uw.Pm k ⟨_, hx⟩ (γ v) = L (Ha.Pw w v)) ∧ AnLie Uw.F Ha.i (Ha.Pw w) (U.un k ⟨_, hx⟩) z := by
+theorem holArc_eq_flow_orbit : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (r : ℕ) (U : Formalism.L2.PjFree.Unf Xo c σ r) (Uw : UnfWit U) [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (a : ArcIn Dw l β ℂ (σ.comp β)) (χ : Sp (PowerSeries ℂ) ⟶ Y.X) (W : Wit Y a χ) (Ha : HolArc Y σ a χ W Uw.F), Formalism.L2.PjFree.GoodEmb c σ → IsUnf U → Module.finrank (𝓞 E) a.D₀.X = 1 → ∀ ξ : Module.Dual ℤ a.D₀.X, ξ ≠ 0 → ∀ w₁ : ℂ, Ha.T < w₁.im → ∃ (k : U.Comp) (ξ' : Fin r → E) (sE : E), (U.X k).IsIso ξ' ∧ IsBePar ξ a.be sE ∧ (∀ τ : (U.X k).Ψ, 0 < (τ.1 sE).re) ∧ (∀ (N : ℕ) (s : E), LevelPar ξ N s → ∀ v ∈ (U.X k).Λ, ∃ u ∈ (U.X k).Λ, (transvMat (U.X k).Gm ξ' (s * (U.X k).κ0)).mulVec v - v = (N : E) • u) ∧ ∀ (z : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Fin Uw.g → ℂ)), (∀ τ, LinearIndependent ℂ (z τ) ∧ ∀ i jj, z τ i jj ≠ 0 → (Uw.e jj).1 = τ) → ∃ x ∈ (U.X k).dom, ∃ (L : (Fin Uw.g → ℂ) ≃ₗ[ℂ] (Fin Uw.g → ℂ)) (γ : (Uw.F.Di Ha.i).La ≃ₗ[𝓞 E] (Uw.F.Di (Uw.ik k)).La), (∀ v v', (Uw.F.Di (Uw.ik k)).EF (γ v) (γ v') = (Uw.F.Di Ha.i).EF v v') ∧ (∀ τ i, L (z τ i) = Pi.single (Uw.e.symm ⟨τ, i⟩) 1) ∧ (∃ t, (∀ v', -(Uw.F.Di Ha.i).EF t v' = ξ (Ha.y v')) ∧ (Uw.φ k (γ t) : Fin r → E) = ξ') ∧ ∀ w : ℂ, Ha.T < w.im → ∃ hx : (U.X k).flow ξ' (fun τ => (w - w₁) * ((τ.1 sE).re : ℂ)) x ∈ (U.X k).dom, (∀ v, Uw.Pm k ⟨_, hx⟩ (γ v) = L (Ha.Pw w v)) ∧ AnLie Uw.F Ha.i (Ha.Pw w) (U.un k ⟨_, hx⟩) z := by
   intro hL _ E _ _ _ H Dw l Xo c σ r U Uw _ _ O _ β Y a χ W Ha hσ hU hY ξ hξ w₁ hw₁
   obtain ⟨nn, h1, h2, h3, h4, h5, h6⟩ := GlobalTheory.ArcQ.holArc_nilpotent E H Dw l Xo c σ O β Y a χ W _ _ Uw.F Ha
   refine orbit Uw hL hσ hU hY a.be a.be_symm a.be_pos Ha.i Ha.T Ha.Pw Ha.y Ha.y_onto Ha.period nn

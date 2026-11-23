@@ -209,14 +209,14 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo GroundTheory.Heights�
 
 theorem leadMinor_map {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) {n : ℕ}
     (M : Matrix (Fin n) (Fin n) R) (a : Fin (n - 1)) :
-    f (leadMinor M a) = leadMinor (f.mapMatrix M) a := by
-  unfold leadMinor pivotMinor
+    f (GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor M a) = GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (f.mapMatrix M) a := by
+  unfold GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor pivotMinor
   rw [RingHom.map_det]
   rfl
 
 theorem leadMinor_one {R : Type} [CommRing R] {n : ℕ} (a : Fin (n - 1)) :
-    leadMinor (1 : Matrix (Fin n) (Fin n) R) a = 1 := by
-  unfold leadMinor pivotMinor
+    GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (1 : Matrix (Fin n) (Fin n) R) a = 1 := by
+  unfold GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor pivotMinor
   have h : (1 : Matrix (Fin n) (Fin n) R).submatrix (Fin.castLE (n := (a : ℕ) + 1) (m := n) (by have := a.2; omega))
       (pivotCols a (Fin.castLE (Nat.sub_le n 1) a)) = (1 : Matrix (Fin ((a : ℕ) + 1)) (Fin ((a : ℕ) + 1)) R) := by
     ext i j
@@ -291,15 +291,15 @@ theorem HodgeFlagArith.proof (hNe : HodgeFlagNeZero.Statement) (hTr : HodgeFlagR
   have hhor : IsHorizontal (Pl.flagPrime B) := horizontal (Pl.flagGenericPoint B)
   refine ⟨⟨Sum.inl D.arith.1.some⟩, ⟨RingHom.ker_isPrime _, isMultiHomogIdeal (Pl.flagGenericPoint B),
     relevant (Pl.flagGenericPoint B) c hc⟩, hhor, ?_⟩
-  have htr := ConeTrdeg.full _ Pl.ιY (ratioField (Pl.flagGenericPoint B) c) (ratioPtL (Pl.flagGenericPoint B) c)
+  have htr := ConeTrdeg.full _ Pl.ιY (GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField (Pl.flagGenericPoint B) c) (ratioPtL (Pl.flagGenericPoint B) c)
     (birational (Pl.flagGenericPoint B) c hc)
     (fun k ↦ ⟨c k, fun h0 ↦ by
       have h1 := congrArg Subtype.val h0
       simp [ratioPtL, ratioPt, hc] at h1⟩)
     (by rw [mCoordIdeal_ratioPtL (Pl.flagGenericPoint B) c hc]; exact hhor)
-  have hL : Algebra.trdeg ℤ (ratioField (Pl.flagGenericPoint B) c) = ((D.n + D.flagDim0 : ℕ) : Cardinal) := by
+  have hL : Algebra.trdeg ℤ (GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField (Pl.flagGenericPoint B) c) = ((D.n + D.flagDim0 : ℕ) : Cardinal) := by
     rw [← hTr II Ψ K ι Ω E D Pl H B c hc]
-    have hsub : (ratioField (Pl.flagGenericPoint B) c).toSubfield = Subfield.closure (coneRatios (Pl.flagGenericPoint B) c) := by
+    have hsub : (GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField (Pl.flagGenericPoint B) c).toSubfield = Subfield.closure (coneRatios (Pl.flagGenericPoint B) c) := by
       simp only [IntermediateField.adjoin_toSubfield]
       refine le_antisymm (Subfield.closure_le.2 (Set.union_subset ?_ Subfield.subset_closure))
         (Subfield.closure_mono Set.subset_union_right)
@@ -465,7 +465,7 @@ def HermExtend.Statement : Prop :=
     (F : ((Σ k, ι k) → ℂ) → ℝ), IsMultiHomogIdeal P → (∀ z ∈ mcPts P, 0 < F z) →
     (∀ z ∈ mcPts P, ∀ c : K → ℂ, (∀ k, c k ≠ 0) → F (torusSmul c z) = (∏ k, ‖c k‖ ^ a k) * F z) →
     SmoothAlong (mcPts P) F →
-    ∃ Z : HermLine ι, Z.a = a ∧ IsSmoothHerm Z ∧ ∀ z ∈ mcPts P, Z.h z = F z
+    ∃ Z : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι, Z.a = a ∧ IsSmoothHerm Z ∧ ∀ z ∈ mcPts P, Z.h z = F z
 
 namespace Line
 

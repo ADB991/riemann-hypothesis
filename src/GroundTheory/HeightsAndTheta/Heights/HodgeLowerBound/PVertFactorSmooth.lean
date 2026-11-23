@@ -43,7 +43,7 @@ theorem mdeg_apply (d : (Σ k, ι k) →₀ ℕ) (k : K) : mdeg d k = ∑ i, d �
   · simp
 
 theorem isMultiHomog_iff (g : MRing ι) (d : K →₀ ℕ) :
-    IsMultiHomog g ⇑d ↔ ∀ e ∈ g.support, mdeg e = d :=
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g ⇑d ↔ ∀ e ∈ g.support, mdeg e = d :=
   ⟨fun h e he => Finsupp.ext fun k => by rw [mdeg_apply]; exact h e he k,
     fun h e he k => by rw [← mdeg_apply, h e he]⟩
 
@@ -83,7 +83,7 @@ theorem coeff_comp (u : MRing ι) (m : K →₀ ℕ) (e : (Σ k, ι k) →₀ �
   simp only [Finset.mem_filter, mem_support_iff]
   split_ifs <;> simp_all
 
-theorem isMultiHomog_comp (u : MRing ι) (m : K →₀ ℕ) : IsMultiHomog (comp u m) ⇑m := by
+theorem isMultiHomog_comp (u : MRing ι) (m : K →₀ ℕ) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (comp u m) ⇑m := by
   rw [isMultiHomog_iff]
   intro e he
   rw [mem_support_iff, coeff_comp] at he
@@ -98,7 +98,7 @@ theorem aeval_comp (y : (Σ k, ι k) → Ω) (u : MRing ι) (m : K →₀ ℕ) :
   simp only [coeff_monomial, aeval_monomial, algebraMap_int_eq, eq_intCast]
   rw [← Finset.sum_filter]
 
-theorem mConeMap_of_homog (y : (Σ k, ι k) → Ω) {g : MRing ι} {d : K →₀ ℕ} (hg : IsMultiHomog g ⇑d) :
+theorem mConeMap_of_homog (y : (Σ k, ι k) → Ω) {g : MRing ι} {d : K →₀ ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g ⇑d) :
     mConeMap y g = monomial d (aeval y g) := by
   classical
   rw [isMultiHomog_iff] at hg
@@ -110,7 +110,7 @@ theorem mConeMap_of_homog (y : (Σ k, ι k) → Ω) {g : MRing ι} {d : K →₀
 
 end Cone
 
-theorem isMultiHomog_X_pow [DecidableEq K] (q : Σ k, ι k) (n : ℕ) : IsMultiHomog (X q ^ n : MRing ι) (Pi.single q.1 n) := by
+theorem isMultiHomog_X_pow [DecidableEq K] (q : Σ k, ι k) (n : ℕ) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (X q ^ n : MRing ι) (Pi.single q.1 n) := by
   classical
   intro m hm k
   rw [support_X_pow, Finset.mem_singleton] at hm
@@ -126,9 +126,9 @@ theorem isMultiHomog_X_pow [DecidableEq K] (q : Σ k, ι k) (n : ℕ) : IsMultiH
   · simp [Ne.symm hk]
 
 theorem isMultiHomog_prod_X_pow (c : (k : K) → ι k) (e : K → ℕ) :
-    IsMultiHomog (∏ k, (X ⟨k, c k⟩ : MRing ι) ^ e k) e := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (∏ k, (X ⟨k, c k⟩ : MRing ι) ^ e k) e := by
   classical
-  have h : ∀ s : Finset K, IsMultiHomog (∏ k ∈ s, (X ⟨k, c k⟩ : MRing ι) ^ e k)
+  have h : ∀ s : Finset K, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (∏ k ∈ s, (X ⟨k, c k⟩ : MRing ι) ^ e k)
       (∑ k ∈ s, Pi.single k (e k)) := by
     intro s
     induction s using Finset.induction_on with
@@ -138,7 +138,7 @@ theorem isMultiHomog_prod_X_pow (c : (k : K) → ι k) (e : K → ℕ) :
       exact isMultiHomog_mul (isMultiHomog_X_pow _ _) ih
   simpa [Finset.univ_sum_single] using h Finset.univ
 
-theorem eval_torusSmul {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) (c : K → ℂ)
+theorem eval_torusSmul {g : MRing ι} {d : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) (c : K → ℂ)
     (z : (Σ k, ι k) → ℂ) :
     eval (torusSmul c z) (map (Int.castRingHom ℂ) g) =
       (∏ k, c k ^ d k) * eval z (map (Int.castRingHom ℂ) g) := by
@@ -178,7 +178,7 @@ variable {II : IntersectionSystem} {Ψ : Type} [Fintype Ψ] {Ω : Type} [Field �
 
 theorem exists_forms (D : ComponentData II Ψ K ι Ω E) {p : ℕ} (hp : p ∈ D.S)
     {z : (Σ k, ι k) → ℂ} (hz : z ∈ mcPts (mCoordIdeal D.y)) :
-    ∃ (dG dH : K → ℕ) (G H : MRing ι), IsMultiHomog G dG ∧ IsMultiHomog H dH ∧
+    ∃ (dG dH : K → ℕ) (G H : MRing ι), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog G dG ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog H dH ∧
       (fun k => (dG k : ℤ) - dH k) = D.vdeg p ∧
       aeval D.y G * aeval D.y (D.vden p) = aeval D.y (D.vnum p) * aeval D.y H ∧
       eval z (map (Int.castRingHom ℂ) H) ≠ 0 := by
@@ -195,7 +195,7 @@ theorem exists_forms (D : ComponentData II Ψ K ι Ω E) {p : ℕ} (hp : p ∈ D
     show mConeMap z s = 0
     rw [mConeMap_of_isMultiHomog z ha, h0, map_zero, zero_mul]
   have hWprime : (mCoordIdeal z).IsPrime := RingHom.ker_isPrime _
-  have hrel : IsRelevant (mCoordIdeal z) := by
+  have hrel : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant (mCoordIdeal z) := by
     intro k
     obtain ⟨i, hi⟩ := hz.1 k
     refine ⟨i, fun h => hi ?_⟩
@@ -211,8 +211,8 @@ theorem exists_forms (D : ComponentData II Ψ K ι Ω E) {p : ℕ} (hp : p ∈ D
   obtain ⟨m, hm⟩ := ne_zero_iff.1 hu'
   set bf' : K →₀ ℕ := Finsupp.equivFunOnFinite.symm bf with hbf'
   set bg' : K →₀ ℕ := Finsupp.equivFunOnFinite.symm bg with hbg'
-  have hf' : IsMultiHomog (D.vnum p) ⇑bf' := by simpa [bf'] using hf
-  have hg' : IsMultiHomog (D.vden p) ⇑bg' := by simpa [bg'] using hg
+  have hf' : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (D.vnum p) ⇑bf' := by simpa [bf'] using hf
+  have hg' : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (D.vden p) ⇑bg' := by simpa [bg'] using hg
   have key : AddMonoidAlgebra.coeff (mConeMap D.y (u * D.vnum p - v * D.vden p)) (m + bf') = 0 := by
     have h0 : mConeMap D.y (u * D.vnum p - v * D.vden p) = 0 := huv
     simp [h0]
@@ -240,8 +240,8 @@ theorem exists_forms (D : ComponentData II Ψ K ι Ω E) {p : ℕ} (hp : p ∈ D
     exact hHz (eval_eq_zero_of_mem_mcPts hz (mem_mCoordIdeal_of_aeval_eq_zero _ (isMultiHomog_comp u m) h0))
 
 theorem vertFactor_eq (D : ComponentData II Ψ K ι Ω E) {p : ℕ} (hp : p ∈ D.S) {w : (Σ k, ι k) → ℂ}
-    (hw : w ∈ mcPts (mCoordIdeal D.y)) {dG dH : K → ℕ} {G H : MRing ι} (hG : IsMultiHomog G dG)
-    (hH : IsMultiHomog H dH) (hdeg : (fun k => (dG k : ℤ) - dH k) = D.vdeg p)
+    (hw : w ∈ mcPts (mCoordIdeal D.y)) {dG dH : K → ℕ} {G H : MRing ι} (hG : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog G dG)
+    (hH : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog H dH) (hdeg : (fun k => (dG k : ℤ) - dH k) = D.vdeg p)
     (hrel : aeval D.y G * aeval D.y (D.vden p) = aeval D.y (D.vnum p) * aeval D.y H)
     (hHw : eval w (map (Int.castRingHom ℂ) H) ≠ 0) :
     D.vertFactor p w = ‖eval w (map (Int.castRingHom ℂ) G) / eval w (map (Int.castRingHom ℂ) H)‖ := by

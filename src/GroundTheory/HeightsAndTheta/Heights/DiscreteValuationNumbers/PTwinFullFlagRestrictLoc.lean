@@ -36,7 +36,7 @@ theorem weight_blkWt_apply (m : (Σ k, ι k) →₀ ℕ) (k : K) :
   · simp
 
 theorem isMultiHomog_iff (s : MRingOver R ι) (a : K → ℕ) :
-    IsMultiHomog s a ↔ IsWeightedHomogeneous (blkWt (ι := ι)) s a := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a ↔ IsWeightedHomogeneous (blkWt (ι := ι)) s a := by
   constructor
   · intro h m hm
     funext k
@@ -45,32 +45,32 @@ theorem isMultiHomog_iff (s : MRingOver R ι) (a : K → ℕ) :
   · intro h m hm k
     rw [← weight_blkWt_apply, h (mem_support_iff.mp hm)]
 
-theorem isMultiHomog_mul {f g : MRingOver R ι} {a b : K → ℕ} (hf : IsMultiHomog f a)
-    (hg : IsMultiHomog g b) : IsMultiHomog (f * g) (a + b) :=
+theorem isMultiHomog_mul {f g : MRingOver R ι} {a b : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a)
+    (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g b) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f * g) (a + b) :=
   (isMultiHomog_iff _ _).2 (((isMultiHomog_iff _ _).1 hf).mul ((isMultiHomog_iff _ _).1 hg))
 
-theorem isMultiHomog_add {f g : MRingOver R ι} {a : K → ℕ} (hf : IsMultiHomog f a)
-    (hg : IsMultiHomog g a) : IsMultiHomog (f + g) a :=
+theorem isMultiHomog_add {f g : MRingOver R ι} {a : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a)
+    (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f + g) a :=
   (isMultiHomog_iff _ _).2 (((isMultiHomog_iff _ _).1 hf).add ((isMultiHomog_iff _ _).1 hg))
 
-theorem isMultiHomog_sub {f g : MRingOver R ι} {a : K → ℕ} (hf : IsMultiHomog f a)
-    (hg : IsMultiHomog g a) : IsMultiHomog (f - g) a := by
+theorem isMultiHomog_sub {f g : MRingOver R ι} {a : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a)
+    (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f - g) a := by
   rw [isMultiHomog_iff] at *
   exact (weightedHomogeneousSubmodule R _ a).sub_mem hf hg
 
-theorem isMultiHomog_C (c : R) : IsMultiHomog (C c : MRingOver R ι) 0 :=
+theorem isMultiHomog_C (c : R) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (C c : MRingOver R ι) 0 :=
   (isMultiHomog_iff _ _).2 (isWeightedHomogeneous_C _ _)
 
-theorem isMultiHomog_one : IsMultiHomog (1 : MRingOver R ι) 0 := by
+theorem isMultiHomog_one : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (1 : MRingOver R ι) 0 := by
   simpa using isMultiHomog_C (R := R) (ι := ι) 1
 
-theorem isMultiHomog_X (p : Σ k, ι k) : IsMultiHomog (X p : MRingOver R ι) (Pi.single p.1 1) :=
+theorem isMultiHomog_X (p : Σ k, ι k) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (X p : MRingOver R ι) (Pi.single p.1 1) :=
   (isMultiHomog_iff _ _).2 (isWeightedHomogeneous_X R _ p)
 
 def segForm (s : ∀ k, ι k) : MRingOver R ι := ∏ k, X ⟨k, s k⟩
 
 theorem isMultiHomog_segForm (s : ∀ k, ι k) :
-    IsMultiHomog (segForm (R := R) s) (fun _ => 1) := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (segForm (R := R) s) (fun _ => 1) := by
   have h : IsWeightedHomogeneous (blkWt (ι := ι)) (segForm (R := R) s) (∑ k, blkWt (ι := ι) ⟨k, s k⟩) :=
     IsWeightedHomogeneous.prod _ _ _ fun k _ => isWeightedHomogeneous_X R _ _
   have e : (∑ k, blkWt (ι := ι) ⟨k, s k⟩) = fun _ => 1 := by
@@ -93,7 +93,7 @@ theorem map_segForm {S : Type*} [CommRing S] (f : R →+* S) (s : ∀ k, ι k) :
   simp [segForm, map_prod]
 
 theorem mcMap_of_isMultiHomog {Ω : Type*} [CommRing Ω] [Algebra R Ω] (x : (Σ k, ι k) → Ω)
-    {H : MRingOver R ι} {α : K → ℕ} (hH : IsMultiHomog H α) :
+    {H : MRingOver R ι} {α : K → ℕ} (hH : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog H α) :
     mcMap R x H = MvPolynomial.C (aeval x H) * ∏ k, X k ^ α k := by
   classical
   conv_lhs => rw [H.as_sum]
@@ -111,7 +111,7 @@ theorem mcMap_of_isMultiHomog {Ω : Type*} [CommRing Ω] [Algebra R Ω] (x : (Σ
   rw [← hH m hm k, ← Finset.prod_pow_eq_pow_sum]
 
 theorem mem_mcIdeal_iff {Ω : Type*} [Field Ω] [Algebra R Ω] (x : (Σ k, ι k) → Ω)
-    {H : MRingOver R ι} {α : K → ℕ} (hH : IsMultiHomog H α) :
+    {H : MRingOver R ι} {α : K → ℕ} (hH : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog H α) :
     H ∈ mcIdeal R x ↔ aeval x H = 0 := by
   rw [mcIdeal, RingHom.mem_ker, mcMap_of_isMultiHomog x hH, mul_eq_zero, MvPolynomial.C_eq_zero]
   have : (∏ k, X k ^ α k : MvPolynomial K Ω) ≠ 0 :=
@@ -170,7 +170,7 @@ variable {O}
 variable {x : (Σ k, ι k) → Ω} {Q : Ideal (MRingOver (kap O) ι)} [Q.IsPrime]
 
 theorem aeval_ne_zero (hPQ : redIdeal O (mcIdeal O x) ≤ Q) {G : MRingOver O ι} {α : K → ℕ}
-    (hG : IsMultiHomog G α) (hGQ : red O G ∉ Q) : aeval x G ≠ 0 := fun h =>
+    (hG : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog G α) (hGQ : red O G ∉ Q) : aeval x G ≠ 0 := fun h =>
   hGQ (hPQ (Ideal.mem_map_of_mem _ ((mem_mcIdeal_iff x hG).2 h)))
 
 theorem aeval_genPt_red_ne_zero {G : MRingOver O ι} (hGQ : red O G ∉ Q) :
@@ -214,7 +214,7 @@ theorem resOf_congr (hPQ : redIdeal O (mcIdeal O x) ≤ Q) {F G F' G' : MRingOve
   obtain ⟨α, hF, hG, hGQ⟩ := h1
   obtain ⟨β, hF', hG', hG'Q⟩ := h2
   rw [div_eq_div_iff (aeval_ne_zero hPQ hG hGQ) (aeval_ne_zero hPQ hG' hG'Q)] at h
-  have hH : IsMultiHomog (F * G' - F' * G) (α + β) := by
+  have hH : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (F * G' - F' * G) (α + β) := by
     refine isMultiHomog_sub (isMultiHomog_mul hF hG') ?_
     rw [add_comm]
     exact isMultiHomog_mul hF' hG

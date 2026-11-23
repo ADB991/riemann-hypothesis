@@ -216,8 +216,8 @@ theorem yFl_eq (q : FlBlock Ψ N) (A : FlIdx Ψ N q) :
 
 def leadIdx (q : FlBlock Ψ N) : FlIdx Ψ N q := ⟨Fin.castLE (step_le q.2), Fin.strictMono_castLE _⟩
 
-theorem yFl_lead (q : FlBlock Ψ N) : yFl Ψ N ⟨q, leadIdx Ψ N q⟩ = leadMinor (genMatFr ℚ Ψ N q.1) q.2 := by
-  rw [yFl_eq, leadMinor, pivotMinor]
+theorem yFl_lead (q : FlBlock Ψ N) : yFl Ψ N ⟨q, leadIdx Ψ N q⟩ = GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (genMatFr ℚ Ψ N q.1) q.2 := by
+  rw [yFl_eq, GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor, pivotMinor]
   congr 2
   funext c
   apply Fin.ext
@@ -244,11 +244,11 @@ theorem coneRatios_eq : coneRatios (yFl Ψ N) (leadIdx Ψ N) = Set.range (flagMi
   · rintro ⟨⟨q, A⟩, rfl⟩
     refine ⟨(q.1, ⟨q.2, ⟨Finset.univ.image A.1,
       by rw [Finset.card_image_of_injective _ A.2.injective, Finset.card_fin]⟩⟩), ?_⟩
-    show flagMinor _ _ _ / leadMinor _ _ = yFl Ψ N ⟨q, A⟩ / yFl Ψ N ⟨q, leadIdx Ψ N q⟩
+    show flagMinor _ _ _ / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor _ _ = yFl Ψ N ⟨q, A⟩ / yFl Ψ N ⟨q, leadIdx Ψ N q⟩
     rw [yFl_lead, yFl_eq_flagMinor]
   · rintro ⟨⟨τ, i, S⟩, rfl⟩
     refine ⟨⟨(τ, i), ⟨S.1.orderEmbOfFin S.2, (S.1.orderEmbOfFin S.2).strictMono⟩⟩, ?_⟩
-    show yFl Ψ N _ / yFl Ψ N ⟨(τ, i), leadIdx Ψ N (τ, i)⟩ = flagMinor _ _ _ / leadMinor _ _
+    show yFl Ψ N _ / yFl Ψ N ⟨(τ, i), leadIdx Ψ N (τ, i)⟩ = flagMinor _ _ _ / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor _ _
     rw [yFl_lead, flagMinor_eq_yFl]
 
 theorem toSubfield_adjoin_rat {E : Type} [Field E] [Algebra ℚ E] (s : Set E) :
@@ -289,15 +289,15 @@ theorem FlagArithVar.proof : FlagArithVar.Statement := by
   have hK : Nonempty (FlBlock Ψ N) := ⟨(Classical.arbitrary Ψ, ⟨0, by omega⟩)⟩
   have hhor : IsHorizontal (PFl Ψ N) := horizontal (yFl Ψ N)
   refine ⟨hK, ⟨RingHom.ker_isPrime _, isMultiHomogIdeal (yFl Ψ N), relevant (yFl Ψ N) _ hc⟩, hhor, ?_⟩
-  have htr := ConeTrdeg.full _ (FlIdx Ψ N) (ratioField (yFl Ψ N) (leadIdx Ψ N))
+  have htr := ConeTrdeg.full _ (FlIdx Ψ N) (GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField (yFl Ψ N) (leadIdx Ψ N))
     (ratioPtL (yFl Ψ N) (leadIdx Ψ N)) (birational (yFl Ψ N) _ hc)
     (fun k ↦ ⟨leadIdx Ψ N k, fun h0 ↦ by
       have h1 := congrArg Subtype.val h0
       simp [ratioPtL, ratioPt, hc] at h1⟩)
     (by rw [mCoordIdeal_ratioPtL (yFl Ψ N) _ hc]; exact hhor)
-  have hL : Algebra.trdeg ℤ (ratioField (yFl Ψ N) (leadIdx Ψ N)) = ((dimFl Ψ N : ℕ) : Cardinal) := by
+  have hL : Algebra.trdeg ℤ (GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField (yFl Ψ N) (leadIdx Ψ N)) = ((dimFl Ψ N : ℕ) : Cardinal) := by
     have h := trdeg_closure_of_rat _ (FlagRatioTrdeg.full ℚ Ψ N)
-    rw [ratioField, coneRatios_eq, trdeg_int_adjoin]
+    rw [GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField, coneRatios_eq, trdeg_int_adjoin]
     exact h
   rw [mCoordIdeal_ratioPtL (yFl Ψ N) _ hc, hL] at htr
   have : (PFl Ψ N).IsPrime := RingHom.ker_isPrime _
