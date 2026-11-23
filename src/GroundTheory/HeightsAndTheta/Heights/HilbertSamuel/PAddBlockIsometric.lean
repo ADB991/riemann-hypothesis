@@ -203,11 +203,11 @@ theorem AddBlockIsometric.proof : AddBlockIsometric.Statement := by
     rw [hBa, hLa]
     cases k with
     | none =>
-      simp [ReciprocityTheory.ChartRestriction.G.AI.I1.pullDeg, unitDeg]
+      simp [ReciprocityTheory.ChartRestriction.G.AI.I1.pullDeg, ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg]
     | some k =>
       simp only [Pi.add_apply, extend_some_some, ReciprocityTheory.ChartRestriction.G.AI.I1.pullDeg]
       have := hδ₀ k
-      simp [unitDeg]
+      simp [ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg]
       linarith
   ·
     refine divCycle_eq_of_forall_cross _ fun W hWp hWr hPW => ?_
