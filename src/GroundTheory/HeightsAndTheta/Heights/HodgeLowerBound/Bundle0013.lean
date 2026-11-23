@@ -289,15 +289,15 @@ theorem FlagArithVar.proof : FlagArithVar.Statement := by
   have hK : Nonempty (FlBlock Ψ N) := ⟨(Classical.arbitrary Ψ, ⟨0, by omega⟩)⟩
   have hhor : IsHorizontal (PFl Ψ N) := horizontal (yFl Ψ N)
   refine ⟨hK, ⟨RingHom.ker_isPrime _, isMultiHomogIdeal (yFl Ψ N), relevant (yFl Ψ N) _ hc⟩, hhor, ?_⟩
-  have htr := ConeTrdeg.full _ (FlIdx Ψ N) (ratioField (yFl Ψ N) (leadIdx Ψ N))
+  have htr := ConeTrdeg.full _ (FlIdx Ψ N) (GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField (yFl Ψ N) (leadIdx Ψ N))
     (ratioPtL (yFl Ψ N) (leadIdx Ψ N)) (birational (yFl Ψ N) _ hc)
     (fun k ↦ ⟨leadIdx Ψ N k, fun h0 ↦ by
       have h1 := congrArg Subtype.val h0
       simp [ratioPtL, ratioPt, hc] at h1⟩)
     (by rw [mCoordIdeal_ratioPtL (yFl Ψ N) _ hc]; exact hhor)
-  have hL : Algebra.trdeg ℤ (ratioField (yFl Ψ N) (leadIdx Ψ N)) = ((dimFl Ψ N : ℕ) : Cardinal) := by
+  have hL : Algebra.trdeg ℤ (GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField (yFl Ψ N) (leadIdx Ψ N)) = ((dimFl Ψ N : ℕ) : Cardinal) := by
     have h := trdeg_closure_of_rat _ (FlagRatioTrdeg.full ℚ Ψ N)
-    rw [ratioField, coneRatios_eq, trdeg_int_adjoin]
+    rw [GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField, coneRatios_eq, trdeg_int_adjoin]
     exact h
   rw [mCoordIdeal_ratioPtL (yFl Ψ N) _ hc, hL] at htr
   have : (PFl Ψ N).IsPrime := RingHom.ker_isPrime _

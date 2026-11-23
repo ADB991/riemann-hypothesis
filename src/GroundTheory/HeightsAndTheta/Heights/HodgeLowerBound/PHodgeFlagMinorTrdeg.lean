@@ -28,12 +28,12 @@ def botRight {n j : ℕ} (h : j ≤ n) (M : Matrix (Fin n) (Fin n) R) : Matrix (
 
 theorem pivotMinor_topLeft {n j : ℕ} (h : j ≤ n) (M : Matrix (Fin n) (Fin n) R) (a : Fin (j - 1)) (b : Fin j)
     (A : Fin (n - 1)) (B : Fin n) (hA : (A : ℕ) = a) (hB : (B : ℕ) = b) :
-    pivotMinor M A B = pivotMinor (topLeft h M) a b := by
+    GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor M A B = GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor (topLeft h M) a b := by
   obtain ⟨A, hA'⟩ := A
   obtain ⟨B, hB'⟩ := B
   simp only at hA hB
   subst hA hB
-  unfold pivotMinor
+  unfold GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor
   congr 1
   ext r c
   simp only [Matrix.submatrix_apply, topLeft, pivotCols]
@@ -41,8 +41,8 @@ theorem pivotMinor_topLeft {n j : ℕ} (h : j ≤ n) (M : Matrix (Fin n) (Fin n)
 
 theorem pivotMinor_congr {n j : ℕ} (M M' : Matrix (Fin n) (Fin n) R)
     (hM : ∀ r c : Fin n, (r : ℕ) < j → (c : ℕ) < j → M r c = M' r c) (a : Fin (n - 1)) (b : Fin n)
-    (ha : (a : ℕ) < j) (hb : (b : ℕ) < j) : pivotMinor M a b = pivotMinor M' a b := by
-  unfold pivotMinor
+    (ha : (a : ℕ) < j) (hb : (b : ℕ) < j) : GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor M a b = GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor M' a b := by
+  unfold GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor
   congr 1
   ext r c
   simp only [Matrix.submatrix_apply]
@@ -54,8 +54,8 @@ theorem pivotMinor_congr {n j : ℕ} (M M' : Matrix (Fin n) (Fin n) R)
 
 theorem pivotMinor_eq_zero_of_block {n j : ℕ} (M : Matrix (Fin n) (Fin n) R)
     (hz : ∀ r c : Fin n, (r : ℕ) < j → j ≤ (c : ℕ) → M r c = 0) (a : Fin (n - 1)) (b : Fin n)
-    (ha : (a : ℕ) < j) (hb : j ≤ (b : ℕ)) : pivotMinor M a b = 0 := by
-  unfold pivotMinor
+    (ha : (a : ℕ) < j) (hb : j ≤ (b : ℕ)) : GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor M a b = 0 := by
+  unfold GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor
   refine Matrix.det_eq_zero_of_column_eq_zero (Fin.last a) fun r => ?_
   simp only [Matrix.submatrix_apply, pivotCols, Fin.val_last, lt_irrefl, dif_neg, not_false_eq_true]
   exact hz _ _ (by simp only [Fin.val_castLE]; have := r.2; omega) hb
@@ -63,12 +63,12 @@ theorem pivotMinor_eq_zero_of_block {n j : ℕ} (M : Matrix (Fin n) (Fin n) R)
 theorem pivotMinor_block {n j : ℕ} (h : j ≤ n) (M : Matrix (Fin n) (Fin n) R)
     (hz : ∀ r c : Fin n, (r : ℕ) < j → j ≤ (c : ℕ) → M r c = 0) (a : Fin (n - j - 1)) (b : Fin (n - j))
     (A : Fin (n - 1)) (B : Fin n) (hA : (A : ℕ) = j + a) (hB : (B : ℕ) = j + b) :
-    pivotMinor M A B = (topLeft h M).det * pivotMinor (botRight h M) a b := by
+    GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor M A B = (topLeft h M).det * GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor (botRight h M) a b := by
   obtain ⟨A, hA'⟩ := A
   obtain ⟨B, hB'⟩ := B
   simp only at hA hB
   subst hA hB
-  unfold pivotMinor
+  unfold GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor
   let e : Fin j ⊕ Fin ((a : ℕ) + 1) ≃ Fin (j + (a : ℕ) + 1) :=
     finSumFinEquiv.trans (finCongr (Nat.add_assoc _ _ _).symm)
   rw [← Matrix.det_submatrix_equiv_self e]
@@ -172,7 +172,7 @@ theorem det_genMatFr_ne_zero (m : ℕ) (τ : Ψ) : (genMatFr F Ψ m τ).det ≠ 
 
 theorem pivotMinor_mapAlg {K L : Type} [CommRing K] [CommRing L] [Algebra F K] [Algebra F L] {m : ℕ}
     (f : K →ₐ[F] L) (M : Matrix (Fin m) (Fin m) K) (a : Fin (m - 1)) (b : Fin m) :
-    pivotMinor (M.map f) a b = f (pivotMinor M a b) :=
+    GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor (M.map f) a b = f (GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor M a b) :=
   FlagRatioTrdeg.pivotMinor_map (f : K →+* L) M a b
 
 theorem det_mapAlg {K L : Type} [CommRing K] [CommRing L] [Algebra F K] [Algebra F L] {m : ℕ}
@@ -181,19 +181,19 @@ theorem det_mapAlg {K L : Type} [CommRing K] [CommRing L] [Algebra F K] [Algebra
 
 theorem ratio_A (τ : Ψ) (a : Fin (j - 1)) (b : Fin j) (hab : (a : ℕ) < b) (A : Fin (n - 1)) (B : Fin n)
     (hA : (A : ℕ) = a) (hB : (B : ℕ) = b) :
-    pivotMinor (genMat0Fr F Ψ n j τ) A B / leadMinor (genMat0Fr F Ψ n j τ) A =
+    GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor (genMat0Fr F Ψ n j τ) A B / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (genMat0Fr F Ψ n j τ) A =
       φA F Ψ h (pivotRatio F Ψ j (τ, ⟨a, ⟨b, hab⟩⟩)) := by
-  rw [pivotMinor_topLeft h _ a b A B hA hB, leadMinor,
+  rw [pivotMinor_topLeft h _ a b A B hA hB, GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor,
     pivotMinor_topLeft h _ a (Fin.castLE (Nat.sub_le j 1) a) A _ hA (by simp [hA]), topLeft_eq,
     pivotMinor_mapAlg, pivotMinor_mapAlg, pivotRatio, map_div₀]
   rfl
 
 theorem ratio_D (τ : Ψ) (a : Fin (n - j - 1)) (b : Fin (n - j)) (hab : (a : ℕ) < b) (A : Fin (n - 1)) (B : Fin n)
     (hA : (A : ℕ) = j + a) (hB : (B : ℕ) = j + b) :
-    pivotMinor (genMat0Fr F Ψ n j τ) A B / leadMinor (genMat0Fr F Ψ n j τ) A =
+    GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor (genMat0Fr F Ψ n j τ) A B / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (genMat0Fr F Ψ n j τ) A =
       φD F Ψ h (pivotRatio F Ψ (n - j) (τ, ⟨a, ⟨b, hab⟩⟩)) := by
   have hz := zero_block F Ψ (n := n) (j := j) τ
-  rw [pivotMinor_block h _ hz a b A B hA hB, leadMinor,
+  rw [pivotMinor_block h _ hz a b A B hA hB, GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor,
     pivotMinor_block h _ hz a (Fin.castLE (Nat.sub_le (n - j) 1) a) A _ hA (by simp [hA]),
     mul_div_mul_left _ _ (by rw [topLeft_eq, det_mapAlg]; exact (map_ne_zero_iff _ (φA F Ψ h).toRingHom.injective).2 (det_genMatFr_ne_zero F Ψ j τ)),
     botRight_eq, pivotMinor_mapAlg, pivotMinor_mapAlg, pivotRatio, map_div₀]
@@ -208,8 +208,8 @@ variable (F : Type) [Field F] (Ψ : Type) {n j : ℕ} (h : j ≤ n)
 abbrev IdxLe (Ψ : Type) (n j : ℕ) : Type := FlagRatioTrdeg.PivotIdxLe Ψ j ⊕ FlagRatioTrdeg.PivotIdxLe Ψ (n - j)
 
 def wpol : IdxLe Ψ n j → MvPolynomial (Ψ × Fin n × Fin n) F :=
-  Sum.elim (fun q => rename (eA Ψ h) (pivotMinor (FlagRatioTrdeg.genMatPol F Ψ j q.1) q.2.1 q.2.2.1))
-    (fun q => rename (eD Ψ h) (pivotMinor (FlagRatioTrdeg.genMatPol F Ψ (n - j) q.1) q.2.1 q.2.2.1))
+  Sum.elim (fun q => rename (eA Ψ h) (GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor (FlagRatioTrdeg.genMatPol F Ψ j q.1) q.2.1 q.2.2.1))
+    (fun q => rename (eD Ψ h) (GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor (FlagRatioTrdeg.genMatPol F Ψ (n - j) q.1) q.2.1 q.2.2.1))
 
 def sp (v : Ψ × Fin n × Fin n) : GenFrac F Ψ n :=
   if hv : (v.2.1 : ℕ) < j ∧ (v.2.2 : ℕ) < j then
@@ -273,8 +273,8 @@ theorem wpol_indep : AlgebraicIndependent F (wpol F Ψ h) := by
   exact (algebraicIndependent_X _ F).comp _ (idx_inj Ψ h)
 
 def w : IdxLe Ψ n j → GenFrac F Ψ n :=
-  Sum.elim (fun q => φA F Ψ h (pivotMinor (genMatFr F Ψ j q.1) q.2.1 q.2.2.1))
-    (fun q => φD F Ψ h (pivotMinor (genMatFr F Ψ (n - j) q.1) q.2.1 q.2.2.1))
+  Sum.elim (fun q => φA F Ψ h (GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor (genMatFr F Ψ j q.1) q.2.1 q.2.2.1))
+    (fun q => φD F Ψ h (GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.pivotMinor (genMatFr F Ψ (n - j) q.1) q.2.1 q.2.2.1))
 
 theorem w_indep : AlgebraicIndependent F (w F Ψ h) := by
   have hw := (wpol_indep F Ψ h).map'
@@ -337,15 +337,15 @@ theorem z_indep : AlgebraicIndependent F (z F Ψ h) := by
 
 
 include h in
-theorem leadMinor_ne_zero (τ : Ψ) (A : Fin (n - 1)) : leadMinor (genMat0Fr F Ψ n j τ) A ≠ 0 := by
+theorem leadMinor_ne_zero (τ : Ψ) (A : Fin (n - 1)) : GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (genMat0Fr F Ψ n j τ) A ≠ 0 := by
   by_cases hA : (A : ℕ) < j
   · have e := pivotMinor_congr (genMat0Fr F Ψ n j τ) (genMatFr F Ψ n τ)
       (fun r c _ hc => by simp [genMat0Fr, Nat.not_le.2 hc]) A (Fin.castLE (Nat.sub_le n 1) A) hA (by simpa using hA)
-    rw [leadMinor, e]
+    rw [GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor, e]
     exact (FlagRatioTrdeg.pivot_indep F Ψ n).ne_zero (τ, ⟨A, ⟨Fin.castLE (Nat.sub_le n 1) A, by simp⟩⟩)
   · have hA' : j ≤ (A : ℕ) := Nat.le_of_not_lt hA
     let a : Fin (n - j - 1) := ⟨A - j, by have := A.2; omega⟩
-    rw [leadMinor, pivotMinor_block h _ (zero_block F Ψ τ) a (Fin.castLE (Nat.sub_le (n - j) 1) a) A _
+    rw [GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor, pivotMinor_block h _ (zero_block F Ψ τ) a (Fin.castLE (Nat.sub_le (n - j) 1) a) A _
       (by simp [a]; omega) (by simp [a]; omega)]
     refine mul_ne_zero ?_ ?_
     · rw [topLeft_eq, det_mapAlg]

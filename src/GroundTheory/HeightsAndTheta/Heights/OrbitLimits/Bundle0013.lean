@@ -173,7 +173,7 @@ theorem LelongWeightDiff.proof (hM : ChartMassCompact.Statement) : LelongWeightD
   simp only [varInt, dif_pos hA]
   set A := hA.choose
   have hAf : IsFiniteProjection J A := hA.choose_spec
-  have hfin : ∀ y, (fibre J A y).Finite := fun y => (FibreBound.proof n (d + 1) J A hJ hdim hAf y).2.1
+  have hfin : ∀ y, (GroundTheory.Heights₂.Heights.ComplexSets.fibre J A y).Finite := fun y => (FibreBound.proof n (d + 1) J A hJ hdim hAf y).2.1
   have hkc : ContinuousOn k (zeroSet J) := by
     obtain ⟨U, -, hU, hkU⟩ := hk; exact hkU.continuousOn.mono hU
   have hlc : Continuous fun x => ‖linEval u x‖ ^ 2 := ((contDiff_linEval u).continuous.norm).pow 2

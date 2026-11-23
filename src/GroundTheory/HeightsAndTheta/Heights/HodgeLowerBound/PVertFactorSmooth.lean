@@ -195,7 +195,7 @@ theorem exists_forms (D : ComponentData II Ψ K ι Ω E) {p : ℕ} (hp : p ∈ D
     show mConeMap z s = 0
     rw [mConeMap_of_isMultiHomog z ha, h0, map_zero, zero_mul]
   have hWprime : (mCoordIdeal z).IsPrime := RingHom.ker_isPrime _
-  have hrel : IsRelevant (mCoordIdeal z) := by
+  have hrel : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant (mCoordIdeal z) := by
     intro k
     obtain ⟨i, hi⟩ := hz.1 k
     refine ⟨i, fun h => hi ?_⟩
