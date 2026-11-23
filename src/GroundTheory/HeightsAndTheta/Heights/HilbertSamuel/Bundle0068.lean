@@ -52,7 +52,7 @@ theorem proof (hPc : EmbeddingPieces.Statement) (hDG : GroundTheory.Heights₂.H
     filter_upwards [hloc z hz sg hsg, hopen.mem_nhds hz.1] with u hu hu'
     show Real.log (A.h u * B.h u) = _
     rw [hu, Real.log_mul (A.pos u hu').ne' (hΛ sg).ne']
-  let L : Finset (Fin (D + 1)) → Fin (D + 1) → HermLine ι := fun S i => if i ∈ S then A.tensor B else A
+  let L : Finset (Fin (D + 1)) → Fin (D + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := fun S i => if i ∈ S then A.tensor B else A
   have hLs : ∀ S i, IsSmoothHerm (L S i) := by
     intro S i
     dsimp only [L]
@@ -70,7 +70,7 @@ theorem proof (hPc : EmbeddingPieces.Statement) (hDG : GroundTheory.Heights₂.H
         -ptsIntegral (mCoordIdeal y) (pot fun _ : Fin D => A) (logNorm B 1) := by
     intro S j hj
     set σ : Equiv.Perm (Fin (D + 1)) := Equiv.swap j (Fin.last D) with hσ
-    set M : Fin D → HermLine ι := Fin.init (L S ∘ σ) with hMdef
+    set M : Fin D → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := Fin.init (L S ∘ σ) with hMdef
     have hσl : σ (Fin.last D) = j := Equiv.swap_apply_right _ _
     have hne : ∀ i : Fin D, σ (Fin.castSucc i) ≠ j := by
       intro i h'
@@ -351,10 +351,10 @@ end Objects
 
 def AddBlockIsometric.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] [CharZero Ω]
-    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : HermLine ι) (m N : ℕ) (v : Fin N → Ω) (B L : HermLine (addIdx ι N)),
+    (y : (Σ k, ι k) → Ω) (D : ℕ) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (m N : ℕ) (v : Fin N → Ω) (B L : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (addIdx ι N)),
     IsArithVar (mCoordIdeal y) (D + 1) → 1 ≤ m →
     (∀ j, v j ∈ chartLat y A.a m) → KH.GeneratesOn y (fun k => (m : ℤ) * A.a k) v →
-    B.a = unitDeg (none : Option K) →
+    B.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg (none : Option K) →
     L.a = ReciprocityTheory.ChartRestriction.G.AI.I1.pullDeg some (fun k => (m : ℤ) * A.a k) →
     (∀ z, L.h z = A.h (basePart₂ z) ^ m) →
     (∀ z ∈ mcPts (mCoordIdeal (addBlock y v)), ∀ j : Fin N,
@@ -402,7 +402,7 @@ def FibreNormDehomCharpoly.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] [CharZero Ω]
     (y : (Σ k, ι k) → Ω) (D : ℕ) (e : K → ℕ) (L : Fin (D + 1) → MRing ι) (q : ℕ),
     IsArithVar (mCoordIdeal y) (D + 1) → Birational y →
-    (∀ k, 1 ≤ e k) → (∀ j, IsMultiHomog (L j) e) →
+    (∀ k, 1 ≤ e k) → (∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (L j) e) →
     (∀ z ∈ mcPts (mCoordIdeal y), ∃ j, eval z (map (Int.castRingHom ℂ) (L j)) ≠ 0) →
     FiniteDimensional (pullField y L) Ω ∧
       ∀ τ : ℕ, ∀ s ∈ chartLatNm y (fun k => ((q * e k : ℕ) : ℤ)) τ, ∀ j : Fin (D + 1), aeval y (L j) ≠ 0 →

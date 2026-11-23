@@ -36,16 +36,16 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : 
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem ratioField_eq (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) :
-    ratioField y c = blockFnField y := by
+    GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField y c = blockFnField y := by
   apply le_antisymm
   · rw [IntermediateField.adjoin_le_iff]
     rintro _ ⟨p, rfl⟩
     exact IntermediateField.subset_adjoin _ _ ⟨p, ⟨p.1, c p.1⟩, rfl, rfl⟩
   · rw [blockFnField, IntermediateField.adjoin_le_iff]
     rintro _ ⟨p, q, hpq, rfl⟩
-    have hp : y p / y ⟨p.1, c p.1⟩ ∈ ratioField y c :=
+    have hp : y p / y ⟨p.1, c p.1⟩ ∈ GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField y c :=
       IntermediateField.subset_adjoin _ _ ⟨p, rfl⟩
-    have hq : y q / y ⟨q.1, c q.1⟩ ∈ ratioField y c :=
+    have hq : y q / y ⟨q.1, c q.1⟩ ∈ GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField y c :=
       IntermediateField.subset_adjoin _ _ ⟨q, rfl⟩
     have he : y p / y q = (y p / y ⟨p.1, c p.1⟩) / (y q / y ⟨q.1, c q.1⟩) := by
       rw [← hpq, div_div_div_cancel_right₀ (hc p.1)]
@@ -57,7 +57,7 @@ theorem dim_eq (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, 
       (((Algebra.trdeg ℤ (blockFnField y)).toENat + Fintype.card K + 1 : ℕ∞) : WithBot ℕ∞) := by
   have hhor : IsHorizontal (mCoordIdeal y) := horizontal y
   have : (mCoordIdeal y).IsPrime := RingHom.ker_isPrime _
-  have htr := ConeTrdeg.proof K ι (ratioField y c) (ratioPtL y c) (birational y c hc)
+  have htr := ConeTrdeg.proof K ι (GroundTheory.Heights₂.Heights.CoordinateConeArithVar.ratioField y c) (ratioPtL y c) (birational y c hc)
     (fun k ↦ ⟨c k, fun h0 ↦ by
       have h1 := congrArg Subtype.val h0
       simp [ratioPtL, ratioPt, hc] at h1⟩)
@@ -70,7 +70,7 @@ theorem dim_eq (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, 
 
 
 omit [Fintype K] [∀ k, Fintype (ι k)] [CharZero Ω] in
-theorem nonzero_of_relevant (y : (Σ k, ι k) → Ω) (h : IsRelevant (mCoordIdeal y)) :
+theorem nonzero_of_relevant (y : (Σ k, ι k) → Ω) (h : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant (mCoordIdeal y)) :
     ∃ c : ∀ k, ι k, ∀ k, y ⟨k, c k⟩ ≠ 0 := by
   choose c hc using h
   refine ⟨c, fun k h0 ↦ hc k ?_⟩
@@ -319,7 +319,7 @@ theorem coe_dehom (f : MRing ι) :
   · simp
   · simp [dehom, ratio, mConeMap, div_eq_mul_inv]
 
-theorem coe_dehom_of_homog {f : MRing ι} {d : K → ℕ} (hf : IsMultiHomog f d) :
+theorem coe_dehom_of_homog {f : MRing ι} {d : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f d) :
     ((dehom y c f : chartRingZ y c) : Ω) = aeval y f * ∏ k, (y ⟨k, c k⟩)⁻¹ ^ d k := by
   rw [coe_dehom, ProjLine.mConeMap_eq_of_isMultiHomog y hf, map_mul, aeval_C, map_prod]
   simp only [map_pow, aeval_X, Algebra.algebraMap_self, RingHom.id_apply]
