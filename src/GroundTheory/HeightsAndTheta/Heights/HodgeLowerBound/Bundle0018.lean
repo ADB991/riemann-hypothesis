@@ -217,14 +217,14 @@ theorem HodgeFlagRatioFieldEq.proof (h₁ : RatioFieldSpan.Statement) (h₂ : Ho
       IntermediateField.adjoin Ω (Set.range fun m =>
           Pl.pluecker0 B τ i m / Pl.pluecker0 B τ i (c (Sum.inr (τ, i)))) =
         IntermediateField.adjoin Ω (Set.range fun S : PluckerBlocks D.N D.N i =>
-          flagMinor (genMat0Fr Ω Ψ D.N D.j τ) i S / leadMinor (genMat0Fr Ω Ψ D.N D.j τ) i) := by
+          flagMinor (genMat0Fr Ω Ψ D.N D.j τ) i S / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (genMat0Fr Ω Ψ D.N D.j τ) i) := by
     intro τ i
     have hspan := h₂ II Ψ K ι Ω E D Pl H B τ i
     obtain ⟨S₀, hS₀⟩ := h₃ _ D.N (genMat0Fr Ω Ψ D.N D.j τ) i (Fin.castLE (Nat.sub_le D.N 1) i) le_rfl
     refine h₁ Ω Pl.ΩY _ _ _ _ _ _ hspan (Submodule.subset_span ⟨_, rfl⟩) ?_ (hc (Sum.inr (τ, i)))
       (h₄ Ω Ψ D.N D.j τ i)
     rw [hspan]
-    exact Submodule.subset_span ⟨S₀, by rw [leadMinor, hS₀]⟩
+    exact Submodule.subset_span ⟨S₀, by rw [GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor, hS₀]⟩
   apply le_antisymm
   · rw [IntermediateField.adjoin_le_iff]
     rintro _ ⟨⟨k | q, t⟩, rfl⟩
@@ -241,9 +241,9 @@ theorem HodgeFlagRatioFieldEq.proof (h₁ : RatioFieldSpan.Statement) (h₂ : Ho
       exact ⟨(q.1, ⟨q.2, S⟩), rfl⟩
   · rw [IntermediateField.adjoin_le_iff]
     rintro _ ⟨⟨τ, i, S⟩, rfl⟩
-    have hmem : flagMinor (genMat0Fr Ω Ψ D.N D.j τ) i S / leadMinor (genMat0Fr Ω Ψ D.N D.j τ) i ∈
+    have hmem : flagMinor (genMat0Fr Ω Ψ D.N D.j τ) i S / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (genMat0Fr Ω Ψ D.N D.j τ) i ∈
         IntermediateField.adjoin Ω (Set.range fun S : PluckerBlocks D.N D.N i =>
-          flagMinor (genMat0Fr Ω Ψ D.N D.j τ) i S / leadMinor (genMat0Fr Ω Ψ D.N D.j τ) i) :=
+          flagMinor (genMat0Fr Ω Ψ D.N D.j τ) i S / GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter.leadMinor (genMat0Fr Ω Ψ D.N D.j τ) i) :=
       IntermediateField.subset_adjoin _ _ ⟨S, rfl⟩
     rw [← hq] at hmem
     refine IntermediateField.adjoin.mono _ _ _ ?_ hmem
@@ -352,7 +352,7 @@ theorem smoothAlong_of_contDiffOn {P : Ideal (MRing ι)} {f : ((Σ k, ι k) → 
   fun _ hz => ⟨_, isOpen_blocks.mem_nhds hz.1, f, hf, fun _ _ => rfl⟩
 
 theorem regWeight_smooth {P : Ideal (MRing ι)} {d : ℕ} {M : CxModel P d} {Xo : Set ((Σ k, ι k) → ℂ)}
-    {A : HermLine ι} (S : LogLogRegularisationSetting M Xo A) (hS : S.IsTied) :
+    {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (S : LogLogRegularisationSetting M Xo A) (hS : S.IsTied) :
     ∀ᶠ t in 𝓝[>] (0 : ℝ), M.atlas.Smooth (S.regWeight t) := by
   have hball : ∀ j, ∃ δ : ℝ, 0 < δ ∧
       cthickening δ (S.R.chart j '' closure (S.R.mid j)) ⊆ (S.R.chart j).target := by

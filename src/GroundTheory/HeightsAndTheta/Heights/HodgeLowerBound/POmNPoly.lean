@@ -223,11 +223,11 @@ theorem OmNPoly.proof (h₁ : NbarSemipos.Statement) (h₂ : OmNVbInt.Statement)
   have hmixInt : ∀ g : ((Σ k, ι k) → ℂ) → ℝ,
       (∀ j : Fin (D.n + 1), IsPtsIntegrable (mCoordIdeal D.y) (X.omN B 1 ((j : ℕ) + 1) t) g) →
       ∀ Ψp : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (D.n + 1) → ℂ), IsGoodProj (mCoordIdeal D.y) Ψp →
-        ∀ i ∈ Finset.range (D.n + 1), Integrable (fun y => ∑ᶠ w ∈ fibre (mCoordIdeal D.y) Ψp y,
+        ∀ i ∈ Finset.range (D.n + 1), Integrable (fun y => ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre (mCoordIdeal D.y) Ψp y,
           sheetDensity (mCoordIdeal D.y) Ψp (mixW (α t) (β t) i) g y w) := by
     intro g hg Ψp hΨp i hi
     have hM := integrable_of_nodes (N := D.n + 1) (μ := volume)
-      (fun i y => (D.n.choose i : ℝ) * ∑ᶠ w ∈ fibre (mCoordIdeal D.y) Ψp y,
+      (fun i y => (D.n.choose i : ℝ) * ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre (mCoordIdeal D.y) Ψp y,
         sheetDensity (mCoordIdeal D.y) Ψp (mixW (α t) (β t) i) g y w)
       (fun j => by
         refine (hg j Ψp hΨp).congr (Eventually.of_forall fun y => ?_)
@@ -265,7 +265,7 @@ theorem OmNPoly.proof (h₁ : NbarSemipos.Statement) (h₂ : OmNVbInt.Statement)
       ptsIntegral (e := D.n) (mCoordIdeal D.y) (fun _ z => Real.log ((muReg X.H X.S B t).h z)) g := by
     intro g
     rw [mixW_zero]
-    exact ptsIntegral_congr _ (fun j z hz => (hmu j z hz).symm) g
+    exact GroundTheory.Heights₂.Heights.LowerBoundFree.PtsPencil.ptsIntegral_congr _ (fun j z hz => (hmu j z hz).symm) g
   refine ⟨?_, ?_⟩
   · show ptsIntegral (mCoordIdeal D.y) (X.omN B 1 q t) (fun z => X.Cd.cuspWeight z / 2) = _
     rw [ptsIntegral_pencil hQ hα hβ _ hintU 1 (1 / (q : ℝ)) (hom q hq)]

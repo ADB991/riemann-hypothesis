@@ -19,7 +19,7 @@ open ReciprocityTheory.AnForm.M (IsCompatChart)
 
 def ModelPtsIntegrable.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (e : ℕ)
-    (M : CxModel P e) (n : ℕ) (ψ : Fin n → OpenPartialHomeomorph M.Xc (Fin e → ℂ)) (L : HermLine ι) (c : ℝ)
+    (M : CxModel P e) (n : ℕ) (ψ : Fin n → OpenPartialHomeomorph M.Xc (Fin e → ℂ)) (L : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (c : ℝ)
     (N : Set ((Σ k, ι k) → ℂ)) (E : Set M.Xc) (v : M.Xc → ℝ) (g : ((Σ k, ι k) → ℂ) → ℝ),
     IsArithVar P (e + 1) → IsSmoothHerm L → IsPtsNull P e N →
     (∀ j, IsCompatChart M.atlas (ψ j)) → (∀ x, ∃ j, x ∈ (ψ j).source) →
@@ -46,7 +46,7 @@ open MvPolynomial MeasureTheory ReciprocityTheory.ChartRestriction.G.Geo Filter 
 
 def RefAlongSheet.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (n : ℕ)
-    (M : CxModel P n) (Xo : Set ((Σ k, ι k) → ℂ)) (A : HermLine ι) (S : LogLogRegularisationSetting M Xo A)
+    (M : CxModel P n) (Xo : Set ((Σ k, ι k) → ℂ)) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (S : LogLogRegularisationSetting M Xo A)
     (γ : (Fin n → ℂ) → (Σ k, ι k) → ℂ) (y : Fin n → ℂ) (j : Fin S.R.N),
     (∀ᶠ y' in 𝓝 y, DifferentiableAt ℂ γ y' ∧ γ y' ∈ mcPts P) →
     M.proj (γ y) ∈ (S.R.chart j).source →
