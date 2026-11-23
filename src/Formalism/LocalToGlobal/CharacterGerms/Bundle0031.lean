@@ -184,7 +184,7 @@ theorem hi1 (Y : FBChart C V O dd) (i : Fin dd) :
     · exact eval_outer_points_first j
     · exact eval_outer_points_middle j
   rw [hph, pderiv_expS hg, ← hph, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul constant_zero_outer_points, Y.B.cocycleLeft_zero_snd, one_mul, map_sub, map_add (f := _), ev_sub constant_zero_outer_points,
-    ev_add constant_zero_outer_points, hA, ev_zero constant_zero_outer_points, zero_add, hB, hE1B, hC, ev_sum constant_zero_outer_points]
+    Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_add constant_zero_outer_points, hA, ev_zero constant_zero_outer_points, zero_add, hB, hE1B, hC, ev_sum constant_zero_outer_points]
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul constant_zero_outer_points, hE1C, hE1D]

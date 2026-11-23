@@ -230,7 +230,7 @@ theorem TwoBlockPieceIndex.proof : TwoBlockPieceIndex.Statement := by
   intro D Ω _ _ κ _ x B c l hX hx hB hsp hl a b
   have hxc : x ⟨(), c⟩ ≠ 0 := hx.ne_zero _
   set x' := matAct B x with hx'
-  have hnum : IsMultiHomog (twoBlockNum l) (Pi.single 1 1) := by
+  have hnum : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (twoBlockNum l) (Pi.single 1 1) := by
     refine (mem_mHom_iff _ _).mp (Submodule.sum_mem _ fun j _ => ?_)
     rw [C_mul']
     exact Submodule.smul_mem _ _ ((mem_mHom_iff _ _).mpr (isMultiHomog_X' (ι := FinTwoTypeFamily κ) 1 j.2))

@@ -233,6 +233,8 @@ private theorem lc_cent {G : Type} [Group G] [TopologicalSpace G] [IsTopological
   have : IsClosed (Subgroup.centralizer {g} : Set G) := Set.isClosed_centralizer _
   exact this.locallyCompactSpace
 
+attribute [-instance] GlobalTheory.LGrp.locallyCompact_GL GlobalTheory.SplitFlip.locallyCompact_GL
+  GlobalTheory.SplitFlip.secondCountable_GL in
 private theorem main (hGl : Glob) (hC : HaarConst) (hX : HaarEx) (hRF : RPF) (hRE : RPE) (hRC : RPCen) (hSF : SideF) (hSE : SideE)
     (hK : K1) (hKF : SelmerRankBoundLaurent) (hH : H1) (hZ : ZNorm) (hN : LocNorm) (hS : SepLoc) (hL : CentLoc) : G4 := by
   classical

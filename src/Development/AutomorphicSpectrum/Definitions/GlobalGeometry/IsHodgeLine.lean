@@ -42,7 +42,7 @@ structure HodgeCpt (Y : Model Xo c β) (S : Finset ℕ) {Ω : Type} [Field Ω] {
   ξ : Spec (CommRingCat.of Ω) ⟶ X
   all : ∀ q : X, genPt ξ ⤳ q
   tie : CoordTie ℤ ξ fun c' : (k : K) → J k => ∏ k, y ⟨k, c' k⟩
-  normal : IsNormalScheme X
+  normal : ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsNormalScheme X
 
   f : X ⟶ Y.X
 

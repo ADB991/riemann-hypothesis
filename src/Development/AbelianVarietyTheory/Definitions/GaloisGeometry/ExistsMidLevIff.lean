@@ -75,7 +75,7 @@ theorem mvL_mul (g h : GL (Fin N) E) (Λ : Submodule (𝓞 E) (Fin N → E)) : m
 theorem latCo_eq_latK (J : Matrix (Fin N) (Fin N) E) (co : GL (Fin N) E) (h : toLE co = stdCo (sp.cm.sig : E →+* E) J) (a : 𝓞 E)
     (y : GL (Fin N) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)) (Lb : Submodule (𝓞 E) (Fin N → E)) :
     latCo sp J co a y Lb = latK sp J a y Lb := by
-  unfold latCo latK toStd mvL
+  unfold latCo Formalism.MainNotions.G.KAat.latK toStd mvL
   rw [h]
 
 theorem latCo_rat (J : Matrix (Fin N) (Fin N) E) (co γ : GL (Fin N) E) (hγ : γ ∈ UJ (sp.cm.sig : E →+* E) J) (a : 𝓞 E)
@@ -96,7 +96,7 @@ def toStdCo (σ : E →+* E) (J : Matrix (Fin N) (Fin N) E) (co : GL (Fin N) E) 
 theorem latK_eq_map (J : Matrix (Fin N) (Fin N) E) (co : GL (Fin N) E) (a : 𝓞 E)
     (y : GL (Fin N) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)) (Lb : Submodule (𝓞 E) (Fin N → E)) :
     latK sp J a y Lb = (latCo sp J co a y Lb).map ((toStdCo (sp.cm.sig : E →+* E) J co).toLinearMap.restrictScalars (𝓞 E)) := by
-  unfold latCo latK toStd mvL
+  unfold latCo Formalism.MainNotions.G.KAat.latK toStd mvL
   rw [← Submodule.map_comp]
   congr 1
   refine LinearMap.ext fun x => ?_

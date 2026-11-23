@@ -220,14 +220,14 @@ theorem dict_core (hp2 : p ≠ 2) (D : D7) {N N' r : ℕ} (lam : Qbar →+* ℂ_
       fun i => constantCoeff_inVar_eq_zero i _ hl0
     have hΦ : MvPowerSeries.HasSubst (fun k : D.what₂.Tau × Fin N' × Fin N =>
         ∑ i, algebraMap ℂ_[p] (MvPowerSeries (Fin r) ℂ_[p])
-          (((C.u⁻¹ : ℂ_[p]ˣ) : ℂ_[p]) * lamC lam (embT D k.1 (b i k.2.1 k.2.2))) *
+          (((C.u⁻¹ : ℂ_[p]ˣ) : ℂ_[p]) * lamC lam (Formalism.MainNotions.TaylorLogMetric.embT D k.1 (b i k.2.1 k.2.2))) *
           PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries (Fin r) ℂ_[p]) (flog (C • wModel lam Λ) wq)) := by
       apply MvPowerSeries.hasSubst_of_constantCoeff_zero
       intro k
       set_option synthInstance.maxHeartbeats 100000 in
         simp [map_sum, hXfl]
     have hT : MvPowerSeries.HasSubst (fun k : D.what₂.Tau × Fin N' × Fin N =>
-        ∑ i, MvPowerSeries.C ((((C.u⁻¹ : ℂ_[p]ˣ) : ℂ_[p]) * κ) * lamC lam (embT D k.1 (b i k.2.1 k.2.2))) *
+        ∑ i, MvPowerSeries.C ((((C.u⁻¹ : ℂ_[p]ˣ) : ℂ_[p]) * κ) * lamC lam (Formalism.MainNotions.TaylorLogMetric.embT D k.1 (b i k.2.1 k.2.2))) *
           (MvPowerSeries.X i : MvPowerSeries (Fin r) ℂ_[p])) := by
       apply MvPowerSeries.hasSubst_of_constantCoeff_zero
       intro k

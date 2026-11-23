@@ -158,7 +158,7 @@ def SiegRep {h p N : ℕ} (Ag : SiegelFamily h p N) : Prop :=
 structure ZOn {O : Type} [CommRing O] {MM : Scheme.{0}} (sM : MM ⟶ Sp O) (tM : SAB H MM) (m : ℕ) where
   Z : Scheme.{0}
   s : Z ⟶ Sp O
-  normal : IsNormalScheme Z
+  normal : ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsNormalScheme Z
   proj : IsProjOver s
   flat : Flat s
   t : SAB H Z

@@ -191,7 +191,7 @@ theorem isSectionOn_ofWeight_one {P : Ideal (MRing ι)} (hP : P.IsPrime) (g : ((
   simp
 
 theorem term_eq {e m : ℕ} {P : Ideal (MRing ι)} {σ : Fin m ≃ ((k : K) → ι k)} {i : (k : K) → ι k}
-    {L : Fin e → HermLine ι} {g : ((Σ k, ι k) → ℂ) → ℝ}
+    {L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {g : ((Σ k, ι k) → ℂ) → ℝ}
     {Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)}
     (hMH : IsMultiHomogIdeal P) (hPp : P.IsPrime) (hL : ∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm (L j)) (hg : IsDegZeroSmooth g)
     (hΨ0 : ∀ w, Ψ w 0 = w i)

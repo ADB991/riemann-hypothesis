@@ -26,12 +26,12 @@ set_option linter.unusedSectionVars false
 variable {D : ℕ} {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {Ω : Type} [Field Ω] [CharZero Ω]
 
-theorem conj_pairValH (A : HermLine ι) (n : ℕ) (b b' : MvPolynomial (Σ k, ι k) ℚ) (z : (Σ k, ι k) → ℂ) :
+theorem conj_pairValH (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (n : ℕ) (b b' : MvPolynomial (Σ k, ι k) ℚ) (z : (Σ k, ι k) → ℂ) :
     conj (GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH A n b b' z) = GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH A n b' b z := by
   simp only [GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH, map_div₀, map_mul, Complex.conj_conj, Complex.conj_ofReal]
   ring
 
-theorem pairValH_conjPt (A : HermLine ι) (hA : IsConjInvariantH A) (n : ℕ) (f f' : MRing ι)
+theorem pairValH_conjPt (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hA : IsConjInvariantH A) (n : ℕ) (f f' : MRing ι)
     (z : (Σ k, ι k) → ℂ) :
     GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH A n (map (Int.castRingHom ℚ) f) (map (Int.castRingHom ℚ) f') (conjPt z) =
       conj (GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH A n (map (Int.castRingHom ℚ) f) (map (Int.castRingHom ℚ) f') z) := by
@@ -64,7 +64,7 @@ theorem sum_quad {r : ℕ} (c w : Fin r → ℂ) (t : ℝ) :
   simp only [map_mul, Complex.conj_conj]
   ring
 
-theorem quad_gram {X : Type*} [MeasurableSpace X] (μ : Measure X) (A : HermLine ι) (n : ℕ) {r : ℕ}
+theorem quad_gram {X : Type*} [MeasurableSpace X] (μ : Measure X) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (n : ℕ) {r : ℕ}
     (f : Fin r → MRing ι) (p : X → (Σ k, ι k) → ℂ) (M : Matrix (Fin r) (Fin r) ℂ)
     (hM : ∀ k l, M k l = ∫ x, GroundTheory.Heights₂.Heights.HilbertSamuel.pairValH A n (map (Int.castRingHom ℚ) (f k)) (map (Int.castRingHom ℚ) (f l)) (p x) ∂μ)
     (hi : ∀ k l, Integrable (fun x =>

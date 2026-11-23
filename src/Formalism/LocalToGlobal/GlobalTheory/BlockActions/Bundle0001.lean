@@ -88,7 +88,7 @@ theorem bZg_isUnitS (Tf : FormsTiedSym D u Ch chOf) (B' : Matrix (Fin (D.R.N D.R
 theorem trEv_repS (Tf : FormsTiedSym D u Ch chOf) (B' : Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) D.host.E) (hB' : IsUnit B'.det)
     (φ : Fn D u D.R.m) (hφ : φ ∈ (D.fm u).Fi D.R.m) (c : (D.fm u).clsP) :
     ∃ Q ∈ Formalism.L2.Forms.CSpan ((D.fm u).lam D.R.m), trEvS Tf c (φ ((D.fm u).til c)) =
-      fnOf _ (shiftOf (lamT u D.R.m)) (atInf (Forms.embT D) (bZg u Tf.til.z0 B')⁻¹) Q := by
+      fnOf _ (shiftOf (lamT u D.R.m)) (atInf (Formalism.L2.Forms.embT D) (bZg u Tf.til.z0 B')⁻¹) Q := by
   obtain ⟨P, hP, hv⟩ := val_repS Tf φ hφ c
   have hM : trEvS Tf c (φ ((D.fm u).til c)) = fnOf _ (shiftOf (lamT u D.R.m)) (mZ u Tf.til.z0) P := by
     funext y
@@ -99,7 +99,7 @@ theorem trEv_repS (Tf : FormsTiedSym D u Ch chOf) (B' : Matrix (Fin (D.R.N D.R.m
 
 theorem eW_repS (Tf : FormsTiedSym D u Ch chOf) (B' : Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) D.host.E) (hB' : IsUnit B'.det)
     (z : (D.mem u).P.Wrow) (hz : z ∈ (D.fm u).ptC) (c : (D.fm u).clsP) :
-    ∃ Q ∈ Formalism.L2.Forms.CSpan (D.fm u).sg, Tf.valP.eW z c = fnOf _ (shiftOf (sgT u)) (atInf (Forms.embT D) B'⁻¹) Q := by
+    ∃ Q ∈ Formalism.L2.Forms.CSpan (D.fm u).sg, Tf.valP.eW z c = fnOf _ (shiftOf (sgT u)) (atInf (Formalism.L2.Forms.embT D) B'⁻¹) Q := by
   have hF := (Tf.valP.ptC z).1 hz
   obtain ⟨g, hg, hres⟩ := Submodule.mem_map.1 hF
   have hval := (Submodule.mem_pi.1 (Submodule.mem_inf.1 hg).2) (Tf.clsP.y c) (Set.mem_univ _)
@@ -126,17 +126,18 @@ theorem coM_mem_ofS : ∀ w c, ∀ φ ∈ (D.fm u).Fi D.R.m,
   intro w c φ hφ
   obtain ⟨Q, hQ, hq⟩ := trEv_repS Tf (B w c) (hB w c) φ hφ c
   have : coMTS Tf B w c (φ ((D.fm u).til c)) = Q := by
-    simp only [coMTS, LinearMap.coe_comp, Function.comp_apply]
-    rw [hq, fnInv_fnOf _ _ _ (atInf_inv_isUnit _ (bZg_isUnitS Tf (B w c) (hB w c)))]
+    show fnInv _ _ _ (trEvS Tf c (φ ((D.fm u).til c))) = Q
+    rw [hq]
+    erw [fnInv_fnOf _ _ _ (atInf_inv_isUnit _ (bZg_isUnitS Tf (B w c) (hB w c)))]
   rw [this]; exact hQ
 
 theorem coP_mem_of_isUnit_det' : ∀ w, ∀ z ∈ (D.fm u).ptC, ∀ c, coPTS Tf B w z c ∈ Formalism.MainNotions.product_first_zeroth_parts.CSpan (D.fm u).sg := by
   intro w z hz c
   obtain ⟨Q, hQ, hq⟩ := eW_repS Tf (B w c) (hB w c) z hz c
   have : coPTS Tf B w z c = Q := by
-    simp only [coPTS, LinearMap.pi_apply, LinearMap.coe_comp, Function.comp_apply, LinearMap.coe_proj, Function.eval,
-      LinearEquiv.coe_coe]
-    rw [hq, fnInv_fnOf _ _ _ (atInf_inv_isUnit _ (hB w c))]
+    show fnInv _ _ _ (Tf.valP.eW z c) = Q
+    rw [hq]
+    erw [fnInv_fnOf _ _ _ (atInf_inv_isUnit _ (hB w c))]
   rw [this]; exact hQ
 
 theorem coP_inj_of_isUnit_det' : ∀ w, ∀ z ∈ (D.fm u).ptC, coPTS Tf B w z = 0 → z = 0 := by
@@ -146,9 +147,9 @@ theorem coP_inj_of_isUnit_det' : ∀ w, ∀ z ∈ (D.fm u).ptC, coPTS Tf B w z =
   funext c
   obtain ⟨Q, hQ, hq⟩ := eW_repS Tf (B w c) (hB w c) z hz c
   have : coPTS Tf B w z c = Q := by
-    simp only [coPTS, LinearMap.pi_apply, LinearMap.coe_comp, Function.comp_apply, LinearMap.coe_proj, Function.eval,
-      LinearEquiv.coe_coe]
-    rw [hq, fnInv_fnOf _ _ _ (atInf_inv_isUnit _ (hB w c))]
+    show fnInv _ _ _ (Tf.valP.eW z c) = Q
+    rw [hq]
+    erw [fnInv_fnOf _ _ _ (atInf_inv_isUnit _ (hB w c))]
   have hQ0 : Q = 0 := by rw [← this, h0]; rfl
   rw [hq, hQ0, map_zero]; rfl
 
@@ -156,21 +157,22 @@ theorem coM_inj_ofS : ∀ w c, ∀ φ ∈ (D.fm u).Fi D.R.m, coMTS Tf B w c (φ 
   intro w c φ hφ h0
   obtain ⟨Q, hQ, hq⟩ := trEv_repS Tf (B w c) (hB w c) φ hφ c
   have hc : coMTS Tf B w c (φ ((D.fm u).til c)) = Q := by
-    simp only [coMTS, LinearMap.coe_comp, Function.comp_apply]
-    rw [hq, fnInv_fnOf _ _ _ (atInf_inv_isUnit _ (bZg_isUnitS Tf (B w c) (hB w c)))]
+    show fnInv _ _ _ (trEvS Tf c (φ ((D.fm u).til c))) = Q
+    rw [hq]
+    erw [fnInv_fnOf _ _ _ (atInf_inv_isUnit _ (bZg_isUnitS Tf (B w c) (hB w c)))]
   have ht : trEvS Tf c (φ ((D.fm u).til c)) = 0 := by rw [hq, ← hc, h0, map_zero]
   funext s'
   let ga : GL (Fin (D.R.N D.R.m)) D.host.E := (Tf.til.ga c).1
-  have hy := congrFun ht (((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').tr (atInf (Forms.embT D) (ga : Matrix _ _ D.host.E)) (isUnit_det_atInf (Forms.embT D) ga))
+  have hy := congrFun ht (((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').tr (atInf (embT D) (ga : Matrix _ _ D.host.E)) (isUnit_det_atInf (embT D) ga))
   simp only [trEvS, LinearMap.smul_apply, LinearMap.funLeft_apply, Pi.smul_apply, Pi.zero_apply, smul_eq_mul] at hy
-  have hback : (((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').tr (atInf (Forms.embT D) (ga : Matrix _ _ D.host.E)) (isUnit_det_atInf (Forms.embT D) ga)).tr
-      (atInf (Forms.embT D) ((ga⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E)) (isUnit_det_atInf (Forms.embT D) ga⁻¹) =
+  have hback : (((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').tr (atInf (embT D) (ga : Matrix _ _ D.host.E)) (isUnit_det_atInf (embT D) ga)).tr
+      (atInf (embT D) ((ga⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E)) (isUnit_det_atInf (embT D) ga⁻¹) =
       (Tf.val D.R.m le_rfl (Or.inr rfl)).eY s' := by
     apply Subtype.ext
     funext τ
-    show atInf (Forms.embT D) ((ga⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
-      (atInf (Forms.embT D) (ga : Matrix _ _ D.host.E) τ * ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').1 τ) = ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').1 τ
-    have h1 := atInf_mul_inv (Forms.embT D) ga⁻¹ τ
+    show atInf (embT D) ((ga⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
+      (atInf (embT D) (ga : Matrix _ _ D.host.E) τ * ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').1 τ) = ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').1 τ
+    have h1 := atInf_mul_inv (embT D) ga⁻¹ τ
     rw [inv_inv] at h1
     rw [← Matrix.mul_assoc, h1, Matrix.one_mul]
   rw [hback, Equiv.symm_apply_apply] at hy

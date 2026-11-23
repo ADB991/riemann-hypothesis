@@ -295,8 +295,8 @@ theorem lbIso_of_refines {L : LB X} (hL : L.IsLB) {K K' K'' : Type} [Fintype K] 
 
 theorem gen_of_lbIso {A B : LB X} (hA : A.IsLB) (hB : B.IsLB) (h : LBIso A B) (t : LB.Gen A) (ht : t.IsGen) :
     ∃ s : LB.Gen B, s.IsGen := by
-  obtain ⟨w, hw⟩ := h.chartPull (chartPullId A) (chartPullPull B (𝟙 X) (𝟙 X) rfl)
-  obtain ⟨c, hc⟩ := gen_chartPull (chartPullPull A (𝟙 X) (𝟙 X) rfl) t ht
+  obtain ⟨w, hw⟩ := h.chartPull (chartPullId A) (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull B (𝟙 X) (𝟙 X) rfl)
+  obtain ⟨c, hc⟩ := gen_chartPull (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull A (𝟙 X) (𝟙 X) rfl) t ht
   obtain ⟨c', hc', -⟩ := exists_up ((isGen_iff w).1 hw) hB hA c hc
   exact gen_chartPull (chartPullUnpull B _ (Category.id_comp _)) c' hc'
 
@@ -353,7 +353,7 @@ theorem kTriv_rigTransl (ht : t * t = 1) (hL : L.IsLB) (h : Out.KTriv A L) : Out
   obtain ⟨V, hV, c, hc⟩ := hy p
   refine ⟨V, hV, gen_of_lbIso (pull_isLB (DVR.linComb_isLB _ (DVR.linComb_isLB _ hL _ _) _ _) _)
     (pull_isLB (DVR.linComb_isLB _ (pull_isLB hL _) _ _) _)
-    (LBIso.chartPull (chartPullPull _ _ _ rfl) (chartPullPull _ _ _ rfl) (lbIso_diff_diff hL _ _ _ _ ?_)) c hc⟩
+    (LBIso.chartPull (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull _ _ _ rfl) (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull _ _ _ rfl) (lbIso_diff_diff hL _ _ _ _ ?_)) c hc⟩
   rw [comp_const, comp_const]
 
 theorem relAmple_rigTransl [IsAffine S] [IsProper A.hom] (ht : t * t = 1) (hL : L.IsLB) (h : Out.RelAmple A L) :
@@ -377,7 +377,7 @@ theorem relAmple_rigTransl [IsAffine S] [IsProper A.hom] (ht : t * t = 1) (hL : 
 
 theorem lam_rigTransl [IsCommMonObj A] (hL : L.IsLB) (c : LB.Gen (Theta A L)) (hc : c.IsGen) :
     LBIso (abelian₂ A (rigTransl L t)) ((abelian₂ A L).pull (𝟙 _)) := by
-  refine LBIso.symm (LBIso.chartPull (chartPullPull _ _ _ rfl) (chartPullId _) ?_)
+  refine LBIso.symm (LBIso.chartPull (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull _ _ _ rfl) (chartPullId _) ?_)
   refine lbIso_of_refines hL (refines_self _ _) ((refines_self _ _).linComb _ _) _
     (DVR.pullGen_isGen _ _ _ _ hc (lift (x2 A 0) (lift (x2 A 1) (toUnit _ ≫ t))).left) fun U _ f => ?_
   rw [Fintype.prod_prod_type]

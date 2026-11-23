@@ -83,7 +83,9 @@ theorem cong_conj {M : ℕ} {κ l : GAf L n} (hκ : κ ∈ Umax L n) (hl : NG.Co
     exact Subring.sum_mem _ fun a _ => Subring.mul_mem _ (hi i a) (hY a b)
   · rw [hprod]
     have : Ki * (1 + (M : AL L) • Matrix.of Y) * K - 1 = (M : AL L) • (Ki * Matrix.of Y * K) := by
-      rw [Matrix.mul_add, Matrix.add_mul, Matrix.mul_one, hKK, add_sub_cancel_left, Matrix.mul_smul, Matrix.smul_mul]
+      rw [Matrix.mul_add, Matrix.add_mul, Matrix.mul_one, hKK, add_sub_cancel_left]
+      exact (congrArg (· * K) (Matrix.mul_smul Ki (M : AL L) (Matrix.of Y))).trans
+        (Matrix.smul_mul (M : AL L) (Ki * Matrix.of Y) K)
     exact congrFun (congrFun this i) j
 
 variable {W : Type} [AddCommGroup W] [Module ℂ W]

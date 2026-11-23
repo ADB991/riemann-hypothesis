@@ -139,7 +139,7 @@ theorem mm_of_mul_matrix {V : VF C} {κ : Type} [Fintype κ] {D : κ → MvPower
     (hM0 : ∀ j i, constantCoeff (M j i) = if j = i then 1 else 0)
     (h : ∀ i μ, V.MM (coeff μ (∑ j, D j * M j i))) : ∀ i μ, V.MM (coeff μ (D i)) := by
   have hsum : ∀ {ι : Type} (s : Finset ι) (f : ι → C), (∀ i ∈ s, V.MM (f i)) → V.MM (∑ i ∈ s, f i) :=
-    fun s f hf => Finset.sum_induction f V.MM (fun _ _ => mm_add) mm_zero hf
+    fun s f hf => Finset.sum_induction f V.MM (fun _ _ => GlobalTheory.PlaceProj.mm_add) mm_zero hf
   suffices H : ∀ N, ∀ μ : κ →₀ ℕ, μ.degree = N → ∀ i, V.MM (coeff μ (D i)) from fun i μ => H _ μ rfl i
   intro N
   induction N using Nat.strong_induction_on with
@@ -648,7 +648,7 @@ theorem mm_pderiv_l_smul_hCoef {X : RawChart C d I κ} {V : VF C} (h : RLaw X V)
     split_ifs
     · exact h2
     · rw [mul_zero]; exact mm_zero
-  have h4 := mm_neg (mm_add (mm_l_mul h1) h3)
+  have h4 := mm_neg (GlobalTheory.PlaceProj.mm_add (mm_l_mul h1) h3)
   convert h4 using 1
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [Derivation.map_smul, smul_mul_assoc, map_sum, coeff_smul, ← Finset.mul_sum]

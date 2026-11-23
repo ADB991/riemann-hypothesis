@@ -105,7 +105,7 @@ theorem exists_dvd_of_stable {K : Type} [Field K] {N : ℕ} {f : (ZMod g)[X]} (h
     intro y hy
     obtain ⟨x, hx, rfl⟩ := Multiset.mem_map.1 hy
     exact hst x hx)
-  refine ⟨q, ?_, by rw [← card_rootsBar, hqS, ← hcard, ← hS, Multiset.card_map]⟩
+  refine ⟨q, ?_, by rw [← GlobalTheory.TameLabels.card_rootsBar, hqS, ← hcard, ← hS, Multiset.card_map]⟩
   rw [← map_dvd_map' (algebraMap (ZMod g) (Fbar g))]
   refine (IsAlgClosed.splits _).dvd_of_roots_le_roots (hq.map _).ne_zero ?_
   exact hqS.trans_le (Multiset.filter_le _ _)

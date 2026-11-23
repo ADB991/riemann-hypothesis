@@ -17,6 +17,7 @@ namespace PositivityTheory.Rg.Rs.boxvol
 
 variable {K : Type} [Field K] [NumberField K] {n : ℕ}
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem exists_measure_le_prod (μ : Measure (AdelicGLn.AdelicGL K n)) [μ.IsHaarMeasure] :
     ∃ c : ℝ≥0∞, c ≠ ⊤ ∧ ∀ (E : Set (AdelicGLn.AdelicGL K n))
       (S : ∀ w : InfinitePlace K, Set (GL (Fin n) w.Completion)) (F : Set (AdelicGLn.FiniteAdelicGL K n)),

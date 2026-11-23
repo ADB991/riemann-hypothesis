@@ -112,30 +112,30 @@ theorem valued_eq_one {v : HeightOneSpectrum (𝓞 E)} {y : v.adicCompletion E} 
   have := Valuation.map_one_add_of_lt (Valued.v : Valuation (v.adicCompletion E) _) h
   rwa [add_sub_cancel] at this
 
-abbrev cmp (a : GlobalTheory.Mem.Chr.Ideles E) (v : HeightOneSpectrum (𝓞 E)) : v.adicCompletion E := (a : AdeleRing (𝓞 E) E).2 v
+abbrev cmp (a : Neutral.B1.Ideles E) (v : HeightOneSpectrum (𝓞 E)) : v.adicCompletion E := (a : AdeleRing (𝓞 E) E).2 v
 
-theorem cmp_mul (a b : GlobalTheory.Mem.Chr.Ideles E) (v : HeightOneSpectrum (𝓞 E)) : cmp (a * b) v = cmp a v * cmp b v := rfl
+theorem cmp_mul (a b : Neutral.B1.Ideles E) (v : HeightOneSpectrum (𝓞 E)) : cmp (a * b) v = cmp a v * cmp b v := rfl
 
-theorem cmp_inv (a : GlobalTheory.Mem.Chr.Ideles E) (v : HeightOneSpectrum (𝓞 E)) : cmp a⁻¹ v = (cmp a v)⁻¹ :=
+theorem cmp_inv (a : Neutral.B1.Ideles E) (v : HeightOneSpectrum (𝓞 E)) : cmp a⁻¹ v = (cmp a v)⁻¹ :=
   eq_inv_of_mul_eq_one_right (congrArg (fun z : AdeleRing (𝓞 E) E => z.2 v) a.mul_inv)
 
 theorem cmp_diag (k : Eˣ) (v : HeightOneSpectrum (𝓞 E)) :
-    cmp (diagUnits E k) v = algebraMap E (v.adicCompletion E) k := rfl
+    cmp (Neutral.B1.diagUnits E k) v = algebraMap E (v.adicCompletion E) k := rfl
 
-theorem cmp_local_self (v : HeightOneSpectrum (𝓞 E)) (u : (v.adicCompletion E)ˣ) : cmp (localIdele E v u) v = u := by
+theorem cmp_local_self (v : HeightOneSpectrum (𝓞 E)) (u : (v.adicCompletion E)ˣ) : cmp (Neutral.B1.localIdele E v u) v = u := by
   classical
   exact Function.update_self v (u : v.adicCompletion E) (fun w : HeightOneSpectrum (𝓞 E) => (1 : w.adicCompletion E))
 
 theorem cmp_local_ne {v w : HeightOneSpectrum (𝓞 E)} (h : w ≠ v) (u : (v.adicCompletion E)ˣ) :
-    cmp (localIdele E v u) w = 1 := by
+    cmp (Neutral.B1.localIdele E v u) w = 1 := by
   classical
   exact Function.update_of_ne h (u : v.adicCompletion E) (fun w : HeightOneSpectrum (𝓞 E) => (1 : w.adicCompletion E))
 
-def congrIdl (𝔪 : Ideal (𝓞 E)) : Subgroup (GlobalTheory.Mem.Chr.Ideles E) where
+def congrIdl (𝔪 : Ideal (𝓞 E)) : Subgroup (Neutral.B1.Ideles E) where
   carrier := {a | ∀ v : HeightOneSpectrum (𝓞 E), v.asIdeal ∣ 𝔪 →
     Valued.v (cmp a v) = 1 ∧ Valued.v (cmp a v - 1) ≤ exp (-ex 𝔪 v)}
   one_mem' := fun v _ => by
-    have : cmp (1 : GlobalTheory.Mem.Chr.Ideles E) v = 1 := rfl
+    have : cmp (1 : Neutral.B1.Ideles E) v = 1 := rfl
     simp [this]
   mul_mem' := fun {a b} ha hb v hv => by
     refine ⟨by rw [cmp_mul, map_mul, (ha v hv).1, (hb v hv).1, one_mul], ?_⟩
@@ -149,23 +149,23 @@ def congrIdl (𝔪 : Ideal (𝓞 E)) : Subgroup (GlobalTheory.Mem.Chr.Ideles E) 
     rw [e, Valuation.map_neg, map_mul, map_inv₀, (ha v hv).1, inv_one, one_mul]
     exact (ha v hv).2
 
-theorem mem_congrIdl {𝔪 : Ideal (𝓞 E)} (hm : 𝔪 ≠ ⊥) {a : GlobalTheory.Mem.Chr.Ideles E} : a ∈ congrIdl 𝔪 ↔
+theorem mem_congrIdl {𝔪 : Ideal (𝓞 E)} (hm : 𝔪 ≠ ⊥) {a : Neutral.B1.Ideles E} : a ∈ congrIdl 𝔪 ↔
     ∀ v : HeightOneSpectrum (𝓞 E), v.asIdeal ∣ 𝔪 → Valued.v (cmp a v - 1) ≤ exp (-ex 𝔪 v) :=
   ⟨fun h v hv => (h v hv).2, fun h v hv => ⟨valued_eq_one ((h v hv).trans_lt (exp_ex_lt_one hm hv)), h v hv⟩⟩
 
-theorem continuous_cmp (v : HeightOneSpectrum (𝓞 E)) : Continuous fun a : GlobalTheory.Mem.Chr.Ideles E => cmp a v :=
+theorem continuous_cmp (v : HeightOneSpectrum (𝓞 E)) : Continuous fun a : Neutral.B1.Ideles E => cmp a v :=
   ((RestrictedProduct.continuous_eval v).comp continuous_snd).comp Units.continuous_val
 
-theorem isOpen_congrIdl {𝔪 : Ideal (𝓞 E)} (hm : 𝔪 ≠ ⊥) : IsOpen (congrIdl 𝔪 : Set (GlobalTheory.Mem.Chr.Ideles E)) := by
+theorem isOpen_congrIdl {𝔪 : Ideal (𝓞 E)} (hm : 𝔪 ≠ ⊥) : IsOpen (congrIdl 𝔪 : Set (Neutral.B1.Ideles E)) := by
   have h := (Ideal.finite_factors hm).isOpen_biInter (f := fun v : HeightOneSpectrum (𝓞 E) =>
-    {a : GlobalTheory.Mem.Chr.Ideles E | Valued.v (cmp a v - 1) ≤ exp (-ex 𝔪 v)}) fun v _ =>
+    {a : Neutral.B1.Ideles E | Valued.v (cmp a v - 1) ≤ exp (-ex 𝔪 v)}) fun v _ =>
       (isOpen_valued_le (K := E) v _).preimage ((continuous_cmp v).sub continuous_const)
   convert h using 1
   ext a
   simp [mem_congrIdl hm]
 
-theorem exists_diag {𝔪 : Ideal (𝓞 E)} (hm : 𝔪 ≠ ⊥) (a : GlobalTheory.Mem.Chr.Ideles E) :
-    ∃ d ∈ (diagUnits E).range, d⁻¹ * a ∈ congrIdl 𝔪 := by
+theorem exists_diag {𝔪 : Ideal (𝓞 E)} (hm : 𝔪 ≠ ⊥) (a : Neutral.B1.Ideles E) :
+    ∃ d ∈ (Neutral.B1.diagUnits E).range, d⁻¹ * a ∈ congrIdl 𝔪 := by
   let S := (Ideal.finite_factors hm).toFinset
   have ho : IsOpen (⋂ v : S, {y : (GlobalTheory.FrobDense.Loc S)ˣ |
       Valued.v ((y : GlobalTheory.FrobDense.Loc S).2 v * cmp a⁻¹ v.1 - 1) ≤ exp (-ex 𝔪 v.1)}) :=
@@ -178,32 +178,32 @@ theorem exists_diag {𝔪 : Ideal (𝓞 E)} (hm : 𝔪 ≠ ⊥) (a : GlobalTheor
   obtain ⟨k, hk⟩ := (GlobalTheory.FrobDense.denseRange_units S).exists_mem_open ho
     ⟨Units.map (GlobalTheory.FrobDense.proj S) a, Set.mem_iInter.2 fun v => by
       show Valued.v (cmp (a * a⁻¹) v.1 - 1) ≤ _
-      have : cmp (1 : GlobalTheory.Mem.Chr.Ideles E) v.1 = 1 := rfl
+      have : cmp (1 : Neutral.B1.Ideles E) v.1 = 1 := rfl
       simp [this]⟩
   refine ⟨_, ⟨k, rfl⟩, ?_⟩
-  have : diagUnits E k * a⁻¹ ∈ congrIdl 𝔪 := (mem_congrIdl hm).2 fun v hv =>
+  have : Neutral.B1.diagUnits E k * a⁻¹ ∈ congrIdl 𝔪 := (mem_congrIdl hm).2 fun v hv =>
     Set.mem_iInter.1 hk ⟨v, (Set.Finite.mem_toFinset _).2 hv⟩
   simpa [mul_comm] using (congrIdl 𝔪).inv_mem this
 
-def idl : GlobalTheory.Mem.Chr.Ideles E →* (FractionalIdeal (𝓞 E)⁰ E)ˣ := ((idealHom E).comp (finIdele E)).toHomUnits
+def idl : Neutral.B1.Ideles E →* (FractionalIdeal (𝓞 E)⁰ E)ˣ := ((idealHom E).comp (finIdele E)).toHomUnits
 
-theorem valued_cmp (a : GlobalTheory.Mem.Chr.Ideles E) (v : HeightOneSpectrum (𝓞 E)) :
+theorem valued_cmp (a : Neutral.B1.Ideles E) (v : HeightOneSpectrum (𝓞 E)) :
     Valued.v (cmp a v) = exp (-FractionalIdeal.count E v (idl a : FractionalIdeal (𝓞 E)⁰ E)) := by
   have : (idl a : FractionalIdeal (𝓞 E)⁰ E) = idealOf (finIdele E a) := rfl
   rw [this, count_idealOf]
   exact valued_idele (finIdele E a) v
 
 theorem idl_diag (k : Eˣ) :
-    (idl (diagUnits E k) : FractionalIdeal (𝓞 E)⁰ E) = FractionalIdeal.spanSingleton (𝓞 E)⁰ (k : E) :=
+    (idl (Neutral.B1.diagUnits E k) : FractionalIdeal (𝓞 E)⁰ E) = FractionalIdeal.spanSingleton (𝓞 E)⁰ (k : E) :=
   idealOf_unitEmbedding k
 
-theorem idl_eq {a : GlobalTheory.Mem.Chr.Ideles E} {J : (FractionalIdeal (𝓞 E)⁰ E)ˣ}
+theorem idl_eq {a : Neutral.B1.Ideles E} {J : (FractionalIdeal (𝓞 E)⁰ E)ˣ}
     (h : ∀ v, Valued.v (cmp a v) = exp (-FractionalIdeal.count E v (J : FractionalIdeal (𝓞 E)⁰ E))) : idl a = J :=
   Units.ext (eq_of_count_eq (idl a).ne_zero J.ne_zero fun v => by
     have := (valued_cmp a v).symm.trans (h v)
     rwa [exp_inj, neg_inj] at this)
 
-theorem idl_unit {a : GlobalTheory.Mem.Chr.Ideles E} (h : a ∈ unitIdl E) : idl a = 1 :=
+theorem idl_unit {a : Neutral.B1.Ideles E} (h : a ∈ unitIdl E) : idl a = 1 :=
   idl_eq fun v => by rw [Units.val_one, FractionalIdeal.count_one]; exact h v
 
 def idlPrime (𝔪 : Ideal (𝓞 E)) : congrIdl 𝔪 →* idealsPrimeTo 𝔪 :=
@@ -211,7 +211,7 @@ def idlPrime (𝔪 : Ideal (𝓞 E)) : congrIdl 𝔪 →* idealsPrimeTo 𝔪 :=
     have := (valued_cmp a.1 v).symm.trans (a.2 v hv).1
     rwa [← exp_zero, exp_inj, neg_eq_zero] at this
 
-theorem exists_quot {𝔪 : Ideal (𝓞 E)} (hm : 𝔪 ≠ ⊥) (k : Eˣ) (hk : diagUnits E k ∈ congrIdl 𝔪) :
+theorem exists_quot {𝔪 : Ideal (𝓞 E)} (hm : 𝔪 ≠ ⊥) (k : Eˣ) (hk : Neutral.B1.diagUnits E k ∈ congrIdl 𝔪) :
     ∃ α β : 𝓞 E, β ≠ 0 ∧ α - 1 ∈ 𝔪 ∧ β - 1 ∈ 𝔪 ∧ (k : E) * β = α := by
   classical
   obtain ⟨c, d, hd, hcd⟩ := IsFractionRing.div_surjective (A := 𝓞 E) (k : E)
@@ -251,13 +251,13 @@ theorem exists_quot {𝔪 : Ideal (𝓞 E)} (hm : 𝔪 ≠ ⊥) (k : Eˣ) (hk : 
   refine ⟨α, β, ?_, (mem_iff_at hm _).2 fun v hv => ?_, hβ1, hα.symm⟩
   · rintro rfl
     exact ht ((Ideal.eq_top_iff_one _).2 (by simpa using 𝔪.neg_mem hβ1))
-  · have e : at' v (α - 1) = cmp (diagUnits E k) v * (at' v β - 1) + (cmp (diagUnits E k) v - 1) := by
+  · have e : at' v (α - 1) = cmp (Neutral.B1.diagUnits E k) v * (at' v β - 1) + (cmp (Neutral.B1.diagUnits E k) v - 1) := by
       rw [at'_sub_one, at', hα, map_mul, cmp_diag]; ring_nf
     rw [e]
     exact Valuation.map_add_le _ (by rw [map_mul, (hk v hv).1, one_mul]; exact h1 v hv) (hk v hv).2
 
 theorem diag_mem {𝔪 : Ideal (𝓞 E)} (hm : 𝔪 ≠ ⊥) {x : 𝓞 E} (hx : x - 1 ∈ 𝔪) (h0 : (x : E) ≠ 0) :
-    diagUnits E (Units.mk0 (x : E) h0) ∈ congrIdl 𝔪 :=
+    Neutral.B1.diagUnits E (Units.mk0 (x : E) h0) ∈ congrIdl 𝔪 :=
   (mem_congrIdl hm).2 fun v hv => by
     have := (mem_iff_at hm _).1 hx v hv
     rwa [at'_sub_one] at this
@@ -272,7 +272,7 @@ variable {A : Type} [CommGroup A]
 theorem exists_idelic {𝔪 : Ideal (𝓞 E)} (hm : 𝔪 ≠ ⊥) (f : idealsPrimeTo 𝔪 →* A)
     (hf : ∀ (x : 𝓞 E) (J : idealsPrimeTo 𝔪), x - 1 ∈ 𝔪 →
       (J.1 : FractionalIdeal (𝓞 E)⁰ E) = (Ideal.span {x} : Ideal (𝓞 E)) → f J = 1) :
-    ∃ ψ : GlobalTheory.Mem.Chr.Ideles E →* A, (∀ a : congrIdl 𝔪, ψ a = f (idlPrime 𝔪 a)) ∧ ∀ d ∈ (diagUnits E).range, ψ d = 1 := by
+    ∃ ψ : Neutral.B1.Ideles E →* A, (∀ a : congrIdl 𝔪, ψ a = f (idlPrime 𝔪 a)) ∧ ∀ d ∈ (Neutral.B1.diagUnits E).range, ψ d = 1 := by
   refine exists_extend _ _ (exists_diag hm) (f.comp (idlPrime 𝔪)) ?_
   rintro ⟨_, hk⟩ ⟨k, rfl⟩
   obtain ⟨α, β, hβ, h1, h2, e⟩ := exists_quot hm k hk
@@ -284,37 +284,37 @@ theorem exists_idelic {𝔪 : Ideal (𝓞 E)} (hm : 𝔪 ≠ ⊥) (f : idealsPri
     ((idl_diag _).trans (FractionalIdeal.coeIdeal_span_singleton β).symm)
   have e' : (⟨_, diag_mem hm h1 hαE⟩ : congrIdl 𝔪) = ⟨_, hk⟩ * ⟨_, diag_mem hm h2 hβE⟩ :=
     Subtype.ext (by
-      show diagUnits E _ = diagUnits E _ * diagUnits E _
+      show Neutral.B1.diagUnits E _ = Neutral.B1.diagUnits E _ * Neutral.B1.diagUnits E _
       rw [← map_mul]
       exact congrArg _ (Units.ext e.symm))
   rwa [e', map_mul, map_mul, hb, mul_one] at ha
 
 section Values
 
-variable {𝔪 : Ideal (𝓞 E)} {f : idealsPrimeTo 𝔪 →* A} {ψ : GlobalTheory.Mem.Chr.Ideles E →* A}
+variable {𝔪 : Ideal (𝓞 E)} {f : idealsPrimeTo 𝔪 →* A} {ψ : Neutral.B1.Ideles E →* A}
 
-theorem map_unit (h1 : ∀ a : congrIdl 𝔪, ψ a = f (idlPrime 𝔪 a)) {a : GlobalTheory.Mem.Chr.Ideles E} (hu : a ∈ unitIdl E)
+theorem map_unit (h1 : ∀ a : congrIdl 𝔪, ψ a = f (idlPrime 𝔪 a)) {a : Neutral.B1.Ideles E} (hu : a ∈ unitIdl E)
     (hc : a ∈ congrIdl 𝔪) : ψ a = 1 := by
   rw [h1 ⟨a, hc⟩, show idlPrime 𝔪 ⟨a, hc⟩ = 1 from Subtype.ext (idl_unit hu), map_one]
 
 theorem local_mem_unitIdl {v : HeightOneSpectrum (𝓞 E)} {u : (v.adicCompletion E)ˣ} (hu : IsUnitAt v u) :
-    localIdele E v u ∈ unitIdl E := fun w => by
+    Neutral.B1.localIdele E v u ∈ unitIdl E := fun w => by
   show Valued.v (cmp _ w) = 1
   by_cases h : w = v
   · subst h; rw [cmp_local_self]; exact hu
   · rw [cmp_local_ne h, map_one]
 
 theorem local_mem_congrIdl {v : HeightOneSpectrum (𝓞 E)} (hv : ¬ v.asIdeal ∣ 𝔪) (u : (v.adicCompletion E)ˣ) :
-    localIdele E v u ∈ congrIdl 𝔪 := fun w hw => by
+    Neutral.B1.localIdele E v u ∈ congrIdl 𝔪 := fun w hw => by
   rw [cmp_local_ne (by rintro rfl; exact hv hw)]
   simp
 
 theorem map_unif (h1 : ∀ a : congrIdl 𝔪, ψ a = f (idlPrime 𝔪 a)) {v : HeightOneSpectrum (𝓞 E)}
     (hv : ¬ v.asIdeal ∣ 𝔪) {u : (v.adicCompletion E)ˣ} (hu : IsUnifAt v u) :
-    ψ (localIdele E v u) = f (primeElt 𝔪 v hv) := by
+    ψ (Neutral.B1.localIdele E v u) = f (primeElt 𝔪 v hv) := by
   rw [h1 ⟨_, local_mem_congrIdl hv u⟩]
   refine congrArg f (Subtype.ext (idl_eq fun w => ?_))
-  show Valued.v (cmp (localIdele E v u) w) = exp (-FractionalIdeal.count E w (v.asIdeal : FractionalIdeal (𝓞 E)⁰ E))
+  show Valued.v (cmp (Neutral.B1.localIdele E v u) w) = exp (-FractionalIdeal.count E w (v.asIdeal : FractionalIdeal (𝓞 E)⁰ E))
   by_cases h : w = v
   · subst h; rw [cmp_local_self, FractionalIdeal.count_self]; exact hu
   · rw [cmp_local_ne h, map_one, FractionalIdeal.count_maximal_coprime E w (Ne.symm h)]; rfl
@@ -325,18 +325,18 @@ theorem ex_split {v : HeightOneSpectrum (𝓞 E)} {n : ℕ} {𝔫 : Ideal (𝓞 
     FractionalIdeal.count_maximal_coprime E w (Ne.symm h), mul_zero, zero_add]
 
 theorem map_local_unit (hm : 𝔪 ≠ ⊥) (h1 : ∀ a : congrIdl 𝔪, ψ a = f (idlPrime 𝔪 a))
-    (h2 : ∀ d ∈ (diagUnits E).range, ψ d = 1) {v : HeightOneSpectrum (𝓞 E)} {n : ℕ} {𝔫 : Ideal (𝓞 E)}
+    (h2 : ∀ d ∈ (Neutral.B1.diagUnits E).range, ψ d = 1) {v : HeightOneSpectrum (𝓞 E)} {n : ℕ} {𝔫 : Ideal (𝓞 E)}
     (hd : 𝔪 = v.asIdeal ^ n * 𝔫) {u : (v.adicCompletion E)ˣ} (hu : IsUnitAt v u) {x : 𝓞 E} (h0 : (x : E) ≠ 0)
     (hx : x - 1 ∈ 𝔫) (hxu : Valued.v (at' v x - u) ≤ exp (-ex 𝔪 v)) :
     ∃ J : idealsPrimeTo 𝔪, (J.1 : FractionalIdeal (𝓞 E)⁰ E) = (Ideal.span {x} : Ideal (𝓞 E)) ∧
-      f J = (ψ (localIdele E v u))⁻¹ := by
+      f J = (ψ (Neutral.B1.localIdele E v u))⁻¹ := by
   have hn : 𝔫 ≠ ⊥ := by rintro rfl; simp at hd; exact hm hd
-  have hc : diagUnits E (Units.mk0 (x : E) h0) * (localIdele E v u)⁻¹ ∈ congrIdl 𝔪 :=
+  have hc : Neutral.B1.diagUnits E (Units.mk0 (x : E) h0) * (Neutral.B1.localIdele E v u)⁻¹ ∈ congrIdl 𝔪 :=
     (mem_congrIdl hm).2 fun w hw => by
       rw [cmp_mul, cmp_inv]
       by_cases h : w = v
       · subst h
-        have e : cmp (diagUnits E (Units.mk0 (x : E) h0)) w * ((u : w.adicCompletion E))⁻¹ - 1 =
+        have e : cmp (Neutral.B1.diagUnits E (Units.mk0 (x : E) h0)) w * ((u : w.adicCompletion E))⁻¹ - 1 =
             (at' w x - u) * ((u : w.adicCompletion E))⁻¹ := by
           rw [sub_mul, mul_inv_cancel₀ u.ne_zero]; rfl
         rw [cmp_local_self, e, map_mul, map_inv₀, show Valued.v (u : w.adicCompletion E) = 1 from hu, inv_one, mul_one]
@@ -362,9 +362,9 @@ theorem exists_integer_near (hm : 𝔪 ≠ ⊥) {v : HeightOneSpectrum (𝓞 E)}
   have hn : 𝔫 ≠ ⊥ := by rintro rfl; simp at hd; exact hm hd
   have hI : 𝔪 * v.asIdeal ≠ ⊥ := mul_ne_zero hm v.ne_bot
   obtain ⟨x, hx⟩ := exists_sub_mem_adelicIdeal_of_integral (K := E) (FractionalIdeal.coeIdeal_ne_zero.2 hI)
-    (a := (localIdele E v u : AdeleRing (𝓞 E) E).2) fun w => (local_mem_unitIdl hu w).le
+    (a := (Neutral.B1.localIdele E v u : AdeleRing (𝓞 E) E).2) fun w => (local_mem_unitIdl hu w).le
   rw [mem_adelicIdeal_iff (FractionalIdeal.coeIdeal_ne_zero.2 hI)] at hx
-  have hx' : ∀ w, Valued.v (at' w x - cmp (localIdele E v u) w) ≤ exp (-ex 𝔪 w) * exp (-ex v.asIdeal w) := fun w => by
+  have hx' : ∀ w, Valued.v (at' w x - cmp (Neutral.B1.localIdele E v u) w) ≤ exp (-ex 𝔪 w) * exp (-ex v.asIdeal w) := fun w => by
     rw [← exp_add, ← neg_add, ← ex_mul hm v.ne_bot, Valuation.map_sub_swap]; exact hx w
   have hv' := hx' v
   rw [cmp_local_self] at hv'
@@ -393,7 +393,7 @@ theorem GlobalArtinReciprocity.rayCharacterArtin (H : GlobalArtinReciprocity) : 
   intro F Ω _ _ _ _ _ 𝔪 hm A _ f hf
   obtain ⟨art, ha⟩ := H F Ω
   obtain ⟨ψ, h1, h2⟩ := exists_idelic hm f hf
-  have hopen : IsOpen (ψ.ker : Set (GlobalTheory.Mem.Chr.Ideles F)) :=
+  have hopen : IsOpen (ψ.ker : Set (Neutral.B1.Ideles F)) :=
     Subgroup.isOpen_mono (H₁ := unitIdl F ⊓ congrIdl 𝔪) (fun a h => map_unit h1 h.1 h.2)
       (GlobalTheory.Mem.UnitOpen.isOpen_unitIdl.inter (isOpen_congrIdl hm))
   have hker : art.ker ≤ ψ.ker := by
@@ -423,13 +423,13 @@ theorem GlobalArtinReciprocity.rayCharacterArtin (H : GlobalArtinReciprocity) : 
     rw [hφ _ _ e, map_unit h1 (local_mem_unitIdl hu) (local_mem_congrIdl hv u), inv_one]
   · rintro ⟨σ, hσ, rfl⟩
     obtain ⟨u, hu, e⟩ := (ha.ine v B hB _).2 ⟨σ, hσ, rfl⟩
-    obtain ⟨x, hx1, hx2, hx3⟩ := exists_integer_near hm hd hv hu
+    obtain ⟨x, hx1, hx2, hx3⟩ := GlobalTheory.RayChar.exists_integer_near hm hd hv hu
     have h0 : (x : F) ≠ 0 := fun h => hx1 (by rw [show x = 0 by exact_mod_cast h]; exact zero_mem _)
     obtain ⟨J, hJ, e'⟩ := map_local_unit hm h1 h2 hd hu h0 hx2 hx3
     exact ⟨x, J, hx1, hx2, hJ, by rw [e', hφ _ _ e]⟩
   · rintro ⟨x, J, hx1, hx2, hJ, rfl⟩
     have h0 := ne_zero_of_eq_span hJ
-    have hu : IsUnitAt v (atFin v (Units.mk0 (x : F) h0)) := valued_algebraMap_eq_one F v x hx1
+    have hu : IsUnitAt v (atFin v (Units.mk0 (x : F) h0)) := Neutral.B1.valued_algebraMap_eq_one F v x hx1
     obtain ⟨J', hJ', e'⟩ := map_local_unit hm h1 h2 hd hu h0 hx2 (by
       rw [show at' v x - ((atFin v (Units.mk0 (x : F) h0) : (v.adicCompletion F)ˣ) : v.adicCompletion F) = 0 from
         sub_self _, map_zero]

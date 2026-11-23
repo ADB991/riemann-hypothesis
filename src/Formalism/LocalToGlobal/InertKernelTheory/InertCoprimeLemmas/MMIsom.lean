@@ -216,8 +216,9 @@ theorem frameONB_of (hLB : LocBasisMM) (hRC : RatCoord) (hFC : FixConj) : FrameO
     set_option synthInstance.maxHeartbeats 100000 in
       rw [hF.2 i' τ w, hc w i' τ, map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
-    rw [map_mul, iota_lamC lam ι hι (JetIntegrality.test_vector_mem_schwartz_bruhat (D := D) _),
-      iota_lamC lam ι hι (AlgP.embT_mem_Qbar (D := D) τ _), ← htE', mul_comm]
+    rw [map_mul, iota_lamC lam ι hι (JetIntegrality.test_vector_mem_schwartz_bruhat (D := D) _)]
+    erw [iota_lamC lam ι hι (AlgP.embT_mem_Qbar (D := D) τ _)]
+    rw [← htE', mul_comm]
 
   have hcross : ∀ (x : Fin 4 × D.what₂.Tau) (i' : Fin 4) (τ : D.what₂.Tau),
       ∑ m, Bb τ m * (Cm * scᵀ) (i', m) x = if i' = x.1 then B' τ x.2 else 0 := by

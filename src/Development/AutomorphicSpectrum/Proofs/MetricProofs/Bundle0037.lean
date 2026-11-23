@@ -82,10 +82,10 @@ theorem isValueAt_add {x : (Σ k, ι k) → Ω} {s t : Ω} {z : (Σ k, ι k) →
     (hv : IsValueAt x s z v) (hw : IsValueAt x t z w) : IsValueAt x (s + t) z (v + w) := by
   obtain ⟨d, g, h, hg, hh, hy, heq, hz0, rfl⟩ := hv
   obtain ⟨d', g', h', hg', hh', hy', heq', hz0', rfl⟩ := hw
-  refine ⟨d + d', g * h' + g' * h, h * h', isMultiHomog_add (isMultiHomog_mul hg hh') ?_,
-    isMultiHomog_mul hh hh', ?_, ?_, ?_, ?_⟩
+  refine ⟨d + d', g * h' + g' * h, h * h', GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_add (GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hg hh') ?_,
+    GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hh hh', ?_, ?_, ?_, ?_⟩
   · rw [add_comm d d']
-    exact isMultiHomog_mul hg' hh
+    exact GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hg' hh
   · rw [map_mul]; exact mul_ne_zero hy hy'
   · simp only [map_add (f := _), map_mul, heq, heq']; ring
   · simp only [map_mul]; exact mul_ne_zero hz0 hz0'
@@ -97,7 +97,7 @@ theorem regAt_mul {x : (Σ k, ι k) → Ω} {z : (Σ k, ι k) → ℂ} {s t : Ω
     RegAt x (mCoordIdeal z) (s * t) := by
   obtain ⟨d, g, h, hg, hh, hn, heq⟩ := hs
   obtain ⟨d', g', h', hg', hh', hn', heq'⟩ := ht
-  refine ⟨d + d', g * g', h * h', isMultiHomog_mul hg hg', isMultiHomog_mul hh hh',
+  refine ⟨d + d', g * g', h * h', GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hg hg', GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hh hh',
     fun hm => ((isPrime_mCoordIdeal z).mem_or_mem hm).elim hn hn', ?_⟩
   rw [map_mul, map_mul, heq, heq']; ring
 
@@ -106,24 +106,24 @@ theorem regAt_add {x : (Σ k, ι k) → Ω} {z : (Σ k, ι k) → ℂ} {s t : Ω
     RegAt x (mCoordIdeal z) (s + t) := by
   obtain ⟨d, g, h, hg, hh, hn, heq⟩ := hs
   obtain ⟨d', g', h', hg', hh', hn', heq'⟩ := ht
-  refine ⟨d + d', g * h' + g' * h, h * h', isMultiHomog_add (isMultiHomog_mul hg hh') ?_,
-    isMultiHomog_mul hh hh',
+  refine ⟨d + d', g * h' + g' * h, h * h', GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_add (GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hg hh') ?_,
+    GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hh hh',
     fun hm => ((isPrime_mCoordIdeal z).mem_or_mem hm).elim hn hn', ?_⟩
   · rw [add_comm d d']
-    exact isMultiHomog_mul hg' hh
+    exact GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hg' hh
   · simp only [map_add (f := _), map_mul, heq, heq']; ring
 
 theorem one_notMem_mCoordIdeal (z : (Σ k, ι k) → ℂ) : (1 : MRing ι) ∉ mCoordIdeal z :=
   (Ideal.ne_top_iff_one _).1 (isPrime_mCoordIdeal z).ne_top
 
 theorem regAt_zero (x : (Σ k, ι k) → Ω) (z : (Σ k, ι k) → ℂ) : RegAt x (mCoordIdeal z) 0 :=
-  ⟨0, 0, 1, isMultiHomog_zero 0, isMultiHomog_one, one_notMem_mCoordIdeal z, by simp⟩
+  ⟨0, 0, 1, GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_zero 0, GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_one, one_notMem_mCoordIdeal z, by simp⟩
 
 theorem regAt_one (x : (Σ k, ι k) → Ω) (z : (Σ k, ι k) → ℂ) : RegAt x (mCoordIdeal z) 1 :=
-  ⟨0, 1, 1, isMultiHomog_one, isMultiHomog_one, one_notMem_mCoordIdeal z, by simp⟩
+  ⟨0, 1, 1, GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_one, GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_one, one_notMem_mCoordIdeal z, by simp⟩
 
 theorem isValueAt_zero_self (x : (Σ k, ι k) → Ω) (z : (Σ k, ι k) → ℂ) : IsValueAt x 0 z 0 :=
-  ⟨0, 0, 1, isMultiHomog_zero 0, isMultiHomog_one, by simp, by simp, by simp, by simp⟩
+  ⟨0, 0, 1, GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_zero 0, GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_one, by simp, by simp, by simp, by simp⟩
 
 end
 
