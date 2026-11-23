@@ -49,11 +49,11 @@ open MvPolynomial MeasureTheory ReciprocityTheory.ChartRestriction.G.Geo
 
 def PtsSumMeasurable.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (e : ℕ)
-    (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (L : Fin e → HermLine ι) (A : HermLine ι)
+    (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι)
     (s : MRing ι),
     IsArithVar P (e + 1) → IsGoodProj P Ψ → (∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm (L j)) → ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm A →
     IsSectionOn P A s →
-    AEStronglyMeasurable (fun y => ∑ᶠ w ∈ fibre P Ψ y, sheetDensity P Ψ (pot L) (logNorm A s) y w) volume
+    AEStronglyMeasurable (fun y => ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, sheetDensity P Ψ (pot L) (logNorm A s) y w) volume
 
 end GroundTheory.Heights₂.Heights
 end
@@ -94,7 +94,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsAri
 def SegreChartIntegral.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (P : Ideal (MRing ι)) (e m : ℕ) (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k)
-    (L : Fin (e + 1) → HermLine ι) (g : ((Σ k, ι k) → ℂ) → ℝ) (δ : ℝ)
+    (L : Fin (e + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (g : ((Σ k, ι k) → ℂ) → ℝ) (δ : ℝ)
     (G : (Fin m → ℂ) → ℝ) (Φ : Fin (e + 1) → (Fin m → ℂ) → ℝ),
     IsArithVar P (e + 2) → (∀ j, IsSmoothHerm (L j)) → IsDegZeroSmooth g → 0 < δ →
     ((∀ z, ‖segre z i‖ < δ * ‖segre z‖ → g z = 0) ∨
@@ -122,7 +122,7 @@ open GroundTheory.Heights₂.Heights (varInt IsDegZeroSmooth segreChartSet segre
 def SegreChartIntegralPoints.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (P : Ideal (MRing ι)) (m : ℕ) (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k)
-    (L : Fin 0 → HermLine ι) (g : ((Σ k, ι k) → ℂ) → ℝ) (δ : ℝ)
+    (L : Fin 0 → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (g : ((Σ k, ι k) → ℂ) → ℝ) (δ : ℝ)
     (G : (Fin m → ℂ) → ℝ) (Φ : Fin 0 → (Fin m → ℂ) → ℝ),
     IsArithVar P 1 → IsDegZeroSmooth g → 0 < δ →
     (∀ z, ‖segre z i‖ < δ * ‖segre z‖ → g z = 0) →
