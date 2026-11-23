@@ -74,10 +74,10 @@ theorem mixedTraceL_star_mul_self_pos {x : mixedSpace K} (hx : x ≠ 0) :
     exact norm_eq_zero.1 (pow_eq_zero_iff two_ne_zero |>.1 this)
 
 theorem mixedTraceL_trace_conjTranspose_mul_self_pos {A : Matrix (Fin n) (Fin n) (mixedSpace K)}
-    (hA : A ≠ 0) : 0 < mixedTraceL K (trace (Aᴴ * A)) := by
-  have e : mixedTraceL K (trace (Aᴴ * A)) = ∑ i, ∑ j, mixedTraceL K (star (A j i) * A j i) := by
+    (hA : A ≠ 0) : 0 < mixedTraceL K (Matrix.trace (Aᴴ * A)) := by
+  have e : mixedTraceL K (Matrix.trace (Aᴴ * A)) = ∑ i, ∑ j, mixedTraceL K (star (A j i) * A j i) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [trace, diag_apply, Matrix.mul_apply, conjTranspose_apply, map_sum]
+      simp only [Matrix.trace, diag_apply, Matrix.mul_apply, conjTranspose_apply, map_sum]
   rw [e]
   obtain ⟨j, i, hji⟩ : ∃ j i, A j i ≠ 0 := by
     by_contra hc
@@ -118,7 +118,7 @@ theorem mem_lie (X : ArchMatrix K n) : X ∈ (isExpLieAlgebra K n).lieSubalgebra
 variable (K n) in
 def archTraceForm : LinearMap.BilinForm ℝ (isExpLieAlgebra K n).lieSubalgebra :=
   LinearMap.mk₂ ℝ
-    (fun X Y => mixedTraceL K (trace (mat (X : ArchMatrix K n) * mat (Y : ArchMatrix K n))))
+    (fun X Y => mixedTraceL K (Matrix.trace (mat (X : ArchMatrix K n) * mat (Y : ArchMatrix K n))))
     (fun X₁ X₂ Y => by simp only [mat_coe_add, Matrix.add_mul, trace_add, map_add])
     (fun r X Y => by simp only [mat_coe_smul, Matrix.smul_mul, trace_smul, map_smul])
     (fun X Y₁ Y₂ => by simp only [mat_coe_add, Matrix.mul_add, trace_add, map_add])
@@ -126,7 +126,7 @@ def archTraceForm : LinearMap.BilinForm ℝ (isExpLieAlgebra K n).lieSubalgebra 
 
 theorem archTraceForm_apply (X Y : (isExpLieAlgebra K n).lieSubalgebra) :
     archTraceForm K n X Y =
-      mixedTraceL K (trace (mat (X : ArchMatrix K n) * mat (Y : ArchMatrix K n))) := rfl
+      mixedTraceL K (Matrix.trace (mat (X : ArchMatrix K n) * mat (Y : ArchMatrix K n))) := rfl
 
 theorem archTraceForm_symm (X Y : (isExpLieAlgebra K n).lieSubalgebra) :
     archTraceForm K n X Y = archTraceForm K n Y X := by
@@ -145,7 +145,7 @@ theorem archTraceForm_lie (X Y Z : (isExpLieAlgebra K n).lieSubalgebra) :
   set x := mat (X : ArchMatrix K n)
   set y := mat (Y : ArchMatrix K n)
   set z := mat (Z : ArchMatrix K n)
-  have e : trace (y * (z * x)) = trace (x * y * z) := by
+  have e : Matrix.trace (y * (z * x)) = Matrix.trace (x * y * z) := by
     rw [← Matrix.mul_assoc, trace_mul_comm, Matrix.mul_assoc]
   rw [Matrix.sub_mul, Matrix.mul_sub, trace_sub, trace_sub, e, Matrix.mul_assoc y x z,
     map_sub, map_sub]
@@ -240,7 +240,7 @@ theorem archTraceForm_eq_zero_of_skew_herm {X Y : (isExpLieAlgebra K n).lieSubal
   rw [mem_archSkew] at hX
   rw [mem_archHerm] at hY
   rw [archTraceForm_apply]
-  set z := trace (mat (X : ArchMatrix K n) * mat (Y : ArchMatrix K n))
+  set z := Matrix.trace (mat (X : ArchMatrix K n) * mat (Y : ArchMatrix K n))
   have hz : star z = -z := by
     rw [← trace_conjTranspose, conjTranspose_mul, hX, hY, Matrix.mul_neg, trace_neg,
       trace_mul_comm]
