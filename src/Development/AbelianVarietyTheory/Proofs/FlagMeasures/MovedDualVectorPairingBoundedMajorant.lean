@@ -280,7 +280,7 @@ lemma Dmin_eq {k r j : ℕ} (hj : j ≤ r) (z z' : Fin (2 * r + k + 1) → ℂ) 
   have ha := a.2
   have hb := b.2
   simp only at ha hb
-  simp only [Matrix.submatrix_apply, Zhat, fvec]
+  simp only [Matrix.submatrix_apply, Formalism.QuantumDeterminants.Zhat, fvec]
   rw [dite_eq_left (by simp; omega), dite_eq_left (by simp; omega), herm_e]
   simp only [bvec, Matrix.mulVec_single_one, Matrix.col_apply, Zr]
   rfl
