@@ -85,7 +85,7 @@ theorem nablaSq_le_span_unitary (n : ℕ) (mu : DomWeight n) :
 
 theorem VV_le_span_vact_extremal : ∀ (ι : Type) [Fintype ι] (n : ℕ) (lam : ι → DomWeight n), VV ℂ lam ≤ Submodule.span ℂ {F | ∃ u : ι → Matrix (Fin n) (Fin n) ℂ, (∀ τ, u τ ∈ Formalism.REAL.Kset (allPos n)) ∧ F = vact lam u (ten fun τ => extremal ℂ n (lam τ))} := by
   intro ι _ n lam
-  unfold VV Formalism.GradedWeylDivisibility.tensorLat
+  unfold Formalism.L2.DIV.VV Formalism.GradedWeylDivisibility.tensorLat
   rw [Submodule.span_le]
   rintro _ ⟨f, hf, rfl⟩
   choose m c g hg using fun τ => Submodule.mem_span_set'.1 (nablaSq_le_span_unitary n (lam τ) (hf τ))
