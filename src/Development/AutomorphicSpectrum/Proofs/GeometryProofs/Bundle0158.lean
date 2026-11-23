@@ -340,7 +340,7 @@ namespace GlobalTheory.CompanionTheory.Ar.Flat.GenRes
 
 theorem genericFibre_closed {O K : Type} [CommRing O] [Field K] (β : O →+* K)
     (hinj : Function.Injective β) (hfr : ∀ x : K, ∃ a b : O, β b ≠ 0 ∧ x * β b = β a)
-    (P : Scheme.{0}) (s : P ⟶ Sp O) (hs : IsProjOver s) (hn : IsNormalScheme P) :
+    (P : Scheme.{0}) (s : P ⟶ Sp O) (hs : IsProjOver s) (hn : ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsNormalScheme P) :
     IsReduced (pullback s (spMap β)) ∧ IsLocallyNoetherian (pullback s (spMap β)) ∧
       ∃ (M : ℕ) (i : pullback s (spMap β) ⟶ PSpace K M), IsClosedImmersion i ∧
         i ≫ PSpace.str K M = pullback.snd s (spMap β) := by
