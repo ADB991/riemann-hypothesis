@@ -403,7 +403,7 @@ theorem locOp : LV → Iwa → Mult → HolParam → LocOp := by
     intro g
     constructor
     · intro hg
-      exact ⟨kOf ⟨g, hg⟩, rfl⟩
+      exact ⟨LocOpA.kOf ⟨g, hg⟩, rfl⟩
     · rintro ⟨k, rfl⟩
       exact k.2
   obtain ⟨ψ, a, b, hψ, ha, hb, hne⟩ := hLV n p q hgood (KR n) μ ι hι hιs
