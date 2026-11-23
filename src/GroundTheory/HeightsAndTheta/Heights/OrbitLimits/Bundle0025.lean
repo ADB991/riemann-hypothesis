@@ -97,7 +97,7 @@ theorem isFiniteProjection_graphProj {J : Ideal (MvPolynomial (Fin n) ℂ)} {A :
 
 theorem fibre_graphProj (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin e) (Fin n) ℂ)
     (p : MvPolynomial (Fin n) ℂ) (y : Fin e → ℂ) :
-    fibre (graphIdeal J p) (graphProj A) y = graphPt p '' fibre J A y := by
+    GroundTheory.Heights₂.Heights.ComplexSets.fibre (graphIdeal J p) (graphProj A) y = graphPt p '' GroundTheory.Heights₂.Heights.ComplexSets.fibre J A y := by
   ext z
   constructor
   · rintro ⟨hz, hzy⟩
@@ -304,7 +304,7 @@ theorem exists_bound {g : ((Σ k, ι k) → ℂ) → ℝ} (hg : IsDegZeroSmooth 
   rw [← hg.2 c z hc]
   exact hM _ hmem
 
-theorem isSemiPosHerm_tensor {A B : HermLine ι} (hA : IsSmoothHerm A) (hB : IsSmoothHerm B)
+theorem isSemiPosHerm_tensor {A B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA : IsSmoothHerm A) (hB : IsSmoothHerm B)
     (hAp : Inter.IsSemiPosHerm A) (hBp : Inter.IsSemiPosHerm B) : Inter.IsSemiPosHerm (A.tensor B) := by
   intro z hz v
   have hU : IsOpen {z : (Σ k, ι k) → ℂ | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := isOpen_blockNonzero
@@ -312,7 +312,7 @@ theorem isSemiPosHerm_tensor {A B : HermLine ι} (hA : IsSmoothHerm A) (hB : IsS
   have hev : ∀ᶠ t in 𝓝 (0 : ℂ), z + t • v ∈ {z : (Σ k, ι k) → ℂ | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
     refine hline.continuousAt.preimage_mem_nhds ?_
     simpa using hU.mem_nhds hz
-  have hsm : ∀ C : HermLine ι, IsSmoothHerm C →
+  have hsm : ∀ C : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι, IsSmoothHerm C →
       ContDiffAt ℝ 2 (fun t : ℂ => Real.log (C.h (z + t • v))) 0 := by
     intro C hC
     have h1 : ContDiffAt ℝ 2 C.h (z + (0 : ℂ) • v) := by
@@ -332,7 +332,7 @@ theorem isSemiPosHerm_tensor {A B : HermLine ι} (hA : IsSmoothHerm A) (hB : IsS
   exact add_nonneg (hAp z hz v) (hBp z hz v)
 
 theorem aestronglyMeasurable {P : Ideal (MRing ι)} {e : ℕ}
-    {Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)} {L : Fin e → HermLine ι}
+    {Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)} {L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι}
     {g : ((Σ k, ι k) → ℂ) → ℝ} (hP : IsArithVar P (e + 1)) (hΨ : IsGoodProj P Ψ)
     (hL : ∀ j, IsSmoothHerm (L j)) (hg : IsDegZeroSmooth g) :
     AEStronglyMeasurable (ptsPosDens P Ψ (pot L) g) := by
@@ -379,7 +379,7 @@ theorem aestronglyMeasurable {P : Ideal (MRing ι)} {e : ℕ}
   set f : ℕ → (Fin e → ℂ) → ℝ := fun m => (S m).indicator (dens m) with hfdef
   have hfm : ∀ m, Measurable (f m) := fun m => (hdm m).indicator (hSm m)
   have hpp : ptsPosDens P Ψ (pot L) g =
-      fun y => ∑ᶠ w ∈ fibre P Ψ y, max (sheetDensity P Ψ (pot L) g y w) 0 := rfl
+      fun y => ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, max (sheetDensity P Ψ (pot L) g y w) 0 := rfl
   rw [hpp]
   refine aestronglyMeasurable_of_tendsto_ae atTop (f := fun N y => ∑ m ∈ Finset.range N, f m y)
     (fun N => (Finset.measurable_sum _ fun m _ => hfm m).aestronglyMeasurable) ?_
@@ -449,7 +449,7 @@ theorem aestronglyMeasurable {P : Ideal (MRing ι)} {e : ℕ}
           simp only
           rw [Set.indicator_of_notMem hmS]
       · rfl
-  have hsum : ∑ᶠ w ∈ fibre P Ψ y, max (sheetDensity P Ψ (pot L) g y w) 0 =
+  have hsum : ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, max (sheetDensity P Ψ (pot L) g y w) 0 =
       ∑ w ∈ (hfin y).toFinset, max (sheetDensity P Ψ (pot L) g y w) 0 :=
     finsum_mem_eq_finite_toFinset_sum _ (hfin y)
   refine tendsto_const_nhds.congr' ?_
@@ -479,7 +479,7 @@ def LiftGraphMetric.Statement : Prop :=
     (y : (Σ k, ι k) → Ω) (N : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (P0 : Ideal (MRing ι)) (a r : ℕ) (v : Fin r → Ω),
     P0 ≤ mCoordIdeal y → IsSemipositiveRel P0 (mCoordIdeal y) N → IsConjInvariantH N →
     (∀ j, v j ∈ chartLat y (a • N.a) 1) → KH.GeneratesOn y (a • N.a) v →
-    ∃ A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (addIdx ι r), A.a = unitDeg (none : Option K) ∧ IsConjInvariantH A ∧
+    ∃ A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (addIdx ι r), A.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg (none : Option K) ∧ IsConjInvariantH A ∧
       IsSemipositiveRel (mCoordIdeal (addBlock y v)) (mCoordIdeal (addBlock y v)) A ∧
       ∀ z ∈ mcPts (mCoordIdeal (addBlock y v)), ∀ j : Fin r,
         secNormAt y N a (v j) (basePart₂ z) * A.h z = ‖z ⟨none, j⟩‖

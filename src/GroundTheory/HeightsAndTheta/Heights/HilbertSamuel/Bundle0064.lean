@@ -249,7 +249,7 @@ theorem MixedKleimanLow.proof (hI : IntegralAgainstPositive.Statement)
   intro d hd K _ ι _ P P0 M A a II hII h1 hP hP0 hMs hMn hMc hMW hAa hAs hAb hAc j hj
   obtain ⟨n, rfl⟩ : ∃ n, d = n + 1 := ⟨d - 1, by omega⟩
   change MixedKleiman.AtDim n at hd
-  let L : Fin n → HermLine ι := fun i => if (i : ℕ) < j then M else A
+  let L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := fun i => if (i : ℕ) < j then M else A
   have hsnoc : (fun i : Fin (n + 1) => if (i : ℕ) < j then M else A) = Fin.snoc L A := by
     funext i
     refine Fin.lastCases ?_ (fun i => ?_) i
@@ -392,9 +392,9 @@ namespace ProjFrameImage
 variable {D : ℕ} {Ω : Type} [Field Ω] {κ : Type} [Fintype κ]
 
 theorem linForm_projMat (e : Fin (D + 1) → Ix κ) (k : Fin (D + 1)) :
-    linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e) ⟨(), k⟩ = X (e k) := by
+    ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e) ⟨(), k⟩ = X (e k) := by
   classical
-  simp only [linForm, projMat]
+  simp only [ReciprocityTheory.ChartRestriction.G.AI.I4.linForm, projMat]
   rw [Finset.sum_eq_single (e k).2]
   · simp
   · intro i _ hi
@@ -407,7 +407,7 @@ def coneEval (x : Ix κ → Ω) :
     (fun _a ha => (RingHom.mem_ker).1 ha)) (fun _ => 1)
 
 theorem coneEval_graphMap (x : Ix κ → Ω) (e : Fin (D + 1) → Ix κ) (f : MRing (GlobalTheory (Fin (D + 1)))) :
-    coneEval x (graphMap (coordIdeal ℤ x) (linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e))
+    coneEval x (graphMap (coordIdeal ℤ x) (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e))
         (rename (inrV (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1)))) f)) =
       coneMap ℤ (x ∘ e) (rename (fun q : Σ _ : Unit, Fin (D + 1) => q.2) f) := by
   set_option synthInstance.maxHeartbeats 200000 in
@@ -427,7 +427,7 @@ open ProjFrameImage in
 theorem ProjFrameImage.proof : ProjFrameImage.Statement := by
   intro D Ω _ _ κ _ x e hP
   refine le_antisymm (fun f hf => ?_) bot_le
-  have h0 : graphMap (coordIdeal ℤ x) (linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e))
+  have h0 : graphMap (coordIdeal ℤ x) (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e))
       (rename (inrV (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1)))) f) = 0 :=
     (RingHom.mem_ker).1 (Ideal.mem_comap.1 hf)
   have h1 : rename (fun q : Σ _ : Unit, Fin (D + 1) => q.2) f ∈ coordIdeal ℤ (x ∘ e) := by
@@ -456,7 +456,7 @@ noncomputable section
 
 def CurveSmallCountLower.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
-    (y : (Σ k, ι k) → Ω) (A : HermLine ι) (II : IntersectionSystem),
+    (y : (Σ k, ι k) → Ω) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (II : IntersectionSystem),
     IsIntersectionSystem II → IsArithVar (mCoordIdeal y) 1 → Birational y →
     IsSmoothHerm A → IsConjInvariantH A →
     ∃ C : ℝ, ∀ n : ℕ, 1 ≤ n →

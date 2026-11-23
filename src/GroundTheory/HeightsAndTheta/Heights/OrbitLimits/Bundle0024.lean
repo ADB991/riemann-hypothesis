@@ -22,7 +22,7 @@ namespace GroundTheory.Heights₂.Heights
 
 open MeasureTheory Filter
 open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsArithVar IsGoodProj IsSheet ptsIntegralAt sheetDensity
-  ReciprocityTheory.ChartRestriction.G.Geo.fibre pot mcPts fibreFinite isOpen_blockNonzero)
+  fibre pot mcPts fibreFinite isOpen_blockNonzero)
 
 section
 
@@ -115,8 +115,8 @@ open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsAri
 theorem ptsPosDens_split {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)] {e : ℕ}
     {P : Ideal (MRing ι)} {Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)}
     (φ : Fin e → ((Σ k, ι k) → ℂ) → ℝ) (g : ((Σ k, ι k) → ℂ) → ℝ) (E : ℕ → Set ((Σ k, ι k) → ℂ))
-    (y : Fin e → ℂ) (hfin : (fibre P Ψ y).Finite) (hE : Pairwise (Function.onFun Disjoint E))
-    (hcov : ∀ w ∈ fibre P Ψ y, (∃ γ, IsSheet P Ψ y w γ) → ∀ z ∈ mcPts P, segre z = w → ∃ k, z ∈ E k) :
+    (y : Fin e → ℂ) (hfin : (ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y).Finite) (hE : Pairwise (Function.onFun Disjoint E))
+    (hcov : ∀ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, (∃ γ, IsSheet P Ψ y w γ) → ∀ z ∈ mcPts P, segre z = w → ∃ k, z ∈ E k) :
     ENNReal.ofReal (ptsPosDens P Ψ φ g y) =
       ∑' k, ENNReal.ofReal (ptsPosDens P Ψ φ ((E k).indicator g) y) := by
   classical
@@ -127,7 +127,7 @@ theorem ptsPosDens_split {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fint
   have hpt : ∀ w ∈ hfin.toFinset, ENNReal.ofReal (max (sheetDensity P Ψ φ g y w) 0) =
       ∑' k, ENNReal.ofReal (max (sheetDensity P Ψ φ ((E k).indicator g) y w) 0) := by
     intro w hw
-    have hw' : w ∈ fibre P Ψ y := hfin.mem_toFinset.mp hw
+    have hw' : w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y := hfin.mem_toFinset.mp hw
     by_cases hs : ∃ γ, IsSheet P Ψ y w γ
     · have hz : hs.choose y ∈ mcPts P := hs.choose_spec.2.self_of_nhds.2.1
       obtain ⟨k₀, hk₀⟩ := hcov w hw' hs _ hz hs.choose_spec.1
@@ -240,14 +240,14 @@ open ReciprocityTheory.ChartRestriction.G.Geo (MRing IsArithVar IsGoodProj mcPts
 
 theorem PtsSheetSimpleNull.simple_of_count {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)] {e : ℕ}
     {P : Ideal (MRing ι)} {Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)} {d : ℕ} {y : Fin e → ℂ}
-    (hbd : ∀ y', (fibre P Ψ y').encard ≤ d) (hy : (fibre P Ψ y).encard = d)
-    (hsh : ∀ w ∈ fibre P Ψ y, ∃ γ, IsSheet P Ψ y w γ) {w : ((k : K) → ι k) → ℂ}
-    (hw : w ∈ fibre P Ψ y) : IsSimpleSheetPt P Ψ w := by
-  have hF : (fibre P Ψ y).Finite := Set.finite_of_encard_eq_coe hy
+    (hbd : ∀ y', (ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y').encard ≤ d) (hy : (ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y).encard = d)
+    (hsh : ∀ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, ∃ γ, IsSheet P Ψ y w γ) {w : ((k : K) → ι k) → ℂ}
+    (hw : w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y) : IsSimpleSheetPt P Ψ w := by
+  have hF : (ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y).Finite := Set.finite_of_encard_eq_coe hy
   choose! γ hγ using hsh
   obtain ⟨U, hU, hdisj⟩ := hF.t2_separation
 
-  have hev : ∀ᶠ y' in 𝓝 y, ∀ a ∈ fibre P Ψ y,
+  have hev : ∀ᶠ y' in 𝓝 y, ∀ a ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y,
       (γ a y' ∈ mcPts P ∧ Ψ (segre (γ a y')) = Fin.cons 1 y') ∧ segre (γ a y') ∈ U a := by
     refine (hF.eventually_all).2 fun a ha => ?_
     have hc := (segre_differentiableAt (hγ a ha).2.self_of_nhds.1).continuousAt
@@ -257,14 +257,14 @@ theorem PtsSheetSimpleNull.simple_of_count {K : Type*} [Fintype K] {ι : K → T
     filter_upwards [(hγ a ha).2, hc.preimage_mem_nhds hmem] with y' h1 h2
     exact ⟨⟨h1.2.1, h1.2.2⟩, h2⟩
 
-  have hfib : ∀ y', (∀ a ∈ fibre P Ψ y, (γ a y' ∈ mcPts P ∧ Ψ (segre (γ a y')) = Fin.cons 1 y') ∧
-      segre (γ a y') ∈ U a) → fibre P Ψ y' = (fun a => segre (γ a y')) '' fibre P Ψ y := by
+  have hfib : ∀ y', (∀ a ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, (γ a y' ∈ mcPts P ∧ Ψ (segre (γ a y')) = Fin.cons 1 y') ∧
+      segre (γ a y') ∈ U a) → ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y' = (fun a => segre (γ a y')) '' ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y := by
     intro y' h
-    have hinj : Set.InjOn (fun a => segre (γ a y')) (fibre P Ψ y) := by
+    have hinj : Set.InjOn (fun a => segre (γ a y')) (ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y) := by
       intro a ha b hb hab
       by_contra hne
       exact Set.disjoint_left.mp (hdisj ha hb hne) (h a ha).2 (by simp only at hab; rw [hab]; exact (h b hb).2)
-    have hsub : (fun a => segre (γ a y')) '' fibre P Ψ y ⊆ fibre P Ψ y' := by
+    have hsub : (fun a => segre (γ a y')) '' ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y ⊆ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y' := by
       rintro _ ⟨a, ha, rfl⟩
       exact ⟨γ a y', (h a ha).1.1, rfl, (h a ha).1.2⟩
     refine ((hF.image _).eq_of_subset_of_encard_le hsub ?_).symm

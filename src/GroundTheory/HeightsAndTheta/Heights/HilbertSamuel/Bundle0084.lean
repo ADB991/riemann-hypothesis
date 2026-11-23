@@ -297,7 +297,7 @@ theorem TwoBlockModuleCycle.proof : TwoBlockModuleCycle.Statement := by
       exact Q.add_mem h1 (Q.mul_mem_right _ hd)
     exact (hQ.mem_or_mem h2).resolve_left hi
 
-  have hmin : ∀ W : Ideal (MRing (FinTwoTypeFamily κ)), IsRelevant W →
+  have hmin : ∀ W : Ideal (MRing (FinTwoTypeFamily κ)), ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W →
       (W ∈ (twoBlockMInner x (matAct B x) l).minimalPrimes ↔
         W ∈ (twoBlockIdeal x (matAct B x) ⊔ Ideal.span {twoBlockNum l}).minimalPrimes) := by
     intro W hrel
@@ -472,7 +472,7 @@ def ChartNakayamaGen.Statement : Prop :=
     ∀ I : KH.Cell K ι 0, (∀ k, ∀ i ∈ I.1 k, (X ⟨k, i⟩ : MRingOver S ι) ∉ P) →
     (∀ x ∈ KH.locPart ι 𝓜 (KH.cellMon S I.1) d, ∃ z ∈ KH.cechZc ι 𝓜 d 0,
       x - z I ∈ locIdealPart 𝓜 (KH.cellMon S I.1) P d) →
-    ∃ (f : MRingOver S ι) (δ : K → ℕ), IsMultiHomog f δ ∧ f ∉ P ∧ GenNear S ι 𝓜 d f δ
+    ∃ (f : MRingOver S ι) (δ : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f δ ∧ f ∉ P ∧ GenNear S ι 𝓜 d f δ
 
 end
 

@@ -171,9 +171,9 @@ theorem PFCoord.of_found (hGD : GenDegStatement)
   intro I hI K _ ι _ K' _ ι' _ κ v Ω _ _ y d L L' hv hP' hP hL hLL'
   obtain ⟨G⟩ := hGF K ι K' ι' κ v (mCoordIdeal y) d hv hP'
   obtain ⟨J, hJ, -⟩ := hR4 G.Φ (FibreBlock κ) (fibreIdx ι' κ)
-  have hV : IsProjVarF (fibreIdeal κ G) 0 := hFD K ι K' ι' κ v (mCoordIdeal y) d 0 G hv hP' hP
+  have hV : IsProjVarF (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G) 0 := hFD K ι K' ι' κ v (mCoordIdeal y) d 0 G hv hP' hP
   choose i hi using hV.1.2.2
-  have h0 := hJ.1 (fibreIdeal κ G) Fin.elim0 i hV hi
+  have h0 := hJ.1 (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G) Fin.elim0 i hV hi
   rw [hGD I hI K ι K' ι' κ v (mCoordIdeal y) d G J L L' hv hP' hP hJ hL hLL', h0,
     hCF K ι K' ι' κ v Ω y d G i hv hP' hP hi, Int.cast_natCast]
 
@@ -360,21 +360,21 @@ open scoped ContDiff
 open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsArithVar ptsIntegral pot segre isOpen_blockNonzero)
 
 def expLine {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
-    (v : ((Σ k, ι k) → ℂ) → ℝ) (hv : IsDegZeroSmooth v) : HermLine ι :=
+    (v : ((Σ k, ι k) → ℂ) → ℝ) (hv : IsDegZeroSmooth v) : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι :=
   HermLine.ofWeight (fun z => -v z) fun c z hc => by rw [hv.2 c z hc]
 
 theorem pot_cons_expLine {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)] {n : ℕ}
-    (v : ((Σ k, ι k) → ℂ) → ℝ) (hv : IsDegZeroSmooth v) (L : Fin n → HermLine ι) :
-    pot (Fin.cons (expLine v hv) L : Fin (n + 1) → HermLine ι) = Fin.cons v (pot L) := by
+    (v : ((Σ k, ι k) → ℂ) → ℝ) (hv : IsDegZeroSmooth v) (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) :
+    pot (Fin.cons (expLine v hv) L : Fin (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) = Fin.cons v (pot L) := by
   funext j z
   refine Fin.cases ?_ (fun j => ?_) j
   · simp [pot, expLine, HermLine.ofWeight]
   · simp [pot]
 
 theorem isSmoothHerm_cons_expLine {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)] {n : ℕ}
-    (v : ((Σ k, ι k) → ℂ) → ℝ) (hv : IsDegZeroSmooth v) (L : Fin n → HermLine ι)
+    (v : ((Σ k, ι k) → ℂ) → ℝ) (hv : IsDegZeroSmooth v) (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι)
     (hL : ∀ j, IsSmoothHerm (L j)) :
-    ∀ j, IsSmoothHerm ((Fin.cons (expLine v hv) L : Fin (n + 1) → HermLine ι) j) := by
+    ∀ j, IsSmoothHerm ((Fin.cons (expLine v hv) L : Fin (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) j) := by
   intro j
   refine Fin.cases ?_ (fun j => ?_) j
   · exact Real.contDiff_exp.comp_contDiffOn hv.1.neg.neg
@@ -438,7 +438,7 @@ theorem SegreChart.proof (hDim : SegreChartDim.Statement) (hInt : SegreChartInte
       (Or.inr fun z hz => by rw [pot_cons_expLine u hu L]; exact hsupp z hz)
       fun x hx => ⟨EventuallyEq.rfl, fun j => ?_⟩
     refine Fin.cases ?_ (fun j => ?_) j
-    · have h0 : pot (Fin.cons (expLine u hu) L : Fin (n + 1) → HermLine ι) 0 = u := by
+    · have h0 : pot (Fin.cons (expLine u hu) L : Fin (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) 0 = u := by
         rw [pot_cons_expLine u hu L]; rfl
       simpa [h0] using key x hx
     · exact EventuallyEq.rfl

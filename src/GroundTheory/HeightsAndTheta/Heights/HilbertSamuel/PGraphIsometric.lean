@@ -48,7 +48,7 @@ theorem mem_divSupp_and_multAt_eq {P W : Ideal (MRing κ)} {f g u v : MRing κ} 
       (mul_mem_sup_span hvu)]
 
 theorem divCycle_eq_of_local {P : Ideal (MRing κ)} {f g : MRing κ}
-    (h : ∀ W : Ideal (MRing κ), W.IsPrime → P ≤ W → IsRelevant W →
+    (h : ∀ W : Ideal (MRing κ), W.IsPrime → P ≤ W → ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W →
       ∃ u v, u ∉ W ∧ v ∉ W ∧ u * f - v * g ∈ P) :
     ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f = ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g := by
   ext W
@@ -90,51 +90,51 @@ theorem graphMap_rename_inlV (P : Ideal (MRing ι)) (g : (Σ k, ι₂ k) → MRi
   | mul_X p n hp => simp [hp, graphMap_X_inlV]
 
 theorem minor_mem (P : Ideal (MRing ι)) (A : ∀ k, ι₂ k → ι k → ℤ) (k : K) (j₁ j₂ : ι₂ k) :
-    X (inrV ⟨k, j₁⟩) * rename inlV (linForm A ⟨k, j₂⟩) - X (inrV ⟨k, j₂⟩) * rename inlV (linForm A ⟨k, j₁⟩) ∈
-      graphIdeal P (linForm A) := by
+    X (inrV ⟨k, j₁⟩) * rename inlV (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k, j₂⟩) - X (inrV ⟨k, j₂⟩) * rename inlV (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k, j₁⟩) ∈
+      graphIdeal P (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A) := by
   rw [graphIdeal, RingHom.mem_ker, map_sub, map_mul, map_mul, graphMap_X_inrV, graphMap_X_inrV,
     graphMap_rename_inlV, graphMap_rename_inlV]
   ring
 
 def num (A : ∀ k, ι₂ k → ι k → ℤ) (j : ∀ k, ι₂ k) (a : K → ℤ) : MRing (Sum.elim ι ι₂) :=
-  ∏ k, rename inlV (linForm A ⟨k, j k⟩) ^ (a k).toNat * X (inrV ⟨k, j k⟩) ^ (-a k).toNat
+  ∏ k, rename inlV (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k, j k⟩) ^ (a k).toNat * X (inrV ⟨k, j k⟩) ^ (-a k).toNat
 
 def den (A : ∀ k, ι₂ k → ι k → ℤ) (j : ∀ k, ι₂ k) (a : K → ℤ) : MRing (Sum.elim ι ι₂) :=
-  ∏ k, X (inrV ⟨k, j k⟩) ^ (a k).toNat * rename inlV (linForm A ⟨k, j k⟩) ^ (-a k).toNat
+  ∏ k, X (inrV ⟨k, j k⟩) ^ (a k).toNat * rename inlV (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k, j k⟩) ^ (-a k).toNat
 
 theorem wh_lin [DecidableEq K] (A : ∀ k, ι₂ k → ι k → ℤ) (q : Σ k, ι₂ k) :
     IsWeightedHomogeneous (GroundTheory.Heights₂.Heights.NumbersDVR.blockWeight (Sum.elim ι ι₂))
-      (rename inlV (linForm A q)) (Pi.single (Sum.inl q.1) 1) := by
+      (rename inlV (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A q)) (Pi.single (Sum.inl q.1) 1) := by
   rw [← mem_weightedHomogeneousSubmodule]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [linForm, map_sum, map_mul, rename_C, rename_X]
+    simp only [ReciprocityTheory.ChartRestriction.G.AI.I4.linForm, map_sum, map_mul, rename_C, rename_X]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [← smul_eq_C_mul]
   exact Submodule.smul_mem _ _ ((mem_weightedHomogeneousSubmodule _ _ _ _).mpr (isWeightedHomogeneous_X ℤ _ _))
 
 theorem isMultiHomog_num [DecidableEq K] (A : ∀ k, ι₂ k → ι k → ℤ) (j : ∀ k, ι₂ k) (a : K → ℤ) :
-    IsMultiHomog (num A j a)
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (num A j a)
       (∑ k, ((a k).toNat • Pi.single (Sum.inl k) 1 + (-a k).toNat • Pi.single (Sum.inr k) 1)) := by
   refine (GroundTheory.Heights₂.Heights.Bridge.isMultiHomog_iff _ _).mp ?_
   exact IsWeightedHomogeneous.prod _ _ _ fun k _ =>
     ((wh_lin A ⟨k, j k⟩).pow _).mul ((isWeightedHomogeneous_X ℤ _ _).pow _)
 
 theorem isMultiHomog_den [DecidableEq K] (A : ∀ k, ι₂ k → ι k → ℤ) (j : ∀ k, ι₂ k) (a : K → ℤ) :
-    IsMultiHomog (den A j a)
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (den A j a)
       (∑ k, ((a k).toNat • Pi.single (Sum.inr k) 1 + (-a k).toNat • Pi.single (Sum.inl k) 1)) := by
   refine (GroundTheory.Heights₂.Heights.Bridge.isMultiHomog_iff _ _).mp ?_
   exact IsWeightedHomogeneous.prod _ _ _ fun k _ =>
     ((isWeightedHomogeneous_X ℤ _ _).pow _).mul ((wh_lin A ⟨k, j k⟩).pow _)
 
 theorem num_den_not_mem {P : Ideal (MRing ι)} (hP : P.IsPrime) (A : ∀ k, ι₂ k → ι k → ℤ) {j : ∀ k, ι₂ k}
-    (hj : ∀ k, linForm A ⟨k, j k⟩ ∉ P) (a : K → ℤ) :
-    num A j a ∉ graphIdeal P (linForm A) ∧ den A j a ∉ graphIdeal P (linForm A) := by
+    (hj : ∀ k, ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k, j k⟩ ∉ P) (a : K → ℤ) :
+    num A j a ∉ graphIdeal P (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A) ∧ den A j a ∉ graphIdeal P (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A) := by
   have := Ideal.Quotient.isDomain P
-  have h1 : ∀ k, (C (Ideal.Quotient.mk P (linForm A ⟨k, j k⟩)) : MvPolynomial K (MRing ι ⧸ P)) ≠ 0 := by
+  have h1 : ∀ k, (C (Ideal.Quotient.mk P (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k, j k⟩)) : MvPolynomial K (MRing ι ⧸ P)) ≠ 0 := by
     intro k
     rw [Ne, MvPolynomial.C_eq_zero, Ideal.Quotient.eq_zero_iff_mem]
     exact hj k
-  have h2 : ∀ k, (C (Ideal.Quotient.mk P (linForm A ⟨k, j k⟩)) * X k : MvPolynomial K (MRing ι ⧸ P)) ≠ 0 :=
+  have h2 : ∀ k, (C (Ideal.Quotient.mk P (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k, j k⟩)) * X k : MvPolynomial K (MRing ι ⧸ P)) ≠ 0 :=
     fun k => mul_ne_zero (h1 k) (X_ne_zero _)
   constructor
   · rw [num, graphIdeal, RingHom.mem_ker]
@@ -144,18 +144,18 @@ theorem num_den_not_mem {P : Ideal (MRing ι)} (hP : P.IsPrime) (A : ∀ k, ι�
     simp only [map_prod, map_mul, map_pow, graphMap_rename_inlV, graphMap_X_inrV]
     exact Finset.prod_ne_zero_iff.mpr fun k _ => mul_ne_zero (pow_ne_zero _ (h2 k)) (pow_ne_zero _ (h1 k))
 
-theorem exists_unit {P : Ideal (MRing ι)} {A : ∀ k, ι₂ k → ι k → ℤ} (hBP : IsBasePtFree P (linForm A))
+theorem exists_unit {P : Ideal (MRing ι)} {A : ∀ k, ι₂ k → ι k → ℤ} (hBP : IsBasePtFree P (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A))
     (j : ∀ k, ι₂ k) (a : K → ℤ) {W : Ideal (MRing (Sum.elim ι ι₂))} (hW : W.IsPrime)
-    (hΓW : graphIdeal P (linForm A) ≤ W) (hrel : IsRelevant W) :
-    ∃ u v, u ∉ W ∧ v ∉ W ∧ u * num A j a - v * den A j a ∈ graphIdeal P (linForm A) := by
+    (hΓW : graphIdeal P (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A) ≤ W) (hrel : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W) :
+    ∃ u v, u ∉ W ∧ v ∉ W ∧ u * num A j a - v * den A j a ∈ graphIdeal P (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A) := by
   have := hW
-  have hlin : ∀ k, ∃ j', rename inlV (linForm A ⟨k, j'⟩) ∉ W := by
+  have hlin : ∀ k, ∃ j', rename inlV (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k, j'⟩) ∉ W := by
     intro k
     by_contra hall
     push Not at hall
     choose i hi using fun k' => hrel (Sum.inl k')
     obtain ⟨N, hN⟩ := hBP k i
-    have hle : P ⊔ Ideal.span (Set.range fun j' : ι₂ k => linForm A ⟨k, j'⟩) ≤
+    have hle : P ⊔ Ideal.span (Set.range fun j' : ι₂ k => ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k, j'⟩) ≤
         W.comap (rename (inlV (ι₂ := ι₂)) : MRing ι →ₐ[ℤ] MRing (Sum.elim ι ι₂)) := by
       refine sup_le (fun p hp => hΓW ?_) (Ideal.span_le.mpr (Set.range_subset_iff.mpr hall))
       rw [graphIdeal, RingHom.mem_ker, graphMap_rename_inlV, Ideal.Quotient.eq_zero_iff_mem.mpr hp, map_zero]
@@ -169,14 +169,14 @@ theorem exists_unit {P : Ideal (MRing ι)} {A : ∀ k, ι₂ k → ι k → ℤ}
     intro k hyk
     obtain ⟨j'', hj''⟩ := hrel (Sum.inr k)
     have hm := hΓW (minor_mem P A k j'' (j' k))
-    have hprod : X (inrV ⟨k, j''⟩) * rename inlV (linForm A ⟨k, j' k⟩) ∈ W := by
-      have h := W.add_mem hm (W.mul_mem_right (rename inlV (linForm A ⟨k, j''⟩)) hyk)
+    have hprod : X (inrV ⟨k, j''⟩) * rename inlV (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k, j' k⟩) ∈ W := by
+      have h := W.add_mem hm (W.mul_mem_right (rename inlV (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k, j''⟩)) hyk)
       rwa [sub_add_cancel] at h
     rcases hW.mem_or_mem hprod with h | h
     · exact hj'' h
     · exact hj' k h
-  refine ⟨∏ k, X (inrV ⟨k, j' k⟩) ^ (a k).toNat * rename inlV (linForm A ⟨k, j' k⟩) ^ (-a k).toNat,
-    ∏ k, rename inlV (linForm A ⟨k, j' k⟩) ^ (a k).toNat * X (inrV ⟨k, j' k⟩) ^ (-a k).toNat, ?_, ?_, ?_⟩
+  refine ⟨∏ k, X (inrV ⟨k, j' k⟩) ^ (a k).toNat * rename inlV (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k, j' k⟩) ^ (-a k).toNat,
+    ∏ k, rename inlV (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k, j' k⟩) ^ (a k).toNat * X (inrV ⟨k, j' k⟩) ^ (-a k).toNat, ?_, ?_, ?_⟩
   · intro h
     obtain ⟨k, -, hk⟩ := Ideal.IsPrime.prod_mem_iff.mp h
     rcases hW.mem_or_mem hk with h | h
@@ -238,10 +238,10 @@ theorem proof : GraphIsometric.Statement := by
       rw [← hev]
       refine hz.2 _ ?_
       rw [graphIdeal, RingHom.mem_ker, graphMap_rename_inlV, Ideal.Quotient.eq_zero_iff_mem.mpr hp, map_zero]
-    have hlin : ∀ q, eval z (map (Int.castRingHom ℂ) (rename inlV (linForm A q))) = linApply A x q := by
+    have hlin : ∀ q, eval z (map (Int.castRingHom ℂ) (rename inlV (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A q))) = linApply A x q := by
       intro q
       rw [hev]
-      simp [linForm, linApply]
+      simp [ReciprocityTheory.ChartRestriction.G.AI.I4.linForm, linApply]
     have hyev : ∀ q, eval z (map (Int.castRingHom ℂ) (X (inrV q) : MRing (Sum.elim ι ι₂))) = y q := by
       intro q
       simp [hydef]
@@ -258,11 +258,11 @@ theorem proof : GraphIsometric.Statement := by
       choose i hi using hx.1
       obtain ⟨N, hN⟩ := hBP k i
       let φ : MRing ι →+* ℂ := (eval x).comp (map (Int.castRingHom ℂ))
-      have hle : P ⊔ Ideal.span (Set.range fun j' : ι₂ k => linForm A ⟨k, j'⟩) ≤ RingHom.ker φ := by
+      have hle : P ⊔ Ideal.span (Set.range fun j' : ι₂ k => ReciprocityTheory.ChartRestriction.G.AI.I4.linForm A ⟨k, j'⟩) ≤ RingHom.ker φ := by
         refine sup_le (fun p hp => RingHom.mem_ker.mpr (hx.2 p hp))
           (Ideal.span_le.mpr (Set.range_subset_iff.mpr fun j' => ?_))
         show φ _ = 0
-        simpa [φ, linForm, linApply] using hall j'
+        simpa [φ, ReciprocityTheory.ChartRestriction.G.AI.I4.linForm, linApply] using hall j'
       have h0 := RingHom.mem_ker.mp (hle hN)
       have hne : φ ((∏ k', (X ⟨k', i k'⟩ : MRing ι)) ^ N) ≠ 0 := by
         simp only [φ, map_pow, map_prod, RingHom.comp_apply, map_X, eval_X]
