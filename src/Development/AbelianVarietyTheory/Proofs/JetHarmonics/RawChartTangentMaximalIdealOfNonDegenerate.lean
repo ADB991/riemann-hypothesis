@@ -24,7 +24,7 @@ open GlobalTheory.RowLaw.CvEnd GlobalTheory.PlaceProj
 variable {C : Type} [Field C] {V : VF C}
 
 theorem mm_sum' {ι : Type} (s : Finset ι) (f : ι → C) (h : ∀ i ∈ s, V.MM (f i)) : V.MM (∑ i ∈ s, f i) :=
-  Finset.sum_induction f V.MM (fun _ _ => mm_add) mm_zero h
+  Finset.sum_induction f V.MM (fun _ _ => GlobalTheory.PlaceProj.mm_add) mm_zero h
 
 def ordIdeal (C : Type) [Field C] {τ : Type} (w : τ → ℕ) (n : ℕ) : Ideal (MvPowerSeries τ C) where
   carrier := {F | F ∈ ordGe C w n}
@@ -57,7 +57,7 @@ theorem mm_subst {σ τ : Type} {a : σ → MvPowerSeries τ C} (ha : MvPowerSer
     {F : MvPowerSeries σ C} (hF : ∀ μ, V.MM (MvPowerSeries.coeff μ F)) (e : τ →₀ ℕ) :
     V.MM (MvPowerSeries.coeff e (MvPowerSeries.subst a F)) := by
   rw [MvPowerSeries.coeff_subst ha]
-  refine finsum_induction (fun x => V.MM x) mm_zero (fun _ _ => mm_add) fun μ => ?_
+  refine finsum_induction (fun x => V.MM x) mm_zero (fun _ _ => GlobalTheory.PlaceProj.mm_add) fun μ => ?_
   rw [smul_eq_mul, mul_comm]
   refine mm_mul ?_ (hF μ)
   revert e
@@ -128,7 +128,7 @@ theorem cob_root (H : RLaw Y V) {c : MvPowerSeries (Fin 2 × κ) C} (hc : IntS V
   refine hroot _ _ hc (intS_sub' (intS_add' hB hD) hA) fun μ => ?_
   have k1 := (hfr _ _ (intS_add' hB hD) hA μ).2
   have k2 := (hfr _ _ hB hD μ).1
-  have := mm_add (mm_add (mm_sub (mm_sub (mm_sub (h μ) k1) k2) (mA μ)) (mB μ)) (mD μ)
+  have := GlobalTheory.PlaceProj.mm_add (GlobalTheory.PlaceProj.mm_add (mm_sub (mm_sub (mm_sub (h μ) k1) k2) (mA μ)) (mB μ)) (mD μ)
   convert this using 1
   simp only [cob, map_sub, map_add (f := _)]
   ring
@@ -282,7 +282,7 @@ theorem sg_all (H : RLaw Y V) (hP : HasProj Y V) {g : Fin 2} {γ : κ → PowerS
   beta_reduce at hK
   set_option synthInstance.maxHeartbeats 100000 in
     rw [e, map_sub, map_sum] at hK
-  have := mm_add (mm_l_mul hK) (mm_sum' Finset.univ _ fun c _ => mm_mul (hbi c) (h c))
+  have := GlobalTheory.PlaceProj.mm_add (mm_l_mul hK) (mm_sum' Finset.univ _ fun c _ => mm_mul (hbi c) (h c))
   convert this using 1
   simp only [PowerSeries.coeff_smul, smul_eq_mul, mul_sub, Finset.mul_sum]
   rw [sub_add, ← Finset.sum_sub_distrib, Finset.sum_eq_zero, sub_zero]

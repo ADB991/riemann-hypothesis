@@ -201,7 +201,7 @@ theorem klat_facts (hc : Crv D cc δ) {A : AddSubgroup (VC D N N')} (hA : KLat D
   obtain ⟨-, -, h1, h2, h3, h4, h5⟩ := GlobalTheory.ConjNorm.Line.theta_line D (GlobalTheory.InducedType.induced_type D).1 cc δ hc N N' A hA
   refine ⟨h3, h4, le_antisymm h2 h1, ?_⟩
   obtain ⟨a, ha⟩ := GlobalTheory.NormSum.exists_integer_map_eq_w0 D
-  refine isSemiChar_round (isHerm_sesqOf D _ N N') (Real.sqrt D.host.d) h1 (fun x hx => ?_) h5
+  refine isSemiChar_round (GlobalTheory.ConjNorm.Inter.isHerm_sesqOf D _ N N') (Real.sqrt D.host.d) h1 (fun x hx => ?_) h5
   have := klat_smul_mem hA a hx
   rwa [ha] at this
 
@@ -213,7 +213,7 @@ theorem GlobalTheory.ConjNorm.unitary_all : ∀ D : D7, IntertwinerUnitary D := 
   intro D cc δ hc N N' A₁ A₂ h₁ h₂ th hth
   obtain ⟨f₁, s₁, d₁, c₁⟩ := GlobalTheory.ConjNorm.Inter.klat_facts hc h₁
   obtain ⟨f₂, s₂, d₂, c₂⟩ := GlobalTheory.ConjNorm.Inter.klat_facts hc h₂
-  have hH := isHerm_sesqOf D (tor0 D cc δ) N N'
+  have hH := GlobalTheory.ConjNorm.Inter.isHerm_sesqOf D (tor0 D cc δ) N N'
   have hψ := (GlobalTheory.InducedType.induced_type D).1.1
   have := klat_finite hψ hc.1.1 h₁ h₂ f₂
   have := klat_finite hψ hc.1.1 h₂ h₁ f₁
