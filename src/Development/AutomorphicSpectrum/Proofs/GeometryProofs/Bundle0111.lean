@@ -59,7 +59,7 @@ theorem exists_block_ne {z w : (Σ k, J k) → ℂ} (hw : ∀ c : K → ℂ, w �
 
 theorem levi_fsMulti_pos {z w : (Σ k, J k) → ℂ} (hz : ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0)
     (hw : ∀ c : K → ℂ, w ≠ torusSmul c z) :
-    0 < leviForm (fun y => Real.log ((fsMulti J).h y)) z w := by
+    0 < ReciprocityTheory.ChartRestriction.G.Geo.leviForm (fun y => Real.log ((fsMulti J).h y)) z w := by
   classical
   obtain ⟨k₀, hk₀⟩ := exists_block_ne hw
   set F : K → ((Σ k, J k) → ℂ) → ℝ :=
@@ -88,7 +88,7 @@ theorem levi_fsMulti_pos {z w : (Σ k, J k) → ℂ} (hz : ∀ k, ∃ i, z ⟨k,
   have hFk : ∀ k, F k = (fun u => Real.log ((fsMetric («ι» := J k)).ρ u)) ∘ blockProj J k := fun k => rfl
   have hC : ∀ k, ContDiffAt ℝ 2 (F k) z := fun k =>
     hFk k ▸ (hφ k).comp z ((blockProj J k).restrictScalars ℝ).contDiff.contDiffAt
-  have hL : ∀ k v, ReciprocityTheory.AnForm.levi (F k) z v = leviForm (fun u => Real.log ((fsMetric («ι» := J k)).ρ u))
+  have hL : ∀ k v, ReciprocityTheory.AnForm.levi (F k) z v = ReciprocityTheory.ChartRestriction.G.Geo.leviForm (fun u => Real.log ((fsMetric («ι» := J k)).ρ u))
       (fun i => z ⟨k, i⟩) (fun i => v ⟨k, i⟩) := fun k v => by
     rw [hFk, ReciprocityTheory.AnForm.levi_comp v ((blockProj J k).analyticAt z) (hφ k), (blockProj J k).fderiv]
     rfl
@@ -119,7 +119,7 @@ theorem isConjInvariantH_fsMulti : IsConjInvariantH (fsMulti J) := by
 def chartForm (c : ∀ k, J k) : MRing J := ∏ k, X ⟨k, c k⟩
 
 theorem isMultiHomog_chartForm (c : ∀ k, J k) :
-    IsMultiHomog (chartForm c) fun k => ((fsMulti J).a k).toNat := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (chartForm c) fun k => ((fsMulti J).a k).toNat := by
   classical
   have h := ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_xpow c (fun _ : K => 1)
   simpa [chartForm, fsMulti, HermLine.ofMetrics, ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.xpow] using h
