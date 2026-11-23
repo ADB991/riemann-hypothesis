@@ -15,6 +15,7 @@ namespace GlobalTheory.AdelicU
 
 open scoped TensorProduct ENNReal NNReal
 open NumberField IsDedekindDomain MeasureTheory MeasureTheory.Measure Filter Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.RestrMeas
+attribute [-instance] Formalism.BasicNotions.Examples₂.instIsEmptyClsEmptyColumnChain
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
