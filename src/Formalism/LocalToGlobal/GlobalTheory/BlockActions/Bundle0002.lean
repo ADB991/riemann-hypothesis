@@ -68,31 +68,31 @@ theorem exP_ofS (Tf : FormsTiedSym D u Ch chOf)
   have hU2 := atInf_inv_isUnit _ hbZg
 
   have hL : coPTS Tf B w z c = (∏ τ, ((1 : D.what₂.Tau → Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) ℂ) τ *
-      (atInf (embT D) (B w c)⁻¹ τ)⁻¹).det ^ shiftOf (sgT u) τ) •
+      (atInf (Formalism.L2.Forms.embT D) (B w c)⁻¹ τ)⁻¹).det ^ shiftOf (sgT u) τ) •
       blkRow (fun τ => (1 : D.what₂.Tau → Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) ℂ) τ *
-        (atInf (embT D) (B w c)⁻¹ τ)⁻¹) (Formalism.L2.Ker.brTen D u P) := by
-    have e1 : coPTS Tf B w z c = fnInv (gramC (gramP D) (embT D)) (shiftOf (sgT u)) (atInf (embT D) (B w c)⁻¹) (Tf.valP.eW z c) := by
+        (atInf (Formalism.L2.Forms.embT D) (B w c)⁻¹ τ)⁻¹) (Formalism.L2.Ker.brTen D u P) := by
+    have e1 : coPTS Tf B w z c = fnInv (gramC (gramP D) (Formalism.L2.Forms.embT D)) (shiftOf (sgT u)) (atInf (Formalism.L2.Forms.embT D) (B w c)⁻¹) (Tf.valP.eW z c) := by
       simp only [coPTS, LinearMap.pi_apply, LinearMap.coe_comp, Function.comp_apply, LinearMap.coe_proj, Function.eval,
         LinearEquiv.coe_coe]
-    rw [e1, hz, fnOf_change _ _ (atInf (embT D) (B w c)⁻¹) 1 hU1, fnInv_fnOf _ _ _ hU1]
+    rw [e1, hz, fnOf_change _ _ (atInf (Formalism.L2.Forms.embT D) (B w c)⁻¹) 1 hU1, fnInv_fnOf _ _ _ hU1]
 
   have hM : trEvS Tf c (φ ((D.fm u).til c)) = fnOf _ (shiftOf (lamT u D.R.m)) (mZ u Tf.til.z0) P := by
     funext y
     rw [trEv_eqS, hv, Equiv.apply_symm_apply]
-  have hR : coMTS Tf B w c (φ ((D.fm u).til c)) = (∏ τ, (atInf (embT D) (bZ u Tf.til.z0)⁻¹ τ *
-      (atInf (embT D) (bZg u Tf.til.z0 (B w c))⁻¹ τ)⁻¹).det ^ shiftOf (lamT u D.R.m) τ) •
-      blkRow (fun τ => atInf (embT D) (bZ u Tf.til.z0)⁻¹ τ * (atInf (embT D) (bZg u Tf.til.z0 (B w c))⁻¹ τ)⁻¹) P := by
+  have hR : coMTS Tf B w c (φ ((D.fm u).til c)) = (∏ τ, (atInf (Formalism.L2.Forms.embT D) (bZ u Tf.til.z0)⁻¹ τ *
+      (atInf (Formalism.L2.Forms.embT D) (bZg u Tf.til.z0 (B w c))⁻¹ τ)⁻¹).det ^ shiftOf (lamT u D.R.m) τ) •
+      blkRow (fun τ => atInf (Formalism.L2.Forms.embT D) (bZ u Tf.til.z0)⁻¹ τ * (atInf (Formalism.L2.Forms.embT D) (bZg u Tf.til.z0 (B w c))⁻¹ τ)⁻¹) P := by
     simp only [coMTS, LinearMap.coe_comp, Function.comp_apply]
-    rw [hM, mZ, fnOf_change _ _ (atInf (embT D) (bZg u Tf.til.z0 (B w c))⁻¹) (atInf (embT D) (bZ u Tf.til.z0)⁻¹) hU2,
+    rw [hM, mZ, fnOf_change _ _ (atInf (Formalism.L2.Forms.embT D) (bZg u Tf.til.z0 (B w c))⁻¹) (atInf (Formalism.L2.Forms.embT D) (bZ u Tf.til.z0)⁻¹) hU2,
       fnInv_fnOf _ _ _ hU2]
-  have hKm : (fun τ => atInf (embT D) (bZ u Tf.til.z0)⁻¹ τ * (atInf (embT D) (bZg u Tf.til.z0 (B w c))⁻¹ τ)⁻¹) =
+  have hKm : (fun τ => atInf (Formalism.L2.Forms.embT D) (bZ u Tf.til.z0)⁻¹ τ * (atInf (Formalism.L2.Forms.embT D) (bZg u Tf.til.z0 (B w c))⁻¹ τ)⁻¹) =
       fun τ => ((Formalism.MainNotions.PrimeDegreeVariant.embGL ℂ _ _ (Nm_succ D.R) (glT (B w c) hBc τ) : GL (Fin (D.R.N D.R.m)) ℂ) : Matrix _ _ ℂ).transpose := by
     funext τ
     rw [embGL_glT, atInf_inv_inv _ hbZg, bZg_eq_mul]
-    show (bZ u Tf.til.z0)⁻¹.map (embT D τ) * (bZ u Tf.til.z0 * dgE (B w c)).map (embT D τ) = _
+    show (bZ u Tf.til.z0)⁻¹.map (Formalism.L2.Forms.embT D τ) * (bZ u Tf.til.z0 * dgE (B w c)).map (Formalism.L2.Forms.embT D τ) = _
     rw [← Matrix.map_mul, ← Matrix.mul_assoc, Matrix.nonsing_inv_mul _ hbZ, Matrix.one_mul]
   have hKp : (fun τ => (1 : D.what₂.Tau → Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) ℂ) τ *
-      (atInf (embT D) (B w c)⁻¹ τ)⁻¹) = fun τ => ((glT (B w c) hBc τ : GL (Fin (D.R.N D.R.m - 1)) ℂ) : Matrix _ _ ℂ).transpose := by
+      (atInf (Formalism.L2.Forms.embT D) (B w c)⁻¹ τ)⁻¹) = fun τ => ((glT (B w c) hBc τ : GL (Fin (D.R.N D.R.m - 1)) ℂ) : Matrix _ _ ℂ).transpose := by
     funext τ
     rw [glT_val, Matrix.transpose_transpose, Pi.one_apply, Matrix.one_mul, atInf_inv_inv _ hBc]
     rfl
@@ -161,7 +161,7 @@ theorem weightedInner_self_eq_sum_coords_of_orthonormal' (Tf : FormsTiedSym D u 
         LinearEquiv.coe_coe]
       rw [hq, fnInv_fnOf _ _ _ (atInf_inv_isUnit _ (hB w c))]
     have hs : shiftOf (sgT u) = fun τ => (sgTr D u τ).detShift := funext fun τ => (shift_sgTr τ).symm
-    rw [hc, hq, hs, fnOf_sqAct _ (sgTr D u) (atInf (embT D) (B w c)⁻¹) o.1 o.2 _ (fun τ => rfl)]
+    rw [hc, hq, hs, fnOf_sqAct _ (sgTr D u) (atInf (Formalism.L2.Forms.embT D) (B w c)⁻¹) o.1 o.2 _ (fun τ => rfl)]
   rw [Tf.valP.ipP o ho z z _ _ hQ hQ hE hE, Complex.re_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [show ((Nat.card ((D.fm u).stabilizer₂ c) : ℕ) : ℂ)⁻¹ = (((Nat.card ((D.fm u).stabilizer₂ c) : ℝ))⁻¹ : ℝ) by push_cast; rfl,

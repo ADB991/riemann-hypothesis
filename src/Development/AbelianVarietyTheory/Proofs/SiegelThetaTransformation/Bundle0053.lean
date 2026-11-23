@@ -40,7 +40,7 @@ theorem prod_C_mul_X {σ σ' : Type} [DecidableEq σ'] (c : σ → ℂ) (f : σ 
 
 theorem polyDeriv_aeval_monomial {σ σ' W : Type} [NormedAddCommGroup W] [NormedSpace ℂ W]
     (c : σ → ℂ) (f : σ → σ') (u : σ' → W) {θ : W → ℂ} (hθ : ContDiff ℂ (⊤ : ℕ∞) θ) (m : σ →₀ ℕ) (x : W) :
-    polyDeriv (MvPolynomial.aeval (fun v => MvPolynomial.C (c v) * MvPolynomial.X (f v))
+    ReciprocityTheory.ChartRestriction.G.I2.polyDeriv (MvPolynomial.aeval (fun v => MvPolynomial.C (c v) * MvPolynomial.X (f v))
       (MvPolynomial.monomial m (1 : ℂ))) u θ x =
       ((Finsupp.toMultiset m).toList.map c).prod *
         I2.itD θ ((Finsupp.toMultiset m).toList.map fun v => u (f v)) x := by
@@ -62,7 +62,7 @@ theorem polyDeriv_aeval_monomial {σ σ' W : Type} [NormedAddCommGroup W] [Norme
   refine List.Perm.map u ?_
   rw [← Multiset.coe_eq_coe, Multiset.coe_toList]
 
-theorem fvec_zero_eq_polyDeriv : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), ∀ B, C.IsB B → ∀ (G : WO S T → ℂ) (θ : (Fin S.rank → Fin C.g → ℂ) → ℂ), Differentiable ℂ θ → (∀ w, IsRealPt w → G w = gaussR C.X C.bas C.idx (C.xB B) (C.zOf (C.xB B) w) * θ (C.zOf (C.xB B) w)) → ∀ Q : MvPolynomial (FVar D T.rank S.rank) ℂ, C.fvec B G Q 0 = polyDeriv (C.toH Q) (letterDir C.X C.hr C.idx) θ 0 := by
+theorem fvec_zero_eq_polyDeriv : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), ∀ B, C.IsB B → ∀ (G : WO S T → ℂ) (θ : (Fin S.rank → Fin C.g → ℂ) → ℂ), Differentiable ℂ θ → (∀ w, IsRealPt w → G w = gaussR C.X C.bas C.idx (C.xB B) (C.zOf (C.xB B) w) * θ (C.zOf (C.xB B) w)) → ∀ Q : MvPolynomial (FVar D T.rank S.rank) ℂ, C.fvec B G Q 0 = ReciprocityTheory.ChartRestriction.G.I2.polyDeriv (C.toH Q) (letterDir C.X C.hr C.idx) θ 0 := by
   intro D S T C B hB G θ hθ hG Q
   obtain ⟨R, -, -, hadd, -⟩ := GlobalTheory.KerReal.real_points D S T C
   obtain ⟨-, -, -, -, hdir, -⟩ := (_root_.GlobalTheory.Ker.onBasis_frame_period D S T C).2 B hB

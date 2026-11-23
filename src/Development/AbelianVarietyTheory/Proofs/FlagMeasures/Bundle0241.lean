@@ -198,7 +198,7 @@ theorem rowE_mem_GN : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
     · funext i
       simp [sideM, he_def]
   have ht2 : t ∈ 𝔞 * 𝔞 := by
-    rw [h𝔞, dInv, ← pow_add, ← two_mul]
+    rw [h𝔞, GlobalTheory.SgGlob.dInv, ← pow_add, ← two_mul]
     exact htI
   refine ⟨⟨isUn_of_form σ' J _ (form_rowE hσ hJ' hee hye hyt'), ?_, ?_⟩, ?_⟩
   · refine ⟨Matrix.of fun i j => (if i = j then 1 else 0) -

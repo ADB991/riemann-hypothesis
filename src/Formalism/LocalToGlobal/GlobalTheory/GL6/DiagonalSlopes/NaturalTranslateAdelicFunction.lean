@@ -25,19 +25,19 @@ section Nat0
 def natTr0 (T : Forms0 D u) (γ : UJ (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _))) (κ : T.cls0.lev.U)
     (h : (D.mem u).C.Y 0 → ℂ) : (D.mem u).C.Y 0 → ℂ :=
   fun s => ((T.cls0.lev.chi κ : ℂˣ) : ℂ)⁻¹ *
-    h (T.val0.eY.symm (frameTranslate (embT D) (fun τ x => embedding_conj_compat D τ x) γ.1⁻¹
+    h (T.val0.eY.symm (frameTranslate (Formalism.L2.Forms.embT D) (fun τ x => embedding_conj_compat D τ x) γ.1⁻¹
       ((UJ (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _))).inv_mem γ.2) (T.val0.eY s)))
 
 theorem is_translate_inverse (T : Forms0 D u) (γ : UJ (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _)))
     (s : (D.mem u).C.Y 0) :
-    IsTr (atInf (embT D) γ.1.1)
-      (T.val0.eY (T.val0.eY.symm (frameTranslate (embT D) (fun τ x => embedding_conj_compat D τ x) γ.1⁻¹
+    IsTr (atInf (Formalism.L2.Forms.embT D) γ.1.1)
+      (T.val0.eY (T.val0.eY.symm (frameTranslate (Formalism.L2.Forms.embT D) (fun τ x => embedding_conj_compat D τ x) γ.1⁻¹
         ((UJ (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _))).inv_mem γ.2) (T.val0.eY s))))
       (T.val0.eY s) := by
   intro τ
   rw [Equiv.apply_symm_apply]
-  show (T.val0.eY s).1 τ = atInf (embT D) (γ.1 : Matrix _ _ D.host.E) τ *
-    (atInf (embT D) ((γ.1⁻¹ : GL _ D.host.E) : Matrix _ _ D.host.E) τ * (T.val0.eY s).1 τ)
+  show (T.val0.eY s).1 τ = atInf (Formalism.L2.Forms.embT D) (γ.1 : Matrix _ _ D.host.E) τ *
+    (atInf (Formalism.L2.Forms.embT D) ((γ.1⁻¹ : GL _ D.host.E) : Matrix _ _ D.host.E) τ * (T.val0.eY s).1 τ)
   rw [← Matrix.mul_assoc, at_infinity_mul_inv, Matrix.one_mul]
 
 
@@ -74,7 +74,7 @@ theorem down_move_natural (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C
 
 theorem natural_translate_adelic_function (T : Forms0 D u)
     {g : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F) → Fr D 0 (Nat.zero_le _) → ℂ}
-    (hg : g ∈ AdFun T.cls0.lev (embT D))
+    (hg : g ∈ AdFun T.cls0.lev (Formalism.L2.Forms.embT D))
     (yc yu η : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F))
     (γ : UJ (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _))) (κ : T.cls0.lev.U)
     (hU : bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) γ.1 * yu.1 = yc.1 * η.1 * κ.1) :
@@ -83,7 +83,7 @@ theorem natural_translate_adelic_function (T : Forms0 D u)
   have e1 : (yc * η).1 = bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) γ.1 * yu.1 *
       (κ⁻¹ : T.cls0.lev.U).1 := by
     simp only [Subgroup.coe_mul, hU, InvMemClass.coe_inv]; group
-  have a1 := adelic_value_translate T.cls0.lev (embT D) (fun τ x => embedding_conj_compat D τ x) hg γ.1 γ.2 yu (yc * η) κ⁻¹ e1
+  have a1 := adelic_value_translate T.cls0.lev (Formalism.L2.Forms.embT D) (fun τ x => embedding_conj_compat D τ x) hg γ.1 γ.2 yu (yc * η) κ⁻¹ e1
     (T.val0.eY s)
   simp only [natTr0, Equiv.apply_symm_apply]
   rw [a1, map_inv, Units.val_inv_eq_inv_val]
@@ -113,7 +113,7 @@ theorem U_op_preserves_forms_zero (T : Forms0 D u) (v : (D.mem u).A.vT) (φ : (D
     (hφ : φ ∈ (D.fm u).Fi 0) : Formalism.MainNotions.product_first_zeroth_parts.Uop D u 0 v φ ∈ (D.fm u).Fi 0 := by
   classical
   obtain ⟨g, hg, hgφ⟩ := forms_from_adelic_function T 0 (Nat.zero_le _) rfl φ hφ
-  have hgA : g ∈ AdFun T.cls0.lev (embT D) := (Submodule.mem_inf.1 hg).1
+  have hgA : g ∈ AdFun T.cls0.lev (Formalism.L2.Forms.embT D) := (Submodule.mem_inf.1 hg).1
   have key : ∀ c (x : (D.fm u).lv 0 v c), (D.fm u).fv 0 v c x = 1 →
       ∃ p : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F),
         (D.fm u).upT 0 v c x (φ ((D.fm u).up 0 v c x)) = fun s => g p (T.val0.eY s) := by
@@ -141,7 +141,7 @@ theorem U_op_preserves_forms_zero (T : Forms0 D u) (v : (D.mem u).A.vT) (φ : (D
     split_ifs
     · exact Submodule.subset_span ⟨_, rfl⟩
     · exact zero_mem _
-  obtain ⟨G, hG, hGc⟩ := adelic_function_extends_from_classes T.cls0.lev (embT D) (fun τ x => embedding_conj_compat D τ x) (lamT u 0)
+  obtain ⟨G, hG, hGc⟩ := adelic_function_extends_from_classes T.cls0.lev (Formalism.L2.Forms.embT D) (fun τ x => embedding_conj_compat D τ x) (lamT u 0)
     T.cls0.y (fun c => trivial_stabiliser_zero T _) (fun c c' γ hγ κ h => class_eq_of_rational_translate T c c' γ hγ κ h) hg Fc hF
   refine (T.val0.Fi _).2 ⟨G, hG, ?_⟩
   funext c z
@@ -155,7 +155,7 @@ theorem D_op_preserves_forms_zero (T : Forms0 D u) (v : (D.mem u).A.vT) (φ : (D
     (hφ : φ ∈ (D.fm u).Fi 0) : Formalism.MainNotions.product_first_zeroth_parts.Dop D u 0 v φ ∈ (D.fm u).Fi 0 := by
   classical
   obtain ⟨g, hg, hgφ⟩ := forms_from_adelic_function T 0 (Nat.zero_le _) rfl φ hφ
-  have hgA : g ∈ AdFun T.cls0.lev (embT D) := (Submodule.mem_inf.1 hg).1
+  have hgA : g ∈ AdFun T.cls0.lev (Formalism.L2.Forms.embT D) := (Submodule.mem_inf.1 hg).1
   have key : ∀ c (x : Module.Dual ((D.mem u).A.Fv v) ((D.fm u).lk 0 v c)), x ((D.fm u).te 0 v c) = 1 →
       ∃ p : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F),
         (D.fm u).dnT 0 v c x (φ ((D.fm u).dn 0 v c x)) = fun s => g p (T.val0.eY s) := by
@@ -184,7 +184,7 @@ theorem D_op_preserves_forms_zero (T : Forms0 D u) (v : (D.mem u).A.vT) (φ : (D
     split_ifs
     · exact Submodule.subset_span ⟨_, rfl⟩
     · exact zero_mem _
-  obtain ⟨G, hG, hGc⟩ := adelic_function_extends_from_classes T.cls0.lev (embT D) (fun τ x => embedding_conj_compat D τ x) (lamT u 0)
+  obtain ⟨G, hG, hGc⟩ := adelic_function_extends_from_classes T.cls0.lev (Formalism.L2.Forms.embT D) (fun τ x => embedding_conj_compat D τ x) (lamT u 0)
     T.cls0.y (fun c => trivial_stabiliser_zero T _) (fun c c' γ hγ κ h => class_eq_of_rational_translate T c c' γ hγ κ h) hg Fc hF
   refine (T.val0.Fi _).2 ⟨G, hG, ?_⟩
   funext c z
@@ -208,7 +208,7 @@ def IsUpMvF (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0) (x : (
 set_option maxHeartbeats 2000000 in
 theorem U_op_eq_move_sum (T : Forms0 D u) (v : (D.mem u).A.vT) (ψ : Fn D u 0)
     {g : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F) → Fr D 0 (Nat.zero_le _) → ℂ}
-    (hg : g ∈ AdFun T.cls0.lev (embT D))
+    (hg : g ∈ AdFun T.cls0.lev (Formalism.L2.Forms.embT D))
     (hψ : ∀ c, ψ c = fun s => g (T.cls0.y c) (T.val0.eY s))
     (c : (D.mem u).C.cls 0)
     (Mv : {x : (D.fm u).lv 0 v c // (D.fm u).fv 0 v c x = 1} →
@@ -254,7 +254,7 @@ theorem diamond_commutes_U_distinct (T : Forms0 D u) (hM : UpDiaMatch0F T) (v v'
   obtain ⟨G, hG, hGφ⟩ := forms_from_adelic_function T 0 (Nat.zero_le _) rfl (Uop D u 0 v φ) (U_op_preserves_forms_zero T v φ hφ)
   have hGA := (Submodule.mem_inf.1 hG).1
   obtain ⟨k, hk, δ, hδ⟩ := diamond_elements_exist_all T 0 (Nat.zero_le _) rfl v' a
-  have hgδ := adelic_function_right_translate_diamond T.cls0.lev (embT D) _ _ (level_places_not_bad T.atT v') hδ hgA
+  have hgδ := adelic_function_right_translate_diamond T.cls0.lev (Formalism.L2.Forms.embT D) _ _ (level_places_not_bad T.atT v') hδ hgA
   have hne : (T.atT.eV v).1 ≠ (T.atT.eV v').1 := fun h => hvv (T.atT.eV.injective (Subtype.ext h))
   have hdφ : ∀ c1, dia D u 0 v' a φ c1 =
       fun s => g (T.cls0.y c1 * δ) (T.val0.eY s) := by
@@ -281,7 +281,7 @@ theorem diamond_commutes_U_distinct (T : Forms0 D u) (hM : UpDiaMatch0F T) (v v'
     exact T.val0.dilT v' a k hk c δ hδ G hGA
   rw [hL, U_op_eq_move_sum T v (dia D u 0 v' a φ) hgδ hdφ c Mv hMv]
   funext s
-  rw [adelic_value_translate T.cls0.lev (embT D) (fun τ x => embedding_conj_compat D τ x) hGA γd hγd _ _
+  rw [adelic_value_translate T.cls0.lev (Formalism.L2.Forms.embT D) (fun τ x => embedding_conj_compat D τ x) hGA γd hγd _ _
     ⟨κ0.1, hκ⟩ hx]
   have hG2 : ∀ y', G (T.cls0.y ((D.fm u).dil 0 v' a c)) y' =
       ∑ x, g (T.cls0.y ((D.fm u).dil 0 v' a c) * Mv2 x) y' := by
@@ -317,7 +317,7 @@ theorem diamond_commutes_U_distinct (T : Forms0 D u) (hM : UpDiaMatch0F T) (v v'
     congr 1
     apply Subtype.ext
     simp only [Subgroup.coe_mul, mul_assoc, hcomm]
-  rw [hv2, adelic_value_translate T.cls0.lev (embT D) (fun τ x => embedding_conj_compat D τ x) hgA γd hγd _ _
+  rw [hv2, adelic_value_translate T.cls0.lev (Formalism.L2.Forms.embT D) (fun τ x => embedding_conj_compat D τ x) hgA γd hγd _ _
     m hx2, hχ]
 
 def IsDnMvF (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0) (x : Module.Dual ((D.mem u).A.Fv v) ((D.fm u).lk 0 v c))
@@ -332,7 +332,7 @@ def IsDnMvF (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0) (x : M
 set_option maxHeartbeats 2000000 in
 theorem D_op_eq_move_sum (T : Forms0 D u) (v : (D.mem u).A.vT) (ψ : Fn D u 0)
     {g : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F) → Fr D 0 (Nat.zero_le _) → ℂ}
-    (hg : g ∈ AdFun T.cls0.lev (embT D))
+    (hg : g ∈ AdFun T.cls0.lev (Formalism.L2.Forms.embT D))
     (hψ : ∀ c, ψ c = fun s => g (T.cls0.y c) (T.val0.eY s))
     (c : (D.mem u).C.cls 0)
     (Mv : {x : Module.Dual ((D.mem u).A.Fv v) ((D.fm u).lk 0 v c) // x ((D.fm u).te 0 v c) = 1} →
@@ -378,7 +378,7 @@ theorem diamond_commutes_D_distinct (T : Forms0 D u) (hM : DnDiaMatch0F T) (v v'
   obtain ⟨G, hG, hGφ⟩ := forms_from_adelic_function T 0 (Nat.zero_le _) rfl (Dop D u 0 v φ) (D_op_preserves_forms_zero T v φ hφ)
   have hGA := (Submodule.mem_inf.1 hG).1
   obtain ⟨k, hk, δ, hδ⟩ := diamond_elements_exist_all T 0 (Nat.zero_le _) rfl v' a
-  have hgδ := adelic_function_right_translate_diamond T.cls0.lev (embT D) _ _ (level_places_not_bad T.atT v') hδ hgA
+  have hgδ := adelic_function_right_translate_diamond T.cls0.lev (Formalism.L2.Forms.embT D) _ _ (level_places_not_bad T.atT v') hδ hgA
   have hne : (T.atT.eV v).1 ≠ (T.atT.eV v').1 := fun h => hvv (T.atT.eV.injective (Subtype.ext h))
   have hdφ : ∀ c1, dia D u 0 v' a φ c1 =
       fun s => g (T.cls0.y c1 * δ) (T.val0.eY s) := by
@@ -405,7 +405,7 @@ theorem diamond_commutes_D_distinct (T : Forms0 D u) (hM : DnDiaMatch0F T) (v v'
     exact T.val0.dilT v' a k hk c δ hδ G hGA
   rw [hL, D_op_eq_move_sum T v (dia D u 0 v' a φ) hgδ hdφ c Mv hMv]
   funext s
-  rw [adelic_value_translate T.cls0.lev (embT D) (fun τ x => embedding_conj_compat D τ x) hGA γd hγd _ _
+  rw [adelic_value_translate T.cls0.lev (Formalism.L2.Forms.embT D) (fun τ x => embedding_conj_compat D τ x) hGA γd hγd _ _
     ⟨κ0.1, hκ⟩ hx]
   have hG2 : ∀ y', G (T.cls0.y ((D.fm u).dil 0 v' a c)) y' =
       ∑ x, g (T.cls0.y ((D.fm u).dil 0 v' a c) * Mv2 x) y' := by
@@ -441,7 +441,7 @@ theorem diamond_commutes_D_distinct (T : Forms0 D u) (hM : DnDiaMatch0F T) (v v'
     congr 1
     apply Subtype.ext
     simp only [Subgroup.coe_mul, mul_assoc, hcomm]
-  rw [hv2, adelic_value_translate T.cls0.lev (embT D) (fun τ x => embedding_conj_compat D τ x) hgA γd hγd _ _
+  rw [hv2, adelic_value_translate T.cls0.lev (Formalism.L2.Forms.embT D) (fun τ x => embedding_conj_compat D τ x) hgA γd hγd _ _
     m hx2, hχ]
 
 end DiaU0

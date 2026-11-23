@@ -200,7 +200,7 @@ theorem left_eq_of_comb {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G] {s 
   obtain ⟨u, hu, rfl⟩ := h
   simpa using hu 0
 
-theorem main : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (r : ℕ) (U : Formalism.L2.PjFree.Unf Xo c σ r) (Uw : UnfWit U) [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (a : ArcIn Dw l β ℂ (σ.comp β)) (χ : Sp (PowerSeries ℂ) ⟶ Y.X) (W : Wit Y a χ) (Ha : HolArc Y σ a χ W Uw.F) [Algebra c.F ℂ⸨X⸩] (y : FrPt Xo c ℂ⸨X⸩) (e : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Out.GtPt a.D₀ (epsR ℂ)) (th : a.D₀.P.L.Sec) (z : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Fin Uw.g → ℂ)), GoodEmb c σ → (∀ x : c.F, algebraMap c.F ℂ⸨X⸩ x = HahnSeries.ofPowerSeries ℤ ℂ (PowerSeries.C (R := ℂ) (σ x))) → Mono Y.j → IsArcFr W e th (HahnSeries.ofPowerSeries ℤ ℂ) y → (∀ τ i, AnVec Ha (e τ i) (z τ i)) → (∀ τ, LinearIndependent ℂ (z τ) ∧ ∀ i jj, z τ i jj ≠ 0 → (Uw.e jj).1 = τ) := by
+theorem main : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (r : ℕ) (U : Formalism.L2.PjFree.Unf Xo c σ r) (Uw : UnfWit U) [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (a : ArcIn Dw l β ℂ (σ.comp β)) (χ : Sp (PowerSeries ℂ) ⟶ Y.X) (W : Wit Y a χ) (Ha : HolArc Y σ a χ W Uw.F) [Algebra c.F ℂ⸨X⸩] (y : FrPt Xo c ℂ⸨X⸩) (e : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Out.GtPt a.D₀ (epsR ℂ)) (th : a.D₀.P.L.Sec) (z : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Fin Uw.g → ℂ)), Formalism.L2.PjFree.GoodEmb c σ → (∀ x : c.F, algebraMap c.F ℂ⸨X⸩ x = HahnSeries.ofPowerSeries ℤ ℂ (PowerSeries.C (R := ℂ) (σ x))) → Mono Y.j → IsArcFr W e th (HahnSeries.ofPowerSeries ℤ ℂ) y → (∀ τ i, AnVec Ha (e τ i) (z τ i)) → (∀ τ, LinearIndependent ℂ (z τ) ∧ ∀ i jj, z τ i jj ≠ 0 → (Uw.e jj).1 = τ) := by
   intro hL _ E _ _ _ H Dw l Xo c σ r U Uw _ _ O _ β Y a χ W Ha _ y e th z hσ halg _ hF hz τ
   have hG := hL.globalFns
   have ex := _root_.GlobalTheory.ConstLie.main hG E H Dw l Xo c O β Y ℂ _ a χ W
@@ -222,7 +222,7 @@ theorem main : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField 
     by_cases hx : x = 0
     · simp [hx]
     have ht := ((ex _).2 _ (hv i)).1 (an₃ _ _ (hz τ i))
-    obtain ⟨ν₁, hν₁, -⟩ := an₂ (fun k => relab c σ (Uw.e k).1 (x : E) * z τ i k)
+    obtain ⟨ν₁, hν₁, -⟩ := an₂ (fun k => Formalism.L2.PjFree.relab c σ (Uw.e k).1 (x : E) * z τ i k)
     obtain ⟨v₁, hv₁, -⟩ := (ex ν₁).1
     have e₁ := act_eq Ha hx (hz τ i) (hv i) ht hν₁ hv₁ (((ex _).2 _ hv₁).1 (an₃ _ _ hν₁))
     obtain ⟨ν₂, hν₂, -⟩ := an₂ (σ (embK c τ x) • z τ i)
@@ -299,11 +299,11 @@ def ptEv : ptRing σ hK hv →ₐ[K] CAt σ where
   commutes' x := (hasSum_algebraMap_const σ hK v x).tsum_eq
 
 theorem hasSum_ptEv (s : ptRing σ hK hv) :
-    HasSum (fun n : ℤ => (s : ℂ⸨X⸩).coeff n * v ^ n) (toC (ptEv σ hK hv s)) :=
+    HasSum (fun n : ℤ => (s : ℂ⸨X⸩).coeff n * v ^ n) (Formalism.L2.PjFree.toC (ptEv σ hK hv s)) :=
   Summable.hasSum s.2
 
 theorem ptEv_eq (s : ptRing σ hK hv) {x : CAt σ}
-    (h : HasSum (fun n : ℤ => (s : ℂ⸨X⸩).coeff n * v ^ n) (toC x)) : ptEv σ hK hv s = x :=
+    (h : HasSum (fun n : ℤ => (s : ℂ⸨X⸩).coeff n * v ^ n) (Formalism.L2.PjFree.toC x)) : ptEv σ hK hv s = x :=
   h.tsum_eq
 
 theorem isUnit_ptRing (s : ptRing σ hK hv) (h0 : (s : ℂ⸨X⸩) ≠ 0)
@@ -330,13 +330,13 @@ theorem hasSum_evR_of_chart (hL : GlobalTheory.Reg.EvLaws Xo c) (σ : c.F →+* 
     (Gw : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) (CAt σ)) (sw : CAt σ)
     {y₀ : FrPt Xo c R} {y₁ y : FrPt Xo c ℂ⸨X⸩} {yw₁ yw : FrPt Xo c (CAt σ)}
     (h₁ : FrMap φ y₀ y₁) (hy : FrChg G s y₁ y) (hw₁ : FrMap ψ y₀ yw₁) (hyw : FrChg Gw sw yw₁ yw)
-    (hφ : ∀ f, HasSum (fun n : ℤ => (φ f).coeff n * v ^ n) (toC (ψ f)))
-    (hG : ∀ τ i k, HasSum (fun n : ℤ => (G τ i k).coeff n * v ^ n) (toC (Gw τ i k)))
-    (hs : HasSum (fun n : ℤ => s.coeff n * v ^ n) (toC sw))
+    (hφ : ∀ f, HasSum (fun n : ℤ => (φ f).coeff n * v ^ n) (Formalism.L2.PjFree.toC (ψ f)))
+    (hG : ∀ τ i k, HasSum (fun n : ℤ => (G τ i k).coeff n * v ^ n) (Formalism.L2.PjFree.toC (Gw τ i k)))
+    (hs : HasSum (fun n : ℤ => s.coeff n * v ^ n) (Formalism.L2.PjFree.toC sw))
     (hG' : ∀ τ, Summable fun n : ℤ => ((G τ).det⁻¹).coeff n * v ^ n)
     (hs' : Summable fun n : ℤ => (s⁻¹).coeff n * v ^ n)
     (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) (F : Rul Xo c) (hF : F ∈ sec Xo c a n) :
-    HasSum (fun m : ℤ => (evR Xo c F y).coeff m * v ^ m) (toC (evR Xo c F yw)) := by
+    HasSum (fun m : ℤ => (evR Xo c F y).coeff m * v ^ m) (Formalism.L2.PjFree.toC (evR Xo c F yw)) := by
   let A := ptRing σ hK hv
   let φA : R →ₐ[c.F] A := φ.codRestrict A fun f => (hφ f).summable
   let GA : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) A :=
@@ -381,7 +381,7 @@ theorem exists_algHom_of_mem_range {R L : Type} [CommRing R] [Algebra c.F R] [Fi
     exact congrArg CommRingCat.Hom.hom (Spec.map_injective this)
   exact ⟨{ f with commutes' := fun x => DFunLike.congr_fun hc x }, hf⟩
 
-theorem hasSum_evR_arc : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (a : ArcIn Dw l β ℂ (σ.comp β)) (χ : Sp (PowerSeries ℂ) ⟶ Y.X) (W : Wit Y a χ) (g : ℕ) (ty : Fin g → (E →+* ℂ)) (Fu : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) ty) (Ha : HolArc Y σ a χ W Fu) [Algebra c.F ℂ⸨X⸩] (y : FrPt Xo c ℂ⸨X⸩) (e : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Out.GtPt a.D₀ (epsR ℂ)) (th : a.D₀.P.L.Sec) (Θ : ThetaDat Ha th) (z : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Fin g → ℂ)), GlobalTheory.Reg.EvLaws Xo c → (∀ x : c.F, algebraMap c.F ℂ⸨X⸩ x = HahnSeries.ofPowerSeries ℤ ℂ (PowerSeries.C (R := ℂ) (σ x))) → χ ≫ Y.s = spMap (PowerSeries.C (R := ℂ)) ≫ spMap (σ.comp β) → Mono (spMap β) → PushInvertible Y.t.G Y.t.PP.L → ThNZ th → IsArcFr W e th (HahnSeries.ofPowerSeries ℤ ℂ) y → (∀ τ k, AnVec Ha (e τ k) (z τ k)) → ∃ T : ℝ, ∀ w : ℂ, T < w.im → ∀ yw, AnFr Ha Θ z w yw → ∀ a' n (F : Rul Xo c), F ∈ sec Xo c a' n → HasSum (fun m : ℤ => (evR Xo c F y).coeff m * eTwoPi w ^ m) (toC (evR Xo c F yw)) := by
+theorem hasSum_evR_arc : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (a : ArcIn Dw l β ℂ (σ.comp β)) (χ : Sp (PowerSeries ℂ) ⟶ Y.X) (W : Wit Y a χ) (g : ℕ) (ty : Fin g → (E →+* ℂ)) (Fu : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) ty) (Ha : HolArc Y σ a χ W Fu) [Algebra c.F ℂ⸨X⸩] (y : FrPt Xo c ℂ⸨X⸩) (e : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Out.GtPt a.D₀ (epsR ℂ)) (th : a.D₀.P.L.Sec) (Θ : ThetaDat Ha th) (z : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Fin g → ℂ)), GlobalTheory.Reg.EvLaws Xo c → (∀ x : c.F, algebraMap c.F ℂ⸨X⸩ x = HahnSeries.ofPowerSeries ℤ ℂ (PowerSeries.C (R := ℂ) (σ x))) → χ ≫ Y.s = spMap (PowerSeries.C (R := ℂ)) ≫ spMap (σ.comp β) → Mono (spMap β) → PushInvertible Y.t.G Y.t.PP.L → ThNZ th → IsArcFr W e th (HahnSeries.ofPowerSeries ℤ ℂ) y → (∀ τ k, AnVec Ha (e τ k) (z τ k)) → ∃ T : ℝ, ∀ w : ℂ, T < w.im → ∀ yw, AnFr Ha Θ z w yw → ∀ a' n (F : Rul Xo c), F ∈ sec Xo c a' n → HasSum (fun m : ℤ => (evR Xo c F y).coeff m * eTwoPi w ^ m) (Formalism.L2.PjFree.toC (evR Xo c F yw)) := by
   intro hL1 hL2 E _ _ _ H Dw l Xo c σ _ _ O _ β Y a χ W g ty Fu Ha _ y e th Θ z hL hK hχ hβ hP hth hy hz
   obtain ⟨pt, -, -, -, -, hpt1, hpt2, -⟩ := id hy
   have hpt3 : pt ≫ pullback.snd _ _ = spMap (algebraMap c.F ℂ⸨X⸩) := by
@@ -408,9 +408,9 @@ theorem hasSum_evR_arc : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [Nu
       ∃ (ψ : p.R →ₐ[c.F] CAt σ) (yw₁ : FrPt Xo c (CAt σ))
         (Gw : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) (CAt σ)) (sw : CAt σ),
         FrMap ψ y₀ yw₁ ∧ FrChg Gw sw yw₁ yw ∧
-        (∀ f, HasSum (fun n : ℤ => (φ f).coeff n * eTwoPi w ^ n) (toC (ψ f))) ∧
-        (∀ τ i k, HasSum (fun n : ℤ => (G τ i k).coeff n * eTwoPi w ^ n) (toC (Gw τ i k))) ∧
-        HasSum (fun n : ℤ => s.coeff n * eTwoPi w ^ n) (toC sw) := by
+        (∀ f, HasSum (fun n : ℤ => (φ f).coeff n * eTwoPi w ^ n) (Formalism.L2.PjFree.toC (ψ f))) ∧
+        (∀ τ i k, HasSum (fun n : ℤ => (G τ i k).coeff n * eTwoPi w ^ n) (Formalism.L2.PjFree.toC (Gw τ i k))) ∧
+        HasSum (fun n : ℤ => s.coeff n * eTwoPi w ^ n) (Formalism.L2.PjFree.toC sw) := by
     intro w hw yw hyw
     rw [max_lt_iff, max_lt_iff] at hw
     obtain ⟨ψ, hψ1, hψ2⟩ := h₁ w hw.1

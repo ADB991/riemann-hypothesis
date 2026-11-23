@@ -200,24 +200,24 @@ open scoped Classical in
 theorem isdRJ_zero_of_trivial_on_open_inertia :
     ∀ {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {l : ℕ} [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P), Nonempty (LocTied l P AI) →
     ∀ (w : HeightOneSpectrum (𝓞 E)) (A : ValuationSubring Ω), IsPlaceOver A w →
-    ∀ (O : Type) [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l E Ω (Dec (F := E) A) O),
+    ∀ (O : Type) [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l E Ω (ReciprocityTheory.Gal.Dec (F := E) A) O),
       GlobalTheory.Pst.Induces Bw →
-    ∀ (LL' : FinExt l), Bw.LL.1 ≤ LL'.1 → ∀ (ψ : ↥(Dec (F := E) A) →* (↥LL'.1)ˣ),
+    ∀ (LL' : FinExt l), Bw.LL.1 ≤ LL'.1 → ∀ (ψ : ↥(ReciprocityTheory.Gal.Dec (F := E) A) →* (↥LL'.1)ˣ),
       Continuous (fun g => ((ψ g : ↥LL'.1) : Qbar l)) → (∀ g, ‖((ψ g : ↥LL'.1) : Qbar l)‖ = 1) →
       ∀ V : Subgroup (G E Ω), IsOpen (V : Set (G E Ω)) →
-      (∀ σ : ↥(Dec (F := E) A), (σ : G E Ω) ∈ V → (σ : G E Ω) ∈ Ine (F := E) A → ψ σ = 1) →
+      (∀ σ : ↥(ReciprocityTheory.Gal.Dec (F := E) A), (σ : G E Ω) ∈ V → (σ : G E Ω) ∈ Ine (F := E) A → ψ σ = 1) →
       PositivityTheory.HodgeLocalCharacter.HLC.IsdRJ Bw P LL' ψ 0 := by
   intro E Ω _ _ _ _ _ l _ P AI hT w A hA O _ _ _ Bw hInd LL' hle ψ hcont hnorm V hV hVI
   obtain ⟨Ti⟩ := hT
   have hK : ∃ (K' : FinExt l) (h : Bw.Kw.1 ≤ K'.1), ∀ g : ↥(GK K'),
-      ((Bw.e.symm (Subgroup.inclusion (GK_le h) g) : ↥(Dec (F := E) A)) : G E Ω) ∈ V := by
-    have hU : IsOpen {g : ↥(GK Bw.Kw) | ((Bw.e.symm g : ↥(Dec (F := E) A)) : G E Ω) ∈ V} :=
+      ((Bw.e.symm (Subgroup.inclusion (GK_le h) g) : ↥(ReciprocityTheory.Gal.Dec (F := E) A)) : G E Ω) ∈ V := by
+    have hU : IsOpen {g : ↥(GK Bw.Kw) | ((Bw.e.symm g : ↥(ReciprocityTheory.Gal.Dec (F := E) A)) : G E Ω) ∈ V} :=
       hV.preimage (continuous_subtype_val.comp Bw.e_symm_cont)
     obtain ⟨U', hU', hUU'⟩ := isOpen_induced_iff.1 hU
     have h1 : (1 : GQ l) ∈ U' := by
       have : (1 : ↥(GK Bw.Kw)) ∈ Subtype.val ⁻¹' U' := by
         rw [hUU']
-        change ((Bw.e.symm 1 : ↥(Dec (F := E) A)) : G E Ω) ∈ V
+        change ((Bw.e.symm 1 : ↥(ReciprocityTheory.Gal.Dec (F := E) A)) : G E Ω) ∈ V
         rw [map_one]
         exact V.one_mem
       exact this

@@ -201,7 +201,7 @@ theorem GlobalTheory.basis_lift : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Type) [C
       · have h1 : x (K + 1) = x K + fun i => (p : B) ^ K * bF (Fs K) i := by
           funext i; simp [hx, Finset.sum_range_succ]
         have h2 : (Fs (K + 1)).1 = gF (Fs K) := by rw [hFs]
-        rw [h1, comb_add, comb_mul, h2, map_pow, map_natCast]
+        rw [h1, comb_add, GlobalTheory.BasisLift.comb_mul, h2, map_pow, map_natCast]
         conv_lhs => rw [hfe, heqF (Fs K)]
         simp only [smul_add, smul_smul, ← pow_succ]
         abel

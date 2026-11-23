@@ -89,7 +89,7 @@ variable {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {A : ReciprocityTheory
   {d e : (∀ k, ι k) → K → ℕ} {G : (∀ k, ι k) → Fin N → MRing ι} {F : Finset (MRing ι × (K → ℕ))}
 
 theorem QE_pos (hgen : KH.GeneratesOn y (fun k => (m : ℤ) * A.a k) v)
-    (he : ∀ c k, (e c k : ℤ) = d c k + m * A.a k) (hG : ∀ c j, IsMultiHomog (G c j) (e c))
+    (he : ∀ c k, (e c k : ℤ) = d c k + m * A.a k) (hG : ∀ c j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (G c j) (e c))
     (hGy : ∀ c j, aeval y (G c j) = v j * aeval y (chartMon c (d c)))
     (hFspan : mCoordIdeal y ≤ Ideal.span ((fun p => p.1) '' (F : Set (MRing ι × (K → ℕ)))))
     {x : (Σ k, ι k) → ℂ} (hx : x ∈ blockNZ ι) : 0 < Qf d G x + Ef A m F x := by
@@ -114,7 +114,7 @@ theorem QE_pos (hgen : KH.GeneratesOn y (fun k => (m : ℤ) * A.a k) v)
     linarith
 
 theorem Sf_pos (hgen : KH.GeneratesOn y (fun k => (m : ℤ) * A.a k) v)
-    (he : ∀ c k, (e c k : ℤ) = d c k + m * A.a k) (hG : ∀ c j, IsMultiHomog (G c j) (e c))
+    (he : ∀ c k, (e c k : ℤ) = d c k + m * A.a k) (hG : ∀ c j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (G c j) (e c))
     (hGy : ∀ c j, aeval y (G c j) = v j * aeval y (chartMon c (d c)))
     (hFspan : mCoordIdeal y ≤ Ideal.span ((fun p => p.1) '' (F : Set (MRing ι × (K → ℕ)))))
     {x : (Σ k, ι k) → ℂ} (hx : x ∈ blockNZ ι) : 0 < Sf d G A m F x :=
@@ -144,7 +144,7 @@ def wt (c : K → ℂ) (n : K → ℤ) : ℝ := ∏ k, ‖c k‖ ^ n k
 theorem wt_ne_zero {c : K → ℂ} (hc : ∀ k, c k ≠ 0) (n : K → ℤ) : wt c n ≠ 0 :=
   Finset.prod_ne_zero_iff.mpr fun k _ => zpow_ne_zero _ (norm_ne_zero_iff.mpr (hc k))
 
-theorem eval_smul_of_isMultiHomog {s : MRing ι} {a : K → ℕ} (hs : IsMultiHomog s a) (c : K → ℂ)
+theorem eval_smul_of_isMultiHomog {s : MRing ι} {a : K → ℕ} (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a) (c : K → ℂ)
     (u : (Σ k, ι k) → ℂ) :
     eval (fun p ↦ c p.1 * u p) (map (Int.castRingHom ℂ) s) =
       (∏ k, c k ^ a k) * eval u (map (Int.castRingHom ℂ) s) := by
@@ -160,7 +160,7 @@ theorem eval_smul_of_isMultiHomog {s : MRing ι} {a : K → ℕ} (hs : IsMultiHo
   rw [hprod]
   ring
 
-theorem norm_ev_smul {F : MRing ι} {a : K → ℕ} (hF : IsMultiHomog F a) (c : K → ℂ) (x : (Σ k, ι k) → ℂ) :
+theorem norm_ev_smul {F : MRing ι} {a : K → ℕ} (hF : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog F a) (c : K → ℂ) (x : (Σ k, ι k) → ℂ) :
     ‖ev F (fun p => c p.1 * x p)‖ ^ 2 = (∏ k, ‖c k‖ ^ (2 * a k)) * ‖ev F x‖ ^ 2 := by
   rw [ev, eval_smul_of_isMultiHomog hF, norm_mul, mul_pow, norm_prod, ← Finset.prod_pow]
   congr 1
@@ -189,7 +189,7 @@ theorem prod_norm_pow_eq_wt (c : K → ℂ) (a : K → ℕ) :
   push_cast
   rfl
 
-theorem term_smul {F : MRing ι} {a b : K → ℕ} (hF : IsMultiHomog F a) (t : K → ℤ)
+theorem term_smul {F : MRing ι} {a b : K → ℕ} (hF : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog F a) (t : K → ℤ)
     (hab : ∀ k, (a k : ℤ) = b k + t k) {c : K → ℂ} (hc : ∀ k, c k ≠ 0) (x : (Σ k, ι k) → ℂ) :
     ‖ev F (fun p => c p.1 * x p)‖ ^ 2 / Nd b (fun p => c p.1 * x p) =
       wt c (fun k => 2 * t k) * (‖ev F x‖ ^ 2 / Nd b x) := by
@@ -218,7 +218,7 @@ theorem h_pow_smul (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (m
 
 theorem Sf_smul {m : ℕ} {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {d e : (∀ k, ι k) → K → ℕ} {G : (∀ k, ι k) → Fin N → MRing ι}
     {F : Finset (MRing ι × (K → ℕ))} (he : ∀ c k, (e c k : ℤ) = d c k + m * A.a k)
-    (hG : ∀ c j, IsMultiHomog (G c j) (e c)) (hF : ∀ p ∈ F, IsMultiHomog p.1 p.2)
+    (hG : ∀ c j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (G c j) (e c)) (hF : ∀ p ∈ F, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p.1 p.2)
     {c : K → ℂ} (hc : ∀ k, c k ≠ 0) (x : (Σ k, ι k) → ℂ) :
     Sf d G A m F (fun p => c p.1 * x p) = Sf d G A m F x := by
   set lam := wt c (fun k => 2 * ((m : ℤ) * A.a k)) with hlam
@@ -269,9 +269,9 @@ variable {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {A : ReciprocityTheory
   {d e : (∀ k, ι k) → K → ℕ} {G : (∀ k, ι k) → Fin N → MRing ι} {F : Finset (MRing ι × (K → ℕ))}
 
 theorem Sf_value (hv : ∀ j, v j ∈ chartLat y A.a m)
-    (he : ∀ c k, (e c k : ℤ) = d c k + m * A.a k) (hG : ∀ c j, IsMultiHomog (G c j) (e c))
+    (he : ∀ c k, (e c k : ℤ) = d c k + m * A.a k) (hG : ∀ c j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (G c j) (e c))
     (hGy : ∀ c j, aeval y (G c j) = v j * aeval y (chartMon c (d c)))
-    (hF : ∀ p ∈ F, IsMultiHomog p.1 p.2 ∧ p.1 ∈ mCoordIdeal y)
+    (hF : ∀ p ∈ F, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p.1 p.2 ∧ p.1 ∈ mCoordIdeal y)
     {x : (Σ k, ι k) → ℂ} (hx : x ∈ mcPts (mCoordIdeal y)) :
     Sf d G A m F x = ∑ j, secNormAt y A m (v j) x ^ 2 := by
   have hx' : x ∈ blockNZ ι := hx.1

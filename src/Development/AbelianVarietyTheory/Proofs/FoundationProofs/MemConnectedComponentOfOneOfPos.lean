@@ -235,10 +235,10 @@ theorem mem_connectedComponentOfOne_of_pos (k : Kˣ) (hk : ∀ φ : K →+* ℝ,
       exact this
   exact hp.subset_connectedComponent (fun w _ => h1 w) (fun w _ => h2 w)
 
-def infPart : Ideles K →* (InfiniteAdeleRing K)ˣ :=
+def infPart : Neutral.B1.Ideles K →* (InfiniteAdeleRing K)ˣ :=
   Units.map (MonoidHom.fst (InfiniteAdeleRing K) (FiniteAdeleRing (𝓞 K) K))
 
-def rayIdl (𝔪 : Ideal (𝓞 K)) : Subgroup (Ideles K) where
+def rayIdl (𝔪 : Ideal (𝓞 K)) : Subgroup (Neutral.B1.Ideles K) where
   carrier := {a | a ∈ unitIdl K ∧ (∀ v : HeightOneSpectrum (𝓞 K), v.asIdeal ∣ 𝔪 →
     Valued.v (ev v (a : AdeleRing (𝓞 K) K) - 1) ≤ rad 𝔪 v) ∧
     infPart a ∈ Subgroup.connectedComponentOfOne (InfiniteAdeleRing K)ˣ}
@@ -256,15 +256,15 @@ def rayIdl (𝔪 : Ideal (𝓞 K)) : Subgroup (Ideles K) where
     rintro a ⟨ha, ha', ha''⟩
     refine ⟨inv_mem ha, fun v hv => ?_, by rw [map_inv]; exact inv_mem ha''⟩
     have h1 : Valued.v (ev v (a : AdeleRing (𝓞 K) K)) = 1 := ha v
-    have h2 : ev v (a : AdeleRing (𝓞 K) K) * (ev v ((a⁻¹ : Ideles K) : AdeleRing (𝓞 K) K) - 1) =
+    have h2 : ev v (a : AdeleRing (𝓞 K) K) * (ev v ((a⁻¹ : Neutral.B1.Ideles K) : AdeleRing (𝓞 K) K) - 1) =
         1 - ev v (a : AdeleRing (𝓞 K) K) := by
       rw [mul_sub, ← map_mul, Units.mul_inv, map_one, mul_one]
     have h3 := ha' v hv
     rwa [Valuation.map_sub_swap, ← h2, map_mul, h1, one_mul] at h3
 
-theorem isOpen_rayIdl {𝔪 : Ideal (𝓞 K)} (hm : 𝔪 ≠ ⊥) : IsOpen (rayIdl 𝔪 : Set (Ideles K)) := by
+theorem isOpen_rayIdl {𝔪 : Ideal (𝓞 K)} (hm : 𝔪 ≠ ⊥) : IsOpen (rayIdl 𝔪 : Set (Neutral.B1.Ideles K)) := by
   have h : IsOpen (⋂ v ∈ {v : HeightOneSpectrum (𝓞 K) | v.asIdeal ∣ 𝔪},
-      {a : Ideles K | Valued.v (ev v (a : AdeleRing (𝓞 K) K) - 1) ≤ rad 𝔪 v}) :=
+      {a : Neutral.B1.Ideles K | Valued.v (ev v (a : AdeleRing (𝓞 K) K) - 1) ≤ rad 𝔪 v}) :=
     (Ideal.finite_factors hm).isOpen_biInter fun v _ => (GlobalTheory.Mem.UnitOpen.isOpen_val_le v _).preimage
       ((GlobalTheory.Mem.UnitOpen.continuous_comp v).sub continuous_const)
   have hp : Continuous (infPart (K := K)) := Continuous.units_map _ continuous_fst
@@ -300,7 +300,7 @@ def unif (v : HeightOneSpectrum (𝓞 K)) : (v.adicCompletion K)ˣ := atFin v (e
 
 theorem isUnifAt_unif (v : HeightOneSpectrum (𝓞 K)) : IsUnifAt v (unif v) := (exists_unif v).choose_spec
 
-def unifIdl (𝔪 : Ideal (𝓞 K)) : idealsPrimeTo 𝔪 →* Ideles K := extend 𝔪 fun v => localIdele K v (unif v)
+def unifIdl (𝔪 : Ideal (𝓞 K)) : idealsPrimeTo 𝔪 →* Neutral.B1.Ideles K := extend 𝔪 fun v => localIdele K v (unif v)
 
 theorem infPart_unifIdl (𝔪 : Ideal (𝓞 K)) (J : idealsPrimeTo 𝔪) : infPart (unifIdl 𝔪 J) = 1 := by
   refine (MonoidHom.map_finprod infPart (finite_support_zpow (fun v => localIdele K v (unif v)) _)).trans ?_
@@ -334,11 +334,11 @@ theorem ev_diagUnits (v : HeightOneSpectrum (𝓞 K)) (k : Kˣ) :
 
 theorem div_mem_rayIdl_iff {𝔪 : Ideal (𝓞 K)} (hm : 𝔪 ≠ ⊥) (J : idealsPrimeTo 𝔪) (k : Kˣ) :
     diagUnits K k * (unifIdl 𝔪 J)⁻¹ ∈ rayIdl 𝔪 ↔ k ∈ rayUnits 𝔪 ∧ toPrincipalIdeal (𝓞 K) K k = J.1 := by
-  have e0 : ∀ v, ev v ((diagUnits K k * (unifIdl 𝔪 J)⁻¹ : Ideles K) : AdeleRing (𝓞 K) K) =
+  have e0 : ∀ v, ev v ((diagUnits K k * (unifIdl 𝔪 J)⁻¹ : Neutral.B1.Ideles K) : AdeleRing (𝓞 K) K) =
       algebraMap K (v.adicCompletion K) k * (ev v (unifIdl 𝔪 J : AdeleRing (𝓞 K) K))⁻¹ := fun v => by
     rw [Units.val_mul, map_mul, ev_diagUnits, map_units_inv]
   have e1 : diagUnits K k * (unifIdl 𝔪 J)⁻¹ ∈ unitIdl K ↔ toPrincipalIdeal (𝓞 K) K k = J.1 := by
-    have : ∀ v, Valued.v (ev v ((diagUnits K k * (unifIdl 𝔪 J)⁻¹ : Ideles K) : AdeleRing (𝓞 K) K)) = 1 ↔
+    have : ∀ v, Valued.v (ev v ((diagUnits K k * (unifIdl 𝔪 J)⁻¹ : Neutral.B1.Ideles K) : AdeleRing (𝓞 K) K)) = 1 ↔
         FractionalIdeal.count K v (FractionalIdeal.spanSingleton (𝓞 K)⁰ (k : K)) =
           FractionalIdeal.count K v (J.1 : FractionalIdeal (𝓞 K)⁰ K) := fun v => by
       rw [e0, map_mul, map_inv₀, valued_unifIdl, valued_algebraMap, mul_inv_eq_one₀ WithZero.exp_ne_zero,
@@ -347,7 +347,7 @@ theorem div_mem_rayIdl_iff {𝔪 : Ideal (𝓞 K)} (hm : 𝔪 ≠ ⊥) (J : idea
     exact ⟨fun h => GlobalTheory.Idele.eq_of_count_eq (FractionalIdeal.spanSingleton_ne_zero_iff.2 k.ne_zero) J.1.ne_zero
       fun v => (this v).1 (h v), fun h v => (this v).2 (by rw [h])⟩
   have e2 : ∀ v : HeightOneSpectrum (𝓞 K), v.asIdeal ∣ 𝔪 →
-      Valued.v (ev v ((diagUnits K k * (unifIdl 𝔪 J)⁻¹ : Ideles K) : AdeleRing (𝓞 K) K) - 1) =
+      Valued.v (ev v ((diagUnits K k * (unifIdl 𝔪 J)⁻¹ : Neutral.B1.Ideles K) : AdeleRing (𝓞 K) K) - 1) =
         v.valuation K ((k : K) - 1) := fun v hv => by
     rw [e0, ev_unifIdl, J.2 v hv, zpow_zero, inv_one, mul_one, ← valued_algebraMap]
     simp only [map_sub, map_one]
@@ -362,7 +362,7 @@ theorem div_mem_rayIdl_iff {𝔪 : Ideal (𝓞 K)} (hm : 𝔪 ≠ ⊥) (J : idea
   · rintro ⟨⟨h2, h3⟩, h1⟩
     exact ⟨e1.2 h1, fun v hv => (e2 v hv).symm ▸ h2 v hv, e3 ▸ mem_connectedComponentOfOne_of_pos k h3⟩
 
-def rayGrp (𝔪 : Ideal (𝓞 K)) : Subgroup (Ideles K) := (diagUnits K).range ⊔ rayIdl 𝔪
+def rayGrp (𝔪 : Ideal (𝓞 K)) : Subgroup (Neutral.B1.Ideles K) := (diagUnits K).range ⊔ rayIdl 𝔪
 
 theorem unifIdl_mem_rayGrp_iff {𝔪 : Ideal (𝓞 K)} (hm : 𝔪 ≠ ⊥) (J : idealsPrimeTo 𝔪) :
     unifIdl 𝔪 J ∈ rayGrp 𝔪 ↔ J ∈ (rayPrincipal 𝔪).subgroupOf (idealsPrimeTo 𝔪) := by

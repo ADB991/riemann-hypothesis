@@ -146,16 +146,16 @@ theorem basis_change_mem_elementary (Tt : Forms0 D u) (w : D.what₂.places.Pl) 
     (τ : D.what₂.Tau) (i : ℕ) (hi : i ≤ D.R.m) (h0 : i = 0) (c : (D.mem u).C.cls i) (B B' : GL (Fin (D.R.N i)) D.host.E)
     (hB : IsLocBasis (D.mem u).A.T (Ld D u i hi c : Set _) B)
     (hB' : IsLocBasis (D.mem u).A.T (Lk Tt.atT i hi v c : Set _) B') :
-    (((B⁻¹ * B' : GL (Fin (D.R.N i)) D.host.E) : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)).map (embT D τ) ∈
+    (((B⁻¹ * B' : GL (Fin (D.R.N i)) D.host.E) : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)).map (Formalism.L2.Forms.embT D τ) ∈
         bwA_EO (bwA_Ow D w) (D.R.N i) ∧
-      ((((B⁻¹ * B' : GL (Fin (D.R.N i)) D.host.E) : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)).map (embT D τ)).det ∈
+      ((((B⁻¹ * B' : GL (Fin (D.R.N i)) D.host.E) : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)).map (Formalism.L2.Forms.embT D τ)).det ∈
         bwA_Ow D w ∧
-      ((((B⁻¹ * B' : GL (Fin (D.R.N i)) D.host.E) : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)).map (embT D τ)).det ≠ 0 ∧
+      ((((B⁻¹ * B' : GL (Fin (D.R.N i)) D.host.E) : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)).map (Formalism.L2.Forms.embT D τ)).det ≠ 0 ∧
       ((D.mem u).A.T : ℂ) *
         (((((B⁻¹ * B' : GL (Fin (D.R.N i)) D.host.E) : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)).map
-          (embT D τ)).det)⁻¹ ∈ bwA_Ow D w := by
+          (Formalism.L2.Forms.embT D τ)).det)⁻¹ ∈ bwA_Ow D w := by
   have hLk : Lk Tt.atT i hi v c ≤ Ld D u i hi c := sup_le (bwL_lcInt0 D u Tt i hi h0 c) Submodule.smul_le_right
-  set σ := embT D τ with hσ
+  set σ := Formalism.L2.Forms.embT D τ with hσ
   set N := (((B'⁻¹ * B : GL (Fin (D.R.N i)) D.host.E) : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)).map σ
     with hNdef
   set M := (((B⁻¹ * B' : GL (Fin (D.R.N i)) D.host.E) : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)).map σ
@@ -234,12 +234,12 @@ theorem pow_smul_mem_weight_lattice (Tt : Forms0 D u) (w : D.what₂.places.Pl) 
   set τv := (D.fm u).tauOf w v with hτv
   obtain ⟨hME, hpO, hM0, hTM⟩ := basis_change_mem_elementary D u Tt w hw v τv i hi h0 c B B' hB hB'
   set Mv := (((B⁻¹ * B' : GL (Fin (D.R.N i)) D.host.E) : Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) D.host.E)).map
-    (embT D τv) with hMv
+    (Formalism.L2.Forms.embT D τv) with hMv
   set Nτ : D.what₂.Tau → Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) ℂ := fun τ => if τ = τv then Mv else 1 with hNτ
   set Mfun : D.what₂.Tau → Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) ℂ := fun τ =>
-    if τ = τv then atInf (embT D) (B'⁻¹ : GL (Fin (D.R.N i)) D.host.E).1 τ
-      else atInf (embT D) (B⁻¹ : GL (Fin (D.R.N i)) D.host.E).1 τ with hMfun
-  have hNM : (fun τ => Nτ τ * Mfun τ) = atInf (embT D) (B⁻¹ : GL (Fin (D.R.N i)) D.host.E).1 := by
+    if τ = τv then atInf (Formalism.L2.Forms.embT D) (B'⁻¹ : GL (Fin (D.R.N i)) D.host.E).1 τ
+      else atInf (Formalism.L2.Forms.embT D) (B⁻¹ : GL (Fin (D.R.N i)) D.host.E).1 τ with hMfun
+  have hNM : (fun τ => Nτ τ * Mfun τ) = atInf (Formalism.L2.Forms.embT D) (B⁻¹ : GL (Fin (D.R.N i)) D.host.E).1 := by
     funext τ
     simp only [hNτ, hMfun]
     split_ifs with h
@@ -266,9 +266,9 @@ theorem pow_smul_mem_weight_lattice (Tt : Forms0 D u) (w : D.what₂.places.Pl) 
       simp only [hNτ, if_pos rfl]; rfl
     rw [e]
     exact Submodule.smul_mem _ _ h1
-  · have hval : fnOf (gramC (gramN D i hi) (embT D)) (shiftOf (lamT u i))
-          (atInf (embT D) (B⁻¹ : GL (Fin (D.R.N i)) D.host.E).1) P =
-        fnOf (gramC (gramN D i hi) (embT D)) (shiftOf (lamT u i)) Mfun
+  · have hval : fnOf (gramC (gramN D i hi) (Formalism.L2.Forms.embT D)) (shiftOf (lamT u i))
+          (atInf (Formalism.L2.Forms.embT D) (B⁻¹ : GL (Fin (D.R.N i)) D.host.E).1) P =
+        fnOf (gramC (gramN D i hi) (Formalism.L2.Forms.embT D)) (shiftOf (lamT u i)) Mfun
           (MvPolynomial.C (∏ τ, (Nτ τ).det ^ shiftOf (lamT u i) τ) * subP Nτ P) := by
       rw [← fnOf_mul, hNM]
     rw [emb_tpow_smul, Pi.smul_apply, Pi.smul_apply, hxP z, hval, LinearMap.map_smul]

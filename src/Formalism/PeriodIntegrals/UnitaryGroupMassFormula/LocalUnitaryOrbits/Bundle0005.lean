@@ -162,7 +162,7 @@ theorem sdc_isOpen_latLoc (Λ : Set (Fin n → E))
       · simp [Pi.single_eq_of_ne h]
     rw [e]
     exact hNw (i, k)
-  let H : AddSubgroup (Fin n → Fv F v ⊗[F] E) := AddSubgroup.pi Set.univ (fun _ => latA v b2)
+  let H : AddSubgroup (Fin n → Fv F v ⊗[F] E) := AddSubgroup.pi Set.univ (fun _ => PI.VolStabSW.SdDualW.latA v b2)
   have hHo : IsOpen (H : Set (Fin n → Fv F v ⊗[F] E)) := by
     rw [AddSubgroup.coe_pi]
     exact isOpen_set_pi Set.finite_univ fun _ _ => isOpen_latA v b2
@@ -289,7 +289,7 @@ def IsRes (ϖ : Fv F v) {K : Type} [CommRing K] (τ : K →+* K) (π : OR (E := 
 
 theorem hR_add_right (x y z : Fin n → Fv F v ⊗[F] E) :
     hR (Fv F v) σ J x (y + z) = hR (Fv F v) σ J x y + hR (Fv F v) σ J x z := by
-  simp only [hR, hform, Pi.add_apply, mul_add, Finset.sum_add_distrib]
+  simp only [hR, Formalism.UG.hform, Pi.add_apply, mul_add, Finset.sum_add_distrib]
 
 theorem coord_eq (e : Fin n → Fin n → Fv F v ⊗[F] E) (he1 : gramR (Fv F v) σ J e = 1)
     (c : Fin n → Fv F v ⊗[F] E) (j : Fin n) : hR (Fv F v) σ J (e j) (∑ i, c i • e i) = c j := by

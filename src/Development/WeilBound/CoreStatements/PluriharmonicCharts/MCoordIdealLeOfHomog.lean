@@ -108,9 +108,9 @@ theorem HasVal.unique (hz : IsPt y z) {s : Φ} {v w : L} (hv : HasVal y z s v) (
   obtain ⟨d, g, h, hg, hh, h0, e, ev⟩ := hv
   obtain ⟨d', g', h', hg', hh', h0', e', ev'⟩ := hw
   have hsub : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (g * h' - g' * h) (d + d') := by
-    refine isMultiHomog_sub (isMultiHomog_mul hg hh') ?_
+    refine isMultiHomog_sub (GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hg hh') ?_
     rw [add_comm]
-    exact isMultiHomog_mul hg' hh
+    exact GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hg' hh
   have h1 := hz.2 _ ((mem_iff_of_homog hsub).2 (by rw [map_sub, map_mul, map_mul, e, e']; ring))
   rw [map_sub, map_mul, map_mul, ev, ev'] at h1
   have h2 : (v - w) * (aeval z h * aeval z h') = 0 := by linear_combination h1
@@ -119,7 +119,7 @@ theorem HasVal.unique (hz : IsPt y z) {s : Φ} {v w : L} (hv : HasVal y z s v) (
 theorem HasVal.mul {s t : Φ} {v w : L} (hv : HasVal y z s v) (hw : HasVal y z t w) : HasVal y z (s * t) (v * w) := by
   obtain ⟨d, g, h, hg, hh, h0, e, ev⟩ := hv
   obtain ⟨d', g', h', hg', hh', h0', e', ev'⟩ := hw
-  refine ⟨d + d', g * g', h * h', isMultiHomog_mul hg hg', isMultiHomog_mul hh hh', ?_, ?_, ?_⟩
+  refine ⟨d + d', g * g', h * h', GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hg hg', GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hh hh', ?_, ?_, ?_⟩
   · rw [map_mul]; exact mul_ne_zero h0 h0'
   · rw [map_mul, map_mul, e, e']; ring
   · rw [map_mul, map_mul, ev, ev']; ring
@@ -127,15 +127,15 @@ theorem HasVal.mul {s t : Φ} {v w : L} (hv : HasVal y z s v) (hw : HasVal y z t
 theorem HasVal.add {s t : Φ} {v w : L} (hv : HasVal y z s v) (hw : HasVal y z t w) : HasVal y z (s + t) (v + w) := by
   obtain ⟨d, g, h, hg, hh, h0, e, ev⟩ := hv
   obtain ⟨d', g', h', hg', hh', h0', e', ev'⟩ := hw
-  refine ⟨d + d', g * h' + g' * h, h * h', isMultiHomog_add (isMultiHomog_mul hg hh') ?_, isMultiHomog_mul hh hh',
+  refine ⟨d + d', g * h' + g' * h, h * h', GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_add (GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hg hh') ?_, GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hh hh',
     ?_, ?_, ?_⟩
-  · rw [add_comm]; exact isMultiHomog_mul hg' hh
+  · rw [add_comm]; exact GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hg' hh
   · rw [map_mul]; exact mul_ne_zero h0 h0'
   · rw [map_add (f := _), map_mul, map_mul, map_mul, e, e']; ring
   · rw [map_add (f := _), map_mul, map_mul, map_mul, ev, ev']; ring
 
 theorem hasVal_intCast (n : ℤ) : HasVal y z (n : Φ) (n : L) :=
-  ⟨0, C n, 1, isMultiHomog_C_zero n, isMultiHomog_one, by simp, by simp, by simp⟩
+  ⟨0, C n, 1, isMultiHomog_C_zero n, GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_one, by simp, by simp, by simp⟩
 
 theorem hasVal_zero : HasVal y z 0 0 := by simpa using hasVal_intCast (y := y) (z := z) 0
 

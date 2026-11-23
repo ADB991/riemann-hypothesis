@@ -268,6 +268,6 @@ theorem exDer_holds {C : Type} [Field C] [CharZero C] {V : VF C} {O : Type} [Com
   unfold FBChart.dF
   rw [ev_sum hZex]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [ev_mul hZex, ev_C, key i]
+  rw [ev_mul hZex, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_C, key i]
 
 end Formalism.L2.FormalSeriesBounds

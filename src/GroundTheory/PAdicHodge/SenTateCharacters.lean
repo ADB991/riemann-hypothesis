@@ -8,6 +8,8 @@ public import GroundTheory.PAdicHodge.Bundle0001
 
 set_option maxSynthPendingDepth 1
 
+attribute [-instance] GroundTheory.PAdicHodge.subfield_valuativeRel
+
 noncomputable section
 
 namespace GroundTheory.PAdicHodge

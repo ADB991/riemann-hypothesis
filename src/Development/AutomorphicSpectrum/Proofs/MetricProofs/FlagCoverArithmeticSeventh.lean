@@ -146,10 +146,10 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 theorem isMultiHomog_finset_prod {α : Type} (s : Finset α) (f : α → MRing ι) (a : α → K → ℕ)
     (h : ∀ i ∈ s, IsMultiHomog (f i) (a i)) : IsMultiHomog (∏ i ∈ s, f i) (∑ i ∈ s, a i) := by
   induction s using Finset.induction_on with
-  | empty => simpa using (isMultiHomog_one : IsMultiHomog (1 : MRing ι) 0)
+  | empty => simpa using (GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_one : IsMultiHomog (1 : MRing ι) 0)
   | insert b s hb ih =>
     rw [Finset.prod_insert hb, Finset.sum_insert hb]
-    exact isMultiHomog_mul (h b (Finset.mem_insert_self _ _))
+    exact GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul (h b (Finset.mem_insert_self _ _))
       (ih fun i hi => h i (Finset.mem_insert_of_mem hi))
 
 theorem isMultiHomog_rename_block {κ : K → K'} {v : (Σ k, ι k) → (Σ k, ι' k)} (hv : IsBlockMap κ v) {f : MRing ι}
@@ -221,7 +221,7 @@ theorem exists_rep {Ω : Type} [Field Ω] [CharZero Ω] (y : (Σ k, ι k) → Ω
       aeval y g = c * aeval y h := by
   have zero_rep : ∃ (d : K → ℕ) (g h : MRing ι), IsMultiHomog g d ∧ IsMultiHomog h d ∧ aeval y h ≠ 0 ∧
       aeval y g = (0 : Ω) * aeval y h :=
-    ⟨0, 0, 1, isMultiHomog_zero 0, isMultiHomog_one, by simp, by simp⟩
+    ⟨0, 0, 1, GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_zero 0, GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_one, by simp, by simp⟩
   unfold blockFnField at hc
   induction hc using IntermediateField.adjoin_induction with
   | mem x hx =>
@@ -244,9 +244,9 @@ theorem exists_rep {Ω : Type} [Field Ω] [CharZero Ω] (y : (Σ k, ι k) → Ω
   | add a b _ _ ha hb =>
     obtain ⟨d, g, h, hg, hh, hy, he⟩ := ha
     obtain ⟨d', g', h', hg', hh', hy', he'⟩ := hb
-    refine ⟨d + d', g * h' + g' * h, h * h', isMultiHomog_add (isMultiHomog_mul hg hh') ?_,
-      isMultiHomog_mul hh hh', ?_, ?_⟩
-    · rw [add_comm d d']; exact isMultiHomog_mul hg' hh
+    refine ⟨d + d', g * h' + g' * h, h * h', GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_add (GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hg hh') ?_,
+      GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hh hh', ?_, ?_⟩
+    · rw [add_comm d d']; exact GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hg' hh
     · rw [map_mul]; exact mul_ne_zero hy hy'
     · simp only [map_add (f := _), map_mul, he, he']; ring
   | inv a _ ha =>
@@ -259,7 +259,7 @@ theorem exists_rep {Ω : Type} [Field Ω] [CharZero Ω] (y : (Σ k, ι k) → Ω
   | mul a b _ _ ha hb =>
     obtain ⟨d, g, h, hg, hh, hy, he⟩ := ha
     obtain ⟨d', g', h', hg', hh', hy', he'⟩ := hb
-    refine ⟨d + d', g * g', h * h', isMultiHomog_mul hg hg', isMultiHomog_mul hh hh', ?_, ?_⟩
+    refine ⟨d + d', g * g', h * h', GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hg hg', GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul hh hh', ?_, ?_⟩
     · rw [map_mul]; exact mul_ne_zero hy hy'
     · simp only [map_mul, he, he']; ring
 
@@ -397,7 +397,7 @@ theorem exists_good_form [CharZero Ω] (hv : IsBlockMap κ v) (x' : (Σ k, ι' k
   have m₁ := isMultiHomog_finset_prod (Finset.range n₁) h₁ d₁ fun e _ => (r₁.2 e).2.1
   have m₂ := isMultiHomog_finset_prod (Finset.range n₂) h₂ d₂ fun e _ => (r₂.2 e).2.1
   have m₃ := isMultiHomog_finset_prod (Finset.range n₃) h₃ d₃ fun e _ => (r₃.2 e).2.1
-  have mE := isMultiHomog_mul (isMultiHomog_mul m₁ m₂) m₃
+  have mE := GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul (GroundTheory.Heights₂.Heights.LowerBoundFree.isMultiHomog_mul m₁ m₂) m₃
   refine ⟨_, _, mE, ?_, ?_⟩
   · simp only [map_mul, map_prod]
     exact mul_ne_zero (mul_ne_zero (Finset.prod_ne_zero_iff.2 fun e _ => (r₁.2 e).2.2.1)

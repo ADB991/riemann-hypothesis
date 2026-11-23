@@ -68,7 +68,7 @@ theorem geoNum_symm [DecidableEq K] : ∀ (n : ℕ) (V : Ideal (MRing ι)) (a : 
   exact FieldNumbers.IntNumSymm.full (ZMod (charOf V)) K ι _ n a σ
 
 theorem exists_dim_nat [DecidableEq K] {q : Ideal (MRing ι)} (hq : q.IsPrime) (hqm : IsMultiHomogIdeal q)
-    (hrel : IsRelevant q) {d : ℕ}
+    (hrel : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant q) {d : ℕ}
     (hd : ringKrullDim (MRing ι ⧸ q) ≤ ((d + Fintype.card K : ℕ) : WithBot ℕ∞)) :
     ∃ d' ≤ d, ringKrullDim (MRing ι ⧸ q) = ((d' + Fintype.card K : ℕ) : WithBot ℕ∞) := by
   have h1 := card_le_dim hq hqm hrel
@@ -96,9 +96,9 @@ theorem dim_add_one_le_of_lt {R : Type*} [CommRing R] {p q : Ideal R} [p.IsPrime
     (Ideal.Quotient.factor_surjective h.le) hr
     (by rw [Ideal.Quotient.factor_mk, Ideal.Quotient.eq_zero_iff_mem]; exact hrp)
 
-theorem mem_minimalPrimes_of_dim {J₂ q : Ideal (MRing ι)} {d : ℕ} (hq : q.IsPrime) (hrel : IsRelevant q)
+theorem mem_minimalPrimes_of_dim {J₂ q : Ideal (MRing ι)} {d : ℕ} (hq : q.IsPrime) (hrel : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant q)
     (hJq : J₂ ≤ q)
-    (hdim : ∀ W : Ideal (MRing ι), W.IsPrime → J₂ ≤ W → IsRelevant W →
+    (hdim : ∀ W : Ideal (MRing ι), W.IsPrime → J₂ ≤ W → ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W →
       ringKrullDim (MRing ι ⧸ W) ≤ ((d + Fintype.card K : ℕ) : WithBot ℕ∞))
     (hqd : ringKrullDim (MRing ι ⧸ q) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞)) :
     q ∈ J₂.minimalPrimes := by
@@ -107,7 +107,7 @@ theorem mem_minimalPrimes_of_dim {J₂ q : Ideal (MRing ι)} {d : ℕ} (hq : q.I
   · exact h ▸ hW
   · exfalso
     have := hW.1.1
-    have hWrel : IsRelevant W := fun k => by
+    have hWrel : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W := fun k => by
       obtain ⟨i, hi⟩ := hrel k
       exact ⟨i, fun h' => hi (hWq h')⟩
     have h1 := dim_add_one_le_of_lt h
@@ -146,7 +146,7 @@ theorem pow_shift_le {a s b : K → ℕ} (h : tdeg b ≤ tdeg a + tdeg s) (m : �
 open Classical in
 theorem factor_est [DecidableEq K] {J₂ q : Ideal (MRing ι)} {N d : ℕ} (hN : 0 < N) (hq : q.IsPrime)
     (hqm : IsMultiHomogIdeal q) (hNq : (N : MRing ι) ∈ q) (hJq : J₂ ≤ q)
-    (hdim : ∀ W : Ideal (MRing ι), W.IsPrime → J₂ ≤ W → IsRelevant W →
+    (hdim : ∀ W : Ideal (MRing ι), W.IsPrime → J₂ ≤ W → ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W →
       ringKrullDim (MRing ι ⧸ W) ≤ ((d + Fintype.card K : ℕ) : WithBot ℕ∞))
     (s c : K → ℕ) :
     ∃ (a₀ : ℕ) (C : ℝ), 0 ≤ C ∧ ∀ a : K → ℕ, (∀ k, a₀ ≤ a k) →
@@ -161,10 +161,10 @@ theorem factor_est [DecidableEq K] {J₂ q : Ideal (MRing ι)} {N d : ℕ} (hN :
       omega
   have htb : ∀ a : K → ℕ, tdeg (a + s - c) ≤ tdeg a + tdeg s := fun a =>
     (tdeg_sub_le _ _).trans (tdeg_add a s).le
-  by_cases hrel : IsRelevant q
+  by_cases hrel : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant q
   swap
   · have hnot : q ∉ topComps J₂ d := fun h => hrel h.2.1
-    simp only [IsRelevant, not_forall, not_exists, not_not] at hrel
+    simp only [ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant, not_forall, not_exists, not_not] at hrel
     obtain ⟨k, hk⟩ := hrel
     refine ⟨1 + tdeg c, 0, le_rfl, fun a ha => ?_⟩
     have hpos : 0 < (a + s - c) k := by

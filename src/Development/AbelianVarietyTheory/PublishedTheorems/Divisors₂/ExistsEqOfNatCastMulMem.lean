@@ -65,7 +65,7 @@ def EllipticMainTheoremCM : Prop :=
     ∀ (σ : ℂ ≃ₐ[K] ℂ) (s : Ideles K), RestrictsTo σ (Art (QuotientGroup.mk s)) →
     ∀ (X : WeierstrassCurve ℂ) [X.IsElliptic] (𝔞 : FractionalIdeal (𝓞 K)⁰ K) (h𝔞 : 𝔞 ≠ 0)
       (ξ : (ℂ ⧸ idealSub 𝔞) ≃+ X.toAffine.Point), IsAnalyticIso ξ →
-      Transports σ (finitePart s) h𝔞 ξ
+      Transports σ (GlobalTheory.EllipticCM.finitePart s) h𝔞 ξ
 
 def HilbertClassFieldJ : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Algebra K ℂ],

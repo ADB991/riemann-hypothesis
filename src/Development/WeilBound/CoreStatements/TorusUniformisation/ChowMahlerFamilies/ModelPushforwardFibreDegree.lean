@@ -1232,7 +1232,7 @@ theorem eq_of_comap_eq (hP' : IsModelOver P' d) (hP : IsModelOver (P'.comap (rr 
   have d1 := GenericDimBound.full O K' ι' y hy hT
   have d2 := DimStrictDrop.proof _ P' y (lt_of_le_of_ne hle (Ne.symm hne))
   rw [hP'.dim, show d + 1 + Fintype.card K' = (d + Fintype.card K') + 1 by omega] at d2
-  have h2 := relDim_lt_of_dim_lt _ _ (lt_of_two_drops d1 d2)
+  have h2 := GroundTheory.Heights₂.Heights.NumbersDVR.relDim_lt_of_dim_lt _ _ (lt_of_two_drops d1 d2)
   have d3 := GenericDimBound.full O K _ _ hP.multiProj hP.noTorsion
   have d4 := GenericDimGe.proof O K _ _ hP.multiProj.isPrime hP.noTorsion
   rw [hP.dim, show d + 1 + Fintype.card K = (d + Fintype.card K) + 1 by omega] at d3 d4
@@ -1312,7 +1312,7 @@ theorem fibre_minimal (hϖ : Irreducible ϖ) (hP' : IsModelOver P' d)
   rw [← SpecialQuotDim.proof O ϖ hϖ K' ι' W' (hQW hϖQ)] at d3
   have d4 := ContractRelDimLe.proof _ K K' j ι' _ (special_mp hϖ hmp (hQW hϖQ))
   rw [contract_special j ι' hϖ (hQW hϖQ), hc, relDim_special hϖ hP hf hfP hW hϖW] at d4
-  exact lt_irrefl _ (lt_of_le_of_lt d4 (relDim_lt_of_dim_lt _ _ d3))
+  exact lt_irrefl _ (lt_of_le_of_lt d4 (GroundTheory.Heights₂.Heights.NumbersDVR.relDim_lt_of_dim_lt _ _ d3))
 
 open Classical in
 theorem fibre_degree (hϖ : Irreducible ϖ) (hP' : IsModelOver P' d)
@@ -1476,7 +1476,7 @@ theorem fibre_num (hϖ : Irreducible ϖ) (hP' : IsModelOver P' d)
       rw [hP.dim, show d + 1 + Fintype.card K = (d + Fintype.card K) + 1 by omega] at hd2
       have hlt := lt_of_two_drops hd1 hd2
       have hltW : relDim (specialIdeal W) < ((d : ℕ) : WithBot (WithTop ℤ)) :=
-        relDim_lt_of_dim_lt _ _ (by rw [SpecialQuotDim.proof O ϖ hϖ K _ W hϖW]; exact hlt)
+        GroundTheory.Heights₂.Heights.NumbersDVR.relDim_lt_of_dim_lt _ _ (by rw [SpecialQuotDim.proof O ϖ hϖ K _ W hϖW]; exact hlt)
       have hz := ProjectionFormulaContracted.full (IsLocalRing.ResidueField O) K K'
         j ι' (specialIdeal W') hmp d hrd (by rw [hcon]; exact hltW) a
       unfold vNum

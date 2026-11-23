@@ -43,15 +43,15 @@ theorem sigR_mem {z : Fv F v ⊗[F] E} (hz : z ∈ OEv (E := E) v) : Formalism.M
 
 theorem hR_add_left' (x y z : Fin n → Fv F v ⊗[F] E) :
     hR (Fv F v) σ J (x + y) z = hR (Fv F v) σ J x z + hR (Fv F v) σ J y z := by
-  simp only [hR, hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
+  simp only [hR, Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hR_add_right' (x y z : Fin n → Fv F v ⊗[F] E) :
     hR (Fv F v) σ J x (y + z) = hR (Fv F v) σ J x y + hR (Fv F v) σ J x z := by
-  simp only [hR, hform, Pi.add_apply, mul_add, Finset.sum_add_distrib]
+  simp only [hR, Formalism.UG.hform, Pi.add_apply, mul_add, Finset.sum_add_distrib]
 
 theorem hR_sub_left' (x y z : Fin n → Fv F v ⊗[F] E) :
     hR (Fv F v) σ J (x - y) z = hR (Fv F v) σ J x z - hR (Fv F v) σ J y z := by
-  simp only [hR, hform, Pi.sub_apply, map_sub, sub_mul, Finset.sum_sub_distrib]
+  simp only [hR, Formalism.UG.hform, Pi.sub_apply, map_sub, sub_mul, Finset.sum_sub_distrib]
 
 theorem hR_sum_left' {ι : Type} (s : Finset ι) (f : ι → Fin n → Fv F v ⊗[F] E) (z : Fin n → Fv F v ⊗[F] E) :
     hR (Fv F v) σ J (∑ k ∈ s, f k) z = ∑ k ∈ s, hR (Fv F v) σ J (f k) z := by

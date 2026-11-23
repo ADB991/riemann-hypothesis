@@ -144,7 +144,7 @@ def phiC : Formalism.REAL.UJ ε ≃ₜ* HcS.BasicNotions.UpqT (pP ε) (pQ ε) wh
   continuous_invFun := continuous_phiB ε
 
 def psiL : gLie ε →ₗ[ℝ] HcS.BasicNotions.lieU (pP ε) (pQ ε) where
-  toFun x := ⟨rA ε (unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))), by
+  toFun x := ⟨rA ε (Formalism.MainNotions.S.unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))), by
     show (rA ε _)ᴴ * HcS.UG.Jpq (pP ε) (pQ ε) + HcS.UG.Jpq (pP ε) (pQ ε) * rA ε _ = 0
     rw [rA_skew_iff]
     exact lieSkew_holds n ε _ x.2⟩
@@ -155,17 +155,17 @@ def psiL : gLie ε →ₗ[ℝ] HcS.BasicNotions.lieU (pP ε) (pQ ε) where
   map_smul' c x := by
     apply Subtype.ext
     ext i j
-    apply Complex.ext <;> simp [unrealify]
+    apply Complex.ext <;> simp [Formalism.MainNotions.S.unrealify]
 
 theorem psiL_val (x : gLie ε) :
     (psiL ε x).1 =
-      rA ε (unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))) := rfl
+      rA ε (Formalism.MainNotions.S.unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))) := rfl
 
 theorem psiL_bij : Function.Bijective (psiL ε) := by
   constructor
   · intro x y hxy
-    have h1 : rA ε (unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))) =
-        rA ε (unrealify (y : EuclideanSpace ℝ (Fin n × Fin n × Bool))) := by
+    have h1 : rA ε (Formalism.MainNotions.S.unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))) =
+        rA ε (Formalism.MainNotions.S.unrealify (y : EuclideanSpace ℝ (Fin n × Fin n × Bool))) := by
       rw [← psiL_val, ← psiL_val, hxy]
     have h2 := (rA ε).injective h1
     apply Subtype.ext
@@ -177,10 +177,10 @@ theorem psiL_bij : Function.Bijective (psiL ε) := by
       Y.2
     have hsk : Xᴴ * Formalism.REAL.Jm ε + Formalism.REAL.Jm ε * X = 0 := by
       rw [← rA_skew_iff, hX, AlgEquiv.apply_symm_apply]; exact hY
-    refine ⟨⟨(WithLp.equiv 2 _).symm (realifyFun X), skewLie_holds n ε X hsk⟩, ?_⟩
+    refine ⟨⟨(WithLp.equiv 2 _).symm (Formalism.MainNotions.S.realifyFun X), skewLie_holds n ε X hsk⟩, ?_⟩
     apply Subtype.ext
     rw [psiL_val]
-    show rA ε (unrealify ((WithLp.equiv 2 _).symm (realifyFun X))) = _
+    show rA ε (Formalism.MainNotions.S.unrealify ((WithLp.equiv 2 _).symm (Formalism.MainNotions.S.realifyFun X))) = _
     rw [unr_re, hX, AlgEquiv.apply_symm_apply]
 
 def psiC : gLie ε ≃L[ℝ] HcS.BasicNotions.lieU (pP ε) (pQ ε) :=
@@ -188,36 +188,36 @@ def psiC : gLie ε ≃L[ℝ] HcS.BasicNotions.lieU (pP ε) (pQ ε) :=
 
 theorem psiC_val (x : gLie ε) :
     (psiC ε x).1 =
-      rA ε (unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))) := rfl
+      rA ε (Formalism.MainNotions.S.unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))) := rfl
 
 theorem rel_iff (g : Formalism.REAL.UJ ε) (x : gLie ε) :
     HcS.BasicNotions.UpqT.mat (phiC ε g) * ((1 + 1) - (psiC ε x).1) =
         (1 + 1) + (psiC ε x).1 ↔
       (((g : (Matrix (Fin n) (Fin n) ℂ)ˣ)) : Matrix (Fin n) (Fin n) ℂ) *
-          (2 - unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))) =
-        2 + unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool)) := by
+          (2 - Formalism.MainNotions.S.unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))) =
+        2 + Formalism.MainNotions.S.unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool)) := by
   have e1 : HcS.BasicNotions.UpqT.mat (phiC ε g) = rA ε (((g : (Matrix (Fin n) (Fin n) ℂ)ˣ)) : Matrix (Fin n) (Fin n) ℂ) :=
     phiF_mat ε g
   rw [e1, psiC_val, one_add_one_eq_two, ← map_ofNat (rA ε) 2, ← map_sub, ← map_mul, ← map_add (f := _),
     (rA ε).injective.eq_iff]
 
 theorem isUnit_of_mem_cayley_domain (x : gLie ε) (hx : psiC ε x ∈ HcInf.D0 (pP ε) (pQ ε)) :
-    IsUnit (2 - unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))).det := by
+    IsUnit (2 - Formalism.MainNotions.S.unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))).det := by
   have h : IsUnit ((1 + 1) - ((psiC ε x : HcS.BasicNotions.lieU (pP ε) (pQ ε)) :
       Matrix (Fin (pP ε) ⊕ Fin (pQ ε)) (Fin (pP ε) ⊕ Fin (pQ ε)) ℂ)).det := hx
   rw [psiC_val] at h
   have e : (1 + 1 : Matrix (Fin (pP ε) ⊕ Fin (pQ ε)) (Fin (pP ε) ⊕ Fin (pQ ε)) ℂ) -
-      rA ε (unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))) =
-      rA ε (2 - unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))) := by
+      rA ε (Formalism.MainNotions.S.unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))) =
+      rA ε (2 - Formalism.MainNotions.S.unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool))) := by
     rw [map_sub, map_ofNat, one_add_one_eq_two]
   rw [e] at h
   simpa [Matrix.det_reindex_self] using h
 
 theorem cayR_eq (x : EuclideanSpace ℝ (Fin n × Fin n × Bool)) (g : Formalism.REAL.UJ ε)
-    (h : (2 + unrealify x) * (2 - unrealify x)⁻¹ = (((g : (Matrix (Fin n) (Fin n) ℂ)ˣ)) : Matrix (Fin n) (Fin n) ℂ)) :
+    (h : (2 + Formalism.MainNotions.S.unrealify x) * (2 - Formalism.MainNotions.S.unrealify x)⁻¹ = (((g : (Matrix (Fin n) (Fin n) ℂ)ˣ)) : Matrix (Fin n) (Fin n) ℂ)) :
     cayR ε x = g := by
-  have hc : IsUnit ((2 + unrealify x) * (2 - unrealify x)⁻¹) ∧
-      Formalism.REAL.inUJ ε ((2 + unrealify x) * (2 - unrealify x)⁻¹) := by
+  have hc : IsUnit ((2 + Formalism.MainNotions.S.unrealify x) * (2 - Formalism.MainNotions.S.unrealify x)⁻¹) ∧
+      Formalism.REAL.inUJ ε ((2 + Formalism.MainNotions.S.unrealify x) * (2 - Formalism.MainNotions.S.unrealify x)⁻¹) := by
     rw [h]; exact ⟨(g : (Matrix (Fin n) (Fin n) ℂ)ˣ).isUnit, g.2⟩
   unfold cayR
   rw [dite_eq_left hc]
@@ -225,8 +225,8 @@ theorem cayR_eq (x : EuclideanSpace ℝ (Fin n × Fin n × Bool)) (g : Formalism
   rw [IsUnit.unit_spec]; exact h
 
 theorem cay_mat (x : EuclideanSpace ℝ (Fin n × Fin n × Bool)) (M : Matrix (Fin n) (Fin n) ℂ)
-    (hu : IsUnit (2 - unrealify x).det) (h : M * (2 - unrealify x) = 2 + unrealify x) :
-    (2 + unrealify x) * (2 - unrealify x)⁻¹ = M := by
+    (hu : IsUnit (2 - Formalism.MainNotions.S.unrealify x).det) (h : M * (2 - Formalism.MainNotions.S.unrealify x) = 2 + Formalism.MainNotions.S.unrealify x) :
+    (2 + Formalism.MainNotions.S.unrealify x) * (2 - Formalism.MainNotions.S.unrealify x)⁻¹ = M := by
   rw [← h, Matrix.mul_nonsing_inv_cancel_right _ _ hu]
 
 end Perm
