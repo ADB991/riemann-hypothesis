@@ -10,6 +10,9 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.PrimitiveFr
 
 open Matrix IsLocalRing ReciprocityTheory.Gal UpperTheory.V.HV UpperTheory.V.U3 UpperTheory.V.Alg UpperTheory.V.UnitaryThreeInertia
 
+attribute [local instance 1100] DivisionSemiring.to_moduleIsTorsionFree
+attribute [-instance] UpperTheory.V.Pr.IsCD.toIsDomain UpperTheory.V.Pr.IsCD.toIsDiscreteValuationRing
+
 private theorem len_union {R H : Type} [CommRing R] [AddCommGroup H] [Module R H] (T : Submodule R H)
     (P : ℕ → Submodule R H) (hm : Monotone P) (hT : ∀ x ∈ T, ∃ k, x ∈ P k) (V : ℕ)
     (hV : ∀ k, Module.length R (P k) ≤ V) : Module.length R T ≤ V := by
@@ -132,7 +135,6 @@ private theorem sha_le [CompactSpace Γ] (hF : F.Ok) (p : O) (htor : ∀ m : M, 
 
 end
 
-attribute [-instance] UpperTheory.V.Pr.IsCD.toIsDomain UpperTheory.V.Pr.IsCD.toIsDiscreteValuationRing in
 theorem UpperTheory.V.UnitaryThreeInertia.vlen_le :
     ∀ (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {l : ℕ} [Fact l.Prime] (c : Coef l) {N : ℕ} [NeZero N] (e : ℕ) (ψ : DirichletCharacter c.O N) (o₁ : ℕ), HostData l e ψ o₁ →
     ∀ (S : Finset Pl) (A : S → ValuationSubring Ω) (F : Frame c.O (Formalism.ConjugateSelfDual.G ℚ Ω) (Gam Ω S) S), IsHostFrame Ω c e ψ S A F →
