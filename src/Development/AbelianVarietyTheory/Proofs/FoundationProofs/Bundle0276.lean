@@ -211,8 +211,8 @@ end GlobalTheory.ConjNorm.Inter
 open GlobalTheory.ThetaInter GlobalTheory.ConjNorm.Inter in
 theorem GlobalTheory.ConjNorm.unitary_all : ∀ D : D7, IntertwinerUnitary D := by
   intro D cc δ hc N N' A₁ A₂ h₁ h₂ th hth
-  obtain ⟨f₁, s₁, d₁, c₁⟩ := klat_facts hc h₁
-  obtain ⟨f₂, s₂, d₂, c₂⟩ := klat_facts hc h₂
+  obtain ⟨f₁, s₁, d₁, c₁⟩ := GlobalTheory.ConjNorm.Inter.klat_facts hc h₁
+  obtain ⟨f₂, s₂, d₂, c₂⟩ := GlobalTheory.ConjNorm.Inter.klat_facts hc h₂
   have hH := isHerm_sesqOf D (tor0 D cc δ) N N'
   have hψ := (GlobalTheory.InducedType.induced_type D).1.1
   have := klat_finite hψ hc.1.1 h₁ h₂ f₂

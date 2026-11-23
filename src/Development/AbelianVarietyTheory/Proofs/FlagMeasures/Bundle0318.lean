@@ -248,7 +248,7 @@ theorem pairsPar : ∀ (Ca Cg cb Cw cT CT C0 C' Cl : ℝ) (D : D7) (large₂ : S
     D.R.m ^ 4 ≤ Formalism.HermitianLatticesTheory.fDeg D.host.E ∧ D.R.m ^ 5 * Formalism.HermitianLatticesTheory.fDeg D.host.E ≤ D.R.k ∧
     Cl * ((D.R.m : ℝ) ^ 2 * Real.log large₂.sc.b) ≤ D.R.k ∧ Real.log (Formalism.HermitianLatticesTheory.fDeg D.host.E : ℝ) ≤ Real.sqrt D.R.rS ∧
     2 ≤ large₂.sc.b ∧ 1 ≤ Formalism.HermitianLatticesTheory.vInv D.host.E ∧ 2 * Formalism.HermitianLatticesTheory.vInv D.host.E ≤ large₂.sc.b ∧
-    ((D.R.k : ℝ) * large₂.sc.b) ^ 8 ≤ (gS D : ℝ) ∧
+    ((D.R.k : ℝ) * large₂.sc.b) ^ 8 ≤ (Formalism.MainNotions.S.Lat.gS D : ℝ) ∧
     ∀ u : D.what₂.Word, 1 ≤ Tu D u ∧ (Tu D u : ℝ) ≤ large₂.sc.b ^ (Ca * (D.R.m : ℝ)) := by
   intro Ca Cg cb Cw cT CT C0 C' Cl D large₂ hH hK hC' hCl hCa
   have hStd : Std D large₂ := ⟨C', Cl, Cg, cb, Cw, cT, CT, C0, hK⟩
@@ -283,13 +283,13 @@ theorem pairsPar : ∀ (Ca Cg cb Cw cT CT C0 C' Cl : ℝ) (D : D7) (large₂ : S
       _ = large₂.sc.b := by rw [← hlb, Real.exp_log (by linarith)]
   · have hg1 : 1 ≤ D.host.g 1 := by
       rcases Nat.eq_zero_or_pos (D.host.g 1) with h | h
-      · have : gS D = 0 := by simp [gS, h]
+      · have : Formalism.MainNotions.S.Lat.gS D = 0 := by simp [Formalism.MainNotions.S.Lat.gS, h]
         omega
       · exact h
     calc ((D.R.k : ℝ) * large₂.sc.b) ^ 8 ≤ (D.host.g 0 : ℝ) := h12
       _ = (D.host.g 0 : ℝ) * 1 := (mul_one _).symm
       _ ≤ (D.host.g 0 : ℝ) * (D.host.g 1 : ℝ) := by gcongr; exact_mod_cast hg1
-      _ = (gS D : ℝ) := by simp [gS]
+      _ = (Formalism.MainNotions.S.Lat.gS D : ℝ) := by simp [Formalism.MainNotions.S.Lat.gS]
   · intro u
     refine ⟨(hT u).1.one_lt.le, ?_⟩
     have h := (h23 u).2

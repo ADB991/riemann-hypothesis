@@ -418,7 +418,7 @@ theorem exists_isVolMeasF : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
   have hinj := fun P Q => (GlobalTheory.UpqTopology.upq_lcsc P Q).2.2.2.2.2.injective
   haveI := cd.haar
   let e : HA (AF F) cm.sig W.gram ≃ₜ*
-      (∀ i, UpqT (W.sig (τ i)).1 (W.sig (τ i)).2) × HA (Af F) cm.sig W.gram :=
+      (∀ i, UpqT (W.sig (τ i)).1 (W.sig (τ i)).2) × HA (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) cm.sig W.gram :=
     e0.trans
       { e1.toMulEquiv.prodCongr (MulEquiv.refl _) with
         continuous_toFun := e1.continuous_toFun.prodMap continuous_id

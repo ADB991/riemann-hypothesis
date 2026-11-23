@@ -101,7 +101,7 @@ theorem comap_fst_nil {A : Type} [CommRing A] {n : ℕ} (J : Ideal A) (hJ : IsNi
     exact le_of_eq rfl
   rw [pow_mul (M := Ideal (TrivSqZeroExt A (Fin n → A))), Ideal.zero_eq_bot, eq_bot_iff]
   refine (Ideal.pow_right_mono h1 2).trans ?_
-  rw [pow_two, Ideal.mul_le]
+  rw [pow_two (M := Ideal (TrivSqZeroExt A (Fin n → A))), Ideal.mul_le]
   intro a ha b hb
   rw [Ideal.mem_bot]
   exact tsze_mul_of_fst a b ha hb
@@ -252,7 +252,7 @@ theorem coboundary_on_charts : ∀ {g : ℕ} {Λ : Type} [AddCommGroup Λ] {F₀
       @HSub.hSub S'.T.C S'.T.C S'.T.C _ (s S') (f.1.φ (s S)) = algebraMap R S'.T.C (q f.1.deg) :=
     fun f ↦ congrFun (congrFun (congrFun hs _) _) f
   refine ⟨fun k ↦ s (objS K₀ hM hev k), fun k a ↦ ?_, fun l k k' h ↦ key (homS K₀ hM hev h)⟩
-  obtain ⟨ψ, hψ⟩ := GlobalTheory.SqZeroMove.sqZeroMove (TrivSqZeroExt.inlHom (R ⊗[ℂ] Hol (K₀.W k)) (Fin g → R ⊗[ℂ] Hol (K₀.W k)))
+  obtain ⟨ψ, hψ⟩ := GlobalTheory.SqZeroMove.sqZeroMove (C := TrivSqZeroExt (R ⊗[ℂ] Hol (K₀.W k)) (Fin g → R ⊗[ℂ] Hol (K₀.W k))) (TrivSqZeroExt.inlHom (R ⊗[ℂ] Hol (K₀.W k)) (Fin g → R ⊗[ℂ] Hol (K₀.W k)))
     (fun a ↦ TrivSqZeroExt.inr (Pi.single a 1)) (fun a b ↦ TrivSqZeroExt.inr_mul_inr _ _ _)
   exact congrFun (killed s key (objS K₀ hM hev k) ψ (fun x a ↦ LinearMap.lTensor R (dw (W := K₀.W k) a).toLinearMap x)
     (fun x ↦ (hψ x).trans (tsze_expand _ _).symm) (fun r a ↦ lTensor_alg _ r) (fun h a ↦ lTensor_right _ h)) a

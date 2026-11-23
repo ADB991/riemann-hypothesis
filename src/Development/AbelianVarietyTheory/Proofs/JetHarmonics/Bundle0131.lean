@@ -464,7 +464,7 @@ theorem leafDepthTwo_of_unscaled_bound : ∀ (E : Type) [Field E] [NumberField E
     nlinarith
   intro w hw h2 j
   obtain ⟨h1, h1'⟩ := DepthTie.tieE Xo c Dd O ι hE hT hpr w hw
-  exact ⟨key w j h2 h1, key (conjPl w) j (by rw [plc_conjPl]; exact h2) h1', content_zero_at_small_primes N O Nd ι hPg tF tP w h2 j⟩
+  exact ⟨key w j h2 h1, key (Formalism.DivisionValues.conjPl w) j (by rw [plc_conjPl]; exact h2) h1', content_zero_at_small_primes N O Nd ι hPg tF tP w h2 j⟩
 
 end GlobalTheory.RunDepth
 end
