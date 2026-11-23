@@ -33,7 +33,7 @@ theorem multilin_of_isFamily {I : AllFam} (hI : I.IsFamily) : IsMultilinFam I :=
   | zero => exact j.elim0
   | succ m =>
     obtain ⟨hsym, hadd, -⟩ := hI K ι
-    have e : ∀ X : HermLine ι, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm X →
+    have e : ∀ X : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm X →
         I K ι P (m + 1) (Function.update L j X) =
           I K ι P (m + 1)
             (Fin.snoc (fun i : Fin m => L (Equiv.swap j (Fin.last m) i.castSucc)) X) := by
@@ -115,18 +115,18 @@ open scoped ContDiff
 
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
-def normSq (A : HermLine ι) (s : MRing ι) (z : (Σ k, ι k) → ℂ) : ℝ :=
+def normSq (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) (z : (Σ k, ι k) → ℂ) : ℝ :=
   (‖eval z (map (Int.castRingHom ℂ) s)‖ / A.h z) ^ 2
 
-def regLog (A : HermLine ι) (s : MRing ι) (ε : ℝ) (z : (Σ k, ι k) → ℂ) : ℝ :=
+def regLog (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) (ε : ℝ) (z : (Σ k, ι k) → ℂ) : ℝ :=
   Real.log (normSq A s z + ε) / 2
 
 omit [∀ k, Fintype (ι k)] in
-theorem normSq_nonneg (A : HermLine ι) (s : MRing ι) (z : (Σ k, ι k) → ℂ) : 0 ≤ normSq A s z :=
+theorem normSq_nonneg (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) (z : (Σ k, ι k) → ℂ) : 0 ≤ normSq A s z :=
   sq_nonneg _
 
-theorem normSq_smul {A : HermLine ι} {s : MRing ι} {a : K → ℕ} (ha : ∀ k, A.a k = a k)
-    (hs : IsMultiHomog s a) (c : K → ℂ) (z : (Σ k, ι k) → ℂ) (hc : ∀ k, c k ≠ 0) :
+theorem normSq_smul {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {s : MRing ι} {a : K → ℕ} (ha : ∀ k, A.a k = a k)
+    (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a) (c : K → ℂ) (z : (Σ k, ι k) → ℂ) (hc : ∀ k, c k ≠ 0) :
     normSq A s (fun p => c p.1 * z p) = normSq A s z := by
   unfold normSq
   rw [eval_smul_of_isMultiHomog hs c z, A.smul c z hc, norm_mul, norm_prod]
@@ -136,16 +136,16 @@ theorem normSq_smul {A : HermLine ι} {s : MRing ι} {a : K → ℕ} (ha : ∀ k
   rw [hC, mul_div_mul_left _ _ (Finset.prod_ne_zero_iff.mpr fun k _ =>
     norm_ne_zero_iff.mpr (pow_ne_zero _ (hc k)))]
 
-def regLine (A : HermLine ι) (s : MRing ι) (ε : ℝ) {a : K → ℕ} (ha : ∀ k, A.a k = a k)
-    (hs : IsMultiHomog s a) : HermLine ι :=
+def regLine (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) (ε : ℝ) {a : K → ℕ} (ha : ∀ k, A.a k = a k)
+    (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a) : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι :=
   HermLine.ofWeight (fun z => -regLog A s ε z) fun c z hc => by
     simp only [regLog, normSq_smul ha hs c z hc]
 
-theorem regLine_a (A : HermLine ι) (s : MRing ι) (ε : ℝ) {a : K → ℕ} (ha : ∀ k, A.a k = a k)
-    (hs : IsMultiHomog s a) : (regLine A s ε ha hs).a = 0 := rfl
+theorem regLine_a (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) (ε : ℝ) {a : K → ℕ} (ha : ∀ k, A.a k = a k)
+    (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a) : (regLine A s ε ha hs).a = 0 := rfl
 
-theorem log_regLine (A : HermLine ι) (s : MRing ι) (ε : ℝ) {a : K → ℕ} (ha : ∀ k, A.a k = a k)
-    (hs : IsMultiHomog s a) : (fun z => Real.log ((regLine A s ε ha hs).h z)) = regLog A s ε := by
+theorem log_regLine (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) (ε : ℝ) {a : K → ℕ} (ha : ∀ k, A.a k = a k)
+    (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a) : (fun z => Real.log ((regLine A s ε ha hs).h z)) = regLog A s ε := by
   funext z
   simp [regLine, HermLine.ofWeight, Real.log_exp]
 
@@ -157,7 +157,7 @@ theorem contDiff_evalC (s : MRing ι) :
   | mul_X p i hp =>
     simpa only [map_mul, map_X, eval_mul, eval_X] using hp.mul (contDiff_apply ℝ (fun _ => ℂ) i)
 
-theorem contDiffOn_regLog {A : HermLine ι} (hA : IsSmoothHerm A) (s : MRing ι) {ε : ℝ} (hε : 0 < ε) :
+theorem contDiffOn_regLog {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA : IsSmoothHerm A) (s : MRing ι) {ε : ℝ} (hε : 0 < ε) :
     ContDiffOn ℝ ∞ (regLog A s ε) {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
   have hN : ContDiffOn ℝ ∞ (normSq A s) {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
     have h1 := (((contDiff_norm_sq ℝ).comp (contDiff_evalC s)).contDiffOn (s := {z : (Σ k, ι k) → ℂ |
@@ -166,8 +166,8 @@ theorem contDiffOn_regLog {A : HermLine ι} (hA : IsSmoothHerm A) (s : MRing ι)
   exact ((hN.add contDiffOn_const).log fun z _ =>
     (add_pos_of_nonneg_of_pos (normSq_nonneg A s z) hε).ne').div_const 2
 
-theorem isSmoothHerm_regLine {A : HermLine ι} (hA : IsSmoothHerm A) {s : MRing ι} {ε : ℝ} (hε : 0 < ε)
-    {a : K → ℕ} (ha : ∀ k, A.a k = a k) (hs : IsMultiHomog s a) :
+theorem isSmoothHerm_regLine {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hA : IsSmoothHerm A) {s : MRing ι} {ε : ℝ} (hε : 0 < ε)
+    {a : K → ℕ} (ha : ∀ k, A.a k = a k) (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a) :
     IsSmoothHerm (regLine A s ε ha hs) :=
   Real.contDiff_exp.comp_contDiffOn (contDiffOn_regLog hA s hε).neg.neg
 
@@ -296,7 +296,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsAri
 
 def PtsBilinear.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (n : ℕ)
-    (L : Fin n → HermLine ι) (T : Type) [Fintype T] (u : T → ((Σ k, ι k) → ℂ) → ℝ)
+    (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (T : Type) [Fintype T] (u : T → ((Σ k, ι k) → ℂ) → ℝ)
     (v : ((Σ k, ι k) → ℂ) → ℝ),
     IsArithVar P (n + 2) → (∀ j, IsSmoothHerm (L j)) → (∀ t, IsDegZeroSmooth (u t)) →
     IsDegZeroSmooth v →
@@ -322,7 +322,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsAri
 
 def SegreChart.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-    (P : Ideal (MRing ι)) (n : ℕ) (L : Fin n → HermLine ι) (u v : ((Σ k, ι k) → ℂ) → ℝ)
+    (P : Ideal (MRing ι)) (n : ℕ) (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (u v : ((Σ k, ι k) → ℂ) → ℝ)
     (i : (k : K) → ι k) (δ : ℝ),
     IsArithVar P (n + 2) → (∀ j, IsSmoothHerm (L j)) → IsDegZeroSmooth u → IsDegZeroSmooth v →
     0 < δ → (∀ z, ‖segre z i‖ < δ * ‖segre z‖ → u z = 0) →
@@ -399,7 +399,7 @@ def AmpleCountAlongMultiples.StatementAmple : Prop :=
     P0 ≤ mCoordIdeal y → IsSemipositiveRel P0 (mCoordIdeal y) N → IsConjInvariantH N →
     KH.AmpleV ℚ (KH.genIdeal y) N.a →
     (∃ c : ℕ, 1 ≤ c ∧ KH.AmpleV ℚ (KH.genIdeal y) (c • N.a - fun _ => 1)) →
-    (∀ ℓ : ℕ, ℓ.Prime → KH.AmpleV (ZMod ℓ) (fibreIdeal ℓ y) N.a) →
+    (∀ ℓ : ℕ, ℓ.Prime → KH.AmpleV (ZMod ℓ) (GroundTheory.Heights₂.Heights.HilbertSamuel.fibreIdeal ℓ y) N.a) →
     ∀ ε : ℝ, 0 < ε → ∃ b : ℕ, 1 ≤ b ∧ ∀ᶠ k : ℕ in atTop,
       (II K ι (mCoordIdeal y) (D + 1) (fun _ => N) - ε) *
           (((b * k : ℕ) : ℝ) ^ (D + 1) / ((D + 1).factorial : ℝ)) ≤
