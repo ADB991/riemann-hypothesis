@@ -228,7 +228,7 @@ theorem IsGal.isOpen_ker (ha : IsGlobalArtin art) (h : IsGal art κ ι χ 0 r) {
   exact (inQ_eq_one κ).symm
 
 theorem IsGal.dec_triv (ha : IsGlobalArtin art) (h : IsGal art κ ι χ 0 r) (hA : IsPlaceOver A v)
-    (hv : ∀ x, χ.loc v x = 1) {σ : G E Ω} (hσ : σ ∈ Dec (F := E) A) : r σ = 1 :=
+    (hv : ∀ x, χ.loc v x = 1) {σ : G E Ω} (hσ : σ ∈ ReciprocityTheory.Gal.Dec (F := E) A) : r σ = 1 :=
   (inQ_eq_one κ).1 ((h.2.2.dec_triv ha (h.cont hO hκ) (Or.inr rfl) hA).2 (MonoidHom.ext hv) σ hσ)
 
 theorem continuous_cyc : Continuous fun g : G E Ω =>
@@ -369,7 +369,7 @@ def LocalisationCharacterSpec : Prop :=
       (∀ v ∈ Q, ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∃ g ∈ Ine (F := H.E) A, chi 1 g ≠ 1) ∧
       (∀ g, ∃ n : ℕ, psiL g ^ (l ^ n) = 1) ∧ IsOpen (psiL.ker : Set (G H.E Ω)) ∧ AntiHom cc psiL ∧
       RamExactly psiL ↑Q ∧
-      (∀ v, v ∈ placesOver H.E l → ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∀ σ ∈ Dec (F := H.E) A, psiL σ = 1) ∧
+      (∀ v, v ∈ placesOver H.E l → ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∀ σ ∈ ReciprocityTheory.Gal.Dec (F := H.E) A, psiL σ = 1) ∧
       ∀ w, w ∉ placesOver H.E l → (∀ k, w ∉ placesOver H.E (H.g k)) →
         w ∉ placesOver H.E (if l = H.pde then H.pde' else H.pde) → w ∉ Q →
         (C.mu0 j * (delAt H C l * ψ) * C.eta⁻¹).UnrAt w ∧
