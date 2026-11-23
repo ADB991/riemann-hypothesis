@@ -111,7 +111,7 @@ theorem DualPointLineDegree.proof (hPt : DualCurvePoint.Statement) (hPos : Point
 
   have hR := (hII Unit (dualBlocks T)).2.2 (mCoordIdeal y) 0 Fin.elim0 A s (fun _ => 1) hW
     (fun j => j.elim0) hsm (fun _ => rfl) hs1 ht₀
-  have hsnoc : (Fin.snoc (Fin.elim0 : Fin 0 → HermLine (dualBlocks T)) A : Fin 1 → HermLine (dualBlocks T)) =
+  have hsnoc : (Fin.snoc (Fin.elim0 : Fin 0 → ReciprocityTheory.ChartRestriction.G.Geo.HermLine (dualBlocks T)) A : Fin 1 → ReciprocityTheory.ChartRestriction.G.Geo.HermLine (dualBlocks T)) =
       ![A] := by
     funext j
     fin_cases j
@@ -180,32 +180,32 @@ variable {K' : Type} [Fintype K'] {ι : K' → Type} [∀ k, Fintype (ι k)]
 
 
 open Classical in
-def vertWeight {n : ℕ} (L : Fin n → HermLine ι) (W : Ideal (MRing ι)) : ℝ :=
+def vertWeight {n : ℕ} (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (W : Ideal (MRing ι)) : ℝ :=
   if IsHorizontal W then 0 else (geoNum n W (fun j => (L j).a) : ℝ) * Real.log (charOf W)
 
-theorem vertR_eq_finsum (P : Ideal (MRing ι)) {n : ℕ} (L : Fin n → HermLine ι) (s : MRing ι) :
-    vertR P L s = ∑ᶠ W, (divCycle P s W : ℝ) * vertWeight L W := by
+theorem vertR_eq_finsum (P : Ideal (MRing ι)) {n : ℕ} (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) :
+    vertR P L s = ∑ᶠ W, (ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s W : ℝ) * vertWeight L W := by
   classical
   rw [vertR, finsum_mem_def]
   refine finsum_congr fun W => ?_
-  simp only [Set.indicator, divCycle, Finsupp.ofSupportFinite_coe, vertWeight]
+  simp only [Set.indicator, ReciprocityTheory.ChartRestriction.G.Geo.divCycle, Finsupp.ofSupportFinite_coe, vertWeight]
   by_cases hW : W ∈ divSupp P s
   · rw [if_pos hW, if_pos hW]
   · rw [if_neg hW, if_neg hW, Nat.cast_zero, zero_mul]
 
-theorem finite_support (P : Ideal (MRing ι)) {n : ℕ} (L : Fin n → HermLine ι) (s : MRing ι) :
-    (Function.support fun W => (divCycle P s W : ℝ) * vertWeight L W).Finite :=
-  (divCycle P s).support.finite_toSet.subset fun W hW =>
+theorem finite_support (P : Ideal (MRing ι)) {n : ℕ} (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι) :
+    (Function.support fun W => (ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s W : ℝ) * vertWeight L W).Finite :=
+  (ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s).support.finite_toSet.subset fun W hW =>
     Finsupp.mem_support_iff.mpr fun h0 => hW (by simp [h0])
 
-theorem vertR_sub (P : Ideal (MRing ι)) {n : ℕ} (L : Fin n → HermLine ι) (s₁ s₂ : MRing ι)
+theorem vertR_sub (P : Ideal (MRing ι)) {n : ℕ} (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s₁ s₂ : MRing ι)
     (E : Ideal (MRing ι)) (hhor : ¬ IsHorizontal E)
-    (hE : (divCycle P s₂ E : ℤ) = divCycle P s₁ E + 1)
-    (hW : ∀ W, ¬ IsHorizontal W → W ≠ E → divCycle P s₂ W = divCycle P s₁ W) :
+    (hE : (ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s₂ E : ℤ) = ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s₁ E + 1)
+    (hW : ∀ W, ¬ IsHorizontal W → W ≠ E → ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s₂ W = ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s₁ W) :
     vertR P L s₁ - vertR P L s₂ = -((geoNum n E (fun j => (L j).a) : ℝ) * Real.log (charOf E)) := by
   classical
   rw [vertR_eq_finsum, vertR_eq_finsum, ← finsum_sub_distrib (finite_support P L s₁) (finite_support P L s₂)]
-  have hpt : ∀ W, (divCycle P s₁ W : ℝ) * vertWeight L W - (divCycle P s₂ W : ℝ) * vertWeight L W =
+  have hpt : ∀ W, (ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s₁ W : ℝ) * vertWeight L W - (ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s₂ W : ℝ) * vertWeight L W =
       if W = E then -vertWeight L E else 0 := by
     intro W
     by_cases hWh : IsHorizontal W
@@ -213,7 +213,7 @@ theorem vertR_sub (P : Ideal (MRing ι)) {n : ℕ} (L : Fin n → HermLine ι) (
       simp [vertWeight, hWh, hne]
     · by_cases hWE : W = E
       · subst hWE
-        have hR : (divCycle P s₂ W : ℝ) = divCycle P s₁ W + 1 := by exact_mod_cast hE
+        have hR : (ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s₂ W : ℝ) = ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s₁ W + 1 := by exact_mod_cast hE
         rw [if_pos rfl, hR]
         ring
       · rw [if_neg hWE, hW W hWh hWE, sub_self]
@@ -269,7 +269,7 @@ theorem isPrime : (Ideal.span {C (p : ℤ)} : Ideal (MRing (plBlocks 1 1 n))).Is
   rw [span_eq_ker]
   exact RingHom.ker_isPrime _
 
-theorem isRelevant : IsRelevant (Ideal.span {C (p : ℤ)} : Ideal (MRing (plBlocks 1 1 n))) := by
+theorem isRelevant : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant (Ideal.span {C (p : ℤ)} : Ideal (MRing (plBlocks 1 1 n))) := by
   intro k
   refine ⟨plAnchor 1 n, ?_⟩
   rw [span_eq_ker, RingHom.mem_ker, Bridge.GeoNum.red, map_X]

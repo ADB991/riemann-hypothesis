@@ -243,7 +243,7 @@ theorem blockDeg_single [DecidableEq K] (s : Σ k, ι k) (a : ℕ) (k' : K) :
     exact h (congrArg Sigma.fst h').symm
 
 theorem isMultiHomog_monomial {m : (Σ k, ι k) →₀ ℕ} {b : K → ℕ} (h : ∀ k, blockDeg m k = b k) :
-    IsMultiHomog (monomial m (1 : ℚ)) b := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (monomial m (1 : ℚ)) b := by
   intro m' hm' k
   rw [support_monomial, if_neg one_ne_zero, Finset.mem_singleton] at hm'
   subst hm'
@@ -296,7 +296,7 @@ theorem PullGradedAlgebraic.proof : PullGradedAlgebraic.Statement := by
   set W : Submodule F Ω := Submodule.span F T with hW
   have hratio : ∀ j, aeval y (L j) / w ∈ F := fun j =>
     IntermediateField.subset_adjoin _ _ ⟨j, j₀, hw, rfl⟩
-  have claim : ∀ n (g : MvPolynomial (Σ k, ι k) ℚ), IsMultiHomog g (fun k => n * e k) →
+  have claim : ∀ n (g : MvPolynomial (Σ k, ι k) ℚ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun k => n * e k) →
       aeval y g / w ^ n ∈ W := by
     intro n
     induction n using Nat.strong_induction_on with
