@@ -107,7 +107,7 @@ theorem LiftModel.combine {K : Type} [Fintype K] {ι : K → Type} {Ω : Type} [
 
 theorem LiftModel.isMultiHomog_rename {κ κ' : Type} [Fintype κ] [Fintype κ']
     (φ : (Σ _ : Unit, κ) → (Σ _ : Unit, κ')) {g : MRing (fun _ : Unit => κ)} {d : Unit → ℕ}
-    (hg : IsMultiHomog g d) : IsMultiHomog (rename φ g) d := by
+    (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (rename φ g) d := by
   have hdeg : ∀ {τ : Type} [Fintype τ] (m : (Σ _ : Unit, τ) →₀ ℕ), m.degree = ∑ i, m ⟨(), i⟩ := by
     intro τ _ m
     classical
@@ -236,7 +236,7 @@ variable {S : Type} [CommRing S] {K : Type} [Fintype K] {ι : K → Type} [∀ k
   {𝓜 : (K → ℤ) → Submodule S M}
 
 def degProducts (𝓜 : (K → ℤ) → Submodule S M) (P : Ideal (MRingOver S ι)) (D : K → ℤ) : Set M :=
-  {x | ∃ (p : MRingOver S ι) (b : K → ℕ) (n : M), p ∈ P ∧ IsMultiHomog p b ∧
+  {x | ∃ (p : MRingOver S ι) (b : K → ℕ) (n : M), p ∈ P ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog p b ∧
     n ∈ 𝓜 (D - fun k => (b k : ℤ)) ∧ x = p • n}
 
 theorem span_degProducts_le (h𝓜 : KH.IsMGraded S ι 𝓜) (P : Ideal (MRingOver S ι)) (D : K → ℤ) :
@@ -361,7 +361,7 @@ theorem proof : LocIdealKer.Statement := by
     set D : K → ℤ := (d + fun k => (a k : ℤ)) + fun k => (e k : ℤ) with hD
     have humD : (u : MRingOver S ι) • m ∈ 𝓜 D := h𝓜.2 e _ _ m he hm
     have hspan := mem_span_degProducts h𝓜 hP hu humD
-    have hut : IsMultiHomog ((u * t : T) : MRingOver S ι) (e + a) := GenSESStep.isMultiHomog_mul he ht
+    have hut : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog ((u * t : T) : MRingOver S ι) (e + a) := GenSESStep.isMultiHomog_mul he ht
     rw [← LocalizedModule.mk_cancel_common_left u t m, Submonoid.smul_def]
     generalize (u : MRingOver S ι) • m = x at hspan ⊢
     induction hspan using Submodule.span_induction with
@@ -417,7 +417,7 @@ theorem blocks_mem_nhds {z : (Σ k, ι k) → ℂ} (hz : ∀ k, ∃ i, z ⟨k, i
       fun y hy => ⟨i, hy⟩
   exact Filter.eventually_all.mpr hopen
 
-theorem contDiffAt_log_h (A : HermLine ι) (hA : IsSmoothHerm A) {z : (Σ k, ι k) → ℂ}
+theorem contDiffAt_log_h (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hA : IsSmoothHerm A) {z : (Σ k, ι k) → ℂ}
     (hz : ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) : ContDiffAt ℝ 2 (fun y => Real.log (A.h y)) z := by
   have h := hA.contDiffAt (blocks_mem_nhds hz)
   exact (h.of_le (show ((2 : ℕ∞) : WithTop ℕ∞) ≤ ((⊤ : ℕ∞) : WithTop ℕ∞) from WithTop.coe_le_coe.mpr le_top)).log (A.pos z hz).ne'
