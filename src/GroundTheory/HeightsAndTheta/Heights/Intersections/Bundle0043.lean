@@ -62,7 +62,7 @@ theorem abs_maDensity_le {P : Ideal (MRing ι)} {e : ℕ} {Ψ : (((k : K) → ι
   have hγ : ∀ᶠ y' in 𝓝 y, DifferentiableAt ℂ γ y' ∧ ∀ k, ∃ i, γ y' ⟨k, i⟩ ≠ 0 := by
     filter_upwards [hS.2] with y' hy'
     exact ⟨hy'.1, hy'.2.1.1⟩
-  have hLT : ∀ j, IsSmoothHerm ((L j).tensor (T j)) := fun j => isSmoothHerm_tensor (hL j) (hT j)
+  have hLT : ∀ j, IsSmoothHerm ((L j).tensor (T j)) := fun j => ReciprocityTheory.ChartRestriction.G.Geo.isSmoothHerm_tensor (hL j) (hT j)
   set A : Fin e → Matrix (Fin e) (Fin e) ℂ := fun j => cxHessian (fun y' => pot L j (γ y')) y with hAdef
   set B : Fin e → Matrix (Fin e) (Fin e) ℂ :=
     fun j => cxHessian (fun y' => pot (fun j => ((L j).tensor (T j)).tensor (T j)) j (γ y')) y with hBdef
@@ -109,7 +109,7 @@ theorem PtsAbsIntegrable.proof (hInt : PtsIntegrableStatement) (hMeas : PtsAbsMe
   have hTw := SemiPosTwist.proof TorusInvLevi.proof
   choose T hTs hTp hLTp using fun j => hTw K ι (L j) (hL j)
   have hN : ∀ j, IsSmoothHerm (((L j).tensor (T j)).tensor (T j)) := fun j =>
-    isSmoothHerm_tensor (isSmoothHerm_tensor (hL j) (hTs j)) (hTs j)
+    ReciprocityTheory.ChartRestriction.G.Geo.isSmoothHerm_tensor (ReciprocityTheory.ChartRestriction.G.Geo.isSmoothHerm_tensor (hL j) (hTs j)) (hTs j)
   obtain ⟨a, ha, hsa, hsP⟩ := hs
   have hs : IsSectionOn P A s := ⟨a, ha, hsa, hsP⟩
   set D := regLine A s ⟨a, ha, hsa⟩ 1 with hDdef
