@@ -428,7 +428,7 @@ theorem exists_smooth_weight_const_near_embeddings :
   · intro z hz sg hsg
     have hzC : projPt z ∈ C sg := ⟨z, ⟨hz, hsg⟩, rfl⟩
     have hcont : ContinuousAt projPt z :=
-      contDiffOn_projPt.continuousOn.continuousAt (isOpen_blockNonzero.mem_nhds hz.1)
+      contDiffOn_projPt.continuousOn.continuousAt (GroundTheory.Heights₂.Heights.HilbertSamuel.EmbeddingWeight.isOpen_blockNonzero.mem_nhds hz.1)
     filter_upwards [Filter.Tendsto.eventually hcont (hloc sg _ hzC)] with w hw1
     change Real.exp (-(-u w)) = Λ sg
     simp only [u, hw1, neg_neg, Real.exp_log (hpos sg)]

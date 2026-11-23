@@ -26,8 +26,8 @@ open ReciprocityTheory.ChartRestriction.G.AI ReciprocityTheory.ChartRestriction.
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem multAt_eqZ (J W : Ideal (MRing ι)) (hW : W.IsPrime) :
-    multAt J W = (locLen (MRing ι ⧸ J) ⟨W, hW⟩).toNat := by
-  simp [multAt, hW, locLen]
+    multAt J W = (ReciprocityTheory.ChartRestriction.G.AI.locLen (MRing ι ⧸ J) ⟨W, hW⟩).toNat := by
+  simp [multAt, hW, ReciprocityTheory.ChartRestriction.G.AI.locLen]
 
 open Classical in
 theorem divCycle_applyZ (V W : Ideal (MRing ι)) (f : MRing ι) :

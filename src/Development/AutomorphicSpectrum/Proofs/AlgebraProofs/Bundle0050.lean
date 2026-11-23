@@ -122,7 +122,7 @@ theorem lead_of_coords {b : Module.Basis T ℤ (dualLattice F)} {b' : Module.Bas
     {k : Type} [Field k] {ρ : 𝓞 K →+* k} {π : 𝓞 K} {y₀ : Fin i → K} {m : ℕ} {g : Fin m → Fin i → K}
     {α : T → k} {M : T → Fin (m + 1) → k} (hco : IsExcCoords F F' b b' ρ π y₀ g α M) {d e : ℕ}
     {f : MRing (stackedBlocks T)} (hf : IsMultiHomog f (bidegree d e))
-    (h0 : stackedFormEval b b' f = 0) : linPointMap α M f = 0 := by
+    (h0 : GroundTheory.Heights₂.Heights.stackedFormEval b b' f = 0) : linPointMap α M f = 0 := by
   obtain ⟨-, hπ, -, hg, hα, hM0, hMj, ⟨t₀, ht₀⟩, -, -, -, -⟩ := hco
   choose cα hcα hcαρ using hα
   choose c0 hc0 hc0ρ using hM0
@@ -147,7 +147,7 @@ theorem lead_of_coords {b : Module.Basis T ℤ (dualLattice F)} {b' : Module.Bas
   let p : K := algebraMap (𝓞 K) K π
   let Φ : MvPolynomial (Fin i) K →+* MvPolynomial (Fin (m + 1)) K :=
     eval₂Hom C (fun j => C p * (C (y₀ j) * X 0 + ∑ l, C (g l j) * X l.succ))
-  have hΦ : Φ.comp (stackedFormEval b b') =
+  have hΦ : Φ.comp (GroundTheory.Heights₂.Heights.stackedFormEval b b') =
       blockEval (fun t => 1 * ι (A t)) (fun t => C p * ι (L t)) := by
     apply ringHom_block_ext
     · intro t

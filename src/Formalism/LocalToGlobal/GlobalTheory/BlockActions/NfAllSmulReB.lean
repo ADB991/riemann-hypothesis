@@ -42,20 +42,20 @@ theorem val_of_trEv (Tf : FormsTiedSym D u Ch chOf) (c : (D.fm u).clsP) (f : (D.
     (M : D.what₂.Tau → Matrix (Fin (D.R.N D.R.m)) (Fin (D.R.N D.R.m)) ℂ) (Q : MvPolynomial (D.what₂.Tau × Fin (D.R.N D.R.m) × Fin (D.R.N D.R.m)) ℂ)
     (hq : trEvS Tf c f = fnOf _ (shiftOf (lamT u D.R.m)) M Q) (z : (D.mem u).C.Y D.R.m) :
     f z = fnOf _ (shiftOf (lamT u D.R.m))
-      (fun τ => M τ * atInf (embT D) (((Tf.til.ga c).1 : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ)
+      (fun τ => M τ * atInf (Forms.embT D) (((Tf.til.ga c).1 : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ)
       ((((Tf.cls D.R.m le_rfl (Or.inr rfl)).lev.chi (Tf.tilAd.ka c) : ℂˣ) : ℂ) • Q) ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY z) := by
   let ga : GL (Fin (D.R.N D.R.m)) D.host.E := (Tf.til.ga c).1
-  have hy := congrFun hq (((Tf.val D.R.m le_rfl (Or.inr rfl)).eY z).tr (atInf (embT D) (ga : Matrix _ _ D.host.E))
-    (isUnit_det_atInf (embT D) ga))
-  have hback : (((Tf.val D.R.m le_rfl (Or.inr rfl)).eY z).tr (atInf (embT D) (ga : Matrix _ _ D.host.E))
-      (isUnit_det_atInf (embT D) ga)).tr (atInf (embT D) ((ga⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E))
-      (isUnit_det_atInf (embT D) ga⁻¹) = (Tf.val D.R.m le_rfl (Or.inr rfl)).eY z := by
+  have hy := congrFun hq (((Tf.val D.R.m le_rfl (Or.inr rfl)).eY z).tr (atInf (Forms.embT D) (ga : Matrix _ _ D.host.E))
+    (isUnit_det_atInf (Forms.embT D) ga))
+  have hback : (((Tf.val D.R.m le_rfl (Or.inr rfl)).eY z).tr (atInf (Forms.embT D) (ga : Matrix _ _ D.host.E))
+      (isUnit_det_atInf (Forms.embT D) ga)).tr (atInf (Forms.embT D) ((ga⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E))
+      (isUnit_det_atInf (Forms.embT D) ga⁻¹) = (Tf.val D.R.m le_rfl (Or.inr rfl)).eY z := by
     apply Subtype.ext
     funext τ
-    show atInf (embT D) ((ga⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
-      (atInf (embT D) (ga : Matrix _ _ D.host.E) τ * ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY z).1 τ) =
+    show atInf (Forms.embT D) ((ga⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
+      (atInf (Forms.embT D) (ga : Matrix _ _ D.host.E) τ * ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY z).1 τ) =
         ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY z).1 τ
-    have h1 := atInf_mul_inv (embT D) ga⁻¹ τ
+    have h1 := atInf_mul_inv (Forms.embT D) ga⁻¹ τ
     rw [inv_inv] at h1
     rw [← Matrix.mul_assoc, h1, Matrix.one_mul]
   simp only [trEvS, LinearMap.smul_apply, LinearMap.funLeft_apply, Pi.smul_apply, smul_eq_mul] at hy
@@ -108,26 +108,26 @@ theorem star_sqrtT : star ((sqrtT D u : ℂˣ) : ℂ) = ((sqrtT D u : ℂˣ) : �
   simp only [sqrtT, Units.val_mk0, Complex.star_def, Complex.conj_ofReal]
 
 theorem dgE_map (B' : Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) D.host.E) (τ : D.what₂.Tau) :
-    (dgE B').map (embT D τ) = Matrix.reindex (eN D) (eN D) (Matrix.fromBlocks (B'.map (embT D τ)) 0 0 1) := by
+    (dgE B').map (Forms.embT D τ) = Matrix.reindex (eN D) (eN D) (Matrix.fromBlocks (B'.map (Forms.embT D τ)) 0 0 1) := by
   unfold dgE
   rw [Matrix.reindex_apply, Matrix.reindex_apply, ← Matrix.submatrix_map, Matrix.fromBlocks_map,
     Matrix.map_zero _ (map_zero _), Matrix.map_zero _ (map_zero _), Matrix.map_one _ (map_zero _) (map_one _)]
 
 theorem dgE_gFull (B' : Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) D.host.E) (hB' : IsUnit B'.det)
     (o' : Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) ℂ) (τ : D.what₂.Tau) (g : GL (Fin (D.R.N D.R.m - 1)) ℂ)
-    (hg : (g : Matrix _ _ ℂ) = (atInf (embT D) B'⁻¹ τ * o')ᵀ) :
-    (dgE B').map (embT D τ) * ((gFull D u g : GL (Fin (D.R.N D.R.m)) ℂ) : Matrix _ _ ℂ)ᵀ = dOT u o' := by
+    (hg : (g : Matrix _ _ ℂ) = (atInf (Forms.embT D) B'⁻¹ τ * o')ᵀ) :
+    (dgE B').map (Forms.embT D τ) * ((gFull D u g : GL (Fin (D.R.N D.R.m)) ℂ) : Matrix _ _ ℂ)ᵀ = dOT u o' := by
   have hl : ((Formalism.MainNotions.PrimeDegreeVariant.lastGL ℂ (D.R.N D.R.m) (sqrtT D u) : GL _ ℂ) : Matrix (Fin (D.R.N D.R.m)) (Fin (D.R.N D.R.m)) ℂ)ᵀ =
       Matrix.reindex (eN D) (eN D) (Matrix.fromBlocks 1 0 0 (Matrix.of fun _ _ => ((sqrtT D u : ℂˣ) : ℂ))) := by
     rw [← lastGL_eq]
     show (Matrix.diagonal _)ᵀ = Matrix.diagonal _
     exact Matrix.diagonal_transpose _
   have he : ((Formalism.MainNotions.PrimeDegreeVariant.embGL ℂ _ _ (Nm_succ D.R) g : GL (Fin (D.R.N D.R.m)) ℂ) : Matrix (Fin (D.R.N D.R.m)) (Fin (D.R.N D.R.m)) ℂ)ᵀ =
-      Matrix.reindex (eN D) (eN D) (Matrix.fromBlocks (atInf (embT D) B'⁻¹ τ * o') 0 0 1) := by
+      Matrix.reindex (eN D) (eN D) (Matrix.fromBlocks (atInf (Forms.embT D) B'⁻¹ τ * o') 0 0 1) := by
     rw [embGL_val, Matrix.transpose_reindex, Matrix.fromBlocks_transpose, hg, Matrix.transpose_transpose,
       Matrix.transpose_zero, Matrix.transpose_zero, Matrix.transpose_one]
-  have hBB : B'.map (embT D τ) * atInf (embT D) B'⁻¹ τ = 1 := by
-    show B'.map (embT D τ) * (B'⁻¹).map (embT D τ) = 1
+  have hBB : B'.map (Forms.embT D τ) * atInf (Forms.embT D) B'⁻¹ τ = 1 := by
+    show B'.map (Forms.embT D τ) * (B'⁻¹).map (Forms.embT D τ) = 1
     rw [← Matrix.map_mul, Matrix.mul_nonsing_inv _ hB', Matrix.map_one _ (map_zero _) (map_one _)]
   unfold gFull
   rw [Units.val_mul, Matrix.transpose_mul, hl, he, dgE_map, reindex_mulB, reindex_mulB, Matrix.fromBlocks_multiply,
@@ -160,29 +160,29 @@ end Frame
 section Main
 
 theorem ga_inv_unitary (Tf : FormsTiedSym D u Ch chOf) (c : (D.fm u).clsP) (τ : D.what₂.Tau) :
-    (atInf (embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ)ᴴ *
-      gramC (gramN D D.R.m le_rfl) (embT D) τ *
-      atInf (embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ =
-      gramC (gramN D D.R.m le_rfl) (embT D) τ := by
+    (atInf (Forms.embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ)ᴴ *
+      gramC (gramN D D.R.m le_rfl) (Forms.embT D) τ *
+      atInf (Forms.embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ =
+      gramC (gramN D D.R.m le_rfl) (Forms.embT D) τ := by
   have h := ((Tf.til.ga c)⁻¹).2
   rw [InvMemClass.coe_inv] at h
   have h' : (((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E).map
       (sigD D : D.host.E →+* D.host.E))ᵀ * gramN D D.R.m le_rfl *
       ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) = gramN D D.R.m le_rfl := h
-  have h2 := congrArg (fun X => X.map (embT D τ)) h'
+  have h2 := congrArg (fun X => X.map (Forms.embT D τ)) h'
   simp only [Matrix.map_mul] at h2
-  rw [map_cT] at h2
+  erw [map_cT] at h2
   exact h2
 
 theorem gram_bZ_map (Tf : FormsTiedSym D u Ch chOf) (τ : D.what₂.Tau) :
-    (atInf (embT D) (bZ u Tf.til.z0) τ)ᴴ * gramC (gramN D D.R.m le_rfl) (embT D) τ * atInf (embT D) (bZ u Tf.til.z0) τ =
-      Matrix.reindex (eN D) (eN D) (Matrix.fromBlocks (gramC (gramP D) (embT D) τ) 0 0
+    (atInf (Forms.embT D) (bZ u Tf.til.z0) τ)ᴴ * gramC (gramN D D.R.m le_rfl) (Forms.embT D) τ * atInf (Forms.embT D) (bZ u Tf.til.z0) τ =
+      Matrix.reindex (eN D) (eN D) (Matrix.fromBlocks (gramC (gramP D) (Forms.embT D) τ) 0 0
         (Matrix.of fun _ _ => ((D.mem u).A.T : ℂ)⁻¹)) := by
   have h := gram_bZ (u := u) Tf.til.z0 Tf.til.lastCoordinateUniformizerVector_spans_orthogonal_line Tf.til.hermitianForm_lastCoordinateUniformizerVector_self
-  have h2 := congrArg (fun X => X.map (embT D τ)) h
+  have h2 := congrArg (fun X => X.map (Forms.embT D τ)) h
   simp only [Matrix.map_mul] at h2
-  rw [map_cT] at h2
-  show ((bZ u Tf.til.z0).map (embT D τ))ᴴ * (gramN D D.R.m le_rfl).map (embT D τ) * (bZ u Tf.til.z0).map (embT D τ) = _
+  erw [map_cT] at h2
+  show ((bZ u Tf.til.z0).map (Forms.embT D τ))ᴴ * (gramN D D.R.m le_rfl).map (Forms.embT D τ) * (bZ u Tf.til.z0).map (Forms.embT D τ) = _
   rw [h2, Matrix.reindex_apply, Matrix.reindex_apply, ← Matrix.submatrix_map, Matrix.fromBlocks_map,
     Matrix.map_zero _ (map_zero _), Matrix.map_zero _ (map_zero _)]
   congr 2
@@ -190,11 +190,11 @@ theorem gram_bZ_map (Tf : FormsTiedSym D u Ch chOf) (τ : D.what₂.Tau) :
   simp [gramC, map_inv₀, map_natCast]
 
 theorem frame_on (Tf : FormsTiedSym D u Ch chOf) (c : (D.fm u).clsP) (τ : D.what₂.Tau)
-    (o' : Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) ℂ) (ho : o'ᴴ * gramC (gramP D) (embT D) τ * o' = 1) :
-    (atInf (embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
-        atInf (embT D) (bZ u Tf.til.z0) τ * dOT u o')ᴴ * gramC (gramN D D.R.m le_rfl) (embT D) τ *
-      (atInf (embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
-        atInf (embT D) (bZ u Tf.til.z0) τ * dOT u o') = 1 := by
+    (o' : Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) ℂ) (ho : o'ᴴ * gramC (gramP D) (Forms.embT D) τ * o' = 1) :
+    (atInf (Forms.embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
+        atInf (Forms.embT D) (bZ u Tf.til.z0) τ * dOT u o')ᴴ * gramC (gramN D D.R.m le_rfl) (Forms.embT D) τ *
+      (atInf (Forms.embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
+        atInf (Forms.embT D) (bZ u Tf.til.z0) τ * dOT u o') = 1 := by
   have e : ∀ (X Y Z G : Matrix (Fin (D.R.N D.R.m)) (Fin (D.R.N D.R.m)) ℂ),
       (X * Y * Z)ᴴ * G * (X * Y * Z) = Zᴴ * (Yᴴ * (Xᴴ * G * X) * Y) * Z := by
     intro X Y Z G
@@ -210,27 +210,27 @@ theorem isUnit_dgE (B' : Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) 
 theorem frame_eq (Tf : FormsTiedSym D u Ch chOf) (c : (D.fm u).clsP) (τ : D.what₂.Tau)
     (B' : Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) D.host.E) (hB' : IsUnit B'.det)
     (o' : Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) ℂ) (g : GL (Fin (D.R.N D.R.m - 1)) ℂ)
-    (hg : (g : Matrix _ _ ℂ) = (atInf (embT D) B'⁻¹ τ * o')ᵀ) :
+    (hg : (g : Matrix _ _ ℂ) = (atInf (Forms.embT D) B'⁻¹ τ * o')ᵀ) :
     ((gFull D u g : GL (Fin (D.R.N D.R.m)) ℂ) : Matrix _ _ ℂ) =
-      ((atInf (embT D) (bZg u Tf.til.z0 B')⁻¹ τ * atInf (embT D) (((Tf.til.ga c).1 : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ) *
-        (atInf (embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
-          atInf (embT D) (bZ u Tf.til.z0) τ * dOT u o'))ᵀ := by
+      ((atInf (Forms.embT D) (bZg u Tf.til.z0 B')⁻¹ τ * atInf (Forms.embT D) (((Tf.til.ga c).1 : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ) *
+        (atInf (Forms.embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
+          atInf (Forms.embT D) (bZ u Tf.til.z0) τ * dOT u o'))ᵀ := by
   have hbZ := bZ_isUnitS Tf
   have hd := isUnit_dgE B' hB'
-  have h1 := atInf_mul_inv (embT D) ((Tf.til.ga c).1) τ
-  have h2 : atInf (embT D) (bZg u Tf.til.z0 B')⁻¹ τ * atInf (embT D) (bZ u Tf.til.z0) τ = ((dgE B')⁻¹).map (embT D τ) := by
-    show ((bZg u Tf.til.z0 B')⁻¹).map (embT D τ) * (bZ u Tf.til.z0).map (embT D τ) = _
+  have h1 := atInf_mul_inv (Forms.embT D) ((Tf.til.ga c).1) τ
+  have h2 : atInf (Forms.embT D) (bZg u Tf.til.z0 B')⁻¹ τ * atInf (Forms.embT D) (bZ u Tf.til.z0) τ = ((dgE B')⁻¹).map (Forms.embT D τ) := by
+    show ((bZg u Tf.til.z0 B')⁻¹).map (Forms.embT D τ) * (bZ u Tf.til.z0).map (Forms.embT D τ) = _
     rw [bZg_eq_mul, Matrix.mul_inv_rev, Matrix.map_mul, Matrix.mul_assoc, ← Matrix.map_mul, Matrix.nonsing_inv_mul _ hbZ,
       Matrix.map_one _ (map_zero _) (map_one _), Matrix.mul_one]
-  have h3 : ((dgE B')⁻¹).map (embT D τ) * dOT u o' = ((gFull D u g : GL (Fin (D.R.N D.R.m)) ℂ) : Matrix _ _ ℂ)ᵀ := by
+  have h3 : ((dgE B')⁻¹).map (Forms.embT D τ) * dOT u o' = ((gFull D u g : GL (Fin (D.R.N D.R.m)) ℂ) : Matrix _ _ ℂ)ᵀ := by
     rw [← dgE_gFull B' hB' o' τ g hg, ← Matrix.mul_assoc, ← Matrix.map_mul, Matrix.nonsing_inv_mul _ hd,
       Matrix.map_one _ (map_zero _) (map_one _), Matrix.one_mul]
-  have e : (atInf (embT D) (bZg u Tf.til.z0 B')⁻¹ τ * atInf (embT D) (((Tf.til.ga c).1 : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ) *
-        (atInf (embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
-          atInf (embT D) (bZ u Tf.til.z0) τ * dOT u o') =
-      atInf (embT D) (bZg u Tf.til.z0 B')⁻¹ τ * (atInf (embT D) (((Tf.til.ga c).1 : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
-        atInf (embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ) *
-          atInf (embT D) (bZ u Tf.til.z0) τ * dOT u o' := by
+  have e : (atInf (Forms.embT D) (bZg u Tf.til.z0 B')⁻¹ τ * atInf (Forms.embT D) (((Tf.til.ga c).1 : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ) *
+        (atInf (Forms.embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
+          atInf (Forms.embT D) (bZ u Tf.til.z0) τ * dOT u o') =
+      atInf (Forms.embT D) (bZg u Tf.til.z0 B')⁻¹ τ * (atInf (Forms.embT D) (((Tf.til.ga c).1 : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
+        atInf (Forms.embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ) *
+          atInf (Forms.embT D) (bZ u Tf.til.z0) τ * dOT u o' := by
     simp only [Matrix.mul_assoc]
   rw [e, h1, Matrix.mul_one, h2, h3, Matrix.transpose_transpose]
 
@@ -240,7 +240,7 @@ theorem nfAll_smul_reB {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeigh
 
 theorem ipV_co_ofS (Tf : FormsTiedSym D u Ch chOf)
     (B : D.what₂.places.Pl → (D.fm u).clsP → Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) D.host.E)
-    (hB : ∀ w c, IsUnit (B w c).det) (o : FrP D) (ho : ∀ τ, (o.1 τ)ᴴ * gramC (gramP D) (embT D) τ * o.1 τ = 1) :
+    (hB : ∀ w c, IsUnit (B w c).det) (o : FrP D) (ho : ∀ τ, (o.1 τ)ᴴ * gramC (gramP D) (Forms.embT D) τ * o.1 τ = 1) :
     ∀ w c, ∀ φ ∈ (D.fm u).Fi D.R.m,
     ((D.fm u).ipV D.R.m ((D.fm u).til c) (φ ((D.fm u).til c)) (φ ((D.fm u).til c))).re =
     (Formalism.MainNotions.product_first_zeroth_parts.nfAll ((D.fm u).lam D.R.m)
@@ -254,21 +254,21 @@ theorem ipV_co_ofS (Tf : FormsTiedSym D u Ch chOf)
     rw [hq, fnInv_fnOf _ _ _ (atInf_inv_isUnit _ (bZg_isUnitS Tf (B w c) (hB w c)))]
   rw [hcQ]
   set oM1 : D.what₂.Tau → Matrix (Fin (D.R.N D.R.m)) (Fin (D.R.N D.R.m)) ℂ := fun τ =>
-    atInf (embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
-      atInf (embT D) (bZ u Tf.til.z0) τ * dOT u (o.1 τ) with hoM1
-  have hon : ∀ τ, (oM1 τ)ᴴ * gramC (gramN D D.R.m le_rfl) (embT D) τ * oM1 τ = 1 := fun τ => frame_on Tf c τ (o.1 τ) (ho τ)
+    atInf (Forms.embT D) ((((Tf.til.ga c).1)⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
+      atInf (Forms.embT D) (bZ u Tf.til.z0) τ * dOT u (o.1 τ) with hoM1
+  have hon : ∀ τ, (oM1 τ)ᴴ * gramC (gramN D D.R.m le_rfl) (Forms.embT D) τ * oM1 τ = 1 := fun τ => frame_on Tf c τ (o.1 τ) (ho τ)
   have hdet : ∀ τ, IsUnit (oM1 τ).det := by
     intro τ
     have h1 := congrArg Matrix.det (hon τ)
     rw [Matrix.det_mul, Matrix.det_mul, Matrix.det_one] at h1
-    have h2 : (oM1 τ).det * ((oM1 τ)ᴴ.det * (gramC (gramN D D.R.m le_rfl) (embT D) τ).det) = 1 := by
+    have h2 : (oM1 τ).det * ((oM1 τ)ᴴ.det * (gramC (gramN D D.R.m le_rfl) (Forms.embT D) τ).det) = 1 := by
       rw [← h1]; ring
     exact ⟨Units.mkOfMulEqOne _ _ h2, rfl⟩
   let oM : Fr D D.R.m le_rfl := ⟨oM1, hdet⟩
   have hoM : oM.IsON := fun τ => Or.inl (hon τ)
   have hg : ∀ τ, ((gFull D u (gPof B hB o w c τ) : GL (Fin (D.R.N D.R.m)) ℂ) : Matrix _ _ ℂ) =
-      ((atInf (embT D) (bZg u Tf.til.z0 (B w c))⁻¹ τ *
-        atInf (embT D) (((Tf.til.ga c).1 : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ) * oM.1 τ)ᵀ :=
+      ((atInf (Forms.embT D) (bZg u Tf.til.z0 (B w c))⁻¹ τ *
+        atInf (Forms.embT D) (((Tf.til.ga c).1 : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ) * oM.1 τ)ᵀ :=
     fun τ => frame_eq Tf c τ (B w c) (hB w c) (o.1 τ) _ rfl
   set χ : ℂ := (((Tf.cls D.R.m le_rfl (Or.inr rfl)).lev.chi (Tf.tilAd.ka c) : ℂˣ) : ℂ) with hχ
   have hf : φ ((D.fm u).til c) = fun z => fnOf _ (shiftOf (lamT u D.R.m)) (fun τ => (oM.1 τ)⁻¹)

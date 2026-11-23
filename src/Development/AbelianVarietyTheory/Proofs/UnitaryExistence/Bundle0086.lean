@@ -49,12 +49,12 @@ section Ring
 variable {K : Type} [Field K] {σ : K →+* ℂ} {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V]
 variable {A : Type} [CommRing A] [Algebra K A]
 
-theorem toC_mul (x y : CAt σ) : toC (x * y) = toC x * toC y := rfl
-theorem toC_add (x y : CAt σ) : toC (x + y) = toC x + toC y := rfl
-theorem toC_one : toC (1 : CAt σ) = 1 := rfl
+theorem toC_mul (x y : CAt σ) : Formalism.L2.PjFree.toC (x * y) = Formalism.L2.PjFree.toC x * Formalism.L2.PjFree.toC y := rfl
+theorem toC_add (x y : CAt σ) : Formalism.L2.PjFree.toC (x + y) = Formalism.L2.PjFree.toC x + Formalism.L2.PjFree.toC y := rfl
+theorem toC_one : Formalism.L2.PjFree.toC (1 : CAt σ) = 1 := rfl
 
 def holSub (B : Set V) (k : V → (A →ₐ[K] CAt σ)) : Subalgebra K A where
-  carrier := {t | DifferentiableOn ℂ (fun b => toC (k b t)) B}
+  carrier := {t | DifferentiableOn ℂ (fun b => Formalism.L2.PjFree.toC (k b t)) B}
   mul_mem' := fun {x y} hx hy => by
     simp only [Set.mem_setOf_eq, map_mul, toC_mul] at *
     exact hx.mul hy
@@ -66,18 +66,18 @@ def holSub (B : Set V) (k : V → (A →ₐ[K] CAt σ)) : Subalgebra K A where
     exact differentiableOn_const _
 
 theorem mem_holSub {B : Set V} {k : V → (A →ₐ[K] CAt σ)} {t : A} :
-    t ∈ holSub B k ↔ DifferentiableOn ℂ (fun b => toC (k b t)) B := Iff.rfl
+    t ∈ holSub B k ↔ DifferentiableOn ℂ (fun b => Formalism.L2.PjFree.toC (k b t)) B := Iff.rfl
 
 theorem inv_mem_holSub {B : Set V} {k : V → (A →ₐ[K] CAt σ)} {d x : A} (hx : x ∈ holSub B k)
     (h : d * x = 1) : d ∈ holSub B k := by
   rw [mem_holSub] at hx ⊢
-  have key : ∀ b, toC (k b d) * toC (k b x) = 1 := fun b => by
+  have key : ∀ b, Formalism.L2.PjFree.toC (k b d) * Formalism.L2.PjFree.toC (k b x) = 1 := fun b => by
     rw [← toC_mul, ← map_mul, h, map_one, toC_one]
-  have hne : ∀ b, toC (k b x) ≠ 0 := fun b hb => by
+  have hne : ∀ b, Formalism.L2.PjFree.toC (k b x) ≠ 0 := fun b hb => by
     have h1 := key b
     rw [hb, mul_zero] at h1
     exact zero_ne_one h1
-  have heq : (fun b => toC (k b d)) = fun b => (toC (k b x))⁻¹ :=
+  have heq : (fun b => Formalism.L2.PjFree.toC (k b d)) = fun b => (Formalism.L2.PjFree.toC (k b x))⁻¹ :=
     funext fun b => eq_inv_of_mul_eq_one_left (key b)
   rw [heq]
   exact hx.inv fun b _ => hne b
@@ -104,7 +104,7 @@ private theorem evR_eq_of_frMap {E : Type} [Field E] [NumberField E] [IsCMField 
 
 end Ring
 
-theorem differentiableOn_evR : Out.SecBaseChangeSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (V : Type) [NormedAddCommGroup V] [NormedSpace ℂ V] (B : Set V) (p : TRing c.F) (y₀ : FrPt Xo c p.R) (ψ : V → (p.R →ₐ[c.F] CAt σ)) (z y : V → FrPt Xo c (CAt σ)) (G : V → (∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) (CAt σ))) (a : V → CAt σ), (∀ b ∈ B, FrMap (ψ b) y₀ (z b) ∧ FrChg (G b) (a b) (z b) (y b)) → (∀ t, DifferentiableOn ℂ (fun b => toC (ψ b t)) B) → (∀ τ i j, DifferentiableOn ℂ (fun b => toC (G b τ i j)) B) → DifferentiableOn ℂ (fun b => toC (a b)) B → ∀ w n, ∀ f ∈ sec Xo c w n, DifferentiableOn ℂ (fun b => toC (evR Xo c f (y b))) B := by
+theorem differentiableOn_evR : Out.SecBaseChangeSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (V : Type) [NormedAddCommGroup V] [NormedSpace ℂ V] (B : Set V) (p : TRing c.F) (y₀ : FrPt Xo c p.R) (ψ : V → (p.R →ₐ[c.F] CAt σ)) (z y : V → FrPt Xo c (CAt σ)) (G : V → (∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) (CAt σ))) (a : V → CAt σ), (∀ b ∈ B, FrMap (ψ b) y₀ (z b) ∧ FrChg (G b) (a b) (z b) (y b)) → (∀ t, DifferentiableOn ℂ (fun b => Formalism.L2.PjFree.toC (ψ b t)) B) → (∀ τ i j, DifferentiableOn ℂ (fun b => Formalism.L2.PjFree.toC (G b τ i j)) B) → DifferentiableOn ℂ (fun b => Formalism.L2.PjFree.toC (a b)) B → ∀ w n, ∀ f ∈ sec Xo c w n, DifferentiableOn ℂ (fun b => Formalism.L2.PjFree.toC (evR Xo c f (y b))) B := by
   intro hS E _ _ _ H Dw l Xo c σ V _ _ B p y₀ ψ z y G a hzy hψ hG ha w n f hf
   obtain ⟨A, π, X, s, u, hU⟩ := _root_.GlobalTheory.Frames.exists_univFrame_testRing hS E H Dw l Xo c p y₀
   obtain ⟨hFR, u₀, hπ, hch⟩ := hU
@@ -126,19 +126,19 @@ theorem differentiableOn_evR : Out.SecBaseChangeSt → ∀ (E : Type) [Field E] 
     intro τ i j
     rw [mem_holSub]
     refine (hG τ i j).congr fun b hb => ?_
-    show toC (kk b (X τ i j)) = toC (G b τ i j)
+    show Formalism.L2.PjFree.toC (kk b (X τ i j)) = Formalism.L2.PjFree.toC (G b τ i j)
     rw [← (hkk b hb).2.1 τ]
     rfl
   have hs : (s : A.R) ∈ holSub B kk := by
     rw [mem_holSub]
     refine ha.congr fun b hb => ?_
-    show toC (kk b (s : A.R)) = toC (a b)
+    show Formalism.L2.PjFree.toC (kk b (s : A.R)) = Formalism.L2.PjFree.toC (a b)
     rw [(hkk b hb).2.2]
   have hA' := _root_.GlobalTheory.frameRing_subalgebra_eq_top c.F (E →+* ℂ) (fun τ => Dw.mult τ) p.R A.R π X s hFR (holSub B kk)
     (fun t => by
       rw [mem_holSub]
       refine (hψ t).congr fun b hb => ?_
-      show toC (kk b (π t)) = toC (ψ b t)
+      show Formalism.L2.PjFree.toC (kk b (π t)) = Formalism.L2.PjFree.toC (ψ b t)
       rw [← (hkk b hb).1]
       rfl)
     hX hs (inv_mem_holSub hs (Units.inv_mul s))
@@ -152,7 +152,7 @@ theorem differentiableOn_evR : Out.SecBaseChangeSt → ∀ (E : Type) [Field E] 
     exact Algebra.mem_top
   rw [mem_holSub] at he
   refine he.congr fun b hb => ?_
-  show toC (evR Xo c f (y b)) = toC (kk b (f A u))
+  show Formalism.L2.PjFree.toC (evR Xo c f (y b)) = Formalism.L2.PjFree.toC (kk b (f A u))
   congr 1
   apply evR_eq_of_frMap hS hf A (kk b) u (y b)
   obtain ⟨hm, hc⟩ := hzy b hb
