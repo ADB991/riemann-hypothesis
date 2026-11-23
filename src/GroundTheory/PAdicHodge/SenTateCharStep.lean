@@ -105,7 +105,12 @@ include hτp hgen in
 theorem stepEmb_surjective (φ : IntermediateField.extendScalars hMM' →ₐ[M] PadicAlgCl p) :
     ∃ j < p, stepEmb hMM' hτM j = φ := by
   set φ' := φ.liftNormal (PadicAlgCl p)
-  have hbij : Function.Bijective φ' := Algebra.IsAlgebraic.algHom_bijective φ'
+  -- Bundling widened the instance search space: supplying the torsion-free instance
+  -- explicitly keeps the default 20k heartbeat budget.
+  have hTF : Module.IsTorsionFree ↥M (PadicAlgCl p) :=
+    DivisionSemiring.to_moduleIsTorsionFree
+  have hbij : Function.Bijective φ' :=
+    @Algebra.IsAlgebraic.algHom_bijective ↥M (PadicAlgCl p) _ _ _ _ hTF _ φ'
   let σ : Gal(PadicAlgCl p/K) := (AlgEquiv.ofBijective φ' hbij).restrictScalars K
   have hσ : σ ∈ M.fixingSubgroup := by
     rw [IntermediateField.mem_fixingSubgroup_iff]
