@@ -11,11 +11,13 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomolog
 
 open Matrix IsLocalRing ReciprocityTheory.Gal UpperTheory.V.HV UpperTheory.V.U3 UpperTheory.V.Alg UpperTheory.V.UnitaryThreeInertia
 
+attribute [local instance 1100] DivisionSemiring.to_moduleIsTorsionFree
+attribute [-instance] UpperTheory.V.Pr.IsCD.toIsDomain UpperTheory.V.Pr.IsCD.toIsDiscreteValuationRing
+
 section SlopeTestRemainingChoices
 
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual
 
-attribute [-instance] UpperTheory.V.Pr.IsCD.toIsDomain UpperTheory.V.Pr.IsCD.toIsDiscreteValuationRing in
 private theorem vanish_zmod (hTD : LocalTateDuality) (hEC : LocalEulerChar) (F Ω : Type) [Field F] [NumberField F]
     [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime] (M : Type) [AddCommGroup M]
     [Module (ZMod (l ^ 1)) M] [Finite M] [TopologicalSpace M] [DiscreteTopology M] (A : ValuationSubring Ω)
