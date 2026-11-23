@@ -331,7 +331,7 @@ private theorem exists_section_of_compatible_local_sections {S : Scheme.{0}} {I 
     obtain ⟨i, hi⟩ := exists_mem hU p
     exact ⟨i, by simpa using hi⟩
   obtain ⟨F, hF⟩ := exists_hom (fun i => (U i).ι) (fun i => inferInstance) hc
-    (fun i => (σ i).left ≫ ψ i) (fun i j => isPullback_opens_inf (U i) (U j)) hσ
+    (fun i => (σ i).left ≫ ψ i) (fun i j => AlgebraicGeometry.isPullback_opens_inf (U i) (U j)) hσ
   have hw : F ≫ A.hom = 𝟙 S := by
     refine hom_ext (fun i => (U i).ι) (fun i => inferInstance) hc (fun i => ?_)
     have h1 := Over.w (σ i)
