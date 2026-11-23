@@ -186,7 +186,10 @@ def mulQ (a b : IdF (sP Q').A) (T : Q'.FullSubcategory) : T.obj.B →+* Module.E
   map_one' := LinearMap.ext fun x => Subtype.ext (by
     change Ideal.Quotient.mk (b.S T) 1 * x.val = x.val
     rw [map_one, one_mul])
-  map_mul' c c' := LinearMap.ext fun x => Subtype.ext (by simp [mul_assoc])
+  map_mul' c c' := LinearMap.ext fun x => Subtype.ext (by
+    change Ideal.Quotient.mk (b.S T) (c * c') * x.val =
+      Ideal.Quotient.mk (b.S T) c * (Ideal.Quotient.mk (b.S T) c' * x.val)
+    rw [map_mul, mul_assoc])
   map_zero' := LinearMap.ext fun x => Subtype.ext (by simp)
   map_add' c c' := LinearMap.ext fun x => Subtype.ext (by simp [add_mul])
 
