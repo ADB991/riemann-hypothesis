@@ -34,7 +34,7 @@ open ReciprocityTheory.ChartRestriction.G.Chart (sp JetR zR IsUnivChart jetLift 
 
 theorem exists_isUnivChart {R : Type} [CommRing R] [IsLocalRing R] (G : Over (Spec (CommRingCat.of R))) [GrpObj G]
     [IsCommMonObj G] (g : ℕ) (hG : SmoothOfRelativeDimension g G.hom) :
-    ∃ x : ∀ m : ℕ, sp (R₀ := R) (JetR R (Fin g) m) ⟶ G, IsUnivChart G g x := by
+    ∃ x : ∀ m : ℕ, sp (R₀ := R) (ReciprocityTheory.ChartRestriction.G.Chart.JetR R (Fin g) m) ⟶ G, IsUnivChart G g x := by
   obtain ⟨X, h0, hnat, hinj, hsurj⟩ := NilCoord.nilpotent_coordinates G g hG
   have nil : ∀ {A : Type} [CommRing A] (J : Ideal A) (m : ℕ), J ^ (m + 1) = ⊥ → ∀ a ∈ J, IsNilpotent a :=
     fun J m hJ a ha => ⟨m + 1, by
@@ -60,7 +60,7 @@ theorem exists_isUnivChart {R : Type} [CommRing R] [IsLocalRing R] (G : Over (Sp
       exact (congrFun (hinj A _ _ (fun i => nil _ m hJ _ (ha i)) (fun i => (hz m i).map ψ) h) j).symm
 
 def tanAct {R : Type} [CommRing R] {G : Over (Spec (CommRingCat.of R))} [GrpObj G] {n : ℕ}
-    {x : ∀ m : ℕ, sp (R₀ := R) (JetR R (Fin n) m) ⟶ G} (hx : IsUnivChart G n x) {O : Type} [CommRing O]
+    {x : ∀ m : ℕ, sp (R₀ := R) (ReciprocityTheory.ChartRestriction.G.Chart.JetR R (Fin n) m) ⟶ G} (hx : IsUnivChart G n x) {O : Type} [CommRing O]
     (act : OAct O G) : O →+* Module.End R (Fin n → R) :=
   haveI := act.hom
   RingHom.mk'

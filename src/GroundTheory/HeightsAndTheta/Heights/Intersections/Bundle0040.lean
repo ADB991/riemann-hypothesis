@@ -361,9 +361,9 @@ theorem RegularityLocalize.proof (h₁ : RegularityLocalPrime.Statement) : Regul
 
   obtain ⟨u₀, v₀, a, hu₀, hv₀, hv₀W, hyv₀⟩ := LocRingFrac.proof K ι P W hPp hWp hPW y hy
   choose c hc using hW.1.2.2
-  obtain ⟨t, ht, htW⟩ : ∃ t : MRing ι, IsMultiHomog t 1 ∧ t ∉ W :=
+  obtain ⟨t, ht, htW⟩ : ∃ t : MRing ι, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog t 1 ∧ t ∉ W :=
     ⟨_, AvoidRing.isMultiHomog_coordProd c 1, AvoidRing.coordProd_not_mem hWp c hc 1⟩
-  obtain ⟨u, v, hu, hv, hvW, hyv⟩ : ∃ u v : MRing ι, IsMultiHomog u (a + 1) ∧ IsMultiHomog v (a + 1) ∧ v ∉ W ∧
+  obtain ⟨u, v, hu, hv, hvW, hyv⟩ : ∃ u v : MRing ι, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog u (a + 1) ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog v (a + 1) ∧ v ∉ W ∧
       y * algebraMap (MRing ι ⧸ P) (FractionRing (MRing ι ⧸ P)) (Ideal.Quotient.mk P v) =
         algebraMap (MRing ι ⧸ P) (FractionRing (MRing ι ⧸ P)) (Ideal.Quotient.mk P u) :=
     ⟨u₀ * t, v₀ * t, AvoidRing.isMultiHomog_mul hu₀ ht, AvoidRing.isMultiHomog_mul hv₀ ht,
@@ -376,8 +376,8 @@ theorem RegularityLocalize.proof (h₁ : RegularityLocalPrime.Statement) : Regul
     nlinarith
   have hhW : h ∉ W := hhS W hWS
   have hhP : h ∉ P := fun e => hhW (hPW e)
-  have hvm : IsMultiHomog (v ^ (m + 1)) ((m + 1) • (a + 1)) := AvoidRing.isMultiHomog_pow hv _
-  have hxm : IsMultiHomog (v ^ m * u) ((m + 1) • (a + 1)) := by
+  have hvm : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (v ^ (m + 1)) ((m + 1) • (a + 1)) := AvoidRing.isMultiHomog_pow hv _
+  have hxm : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (v ^ m * u) ((m + 1) • (a + 1)) := by
     rw [succ_nsmul]; exact AvoidRing.isMultiHomog_mul (AvoidRing.isMultiHomog_pow hv _) hu
   obtain ⟨s₀, hs₀⟩ := exists_funField_mul_eq hvm hh hhP
   obtain ⟨x₀, hx₀⟩ := exists_funField_mul_eq hxm hh hhP
@@ -388,7 +388,7 @@ theorem RegularityLocalize.proof (h₁ : RegularityLocalPrime.Statement) : Regul
     rw [pow_succ, ← hyv]
     ring
 
-  have hover : ∀ z : funField P, (∃ g : MRing ι, IsMultiHomog g ((m + 1) • (a + 1)) ∧
+  have hover : ∀ z : funField P, (∃ g : MRing ι, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g ((m + 1) • (a + 1)) ∧
       (z : FractionRing (MRing ι ⧸ P)) * algebraMap (MRing ι ⧸ P) (FractionRing (MRing ι ⧸ P)) (Ideal.Quotient.mk P h) =
         algebraMap (MRing ι ⧸ P) (FractionRing (MRing ι ⧸ P)) (Ideal.Quotient.mk P g)) →
       ∀ W', IsClosedPt W' → P ≤ W' → C p ∈ W' → (z : FractionRing (MRing ι ⧸ P)) ∈ locRing P W' :=
@@ -404,7 +404,7 @@ theorem RegularityLocalize.proof (h₁ : RegularityLocalPrime.Statement) : Regul
     have hnW : (C (n₁ * n₂) : MRing ι) ∉ W := fun e => by
       rcases hp.dvd_or_dvd ((hpW _).1 e) with h' | h'
       exacts [hn₁ h', hn₂ h']
-    have hden : IsMultiHomog (C (n₁ * n₂) * v ^ (m + 1)) ((m + 1) • (a + 1)) := by
+    have hden : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (C (n₁ * n₂) * v ^ (m + 1)) ((m + 1) • (a + 1)) := by
       simpa using AvoidRing.isMultiHomog_mul (RegularityDenominator.isMultiHomog_C (n₁ * n₂)) hvm
     have hdenW : C (n₁ * n₂) * v ^ (m + 1) ∉ W := fun e =>
       (hWp.mem_or_mem e).elim hnW fun e' => hvW (hWp.mem_of_pow_mem _ e')

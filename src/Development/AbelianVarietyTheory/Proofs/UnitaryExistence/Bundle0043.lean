@@ -175,7 +175,7 @@ theorem exists_complete_normal_subring_join : ∀ (R : Type) [CommRing R] [IsDom
   have hqR : (q : R) ∈ maximalIdeal R := not_isUnit_of_norm_lt_one f hf1 (by simpa using hqC)
   obtain ⟨φ⟩ := nonempty_padicInt_ringHom_of_isAdicComplete (maximalIdeal R) q hqR
   obtain ⟨S₀, ψ₀, hψ₀, h₀, hg₀⟩ := exists_subring_finite f g φ
-    (padicInt_ringHom_ext hqC _ _ (fun x => hf1 _) fun x => hg1 _)
+    (GlobalTheory.CompleteJoin.padicInt_ringHom_ext hqC _ _ (fun x => hf1 _) fun x => hg1 _)
   obtain ⟨_, hN₀, hc₀, -, hm₀⟩ := subring_of_finite S₀ ψ₀ hψ₀ (fun a => h₀ a ▸ hf1 a)
     fun a ha => h₀ a ▸ hf2 a ha
   obtain ⟨S, ψ, hψ, h, hS⟩ := exists_normal_subring S₀

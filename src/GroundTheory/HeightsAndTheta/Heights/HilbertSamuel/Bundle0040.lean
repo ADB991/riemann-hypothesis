@@ -175,12 +175,12 @@ set_option linter.unusedSectionVars false
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem HermLine.zcomb_isConjInvariantH {A B : HermLine ι} (hA : IsConjInvariantH A) (hB : IsConjInvariantH B)
-    (p q : ℤ) : IsConjInvariantH (HermLine.zcomb A B p q) := fun z => by
+theorem HermLine.zcomb_isConjInvariantH {A B : HermLine ι} (hA : ReciprocityTheory.ChartRestriction.G.Geo.IsConjInvariantH A) (hB : ReciprocityTheory.ChartRestriction.G.Geo.IsConjInvariantH B)
+    (p q : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.IsConjInvariantH (HermLine.zcomb A B p q) := fun z => by
   show A.h _ ^ p * B.h _ ^ q = A.h z ^ p * B.h z ^ q
   rw [hA z, hB z]
 
-theorem fsH_isConjInvariantH (ι : K → Type) [∀ k, Fintype (ι k)] : IsConjInvariantH (fsH ι) := fun z => by
+theorem fsH_isConjInvariantH (ι : K → Type) [∀ k, Fintype (ι k)] : ReciprocityTheory.ChartRestriction.G.Geo.IsConjInvariantH (fsH ι) := fun z => by
   show ∏ k, (fsMetric (ι := ι k)).ρ (fun i => (starRingEnd ℂ) (z ⟨k, i⟩)) ^ (1 : K → ℤ) k =
     ∏ k, (fsMetric (ι := ι k)).ρ (fun i => z ⟨k, i⟩) ^ (1 : K → ℤ) k
   exact Finset.prod_congr rfl fun k _ => by rw [ProjLine.isConjInvariant_fs (fun i => z ⟨k, i⟩)]
