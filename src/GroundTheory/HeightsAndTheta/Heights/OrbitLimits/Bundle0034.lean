@@ -207,7 +207,7 @@ theorem sum_single_chart_apply (k' : K) (j : ι k') (b : ℕ) (k : K) :
     exact h (Sigma.mk.inj_iff.mp he).1
 
 theorem isMultiHomog_curveChartMono (c : ∀ k, ι k) (d : K → ℕ) :
-    IsMultiHomog (curveChartMono c d) d := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (curveChartMono c d) d := by
   classical
   have h : curveChartMono c d = monomial (∑ k, Finsupp.single (⟨k, c k⟩ : Σ k, ι k) (d k)) (1 : ℤ) := by
     rw [curveChartMono, monomial_sum_one]
@@ -333,7 +333,7 @@ theorem FibreMultiHomog.proof : FibreMultiHomog.Statement := by
   rw [show (DirectSum.decompose (weightedHomogeneousSubmodule G.Φ (cycBlockWt k)) f n : MvPolynomial _ G.Φ) =
     weightedHomogeneousComponent (cycBlockWt k) n f from MvPolynomial.decompose'_apply _ _ f n]
   obtain ⟨b, hb, F, e⟩ := exists_clear G f
-  rw [fibreIdeal, RingHom.mem_ker] at hf ⊢
+  rw [ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal, RingHom.mem_ker] at hf ⊢
   have hF : liftZ κ v F ∈ P' := by
     rw [← G.genericFibre_ker_target, RingHom.mem_ker, aeval_liftZ, ← e, map_mul, aeval_C]
     simp [hf]
