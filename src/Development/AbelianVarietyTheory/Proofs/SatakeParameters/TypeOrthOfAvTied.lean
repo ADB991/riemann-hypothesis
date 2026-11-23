@@ -84,8 +84,7 @@ theorem cong_conj {M : ℕ} {κ l : GAf L n} (hκ : κ ∈ Umax L n) (hl : NG.Co
   · rw [hprod]
     have : Ki * (1 + (M : AL L) • Matrix.of Y) * K - 1 = (M : AL L) • (Ki * Matrix.of Y * K) := by
       rw [Matrix.mul_add, Matrix.add_mul, Matrix.mul_one, hKK, add_sub_cancel_left, Matrix.mul_smul, Matrix.smul_mul]
-    have h2 := congrFun (congrFun this i) j
-    simpa [Matrix.sub_apply, Matrix.smul_apply] using h2
+    exact congrFun (congrFun this i) j
 
 variable {W : Type} [AddCommGroup W] [Module ℂ W]
 
