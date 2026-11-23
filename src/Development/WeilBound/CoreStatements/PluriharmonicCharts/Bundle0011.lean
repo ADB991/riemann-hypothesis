@@ -98,7 +98,7 @@ theorem arith_of_trdeg {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype 
       simp [ratioPtL, ratioPt, hc] at h1⟩)
     (by rw [mCoordIdeal_ratioPtL y _ hc]; exact hhor)
   have hL : Algebra.trdeg ℤ (ratioField y c) = ((d : ℕ) : Cardinal) := by
-    rw [ratioField, trdeg_int_adjoin]
+    rw [CoordinateConeArithVar.ratioField, trdeg_int_adjoin]
     exact hd
   rw [mCoordIdeal_ratioPtL y _ hc, hL] at htr
   have : (mCoordIdeal y).IsPrime := RingHom.ker_isPrime _
