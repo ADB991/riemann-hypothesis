@@ -293,7 +293,7 @@ theorem inTh_lat_iff : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) {T T' : D.h
     exact hi
   have hg : ((gS D : ℕ) : 𝓞 D.host.E) =
       ((D.host.g 0 : ℕ) : 𝓞 D.host.E) * ((D.host.g 1 : ℕ) : 𝓞 D.host.E) := by
-    unfold gS
+    unfold Formalism.MainNotions.S.Lat.gS
     push_cast
     ring
   obtain ⟨i, j, hij, hi, hgij⟩ : ∃ i j : Fin 2, D.host.g i ≠ D.host.g j ∧
