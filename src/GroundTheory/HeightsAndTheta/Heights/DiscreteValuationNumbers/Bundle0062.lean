@@ -240,7 +240,7 @@ variable (O : Type*) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 variable {Ω : Type*} [Field Ω] [Algebra O Ω]
 
 def IsLocFrac (Q : Ideal (MRingOver (kap O) ι)) (F G : MRingOver O ι) : Prop :=
-  ∃ α : K → ℕ, IsMultiHomog F α ∧ IsMultiHomog G α ∧ MvPolynomial.map (IsLocalRing.residue O) G ∉ Q
+  ∃ α : K → ℕ, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog F α ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog G α ∧ MvPolynomial.map (IsLocalRing.residue O) G ∉ Q
 
 def stalk (x : (Σ k, ι k) → Ω) (Q : Ideal (MRingOver (kap O) ι)) {N : ℕ} {V : Type*} [AddCommGroup V]
     [Module Ω V] (B : ChartBundle O (mseg x) N V) : AddSubgroup V :=

@@ -438,7 +438,7 @@ def GenericPointsInAffineChart.Statement : Prop :=
     (G : GenFibre v P') (j : ∀ k : FibreBlock κ, ι' k.1),
     IsBlockMap κ v → IsArithVar P' (n + 1) → IsArithVar (imageZ v P') (n + 1) →
     (∀ k : FibreBlock κ, G.x' ⟨k.1, j k⟩ ≠ 0) →
-    ∃ (D : MRing ι) (a : K → ℕ), IsMultiHomog D a ∧ D ∉ imageZ v P' ∧
+    ∃ (D : MRing ι) (a : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog D a ∧ D ∉ imageZ v P' ∧
       ∀ z ∈ mcPts (imageZ v P'), eval z (map (Int.castRingHom ℂ) D) ≠ 0 →
         (ptsOverChart P' κ v j z).Finite ∧
         (ptsOverChart P' κ v j z).ncard = Module.finrank G.Φ (IntermediateField.adjoin G.Φ

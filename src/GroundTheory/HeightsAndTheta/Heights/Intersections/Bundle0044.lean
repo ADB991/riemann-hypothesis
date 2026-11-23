@@ -72,7 +72,7 @@ def SemilocLengthSum.Statement : Prop :=
       algebraMap _ _ (Ideal.Quotient.mk (imageZ v P') s) →
     (∀ W' ∈ fibreOver v P' W, rename v s ∈ W' →
       ∃ (G' : GenFibre v W') (J' : IFamily G'.Φ (fibreIdx ι' κ)),
-        IsFieldIntersection J' ∧ E W' = J' (fibreIdeal κ G') 0 Fin.elim0) →
+        IsFieldIntersection J' ∧ E W' = J' (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G') 0 Fin.elim0) →
     haveI := hP'.2.1.1
     letI := (locToSemiloc hv P' W).toAlgebra
     (fibreOver v P' W).Finite ∧
