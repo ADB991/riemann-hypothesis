@@ -34,7 +34,7 @@ def GenericPointsAvoidBadLocus.Statement : Prop :=
     (G : GenFibre v P') (i : ∀ k : FibreBlock κ, ι' k.1),
     IsBlockMap κ v → IsArithVar P' (n + 1) → IsArithVar (imageZ v P') (n + 1) →
     (∀ k : FibreBlock κ, G.x' ⟨k.1, i k⟩ ≠ 0) →
-    ∃ (D : MRing ι) (a : K → ℕ), IsMultiHomog D a ∧ D ∉ imageZ v P' ∧
+    ∃ (D : MRing ι) (a : K → ℕ), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog D a ∧ D ∉ imageZ v P' ∧
       ∀ z ∈ mcPts (imageZ v P'), eval z (map (Int.castRingHom ℂ) D) ≠ 0 →
         (ptsOverPt P' v z).ncard = Module.finrank G.Φ (IntermediateField.adjoin G.Φ
           (Set.range fun q : Σ k : FibreBlock κ, ι' k.1 => G.x' ⟨q.1.1, q.2⟩ / G.x' ⟨q.1.1, i q.1⟩))
@@ -64,7 +64,7 @@ def LocRingIntClosureFinite.Statement : Prop :=
     (K' : Type) [Fintype K'] (ι' : K' → Type) [∀ k, Fintype (ι' k)]
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (n : ℕ) (s : MRing ι) (α : K → ℕ)
     (W : Ideal (MRing ι)) (_hv : IsBlockMap κ v) (hP' : IsArithVar P' (n + 1)),
-    IsArithVar (imageZ v P') (n + 1) → IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
+    IsArithVar (imageZ v P') (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
     haveI := hP'.2.1.1
     letI := ((fracMapZ v P').comp (locRing (imageZ v P') W).subtype).toAlgebra
     letI : Module (locRing (imageZ v P') W) (FractionRing (MRing ι' ⧸ P')) := Algebra.toModule
@@ -90,7 +90,7 @@ def SemilocFinite.Statement : Prop :=
     (K' : Type) [Fintype K'] (ι' : K' → Type) [∀ k, Fintype (ι' k)]
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (n : ℕ) (s : MRing ι) (α : K → ℕ)
     (W : Ideal (MRing ι)) (hv : IsBlockMap κ v) (hP' : IsArithVar P' (n + 1)),
-    IsArithVar (imageZ v P') (n + 1) → IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
+    IsArithVar (imageZ v P') (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
     haveI := hP'.2.1.1
     letI := (locToSemiloc hv P' W).toAlgebra
     Module.Finite (locRing (imageZ v P') W) (semiLocRing P' (fibreOver v P' W)) ∧
@@ -115,7 +115,7 @@ def SemilocIntegral.Statement : Prop :=
     (K' : Type) [Fintype K'] (ι' : K' → Type) [∀ k, Fintype (ι' k)]
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (n : ℕ) (s : MRing ι) (α : K → ℕ)
     (W : Ideal (MRing ι)) (hv : IsBlockMap κ v) (hP' : IsArithVar P' (n + 1)),
-    IsArithVar (imageZ v P') (n + 1) → IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
+    IsArithVar (imageZ v P') (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s α → s ∉ imageZ v P' → W ∈ divSupp (imageZ v P') s →
     haveI := hP'.2.1.1
     letI := (locToSemiloc hv P' W).toAlgebra
     Algebra.IsIntegral (locRing (imageZ v P') W) (semiLocRing P' (fibreOver v P' W))
@@ -140,13 +140,13 @@ def SemilocLength.Statement : Prop :=
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (n : ℕ) (s t : MRing ι) (α : K → ℕ)
     (W : Ideal (MRing ι)) (E : Ideal (MRing ι') → ℤ) (hv : IsBlockMap κ v) (hP' : IsArithVar P' (n + 1))
     (y : locRing (imageZ v P') W),
-    IsArithVar (imageZ v P') (n + 1) → IsMultiHomog s α → IsMultiHomog t α → s ∉ imageZ v P' →
+    IsArithVar (imageZ v P') (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s α → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog t α → s ∉ imageZ v P' →
     W ∈ divSupp (imageZ v P') s → t ∉ W →
     (y : FractionRing (MRing ι ⧸ imageZ v P')) * algebraMap _ _ (Ideal.Quotient.mk (imageZ v P') t) =
       algebraMap _ _ (Ideal.Quotient.mk (imageZ v P') s) →
     (∀ W' ∈ divSupp P' (rename v s), imageZ v W' = W →
       ∃ (G' : GenFibre v W') (J' : IFamily G'.Φ (fibreIdx ι' κ)),
-        IsFieldIntersection J' ∧ E W' = J' (fibreIdeal κ G') 0 Fin.elim0) →
+        IsFieldIntersection J' ∧ E W' = J' (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G') 0 Fin.elim0) →
     haveI := hP'.2.1.1
     letI := (locToSemiloc hv P' W).toAlgebra
     ∃ N : ℕ, Module.length (locRing (imageZ v P') W)
@@ -175,12 +175,12 @@ def SemilocRank.Statement : Prop :=
     (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (n : ℕ)
     (G : GenFibre v P') (J : IFamily G.Φ (fibreIdx ι' κ)) (s : MRing ι) (α : K → ℕ)
     (W : Ideal (MRing ι)) (hv : IsBlockMap κ v) (hP' : IsArithVar P' (n + 1)),
-    IsArithVar (imageZ v P') (n + 1) → IsFieldIntersection J → IsMultiHomog s α → s ∉ imageZ v P' →
+    IsArithVar (imageZ v P') (n + 1) → IsFieldIntersection J → ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s α → s ∉ imageZ v P' →
     W ∈ divSupp (imageZ v P') s →
     haveI := hP'.2.1.1
     letI := (locToSemiloc hv P' W).toAlgebra
     (Module.finrank (locRing (imageZ v P') W) (semiLocRing P' (fibreOver v P' W)) : ℤ) =
-      J (fibreIdeal κ G) 0 Fin.elim0
+      J (ReciprocityTheory.ChartRestriction.G.AI.I4.fibreIdeal κ G) 0 Fin.elim0
 
 end GroundTheory.Heights₂.Heights.Inter
 end
