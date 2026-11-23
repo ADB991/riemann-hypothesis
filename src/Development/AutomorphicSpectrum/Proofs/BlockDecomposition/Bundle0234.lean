@@ -246,7 +246,7 @@ theorem exists_gal (K : FinExt l) {LL : Type} [Field LL] [Algebra ℚ_[l] LL] (�
   have hg₀ : ∀ x, g₀ (σ x) = σ' x := fun x => AlgHom.liftNormal_commutes σ' (Om l) x
   let g : GQ l := AlgEquiv.ofBijective g₀ (Algebra.IsAlgebraic.algHom_bijective g₀)
   refine ⟨⟨g, ?_⟩, hg₀⟩
-  rw [GK, IntermediateField.mem_fixingSubgroup_iff]
+  rw [Formalism.BasicNotions.Loc.GK, IntermediateField.mem_fixingSubgroup_iff]
   intro c hc
   have h1 : σ (τ ⟨c, hc⟩) = c := DFunLike.congr_fun h ⟨c, hc⟩
   have h2 : σ' (τ ⟨c, hc⟩) = c := DFunLike.congr_fun h' ⟨c, hc⟩
