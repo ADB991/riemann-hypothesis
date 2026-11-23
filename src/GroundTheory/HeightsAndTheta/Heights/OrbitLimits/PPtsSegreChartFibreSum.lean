@@ -193,7 +193,7 @@ theorem isSectionOn_ofWeight_one {P : Ideal (MRing ι)} (hP : P.IsPrime) (g : ((
 theorem term_eq {e m : ℕ} {P : Ideal (MRing ι)} {σ : Fin m ≃ ((k : K) → ι k)} {i : (k : K) → ι k}
     {L : Fin e → HermLine ι} {g : ((Σ k, ι k) → ℂ) → ℝ}
     {Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)}
-    (hMH : IsMultiHomogIdeal P) (hPp : P.IsPrime) (hL : ∀ j, IsSmoothHerm (L j)) (hg : IsDegZeroSmooth g)
+    (hMH : IsMultiHomogIdeal P) (hPp : P.IsPrime) (hL : ∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm (L j)) (hg : IsDegZeroSmooth g)
     (hΨ0 : ∀ w, Ψ w 0 = w i)
     (hsub : ∀ J ∈ segreChartComponents P σ i, zeroSet J ⊆ segreChartSet P σ i)
     (hcov : ∀ x ∈ segreChartSet P σ i, ∃ J ∈ segreChartComponents P σ i, x ∈ zeroSet J)

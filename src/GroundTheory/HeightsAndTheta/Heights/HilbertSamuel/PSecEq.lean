@@ -44,7 +44,7 @@ theorem aeval_monPoly (y : (Σ k, ι k) → Ω) (μ : (Σ k, ι k) → ℕ) : ae
   rw [monPoly, aeval_monomial, map_one, one_mul, Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]
   rfl
 
-theorem homog_monPoly {a : K → ℕ} (μ : Mono ι a) : IsMultiHomog (monPoly μ.1) a := by
+theorem homog_monPoly {a : K → ℕ} (μ : Mono ι a) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (monPoly μ.1) a := by
   intro m hm k
   have := support_monomial_subset hm
   rw [Finset.mem_singleton] at this
@@ -52,7 +52,7 @@ theorem homog_monPoly {a : K → ℕ} (μ : Mono ι a) : IsMultiHomog (monPoly �
   simpa using μ.2 k
 
 theorem homog_prod {J : Type} (s : Finset J) (f : J → MRing ι) (d : J → K → ℕ)
-    (h : ∀ j ∈ s, IsMultiHomog (f j) (d j)) : IsMultiHomog (∏ j ∈ s, f j) (∑ j ∈ s, d j) := by
+    (h : ∀ j ∈ s, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f j) (d j)) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (∏ j ∈ s, f j) (∑ j ∈ s, d j) := by
   classical
   induction s using Finset.induction_on with
   | empty => simpa using SectionBounded.homog_one (ι := ι)
@@ -61,9 +61,9 @@ theorem homog_prod {J : Type} (s : Finset J) (f : J → MRing ι) (d : J → K �
     exact SectionBounded.homog_mul (h j (Finset.mem_insert_self _ _))
       (ih fun i hi => h i (Finset.mem_insert_of_mem hi))
 
-theorem homog_bind₁ {a : K → ℕ} {N : ℕ} (φ : Fin (N + 1) → MRing ι) (hφ : ∀ j, IsMultiHomog (φ j) a)
+theorem homog_bind₁ {a : K → ℕ} {N : ℕ} (φ : Fin (N + 1) → MRing ι) (hφ : ∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (φ j) a)
     {f : MvPolynomial (Fin (N + 1)) ℤ} {n : ℕ} (hf : f.IsHomogeneous n) :
-    IsMultiHomog (bind₁ φ f) (fun k => n * a k) := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (bind₁ φ f) (fun k => n * a k) := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [f.as_sum, map_sum]
   refine SectionBounded.homog_sum _ fun m hm => ?_
@@ -164,7 +164,7 @@ theorem chartLat_le_secs (y : (Σ k, ι k) → Ω) {a : K → ℕ} (ha : ∀ k, 
 theorem piece_le_secM (y : (Σ k, ι k) → Ω) {a : K → ℕ} {N : ℕ} (e : Mono ι a ≃ Fin (N + 1)) (τ : ℕ) {s : Ω}
     (hs : s ∈ (Kleiman.coordGraded ℤ (svPt y e)).piece (τ : ℤ)) : s ∈ secM y (fun k => τ * a k) := by
   have hle : (Kleiman.coordGraded ℤ (svPt y e)).piece (τ : ℤ) ≤
-      Submodule.span ℤ {s | ∃ g : MRing ι, IsMultiHomog g (fun k => τ * a k) ∧ aeval y g = s} := by
+      Submodule.span ℤ {s | ∃ g : MRing ι, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (fun k => τ * a k) ∧ aeval y g = s} := by
     refine Submodule.span_le.mpr ?_
     rintro _ ⟨f, n, hf, hn, rfl⟩
     obtain rfl : n = τ := by exact_mod_cast hn

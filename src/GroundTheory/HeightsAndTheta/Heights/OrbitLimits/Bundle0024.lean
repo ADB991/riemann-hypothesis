@@ -22,7 +22,7 @@ namespace GroundTheory.Heights₂.Heights
 
 open MeasureTheory Filter
 open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsArithVar IsGoodProj IsSheet ptsIntegralAt sheetDensity
-  fibre pot mcPts fibreFinite isOpen_blockNonzero)
+  ReciprocityTheory.ChartRestriction.G.Geo.fibre pot mcPts fibreFinite isOpen_blockNonzero)
 
 section
 
@@ -83,7 +83,7 @@ theorem PtsIntegralProjIndep.proof (hInt : PtsPosDensIntegrable.Statement)
     have e₂ : ptsPosDens P Ψ₀ (pot L) (fun z => -g₀ z) = ptsPosDens P Ψ₀ (pot L) (fun z => -g z) := by
       funext y
       simp only [ptsPosDens, sheetDensity_congr (Ψ := Ψ₀) (φ := pot L) hagn]
-    have hsplit : ∀ y, (∑ᶠ w ∈ fibre P Ψ₀ y, sheetDensity P Ψ₀ (pot L) g y w) =
+    have hsplit : ∀ y, (∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ₀ y, sheetDensity P Ψ₀ (pot L) g y w) =
         ptsPosDens P Ψ₀ (pot L) g y - ptsPosDens P Ψ₀ (pot L) (fun z => -g z) y := by
       intro y
       have hF := fibreFinite K ι P e Ψ₀ hP h₀ y

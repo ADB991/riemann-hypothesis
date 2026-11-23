@@ -96,7 +96,7 @@ theorem apply_eq_of_segre_eq {β : Sort*} {F : ((Σ k, ι k) → ℂ) → β}
   calc F v = F (bsmul (fun k => v ⟨k, i0 k⟩ / u ⟨k, i0 k⟩) u) := congrArg F h2
     _ = F u := hF _ u fun k => div_ne_zero (h1 k) (hi0 k)
 
-theorem maDensity_bsmul {L : Fin e → HermLine ι} (hL : ∀ j, IsSmoothHerm (L j))
+theorem maDensity_bsmul {L : Fin e → HermLine ι} (hL : ∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm (L j))
     {γ γ' : (Fin e → ℂ) → (Σ k, ι k) → ℂ} {c : K → (Fin e → ℂ) → ℂ} {y : Fin e → ℂ}
     (hγ : AnalyticAt ℂ γ y) (hy : ∀ k, ∃ i, γ y ⟨k, i⟩ ≠ 0) (hcan : ∀ k, AnalyticAt ℂ (c k) y)
     (hc0 : ∀ k, c k y ≠ 0) (hrel : ∀ᶠ y' in 𝓝 y, γ' y' = bsmul (fun k => c k y') (γ y')) :
@@ -136,7 +136,7 @@ theorem maDensity_bsmul {L : Fin e → HermLine ι} (hL : ∀ j, IsSmoothHerm (L
       (pot_contDiffAt (hL j) hγ hy) hGan]
   simp only [maDensity, hH]
 
-theorem maDensity_eq_of_segre {L : Fin e → HermLine ι} (hL : ∀ j, IsSmoothHerm (L j))
+theorem maDensity_eq_of_segre {L : Fin e → HermLine ι} (hL : ∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm (L j))
     {γ γ' : (Fin e → ℂ) → (Σ k, ι k) → ℂ} {y : Fin e → ℂ} (hγ : AnalyticAt ℂ γ y)
     (hγ' : AnalyticAt ℂ γ' y) (hy : ∀ k, ∃ i, γ y ⟨k, i⟩ ≠ 0)
     (hseg : (fun y' => segre (γ y')) =ᶠ[𝓝 y] fun y' => segre (γ' y')) :
@@ -179,7 +179,7 @@ theorem nrm_mem_fibre {P : Ideal (MRing ι)} (hPh : IsMultiHomogIdeal P) (k0 : K
   rw [segre_smul, hprod]
   rfl
 
-theorem sheetDensity_eq {P : Ideal (MRing ι)} {L : Fin e → HermLine ι} (hL : ∀ j, IsSmoothHerm (L j))
+theorem sheetDensity_eq {P : Ideal (MRing ι)} {L : Fin e → HermLine ι} (hL : ∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm (L j))
     {G : ((Σ k, ι k) → ℂ) → ℝ}
     (hG : ∀ (c : K → ℂ) (z : (Σ k, ι k) → ℂ), (∀ k, c k ≠ 0) → G (fun p => c p.1 * z p) = G z)
     {γ : (Fin e → ℂ) → (Σ k, ι k) → ℂ} {U : Set (Fin e → ℂ)}
@@ -208,7 +208,7 @@ theorem sheetDensity_eq {P : Ideal (MRing ι)} {L : Fin e → HermLine ι} (hL :
   rw [apply_eq_of_segre_eq hG hblk (hc.1.trans hw1).symm,
     maDensity_eq_of_segre hL (han y hyU) (sheet_analyticAt osgood hc) hblk hseg]
 
-theorem ptsPosDens_eq {P : Ideal (MRing ι)} {L : Fin e → HermLine ι} (hL : ∀ j, IsSmoothHerm (L j))
+theorem ptsPosDens_eq {P : Ideal (MRing ι)} {L : Fin e → HermLine ι} (hL : ∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm (L j))
     {g : ((Σ k, ι k) → ℂ) → ℝ}
     (hg : ∀ (c : K → ℂ) (z : (Σ k, ι k) → ℂ), (∀ k, c k ≠ 0) → g (fun p => c p.1 * z p) = g z)
     {E : Set ((Σ k, ι k) → ℂ)}

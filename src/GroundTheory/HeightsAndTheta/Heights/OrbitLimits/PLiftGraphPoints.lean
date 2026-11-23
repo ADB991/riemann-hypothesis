@@ -22,7 +22,7 @@ namespace LiftGraphPoints
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem aeval_scale {S : Type} [CommRing S] {g : MRing ι} {a : K → ℕ} (hg : IsMultiHomog g a)
+theorem aeval_scale {S : Type} [CommRing S] {g : MRing ι} {a : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a)
     (t : K → S) (x z : (Σ k, ι k) → S) (hz : ∀ p, z p = t p.1 * x p) :
     aeval z g = (∏ k, t k ^ a k) * aeval x g := by
   obtain rfl : z = fun p => t p.1 * x p := funext hz
@@ -46,7 +46,7 @@ def homogAt (c : ∀ k, ι k) (M : ℕ) (F : MRing ι) : MRing ι :=
   ∑ m ∈ F.support, monomial m (AddMonoidAlgebra.coeff F m) * ∏ k, (X ⟨k, c k⟩ : MRing ι) ^ (M - ∑ i, m ⟨k, i⟩)
 
 theorem homogAt_isMultiHomog (c : ∀ k, ι k) (M : ℕ) (F : MRing ι)
-    (hM : ∀ m ∈ F.support, ∀ k, ∑ i, m ⟨k, i⟩ ≤ M) : IsMultiHomog (homogAt c M F) (fun _ => M) := by
+    (hM : ∀ m ∈ F.support, ∀ k, ∑ i, m ⟨k, i⟩ ≤ M) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (homogAt c M F) (fun _ => M) := by
   classical
   intro m' hm' k
   obtain ⟨m, hm, hm'⟩ := Finset.mem_biUnion.mp (support_sum hm')

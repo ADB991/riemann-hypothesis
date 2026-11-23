@@ -254,7 +254,7 @@ theorem ev_pt_dF (Y : FBChart C V O dd) (v : Fin dd → C) (g' : Fin 2) (j : Fin
   unfold FBChart.dF
   rw [ev_sum hZ]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [ev_mul hZ, ev_C, ev_ev hZ' hZ]
+  rw [ev_mul hZ, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_C, ev_ev hZ' hZ]
   congr 2
   funext k j'
   fin_cases k

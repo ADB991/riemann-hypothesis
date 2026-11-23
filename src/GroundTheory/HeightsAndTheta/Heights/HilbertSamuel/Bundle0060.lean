@@ -53,8 +53,8 @@ theorem measurableSet_mcPts (P : Ideal (MRing ι)) : MeasurableSet (mcPts P) := 
 
 
 omit [Fintype K] in
-theorem isMultiHomog_sum_smul_map {r : ℕ} {e : K → ℕ} {g : Fin r → MRing ι} (hg : ∀ i, IsMultiHomog (g i) e)
-    (c : Fin r → ℂ) : IsMultiHomog (∑ i, c i • map (Int.castRingHom ℂ) (g i)) e := by
+theorem isMultiHomog_sum_smul_map {r : ℕ} {e : K → ℕ} {g : Fin r → MRing ι} (hg : ∀ i, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (g i) e)
+    (c : Fin r → ℂ) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (∑ i, c i • map (Int.castRingHom ℂ) (g i)) e := by
   classical
   intro m hm k
   obtain ⟨i, -, hi⟩ := Finset.mem_biUnion.1 (MvPolynomial.support_sum hm)

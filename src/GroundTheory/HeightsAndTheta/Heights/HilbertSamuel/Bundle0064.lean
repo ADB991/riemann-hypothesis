@@ -226,7 +226,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
 theorem MixedKleimanLow.exists_monomial {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
     (P : Ideal (MRing ι)) (hP : P.IsPrime) (hrel : IsRelevant P) (a : K → ℕ) :
     ∃ μ : (Σ k, ι k) →₀ ℕ, (∀ k, ∑ i, μ ⟨k, i⟩ = a k) ∧ (monomial μ 1 : MRing ι) ∉ P ∧
-      IsMultiHomog (monomial μ 1 : MRing ι) a := by
+      ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (monomial μ 1 : MRing ι) a := by
   classical
   choose c hc using hrel
   let μ : (Σ k, ι k) →₀ ℕ := Finsupp.equivFunOnFinite.symm fun p => if p.2 = c p.1 then a p.1 else 0

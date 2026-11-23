@@ -44,7 +44,7 @@ theorem segre_scaleBlock (k0 : K) (c : ℂ) (z : (Σ k, ι k) → ℂ) :
 
 theorem smul_mem_fibre {P : Ideal (MRing ι)} (hPh : IsMultiHomogIdeal P) [Nonempty K] {z : (Σ k, ι k) → ℂ}
     (hz : z ∈ mcPts P) (Ψ' : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (h0 : Ψ' (segre z) 0 ≠ 0) :
-    (Ψ' (segre z) 0)⁻¹ • segre z ∈ fibre P Ψ' (ratio (Ψ' (segre z))) := by
+    (Ψ' (segre z) 0)⁻¹ • segre z ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ' (ratio (Ψ' (segre z))) := by
   obtain ⟨k0⟩ := ‹Nonempty K›
   refine ⟨scaleBlock k0 (Ψ' (segre z) 0)⁻¹ z, scaleBlock_mem_zeroLocus P hPh k0 (inv_ne_zero h0) hz, segre_scaleBlock _ _ _, ?_⟩
   rw [map_smul]
@@ -155,7 +155,7 @@ theorem isSimpleSheetPt_of_injective {P : Ideal (MRing ι)} (hP : IsArithVar P (
     {B : Set (Fin e → ℂ)} (hB : IsOpen B)
     (hγ : ∀ y ∈ B, DifferentiableAt ℂ γ y ∧ γ y ∈ mcPts P ∧ Ψ (segre (γ y)) = Fin.cons 1 y)
     {y : Fin e → ℂ} (hyB : y ∈ B)
-    (huniq : ∀ᶠ q in 𝓝 (y, segre (γ y)), q.2 ∈ fibre P Ψ q.1 → q.2 = segre (γ q.1))
+    (huniq : ∀ᶠ q in 𝓝 (y, segre (γ y)), q.2 ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ q.1 → q.2 = segre (γ q.1))
     (h0 : Ψ' (segre (γ y)) 0 ≠ 0)
     (hinj : Function.Injective (fderiv ℂ (fun y' => ratio (Ψ' (segre (γ y')))) y)) :
     IsSimpleSheetPt P Ψ' ((Ψ' (segre (γ y)) 0)⁻¹ • segre (γ y)) := by
@@ -240,7 +240,7 @@ theorem isSimpleSheetPt_of_injective {P : Ideal (MRing ι)} (hP : IsArithVar P (
   refine ⟨τ y, γ', hsheet, ?_⟩
   filter_upwards [hev1, hev2, hev3] with q hq1 hq2 hq3 hqf
   obtain ⟨z, hz, hzs, hΨ'z⟩ := hqf
-  have hfib : (m q).2 ∈ fibre P Ψ (m q).1 := by
+  have hfib : (m q).2 ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ (m q).1 := by
     have := smul_mem_fibre hPh hz Ψ (by rw [hzs]; exact hq3)
     rw [hzs] at this
     exact this
@@ -261,7 +261,7 @@ theorem piece_null (hC : CriticalFibreInfinite.Statement) {P : Ideal (MRing ι)}
     {Ψ Ψ' : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)} (hΨ' : IsGoodProj P Ψ')
     {γ : (Fin e → ℂ) → (Σ k, ι k) → ℂ} {O : Set ((Fin e → ℂ) × (((k : K) → ι k) → ℂ))} (hOo : IsOpen O)
     (hO : ∀ q ∈ O, (DifferentiableAt ℂ γ q.1 ∧ γ q.1 ∈ mcPts P ∧ Ψ (segre (γ q.1)) = Fin.cons 1 q.1) ∧
-      (q.2 ∈ fibre P Ψ q.1 → q.2 = segre (γ q.1))) :
+      (q.2 ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ q.1 → q.2 = segre (γ q.1))) :
     volume {y | (y, segre (γ y)) ∈ O ∧
       ¬ IsSimpleSheetPt P Ψ' ((Ψ' (segre (γ y)) 0)⁻¹ • segre (γ y))} = 0 := by
   set τ : (Fin e → ℂ) → Fin e → ℂ := fun y' => ratio (Ψ' (segre (γ y'))) with hτdef
@@ -284,7 +284,7 @@ theorem piece_null (hC : CriticalFibreInfinite.Statement) {P : Ideal (MRing ι)}
     by_cases h0 : Ψ' (segre (γ y)) 0 = 0
     · exact Or.inl ⟨hyD, h0⟩
     · refine Or.inr ⟨hyD, h0, fun hinj => hns ?_⟩
-      have huniq : ∀ᶠ q in 𝓝 (y, segre (γ y)), q.2 ∈ fibre P Ψ q.1 → q.2 = segre (γ q.1) :=
+      have huniq : ∀ᶠ q in 𝓝 (y, segre (γ y)), q.2 ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ q.1 → q.2 = segre (γ q.1) :=
         Filter.mem_of_superset (hOo.mem_nhds hyO) fun q hq => (hO q hq).2
       exact isSimpleSheetPt_of_injective hP hBo hγB hyD.1 huniq h0 hinj
   refine measure_mono_null hsub (measure_union_null ?_ ?_)
@@ -325,10 +325,10 @@ theorem proof (hC : CriticalFibreInfinite.Statement) : PtsSheetOnlyNull.Statemen
   have hloc : ∀ p : (Fin e → ℂ) × (((k : K) → ι k) → ℂ), ∃ (γ : (Fin e → ℂ) → (Σ k, ι k) → ℂ)
       (O : Set ((Fin e → ℂ) × (((k : K) → ι k) → ℂ))), IsOpen O ∧
       (∀ q ∈ O, (DifferentiableAt ℂ γ q.1 ∧ γ q.1 ∈ mcPts P ∧ Ψ (segre (γ q.1)) = Fin.cons 1 q.1) ∧
-        (q.2 ∈ fibre P Ψ q.1 → q.2 = segre (γ q.1))) ∧
-      (p.2 ∈ fibre P Ψ p.1 → IsSimpleSheetPt P Ψ p.2 → p ∈ O) := by
+        (q.2 ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ q.1 → q.2 = segre (γ q.1))) ∧
+      (p.2 ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ p.1 → IsSimpleSheetPt P Ψ p.2 → p ∈ O) := by
     intro p
-    by_cases hp : p.2 ∈ fibre P Ψ p.1 ∧ IsSimpleSheetPt P Ψ p.2
+    by_cases hp : p.2 ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ p.1 ∧ IsSimpleSheetPt P Ψ p.2
     · obtain ⟨hpf, y0, γ, ⟨hseg, hsh⟩, hun⟩ := hp
       have hy0 : y0 = p.1 := by
         obtain ⟨z, -, -, hΨz⟩ := hpf
@@ -341,7 +341,7 @@ theorem proof (hC : CriticalFibreInfinite.Statement) : PtsSheetOnlyNull.Statemen
       subst hy0
       have hev : ∀ᶠ q in 𝓝 (p.1, p.2),
           (DifferentiableAt ℂ γ q.1 ∧ γ q.1 ∈ mcPts P ∧ Ψ (segre (γ q.1)) = Fin.cons 1 q.1) ∧
-            (q.2 ∈ fibre P Ψ q.1 → q.2 = segre (γ q.1)) :=
+            (q.2 ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ q.1 → q.2 = segre (γ q.1)) :=
         ((continuous_fst.tendsto (p.1, p.2)).eventually hsh).and hun
       obtain ⟨O, hO, hOo, hpO⟩ := eventually_nhds_iff.1 hev
       exact ⟨γ, O, hOo, hO, fun _ _ => hpO⟩

@@ -426,7 +426,7 @@ theorem exists_away_flat_projRep : ∀ (R σ Hh : Type) [CommRing R] [IsNoetheri
       IsPullback.of_horiz_isIso ⟨by rw [he, Category.comp_id]⟩
     simpa using h0.paste_horiz hpb
   · exact LBIso.trans hrep'.1 (pull_isLB hrep₁.1 _) (pull_isLB hrep.1 _) hiso
-      (LBIso.chartPull (chartPullPull _ e.hom e.hom rfl) (chartPullSame M _ _ _ e.hom fun _ => rfl)
+      (LBIso.chartPull (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull _ e.hom e.hom rfl) (chartPullSame M _ _ _ e.hom fun _ => rfl)
         ⟨_, idIso_isGen hrep₁.1⟩)
   · rw [hc T y w, hc₁ T _ w, Category.assoc]
 

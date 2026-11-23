@@ -67,7 +67,7 @@ theorem inLat_prod (y : (Σ k, ι k) → Ω) (f : ∀ k, ι k) : InLat y 1 (∏ 
   rw [h]
   exact Subalgebra.prod_mem _ fun k _ => Algebra.subset_adjoin ⟨⟨k, f k⟩, rfl⟩
 
-theorem aeval_scale {d : K → ℕ} {g : MRing ι} (hg : IsMultiHomog g d) (lam : K → Ω) (z : (Σ k, ι k) → Ω) :
+theorem aeval_scale {d : K → ℕ} {g : MRing ι} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) (lam : K → Ω) (z : (Σ k, ι k) → Ω) :
     aeval (fun p => lam p.1 * z p) g = (∏ k, lam k ^ d k) * aeval z g := by
   classical
   rw [aeval_def, aeval_def, eval₂_eq', eval₂_eq', Finset.mul_sum]
@@ -99,30 +99,30 @@ section Forms
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
-theorem homog_zero (a : K → ℕ) : IsMultiHomog (0 : MRing ι) a := by
+theorem homog_zero (a : K → ℕ) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (0 : MRing ι) a := by
   intro m hm
   simp at hm
 
-theorem homog_one : IsMultiHomog (1 : MRing ι) 0 := by
+theorem homog_one : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (1 : MRing ι) 0 := by
   intro m hm k
   rw [MvPolynomial.support_one, Finset.mem_singleton] at hm
   subst hm
   simp
 
-theorem homog_add {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) (hg : IsMultiHomog g a) :
-    IsMultiHomog (f + g) a := by
+theorem homog_add {f g : MRing ι} {a : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f + g) a := by
   classical
   intro m hm k
   rcases Finset.mem_union.mp (MvPolynomial.support_add hm) with h | h
   exacts [hf m h k, hg m h k]
 
-theorem homog_neg {f : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) : IsMultiHomog (-f) a := by
+theorem homog_neg {f : MRing ι} {a : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (-f) a := by
   intro m hm
   rw [MvPolynomial.support_neg] at hm
   exact hf m hm
 
-theorem homog_mul {f g : MRing ι} {a b : K → ℕ} (hf : IsMultiHomog f a) (hg : IsMultiHomog g b) :
-    IsMultiHomog (f * g) (a + b) := by
+theorem homog_mul {f g : MRing ι} {a b : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f a) (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g b) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f * g) (a + b) := by
   classical
   intro m hm k
   obtain ⟨m1, hm1, m2, hm2, rfl⟩ := Finset.mem_add.mp (MvPolynomial.support_mul f g hm)
@@ -137,14 +137,14 @@ theorem blockDeg_add (k₀ : K) (s t : ℕ) : blockDeg k₀ s + blockDeg k₀ t 
   simp only [blockDeg, Pi.add_apply]
   split_ifs <;> simp
 
-theorem homog_mul_block {k₀ : K} {f g : MRing ι} {s t : ℕ} (hf : IsMultiHomog f (blockDeg k₀ s))
-    (hg : IsMultiHomog g (blockDeg k₀ t)) : IsMultiHomog (f * g) (blockDeg k₀ (s + t)) :=
+theorem homog_mul_block {k₀ : K} {f g : MRing ι} {s t : ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f (blockDeg k₀ s))
+    (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (blockDeg k₀ t)) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f * g) (blockDeg k₀ (s + t)) :=
   blockDeg_add k₀ s t ▸ homog_mul hf hg
 
-theorem homog_one_block (k₀ : K) : IsMultiHomog (1 : MRing ι) (blockDeg k₀ 0) :=
+theorem homog_one_block (k₀ : K) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (1 : MRing ι) (blockDeg k₀ 0) :=
   (blockDeg_zero k₀).symm ▸ homog_one
 
-theorem homog_X_block (k₀ : K) (i₀ : ι k₀) : IsMultiHomog (X ⟨k₀, i₀⟩ : MRing ι) (blockDeg k₀ 1) := by
+theorem homog_X_block (k₀ : K) (i₀ : ι k₀) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (X ⟨k₀, i₀⟩ : MRing ι) (blockDeg k₀ 1) := by
   classical
   intro m hm k
   rw [support_X, Finset.mem_singleton] at hm
@@ -166,7 +166,7 @@ theorem homog_X_block (k₀ : K) (i₀ : ι k₀) : IsMultiHomog (X ⟨k₀, i�
     exact hk (Sigma.mk.inj_iff.mp h).1.symm
 
 def blockFrac (Y : (Σ k, ι k) → Ω) (k₀ : K) : Subfield Ω where
-  carrier := {s | ∃ (t : ℕ) (g h : MRing ι), IsMultiHomog g (blockDeg k₀ t) ∧ IsMultiHomog h (blockDeg k₀ t) ∧
+  carrier := {s | ∃ (t : ℕ) (g h : MRing ι), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (blockDeg k₀ t) ∧ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog h (blockDeg k₀ t) ∧
     aeval Y h ≠ 0 ∧ aeval Y g = s * aeval Y h}
   zero_mem' := ⟨0, 0, 1, homog_zero _, homog_one_block k₀, by simp, by simp⟩
   one_mem' := ⟨0, 1, 1, homog_one_block k₀, homog_one_block k₀, by simp, by simp⟩
@@ -195,7 +195,7 @@ def blockFrac (Y : (Σ k, ι k) → Ω) (k₀ : K) : Subfield Ω where
 
 theorem exists_form_of_mem_closure {N : ℕ} (y : (Σ k, ι k) → Ω) (v : Fin N → Ω) {x : Ω}
     (hx : x ∈ AddSubgroup.closure (Set.range v)) :
-    ∃ g : MRing (addIdx ι N), IsMultiHomog g (blockDeg (none : Option K) 1) ∧ aeval (addBlock y v) g = x := by
+    ∃ g : MRing (addIdx ι N), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (blockDeg (none : Option K) 1) ∧ aeval (addBlock y v) g = x := by
   induction hx using AddSubgroup.closure_induction with
   | mem x hx =>
     obtain ⟨j, rfl⟩ := hx

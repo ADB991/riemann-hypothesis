@@ -604,7 +604,7 @@ theorem dictC_holds : DictC := by
       mul_one, Complex.norm_real, Real.norm_of_nonneg hrd.le]
   funext p
 
-  set τ := tw (X.Fu u) F'.fl L (hLu_of hL) hZu hGr ((β⁻¹ : StG w) : GLR D) with hτdef
+  set τ := Formalism.L2.SG.Pf.StabilizerIndexVolumes.tw (X.Fu u) F'.fl L (hLu_of hL) hZu hGr ((β⁻¹ : StG w) : GLR D) with hτdef
   set xβ := rpt X τ (tw_isom_st (X.Fu u) F'.fl hL hU hZu hZ1 hGr β⁻¹) with hxβ
   set xn := rpt X n0 hn0.1.1 with hxn
   set ρ := t.lin⁻¹ * (n0⁻¹ * τ * n0) * t.lin with hρ

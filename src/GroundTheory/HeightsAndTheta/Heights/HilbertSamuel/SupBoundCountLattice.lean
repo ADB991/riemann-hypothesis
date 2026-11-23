@@ -86,8 +86,8 @@ theorem coeff_eq_zero {y : (Σ k, ι k) → Ω} {r : ℕ} {f : Fin r → MRing �
 variable {D : ℕ}
 
 theorem pairRe_comm (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (n : ℕ) (f f' : MRing ι) (z : (Σ k, ι k) → ℂ) :
-    pairRe A n f f' z = pairRe A n f' f z := by
-  simp only [pairRe]
+    GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe A n f f' z = GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe A n f' f z := by
+  simp only [GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe]
   ring
 
 theorem comb_smul {r : ℕ} (f : Fin r → MRing ι) (t : ℝ) (a : Fin r → ℝ) (z : (Σ k, ι k) → ℂ) :
@@ -221,8 +221,8 @@ theorem rank_le (d : HSMBlockDatum D K ι Ω) (n : ℕ) {r : ℕ} (f : Fin r →
     (r : ℝ) ≤ 2 * c ^ 2 := by
   obtain ⟨G, hGdef⟩ : ∃ G, G = blockGram d n (fun j => map (Int.castRingHom ℚ) (f j)) := ⟨_, rfl⟩
   have hG : G.PosDef := hGdef ▸ gram_posDef d n f hf hli hc hsup
-  have hGe : ∀ k l, G k l = (1 / 2) * ((∫ x, pairRe d.A n (f k) (f l) (blockPt d x) ∂d.dV) +
-      ∫ x, pairRe d.A n (f k) (f l) (conjPt (blockPt d x)) ∂d.dV) := fun k l => by
+  have hGe : ∀ k l, G k l = (1 / 2) * ((∫ x, GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe d.A n (f k) (f l) (blockPt d x) ∂d.dV) +
+      ∫ x, GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe d.A n (f k) (f l) (conjPt (blockPt d x)) ∂d.dV) := fun k l => by
     rw [hGdef]
     exact blockGram_eq d n f hf k l
   have hu : IsUnit G.det := hG.det_pos.ne'.isUnit
@@ -235,17 +235,17 @@ theorem rank_le (d : HSMBlockDatum D K ι Ω) (n : ℕ) {r : ℕ} (f : Fin r →
   have hQ : ∀ a, 0 ≤ a ⬝ᵥ (G *ᵥ a) := fun a => by
     simpa using hG.posSemidef.dotProduct_mulVec_nonneg a
   have hpt : ∀ w ∈ mcPts (mCoordIdeal d.y),
-      ∑ k, ∑ l, G⁻¹ k l * pairRe d.A n (f l) (f k) w * 1 ≤ 2 * c ^ 2 := by
+      ∑ k, ∑ l, G⁻¹ k l * GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe d.A n (f l) (f k) w * 1 ≤ 2 * c ^ 2 := by
     intro w hw
     set H := d.A.h w ^ n with hH
     have hH0 : 0 < H := pow_pos (d.A.pos w hw.1) n
     set x : Fin r → ℝ := fun k => (eval w (map (Int.castRingHom ℂ) (f k))).re / H with hx
     set y' : Fin r → ℝ := fun k => (eval w (map (Int.castRingHom ℂ) (f k))).im / H with hy'
-    have hsum : ∑ k, ∑ l, G⁻¹ k l * pairRe d.A n (f l) (f k) w * 1 =
+    have hsum : ∑ k, ∑ l, G⁻¹ k l * GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe d.A n (f l) (f k) w * 1 =
         x ⬝ᵥ (G⁻¹ *ᵥ x) + y' ⬝ᵥ (G⁻¹ *ᵥ y') := by
       simp only [dotProduct, mulVec, Finset.mul_sum, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
-      simp only [pairRe, hx, hy', hH, pow_mul']
+      simp only [GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe, hx, hy', hH, pow_mul']
       field_simp
     have hbd : ∀ a : Fin r → ℝ, ‖comb f a w‖ / H ≤ c * Real.sqrt (a ⬝ᵥ (G *ᵥ a)) := fun a => by
       rw [hGdef]
@@ -276,16 +276,16 @@ theorem rank_le (d : HSMBlockDatum D K ι Ω) (n : ℕ) {r : ℕ} (f : Fin r →
     have := quad_inv_le hG hxa
     have := quad_inv_le hG hya
     linarith
-  have hI : ∀ k l, Integrable (fun x => pairRe d.A n (f l) (f k) (blockPt d x)) d.dV ∧
-      Integrable (fun x => pairRe d.A n (f l) (f k) (conjPt (blockPt d x))) d.dV :=
+  have hI : ∀ k l, Integrable (fun x => GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe d.A n (f l) (f k) (blockPt d x)) d.dV ∧
+      Integrable (fun x => GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe d.A n (f l) (f k) (conjPt (blockPt d x))) d.dV :=
     fun k l => pairRe_integrable d n (hf l) (hf k)
   have h1 := sum_integral d.dV (fun k l => G⁻¹ k l) (fun _ _ => 1)
-    (fun k l x => pairRe d.A n (f l) (f k) (blockPt d x)) fun k l => (hI k l).1
+    (fun k l x => GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe d.A n (f l) (f k) (blockPt d x)) fun k l => (hI k l).1
   have h2 := sum_integral d.dV (fun k l => G⁻¹ k l) (fun _ _ => 1)
-    (fun k l x => pairRe d.A n (f l) (f k) (conjPt (blockPt d x))) fun k l => (hI k l).2
+    (fun k l x => GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe d.A n (f l) (f k) (conjPt (blockPt d x))) fun k l => (hI k l).2
   have hr' : (r : ℝ) = (1 / 2) *
-      ((∑ k, ∑ l, G⁻¹ k l * (∫ x, pairRe d.A n (f l) (f k) (blockPt d x) ∂d.dV) * 1) +
-        ∑ k, ∑ l, G⁻¹ k l * (∫ x, pairRe d.A n (f l) (f k) (conjPt (blockPt d x)) ∂d.dV) * 1) := by
+      ((∑ k, ∑ l, G⁻¹ k l * (∫ x, GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe d.A n (f l) (f k) (blockPt d x) ∂d.dV) * 1) +
+        ∑ k, ∑ l, G⁻¹ k l * (∫ x, GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe d.A n (f l) (f k) (conjPt (blockPt d x)) ∂d.dV) * 1) := by
     rw [hr, mul_add, Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
@@ -293,15 +293,15 @@ theorem rank_le (d : HSMBlockDatum D K ι Ω) (n : ℕ) {r : ℕ} (f : Fin r →
     rw [hGe]
     ring
   rw [hr', h1, h2]
-  have hint1 : Integrable (fun x => ∑ k, ∑ l, G⁻¹ k l * pairRe d.A n (f l) (f k) (blockPt d x) * 1) d.dV :=
+  have hint1 : Integrable (fun x => ∑ k, ∑ l, G⁻¹ k l * GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe d.A n (f l) (f k) (blockPt d x) * 1) d.dV :=
     MeasureTheory.integrable_finsetSum _ fun k _ => MeasureTheory.integrable_finsetSum _ fun l _ => (((hI k l).1.const_mul _).mul_const _)
-  have hint2 : Integrable (fun x => ∑ k, ∑ l, G⁻¹ k l * pairRe d.A n (f l) (f k) (conjPt (blockPt d x)) * 1)
+  have hint2 : Integrable (fun x => ∑ k, ∑ l, G⁻¹ k l * GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe d.A n (f l) (f k) (conjPt (blockPt d x)) * 1)
       d.dV :=
     MeasureTheory.integrable_finsetSum _ fun k _ => MeasureTheory.integrable_finsetSum _ fun l _ => (((hI k l).2.const_mul _).mul_const _)
-  have i1 : ∫ x, ∑ k, ∑ l, G⁻¹ k l * pairRe d.A n (f l) (f k) (blockPt d x) * 1 ∂d.dV ≤ 2 * c ^ 2 :=
+  have i1 : ∫ x, ∑ k, ∑ l, G⁻¹ k l * GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe d.A n (f l) (f k) (blockPt d x) * 1 ∂d.dV ≤ 2 * c ^ 2 :=
     calc _ ≤ ∫ _, 2 * c ^ 2 ∂d.dV := integral_mono hint1 (integrable_const _) fun x => hpt _ (blockPt_mem d x)
       _ = 2 * c ^ 2 := by simp
-  have i2 : ∫ x, ∑ k, ∑ l, G⁻¹ k l * pairRe d.A n (f l) (f k) (conjPt (blockPt d x)) * 1 ∂d.dV ≤ 2 * c ^ 2 :=
+  have i2 : ∫ x, ∑ k, ∑ l, G⁻¹ k l * GroundTheory.Heights₂.Heights.HilbertSamuel.SupBoundCount.pairRe d.A n (f l) (f k) (conjPt (blockPt d x)) * 1 ∂d.dV ≤ 2 * c ^ 2 :=
     calc _ ≤ ∫ _, 2 * c ^ 2 ∂d.dV := integral_mono hint2 (integrable_const _)
           fun x => hpt _ (conjPt_mem_mcPts (blockPt_mem d x))
       _ = 2 * c ^ 2 := by simp
