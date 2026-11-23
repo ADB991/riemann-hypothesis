@@ -442,7 +442,7 @@ theorem map_finPartI_locF {F : Type} [Field F] [NumberField F] [Algebra F L] {χ
   have h1 := h.1 v k
   unfold HChar.resFin at h1
   rw [MonoidHom.finsetProd_apply] at h1
-  unfold locF
+  unfold GlobalTheory.Mem.Chr.locF
   rw [map_prod, map_prod, ← h1]
   exact Finset.prod_congr rfl fun Q _ => congrArg χ.1 (finPartI_localIdele Q _)
 
@@ -453,6 +453,10 @@ theorem le_exp_neg_one {γ : WithZero (Multiplicative ℤ)} (h : γ < 1) : γ �
     rw [← WithZero.exp_log h0, WithZero.exp_le_exp]
     omega
 
+
+local notation "Ideles" => _root_.Neutral.B1.Ideles
+local notation "infIdele" => _root_.ReciprocityTheory.Neutral.Bridge.HCFR.infIdele
+local notation "diagUnits" => _root_.Neutral.B1.diagUnits
 
 open Classical in
 theorem kernel_open_and_factor : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R), IsOpen (KD H : Set (Ideles H.E)) ∧ (∀ w y, infIdele H.E w y ∈ KD H) ∧ (∀ k : (H.F)ˣ, diagUnits H.E (upF H.F k) ∈ KD H) ∧ ∀ χ : HChar H.E, χ.TrivOn H.F → (∀ v, χ.TameAt v) → (∀ v, (∀ k, ¬ OverP H (H.g k) v) → χ.UnrAt v) → KD H ≤ (χ.1.comp (finPartI H.E)).ker := by
