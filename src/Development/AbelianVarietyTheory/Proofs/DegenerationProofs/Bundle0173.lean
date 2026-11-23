@@ -367,7 +367,7 @@ theorem exists_th_notMem (hL : Laws) (hL₂ : Laws2) (ρ : S.Real) (z : PrimeSpe
     rw [map_natCast, hM, Nat.cast_mul] at h
     exact left_ne_zero_of_mul h
   obtain ⟨θ, hθ, hv⟩ := UnitTheta.exists_sec_of_baseOver S.R ρ.P ρ.th₁
-  obtain ⟨y₀, hy₀, e₀⟩ := ThetaFibre.exists_mem_nonzeroLocus_fibre hL₂.secBaseChangeAny S.R ρ.P ρ.th₁ ρ.th₁_basis
+  obtain ⟨y₀, hy₀, e₀⟩ := _root_.GlobalTheory.ThetaFibre.exists_mem_nonzeroLocus_fibre hL₂.secBaseChangeAny S.R ρ.P ρ.th₁ ρ.th₁_basis
     (x (IsLocalRing.closedPoint K))
   let u : Over.mk x ⟶ baseOver (Sp S.R) := Over.homMk x (by simp)
   obtain ⟨y, hy, H⟩ := UnitTheta.exists_good_point_of_sec hL.polBaseChange hL.goodPt _ ρ.P θ K x ρ.n
