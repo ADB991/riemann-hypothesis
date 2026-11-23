@@ -311,29 +311,29 @@ theorem eig_of_span {R OE : Type} [CommRing R] [CommRing OE] {d N : ℕ}
 
 theorem linPart_map {R O : Type} [CommRing R] [CommRing O] (f : R →+* O) {d : ℕ}
     (φ : Fin d → PS R 1 d) :
-    linPart (fun i => MvPowerSeries.map f (φ i)) = (linPart φ).map f := by
+    ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart (fun i => MvPowerSeries.map f (φ i)) = (ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart φ).map f := by
   ext i j
-  simp [linPart, MvPowerSeries.coeff_map]
+  simp [ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart, MvPowerSeries.coeff_map]
 
-theorem isEigBasis_map : ∀ (R O : Type) [CommRing R] [CommRing O] [Algebra R O] [Module.Flat R O] (OE : Type) [CommRing OE] [Module.Finite ℤ OE] (d s : ℕ) (act : OE → Fin d → PS R 1 d), (∀ a b, linPart (act (a + b)) = linPart (act a) + linPart (act b)) → ∀ (τ : OE →+* R) (w : Fin s → Fin d → R), IsEigBasis act τ w → IsEigBasis (fun a i => MvPowerSeries.map (algebraMap R O) (act a i)) ((algebraMap R O).comp τ) (fun i j => algebraMap R O (w i j)) := by
+theorem isEigBasis_map : ∀ (R O : Type) [CommRing R] [CommRing O] [Algebra R O] [Module.Flat R O] (OE : Type) [CommRing OE] [Module.Finite ℤ OE] (d s : ℕ) (act : OE → Fin d → PS R 1 d), (∀ a b, ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart (act (a + b)) = ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart (act a) + ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart (act b)) → ∀ (τ : OE →+* R) (w : Fin s → Fin d → R), IsEigBasis act τ w → IsEigBasis (fun a i => MvPowerSeries.map (algebraMap R O) (act a i)) ((algebraMap R O).comp τ) (fun i j => algebraMap R O (w i j)) := by
   intro R O _ _ _ _ OE _ _ d s act hadd τ w hw
   obtain ⟨N, g, hg⟩ := Module.Finite.exists_fin (R := ℤ) (M := OE)
-  have hadd' : ∀ a b, (linPart (act (a + b))).map (algebraMap R O) =
-      (linPart (act a)).map (algebraMap R O) + (linPart (act b)).map (algebraMap R O) := by
+  have hadd' : ∀ a b, (ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart (act (a + b))).map (algebraMap R O) =
+      (ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart (act a)).map (algebraMap R O) + (ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart (act b)).map (algebraMap R O) := by
     intro a b
     rw [hadd, Matrix.map_add _ (map_add _)]
-  have hlin : ∀ (c : Fin s → R) a, (linPart (act a)).mulVec (∑ i, c i • w i) = τ a • ∑ i, c i • w i := by
+  have hlin : ∀ (c : Fin s → R) a, (ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart (act a)).mulVec (∑ i, c i • w i) = τ a • ∑ i, c i • w i := by
     intro c a
     rw [Matrix.mulVec_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Matrix.mulVec_smul, hw.1, smul_comm]
   have ex1 : Function.Exact (Matrix.of w).transpose.mulVec
-      (eigMat (fun k => linPart (act (g k))) (fun k => τ (g k))).mulVec := by
+      (eigMat (fun k => ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart (act (g k))) (fun k => τ (g k))).mulVec := by
     intro v
     rw [eigMat_mulVec_eq_zero]
     constructor
     · intro h
-      obtain ⟨c, hc, -⟩ := hw.2 v (eig_of_span (fun a => linPart (act a)) hadd τ g hg v h)
+      obtain ⟨c, hc, -⟩ := hw.2 v (eig_of_span (fun a => ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.linPart (act a)) hadd τ g hg v h)
       exact ⟨c, by rw [transpose_mulVec, hc]⟩
     · rintro ⟨c, rfl⟩ k
       rw [transpose_mulVec]; exact hlin c _
