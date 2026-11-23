@@ -320,6 +320,10 @@ theorem isLocOp_integral (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) {μ : Mea
   have hρ : IsHeis (fun x y => om x y) (rhoV hψ σ S T) := by
     simp only [e]
     exact isHeis_rhoB h hψ
+  -- Supply the instance from the `V` side, so the search never has to exhaust `↥(BB ψ S T)`.
+  haveI : ProperSpace V := FiniteDimensional.proper_real V
+  haveI : SecondCountableTopology V := secondCountable_of_proper
+  haveI : SecondCountableTopologyEither V (BB ψ S T) := secondCountableTopologyEither_of_left _ _
   have hint : ∀ F : BB ψ S T, Integrable (fun u => c u • rhoV hψ σ S T (E u) F) ν := fun F => by
     refine Integrable.mono' ((hci 0).mul_const ‖F‖)
       (hc.smul ((hρ.2.2.2 F).comp E.continuous)).aestronglyMeasurable (Filter.Eventually.of_forall fun u => ?_)
