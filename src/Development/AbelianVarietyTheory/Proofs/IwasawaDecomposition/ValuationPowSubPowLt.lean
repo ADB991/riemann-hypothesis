@@ -68,10 +68,10 @@ end Tame
 
 section Basic
 
-variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] {art : GlobalTheory.Mem.Chr.Ideles E →* Gab E Ω}
+variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] {art : Neutral.B1.Ideles E →* Gab E Ω}
 
-def IsHeckeOf (art : GlobalTheory.Mem.Chr.Ideles E →* Gab E Ω) (r : G E Ω →* ℂˣ) (χ : HChar E) : Prop :=
-  ∀ (x : GlobalTheory.Mem.Chr.Ideles E) (σ : G E Ω), art x = toAb E Ω σ → χ.1 x = r σ
+def IsHeckeOf (art : Neutral.B1.Ideles E →* Gab E Ω) (r : G E Ω →* ℂˣ) (χ : HChar E) : Prop :=
+  ∀ (x : Neutral.B1.Ideles E) (σ : G E Ω), art x = toAb E Ω σ → χ.1 x = r σ
 
 def heckeOf (ha : IsGlobalArtin art) (r : G E Ω →* ℂˣ) (hr : IsOpen (r.ker : Set (G E Ω))) : HChar E :=
   ⟨(liftAb r (continuous_of_isOpen_ker' r hr)).comp art,
@@ -118,7 +118,7 @@ theorem IsHeckeOf.val_eq (ha : IsGlobalArtin art) (h : IsHeckeOf art r χ) (hu :
 
 theorem IsHeckeOf.loc_eq_one (ha : IsGlobalArtin art) (h : IsHeckeOf art r χ) (hA : IsPlaceOver A v)
     (H : ∀ σ ∈ Dec (F := E) A, r σ = 1) (x : (v.adicCompletion E)ˣ) : χ.loc v x = 1 := by
-  have hm : art (localIdele E v x) ∈ (Dec (F := E) A).map (toAb E Ω) := by
+  have hm : art (Neutral.B1.localIdele E v x) ∈ (Dec (F := E) A).map (toAb E Ω) := by
     rw [← ha.dec v A hA]
     exact Subgroup.le_topologicalClosure _ ⟨x, rfl⟩
   obtain ⟨σ, hσ, e⟩ := hm
@@ -392,7 +392,7 @@ theorem IsHeckeOf.trivOn [IsAlgClosure E Ω] [_root_.NumberField.IsTotallyComple
     (hinv : ∀ x, c (c x) = x)
     (hr : ∀ (P : HeightOneSpectrum (𝓞 E)) (k : Fˣ), ordF P (upF F k) = ordF (P.under (𝓞 F)) k)
     (cc : Ω ≃+* Ω) (hcc : ∀ x : E, cc (algebraMap E Ω x) = algebraMap E Ω (c x)) (hcc2 : ∀ x, cc (cc x) = x)
-    {art : GlobalTheory.Mem.Chr.Ideles E →* Gab E Ω} (ha : IsGlobalArtin art) {r : G E Ω →* ℂˣ} {χ : HChar E} (h : IsHeckeOf art r χ)
+    {art : Neutral.B1.Ideles E →* Gab E Ω} (ha : IsGlobalArtin art) {r : G E Ω →* ℂˣ} {χ : HChar E} (h : IsHeckeOf art r χ)
     (hanti : AntiHom cc r) {m : ℕ} (hm : 0 < m) (ho : χ.OrderDvd m) (htame : ∀ P, χ.TameAt P) : χ.TrivOn F := by
   classical
   have hc : ∀ x : E, ∃ y : E, cc.symm (algebraMap E Ω x) = algebraMap E Ω y := fun x =>
