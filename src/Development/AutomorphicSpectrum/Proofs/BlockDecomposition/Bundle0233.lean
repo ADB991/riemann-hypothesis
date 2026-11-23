@@ -301,6 +301,8 @@ theorem comp_eq (T : Thick (F.cr b ht κ)) {g : s.R →+* T.B ⧸ T.J}
 variable (𝓛 : Lift s.a (fun k => (s.T k : s.R)) b.R b.I κ) (δ : DividedPowers (b.I.map 𝓛.i))
   (hδ : IsDPMorphism b.γ δ 𝓛.i) (hp : b.p ≠ 0) (hn : IsNilpotent (b.p : b.R))
 
+attribute [local instance 1100] Empty.instIsEmpty
+
 theorem s_eq_one (T : Thick (F.cr b ht κ)) : T.s = 1 := by
   have h : (1 : T.B) = T.s * T.i b.t := (Finset.prod_of_isEmpty (ι := Empty) _).symm.trans T.hs
   rw [ht, map_one, mul_one] at h
