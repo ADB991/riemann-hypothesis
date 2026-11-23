@@ -322,8 +322,8 @@ theorem exists_unramified_resEta : ∀ (F L : Type) [Field F] [NumberField F] [F
       Formalism.L2.Host.etaInf F ((InfinitePlace.mk (φ i)).comap (algebraMap F L)) k
     rw [Formalism.L2.Host.HChar.resInf_apply, e, Finset.prod_singleton]
     apply Units.ext
-    rw [etaInf_eq (φ i) (hn i), ← hψi, ← hχU _ (infIdele_mem _ _)]
-    rfl
+    rw [etaInf_eq (φ i) (hn i), ← hψi]
+    exact congrArg Units.val (hχU _ (infIdele_mem _ _))
   · rw [← hψinf, ← hχU _ (by rw [infDiag_eq]; exact prod_mem fun w _ => infIdele_mem _ _)]
     rfl
 
