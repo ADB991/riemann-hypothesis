@@ -233,7 +233,9 @@ theorem exists_geomInt_component : ∀ (K : Type) [Field K] [NumberField K] [Alg
   let π : Ω ⊗[K] R →ₐ[K] ℂ := Algebra.TensorProduct.lift Ω.val p (fun _ _ => Commute.all _ _)
   haveI : (RingHom.ker π).IsPrime := RingHom.ker_isPrime _
   obtain ⟨e', he', hP, hpr⟩ := exists_idempotent (A := Ω ⊗[K] R)
-    (fun q _ => GlobalTheory.isDomain_of_isRegularLocalRing _) (RingHom.ker π)
+    (fun q _ =>
+      haveI := IsRegularRing.isRegularLocalRing_localization q
+      GlobalTheory.isDomain_of_isRegularLocalRing _) (RingHom.ker π)
   obtain ⟨k, hk, e, hfin, rfl⟩ := exists_finite_level K ℂ R Ω e'
   let inc := Algebra.TensorProduct.map (IntermediateField.inclusion hk) (AlgHom.id K R)
   have hinc : Function.Injective inc :=
