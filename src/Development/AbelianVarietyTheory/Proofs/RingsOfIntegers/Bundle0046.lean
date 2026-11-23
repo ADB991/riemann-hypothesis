@@ -71,7 +71,7 @@ theorem exists_unitary_of_selfDual [Algebra.Unramified (𝓞 (maximalRealSubfiel
   choose h hh hhL using exists_orthonormal_frame (G := 1) (L := Λ.L)
     (fun a b => by simp [cc, Matrix.one_apply, apply_ite, eq_comm]) (by simp) hL
     (fun x => (hΛ x).trans (forall₂_congr fun y _ => by
-      rw [GlobalTheory.SW.Base.herm_one]
+      rw [GlobalTheory.GenusSelfDual.herm_one]
       exact ⟨fun ⟨a, ha⟩ => ha ▸ a.isIntegral_coe, fun h => ⟨⟨_, h⟩, rfl⟩⟩))
   have hh' : ∀ v, ((h v).1.map (locConj v))ᵀ * (h v).1 = 1 := fun v => by
     have := congrArg Matrix.transpose (hh v)
