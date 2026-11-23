@@ -265,8 +265,8 @@ theorem cube_points {X0 : Scheme.{0}} (t : SAB H X0) {S : Type} [CommRing S] (x0
       rw [← Category.assoc, Formalism.MainNotions.ModuliIntegralCharts.H1.GermD.homAt_comp, sL_copy1, ha]
   simp only [cφG, ← Over.comp_left]
   refine congrArg (fun f => Over.Hom.left f) ?_
-  refine (psum_hom (preHom (x m)) _ I.down).trans
-    (Eq.trans ?_ (psum_hom (preHom (Formalism.L2.Pj.homAt x0 (sL m a))) _ I.down).symm)
+  refine (psum_hom (ReciprocityTheory.ChartRestriction.G.Geo.Tor.preHom (x m)) _ I.down).trans
+    (Eq.trans ?_ (psum_hom (ReciprocityTheory.ChartRestriction.G.Geo.Tor.preHom (Formalism.L2.Pj.homAt x0 (sL m a))) _ I.down).symm)
   exact congrArg (fun f => psum t.G f I.down) hpt
 
 theorem prod_points {X0 : Scheme.{0}} (t : SAB H X0) {S : Type} [CommRing S] (x0 : Sp S ⟶ X0) (d : ℕ)

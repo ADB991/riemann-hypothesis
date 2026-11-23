@@ -152,7 +152,7 @@ theorem aux (hC : ContractStatement) (hIm : ImageArithStatement) (hInt : PFIntZe
         rw [h1, h2, sub_zero]
 
       let A' := L' (Fin.last n)
-      let M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι' := HermLine.sqMetric fun k => (-(A'.a k)).toNat
+      let M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι' := ReciprocityTheory.ChartRestriction.G.Geo.HermLine.sqMetric fun k => (-(A'.a k)).toNat
       have hM : IsSmoothHerm M := isSmoothHerm_sqMetric _
       have hA' : IsSmoothHerm A' := hL' _
       have hadd := (hI K' ι').2.1 P' n (Fin.init L') A' M hP' hL0 hA' hM

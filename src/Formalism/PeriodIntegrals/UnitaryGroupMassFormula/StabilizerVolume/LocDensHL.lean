@@ -49,9 +49,12 @@ open NumberField IsDedekindDomain Topology Filter Formalism.MainNotions.GlobalTh
 
 theorem sigR_incl {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
     {v : HeightOneSpectrum (𝓞 F)} (σ : E →ₐ[F] E) (e : E) :
-    sigR (Fv F v) σ (inclR (Fv F v) e) = inclR (Fv F v) (σ e) := by
+    Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (Fv F v) σ
+        (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (Fv F v) e) =
+      Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (Fv F v) (σ e) := by
 
-  simp [sigR, inclR, Algebra.TensorProduct.map_tmul]
+  simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR,
+    Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR, Algebra.TensorProduct.map_tmul]
 
 theorem latFacts_holds : LatFacts := by
   intro F E _ _ _ _ _ σ d b a M v

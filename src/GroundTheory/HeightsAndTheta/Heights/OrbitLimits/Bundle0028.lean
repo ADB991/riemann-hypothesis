@@ -48,10 +48,10 @@ theorem sheetDensity_finset_sum {e : ℕ} (Q : Ideal (MRing ι))
 
 theorem integrable_fibreSum_degZero (hInt : PtsIntegrableStatement) {Q : Ideal (MRing ι)} {e : ℕ}
     (hQ : IsArithVar Q (e + 1)) {Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)} (hΨ : IsGoodProj Q Ψ)
-    {L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hL : ∀ j, IsSmoothHerm (L j)) {u : ((Σ k, ι k) → ℂ) → ℝ}
+    {L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hL : ∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm (L j)) {u : ((Σ k, ι k) → ℂ) → ℝ}
     (hu : IsDegZeroSmooth u) :
     Integrable (fun y => ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre Q Ψ y, sheetDensity Q Ψ (pot L) u y w) := by
-  have hsm : IsSmoothHerm (HermLine.ofWeight u hu.2) :=
+  have hsm : ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm (HermLine.ofWeight u hu.2) :=
     Real.contDiff_exp.comp_contDiffOn hu.1.neg
   have h := hInt K ι Q e Ψ L (HermLine.ofWeight u hu.2) 1 hQ hΨ hL hsm
     (Inter.isSectionOn_one hQ rfl)
@@ -61,7 +61,7 @@ theorem integrable_fibreSum_degZero (hInt : PtsIntegrableStatement) {Q : Ideal (
   rwa [hlog] at h
 
 theorem ptsIntegral_finset_sum (hInt : PtsIntegrableStatement) {Q : Ideal (MRing ι)} {e : ℕ}
-    (hQ : IsArithVar Q (e + 1)) {L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hL : ∀ j, IsSmoothHerm (L j)) {T : Type*}
+    (hQ : IsArithVar Q (e + 1)) {L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hL : ∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm (L j)) {T : Type*}
     (S : Finset T) {u : T → ((Σ k, ι k) → ℂ) → ℝ} (hu : ∀ t, IsDegZeroSmooth (u t)) :
     ptsIntegral Q (pot L) (fun z => ∑ t ∈ S, u t z) = ∑ t ∈ S, ptsIntegral Q (pot L) (u t) := by
   classical
@@ -115,7 +115,7 @@ theorem LelongSectionLimit.proof (hInt : PtsIntegrableStatement) (hChart : Lelon
 
   refine hlim.congr' (eventually_nhdsWithin_of_forall fun ε (hε : 0 < ε) => ?_)
   set M := (regLine A s ε ha hsa).tensor A
-  have hM : IsSmoothHerm M := (isSmoothHerm_regLine hA hε ha hsa).mul hA
+  have hM : ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm M := (isSmoothHerm_regLine hA hε ha hsa).mul hA
   have hcongr : ∀ g : ((Σ k, ι k) → ℂ) → ℝ,
       ptsIntegral P
           (Fin.cons (fun z => Real.log (‖eval z (map (Int.castRingHom ℂ) s)‖ ^ 2 + ε * A.h z ^ 2) / 2)
@@ -129,7 +129,7 @@ theorem LelongSectionLimit.proof (hInt : PtsIntegrableStatement) (hChart : Lelon
       exact (log_regLine_tensor A s hε ha hsa z hz.1).symm
     · intro z _
       simp only [Fin.cons_succ]
-  have hML : ∀ j, IsSmoothHerm ((Fin.cons M L : Fin (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) j) :=
+  have hML : ∀ j, ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm ((Fin.cons M L : Fin (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) j) :=
     fun j => Fin.cases hM (fun i => hL i) j
   simp only [hcongr]
   rw [hvsum]

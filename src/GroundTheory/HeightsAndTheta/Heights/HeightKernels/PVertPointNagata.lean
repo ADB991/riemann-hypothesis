@@ -23,7 +23,7 @@ abbrev comp (n : ℕ) (f : MRing (fun _ : Unit => T)) : MRing (fun _ : Unit => T
   weightedHomogeneousComponent (Inter.LocRingPow.multiDegWeight (fun _ : Unit => T)) (fun _ => n) f
 
 theorem isMultiHomog_comp (n : ℕ) (f : MRing (fun _ : Unit => T)) :
-    IsMultiHomog (comp n f) (fun _ => n) :=
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (comp n f) (fun _ => n) :=
   Inter.LocRingPow.isMultiHomog_iff.mpr (weightedHomogeneousComponent_isWeightedHomogeneous _ _)
 
 
@@ -44,7 +44,7 @@ theorem aeval_eq_eval₂ {S : Type*} [CommRing S] [Algebra ℤ S] (v : (Σ _ : U
   rw [aeval_def, show algebraMap ℤ S = Int.castRingHom S from RingHom.ext_int _ _]
 
 theorem aeval_C_mul_X' {S : Type*} [CommRing S] [Algebra ℤ S] [Algebra ℤ (Polynomial S)] (r : (Σ _ : Unit, T) → S)
-    (f : MRing (fun _ : Unit => T)) (d : ℕ) (hf : IsMultiHomog f (fun _ => d)) :
+    (f : MRing (fun _ : Unit => T)) (d : ℕ) (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f (fun _ => d)) :
     (aeval (fun p => Polynomial.C (r p) * Polynomial.X) f : Polynomial S) =
       Polynomial.C (aeval r f) * Polynomial.X ^ d := by
   rw [aeval_eq_eval₂, aeval_eq_eval₂, VerticalPointMultiplicityChart.aeval_C_mul_X r f d hf]
@@ -55,7 +55,7 @@ theorem coeff_aeval {S : Type*} [CommRing S] [Algebra ℤ S] [Algebra ℤ (Polyn
   classical
   induction f using MvPolynomial.induction_on' with
   | monomial u c =>
-    have hu : IsMultiHomog (monomial u c : MRing (fun _ : Unit => T)) (fun _ => ∑ i, u ⟨(), i⟩) := by
+    have hu : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (monomial u c : MRing (fun _ : Unit => T)) (fun _ => ∑ i, u ⟨(), i⟩) := by
       intro m hm k
       have := Finset.mem_singleton.mp (support_monomial_subset hm)
       subst this

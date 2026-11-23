@@ -136,7 +136,7 @@ theorem num_rel {x : Ix κ → Ω} {B : Matrix (Ix κ) (Ix κ) ℚ} {c : κ} {l 
 theorem sup_le_iff_of_horiz {x : Ix κ → Ω} {B : Matrix (Ix κ) (Ix κ) ℚ} {c : κ} {l : Ix κ → ℤ}
     (hsp : Submodule.span ℤ (Set.range x) ≤ Submodule.span ℤ (Set.range (matAct B x)))
     (hl : x ⟨(), c⟩ = ∑ j, (l j : Ω) * matAct B x j) {Q : Ideal (MRing (FinTwoTypeFamily κ))} (hQ : Q.IsPrime)
-    (hH : IsHorizontal Q) (hR : IsRelevant Q) :
+    (hH : IsHorizontal Q) (hR : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant Q) :
     twoBlockIdeal x (matAct B x) ⊔ Ideal.span {twoBlockNum l} ≤ Q ↔
       twoBlockIdeal x (matAct B x) ⊔ Ideal.span {twoBlockDen c} ≤ Q := by
   obtain ⟨i₀, hi₀⟩ := hR 0

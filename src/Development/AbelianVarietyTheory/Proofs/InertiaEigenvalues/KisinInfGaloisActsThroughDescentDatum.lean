@@ -244,7 +244,7 @@ theorem actB_jB_toBcris {ι : Type} [Fintype ι] [DecidableEq ι] {P : PhiMod O 
     {Δ : Descent P} (hcmp : IsCrisCmp I jB) (hdesc : IsGalDesc (sQ l) I Δ) {g : Gl l}
     {γ : TameGal K l e a} (hc : Covers K t ϖ (sQ l g) γ) (σ σ' : P.MMl) (hσ : σ'.1 = Δ.act γ σ.1) :
     actB (sQ l) T g (jB (toBcris t ϖ P σ)) = jB (toBcris t ϖ P σ') := by
-  let f : ι → ZMod a → invL l (S O K e) := fun i => coordL P _ σ i
+  let f : ι → ZMod a → invL l (S O K e) := fun i => GlobalTheory.BKReal.coordL P _ σ i
   let f' : ι → ZMod a → invL l (S O K e) := fun i τ =>
     ⟨ringAct γ (fun τ' => (f i τ' : K⟦X⟧)) τ, (rot_S.invL).ringAct_mem γ (fun τ' => (f i τ').2) τ⟩
   let w : ι → Vec K a ι := fun i => P.phi (bas i)

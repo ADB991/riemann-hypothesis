@@ -103,7 +103,7 @@ def ModulePieceHilbert.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (J₁ J₂ : Ideal (MRing ι)) (N d : ℕ),
     IsMultiHomogIdeal J₁ → IsMultiHomogIdeal J₂ → J₂ ≤ J₁ → 0 < N →
     (∀ f ∈ J₁, (N : MRing ι) * f ∈ J₂) →
-    (∀ W : Ideal (MRing ι), W.IsPrime → J₂ ≤ W → IsRelevant W →
+    (∀ W : Ideal (MRing ι), W.IsPrime → J₂ ≤ W → ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W →
       ringKrullDim (MRing ι ⧸ W) ≤ ((d + Fintype.card K : ℕ) : WithBot ℕ∞)) →
     ∀ s : K → ℕ, ∃ (a₀ : ℕ) (C : ℝ), ∀ a : K → ℕ, (∀ k, a₀ ≤ a k) →
       |Real.log (modPieceCard J₁ J₂ (a + s)) -

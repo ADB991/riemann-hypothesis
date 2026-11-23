@@ -38,7 +38,7 @@ theorem sum_bipart (f : MRing (stackedBlocks T)) : f = ∑ p ∈ f.support.image
   exact (support_sum_monomial_coeff f).symm
 
 theorem isMultiHomog_bipart (f : MRing (stackedBlocks T)) (p : ℕ × ℕ) :
-    IsMultiHomog (bipart f p) (bidegree p.1 p.2) := by
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (bipart f p) (bidegree p.1 p.2) := by
   classical
   intro m hm κ
   obtain ⟨m', hm', hmm'⟩ := Finset.mem_biUnion.mp (support_sum hm)

@@ -49,7 +49,7 @@ theorem link (Y : FBChart C V O dd) (u : Fin dd → C) (W : Pt C 2 dd) (hW : ∀
   have hz2 := constant_zero_two_points (p3 0) (z0p3 0) hW0
   rw [aOf_eq, ev_sum hz1]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [ev_mul hz1, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_C, map_sum, coeff_C_mul]
+    simp only [Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul hz1, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_C, map_sum, coeff_C_mul]
   unfold Phi
   refine Finset.sum_congr rfl fun i _ => ?_
   have e1 : ev ![W] (ev (rz 1) ((pderiv (R := C) ((0 : Fin 2), i))^[V.l] Y.u1)) =
@@ -90,7 +90,7 @@ theorem coeff_U_eq (Y : FBChart C V O dd) (u : Fin dd → C) (hu : ∀ i, V.Ge 0
   have iP : IntS V (Y.B.ph2 ^ V.l) := intS_pow Y.intPh2 _
   have i12 : IntS V (UU Y (p3 1) * UU Y (p3 2)) := intS_mul i1 i2
   have f12 : FrobD V (UU Y (p3 1) * UU Y (p3 2)) := frobD_mul i1 i2 f1 f2
-  have o12 : ev (rz 2) (UU Y (p3 1) * UU Y (p3 2)) = 1 := by rw [ev_mul (constant_zero_restrict_points 2), o1, o2, one_mul]
+  have o12 : ev (rz 2) (UU Y (p3 1) * UU Y (p3 2)) = 1 := by rw [Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul (constant_zero_restrict_points 2), o1, o2, one_mul]
   unfold Phi
   rw [← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib]
   refine GmExArith.mm_sum fun i _ => ?_

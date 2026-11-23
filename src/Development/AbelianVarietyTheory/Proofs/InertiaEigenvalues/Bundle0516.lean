@@ -133,7 +133,7 @@ theorem inOE_of_approx {ι κ : Type} {A : Matrix ι κ (WCb l)}
 theorem E_not_dvd : ¬ (l : bk.S) ∣ bk.E := by
   rintro ⟨s, hs⟩
   have h := congrArg (PowerSeries.coeff bk.Ep.natDegree) hs
-  rw [BK.E, Polynomial.coeff_coe, bk.monic.coeff_natDegree] at h
+  rw [show bk.E = (bk.Ep : (Wq l bk.a)⟦X⟧) from rfl, Polynomial.coeff_coe, bk.monic.coeff_natDegree] at h
   have h2 : (1 : Wq l bk.a) = (PowerSeries.coeff bk.Ep.natDegree s) * (l : Wq l bk.a) := by
     rw [h, ← nsmul_eq_mul, map_nsmul, nsmul_eq_mul, mul_comm]
   have h3 := congrArg (fun w : Wq l bk.a => w.coeff 0) h2

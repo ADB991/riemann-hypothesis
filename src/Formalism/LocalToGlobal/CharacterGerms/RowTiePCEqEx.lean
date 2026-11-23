@@ -111,7 +111,7 @@ theorem ex_add (Y : FBChart C V O dd) (j : Fin dd) :
       fin_cases k'
       rfl
     rw [e, show ev (n := 1) ![Y.ex] (Y.lg m) = comp1 Y.lg Y.ex m from rfl, Y.lg_ex,
-      show (pt C (n := 1) dd 0 m) = X ((0 : Fin 1), m) from rfl, ev_X (z0_1 _ (z0_pt k))]
+      show (pt C (n := 1) dd 0 m) = X ((0 : Fin 1), m) from rfl, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_X (z0_1 _ (z0_pt k))]
     rfl
   set P : Pt C 2 dd := fun j => ev (n := 2) ![comp1 Y.ex (pt C (n := 2) dd 0), comp1 Y.ex (pt C (n := 2) dd 1)]
     (Y.B.G.F j) with hP
@@ -137,13 +137,13 @@ theorem ex_add (Y : FBChart C V O dd) (j : Fin dd) :
       funext k' i
       fin_cases k'
       show ev (n := 2) _ (X (k, i) : PS C 2 dd) = _
-      rw [ev_X hAB]
+      rw [Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_X hAB]
       fin_cases k <;> rfl
     rw [e2 0, e2 1, hlgk 0, hlgk 1]
   have hPS : ∀ j, P j = ev (n := 2) ![fun m => pt C (n := 2) dd 0 m + pt C dd 1 m] (Y.ex j) := by
     intro j
     have e1 : ev (n := 2) ![P] (comp1 Y.ex Y.lg j) = P j := by
-      rw [Y.ex_lg, show (pt C (n := 1) dd 0 j) = X ((0 : Fin 1), j) from rfl, ev_X hZP]
+      rw [Y.ex_lg, show (pt C (n := 1) dd 0 j) = X ((0 : Fin 1), j) from rfl, Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_X hZP]
       rfl
     rw [← e1]
     unfold comp1

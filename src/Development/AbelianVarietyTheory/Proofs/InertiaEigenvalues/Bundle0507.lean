@@ -458,14 +458,14 @@ theorem eq_zero_of_isNilpotent_of_finrank_eq_one {k V : Type} [Field k] [AddComm
 
 end GlobalTheory.PotCrysRankOne
 
-theorem GlobalTheory.PotCrysRankOne.isPotCrystalline_of_deRham_character : DeRhamPotSemistable → ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P), Nonempty (LocTied l P AI) → ∀ (μ : G E Ω →* (Qbar l)ˣ), Continuous μ → ∀ (A : ValuationSubring Ω) (O : Type) [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l E Ω (Dec (F := E) A) O), GlobalTheory.Pst.Induces Bw → IsdRAt P Bw ((rk1 μ).comp (Dec (F := E) A).subtype) → IsPotCrysAt P Bw ((rk1 μ).comp (Dec (F := E) A).subtype) := by
+theorem GlobalTheory.PotCrysRankOne.isPotCrystalline_of_deRham_character : DeRhamPotSemistable → ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P), Nonempty (LocTied l P AI) → ∀ (μ : G E Ω →* (Qbar l)ˣ), Continuous μ → ∀ (A : ValuationSubring Ω) (O : Type) [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l E Ω (ReciprocityTheory.Gal.Dec (F := E) A) O), GlobalTheory.Pst.Induces Bw → IsdRAt P Bw ((rk1 μ).comp (ReciprocityTheory.Gal.Dec (F := E) A).subtype) → IsPotCrysAt P Bw ((rk1 μ).comp (ReciprocityTheory.Gal.Dec (F := E) A).subtype) := by
   intro hB E Ω _ _ _ _ _ l _ P AI hT μ hμ A O _ _ _ Bw _ hd
   obtain ⟨T⟩ := hT
-  have hc : Continuous fun g : ↥(Dec (F := E) A) =>
-      ((((rk1 μ).comp (Dec (F := E) A).subtype) g : GL (Fin 1) (Om l)) : Matrix (Fin 1) (Fin 1) (Om l)) := by
-    have e : (fun g : ↥(Dec (F := E) A) =>
-        ((((rk1 μ).comp (Dec (F := E) A).subtype) g : GL (Fin 1) (Om l)) : Matrix (Fin 1) (Fin 1) (Om l))) =
-        fun g : ↥(Dec (F := E) A) => Matrix.diagonal fun _ : Fin 1 => ((μ (g : G E Ω) : (Qbar l)ˣ) : Qbar l) := by
+  have hc : Continuous fun g : ↥(ReciprocityTheory.Gal.Dec (F := E) A) =>
+      ((((rk1 μ).comp (ReciprocityTheory.Gal.Dec (F := E) A).subtype) g : GL (Fin 1) (Om l)) : Matrix (Fin 1) (Fin 1) (Om l)) := by
+    have e : (fun g : ↥(ReciprocityTheory.Gal.Dec (F := E) A) =>
+        ((((rk1 μ).comp (ReciprocityTheory.Gal.Dec (F := E) A).subtype) g : GL (Fin 1) (Om l)) : Matrix (Fin 1) (Fin 1) (Om l))) =
+        fun g : ↥(ReciprocityTheory.Gal.Dec (F := E) A) => Matrix.diagonal fun _ : Fin 1 => ((μ (g : G E Ω) : (Qbar l)ˣ) : Qbar l) := by
       funext g; rfl
     rw [e]
     exact Continuous.matrix_diagonal (continuous_pi fun _ => (Units.continuous_val.comp hμ).comp continuous_subtype_val)

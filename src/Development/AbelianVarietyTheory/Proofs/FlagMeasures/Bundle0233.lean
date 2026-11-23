@@ -336,7 +336,7 @@ theorem natAbs_discr_sq (h2 : Module.finrank F E = 2) [Algebra.FormallyUnramifie
 
 theorem absNorm_dInv (j : ℕ) :
     ((FractionalIdeal.absNorm (dInv E j) : ℚ) : ℝ) = |(discr E : ℝ)|⁻¹ ^ j := by
-  rw [dInv, map_pow, map_inv₀, FractionalIdeal.coeIdeal_absNorm, absNorm_differentIdeal E (𝓞 E)]
+  rw [GlobalTheory.SgGlob.dInv, map_pow, map_inv₀, FractionalIdeal.coeIdeal_absNorm, absNorm_differentIdeal E (𝓞 E)]
   simp
 
 end Frame

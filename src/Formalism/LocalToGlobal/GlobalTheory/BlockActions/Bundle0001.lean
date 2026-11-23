@@ -163,16 +163,16 @@ theorem coM_inj_ofS : ∀ w c, ∀ φ ∈ (D.fm u).Fi D.R.m, coMTS Tf B w c (φ 
   have ht : trEvS Tf c (φ ((D.fm u).til c)) = 0 := by rw [hq, ← hc, h0, map_zero]
   funext s'
   let ga : GL (Fin (D.R.N D.R.m)) D.host.E := (Tf.til.ga c).1
-  have hy := congrFun ht (((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').tr (atInf (Forms.embT D) (ga : Matrix _ _ D.host.E)) (isUnit_det_atInf (Forms.embT D) ga))
+  have hy := congrFun ht (((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').tr (atInf (Formalism.L2.Forms.embT D) (ga : Matrix _ _ D.host.E)) (isUnit_det_atInf (Formalism.L2.Forms.embT D) ga))
   simp only [trEvS, LinearMap.smul_apply, LinearMap.funLeft_apply, Pi.smul_apply, Pi.zero_apply, smul_eq_mul] at hy
-  have hback : (((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').tr (atInf (Forms.embT D) (ga : Matrix _ _ D.host.E)) (isUnit_det_atInf (Forms.embT D) ga)).tr
-      (atInf (Forms.embT D) ((ga⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E)) (isUnit_det_atInf (Forms.embT D) ga⁻¹) =
+  have hback : (((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').tr (atInf (Formalism.L2.Forms.embT D) (ga : Matrix _ _ D.host.E)) (isUnit_det_atInf (Formalism.L2.Forms.embT D) ga)).tr
+      (atInf (Formalism.L2.Forms.embT D) ((ga⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E)) (isUnit_det_atInf (Formalism.L2.Forms.embT D) ga⁻¹) =
       (Tf.val D.R.m le_rfl (Or.inr rfl)).eY s' := by
     apply Subtype.ext
     funext τ
-    show atInf (Forms.embT D) ((ga⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
-      (atInf (Forms.embT D) (ga : Matrix _ _ D.host.E) τ * ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').1 τ) = ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').1 τ
-    have h1 := atInf_mul_inv (Forms.embT D) ga⁻¹ τ
+    show atInf (Formalism.L2.Forms.embT D) ((ga⁻¹ : GL (Fin (D.R.N D.R.m)) D.host.E) : Matrix _ _ D.host.E) τ *
+      (atInf (Formalism.L2.Forms.embT D) (ga : Matrix _ _ D.host.E) τ * ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').1 τ) = ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s').1 τ
+    have h1 := atInf_mul_inv (Formalism.L2.Forms.embT D) ga⁻¹ τ
     rw [inv_inv] at h1
     rw [← Matrix.mul_assoc, h1, Matrix.one_mul]
   rw [hback, Equiv.symm_apply_apply] at hy

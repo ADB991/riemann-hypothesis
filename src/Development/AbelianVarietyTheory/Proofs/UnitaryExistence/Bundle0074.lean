@@ -304,7 +304,7 @@ theorem exists_val_ne (hT : Out.SecTwistSt) {R : Type} [CommRing R] (φ : R →+
     (x u : Sp ℂ ⟶ Xo.X) (hu : u = x) (s₀ : LB.Sec (PPx x₀)) (s : LB.Sec (PPx x)) (pm : Gx x ⟶ Gx x₀)
     (h₁ : pm ≫ Formalism.L2.PjFree.gxFst x₀ = Formalism.L2.PjFree.gxFst x) (h₂ : pm ≫ Formalism.L2.PjFree.gxSnd x₀ = Formalism.L2.PjFree.gxSnd x ≫ spMap φ)
     (h₃ : ∀ (i : Fin 1 → Xo.univ.t.PP.L.ι) (h : (PPx x).U i ≤ pm ⁻¹ᵁ (PPx x₀).U i),
-      (pm.appLE _ _ h).hom (s₀.f i) = s.f i) (hs : GlobalTheory.Frames.SecGen x s) :
+      (pm.appLE _ _ h).hom (s₀.f i) = s.f i) (hs : SecGen x s) :
     ∃ (e : Over.mk u ⟶ Xo.univ.t.G) (j : Xo.univ.t.PP.L.ι), ∀ q : Sp ℂ ⟶ Gx x₀, q ≫ Formalism.L2.PjFree.gxFst x₀ = e.left →
       q ≫ Formalism.L2.PjFree.gxSnd x₀ = spMap φ → valAt' q ((PPx x₀).U (fun _ => j)) (s₀.f (fun _ => j)) ≠ 0 := by
   subst hu

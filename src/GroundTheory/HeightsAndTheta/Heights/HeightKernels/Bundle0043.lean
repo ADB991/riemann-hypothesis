@@ -449,7 +449,7 @@ theorem DualStdModelRank.proof : DualStdModelRank.Statement := by
     exact Subalgebra.mul_mem _ (hwM' t) (Subalgebra.inv_mem_of_algebraic M' (x := ⟨w b c, hwM' c⟩)
       (IsIntegral.of_mem_of_fg M' hfg _ (hwM' c)).isAlgebraic)
   have hβM : ∀ a, embK K i a ∈ Algebra.adjoin Φ₀ (Set.range fun t => w b t * (w b c)⁻¹) := fun a => by
-    obtain ⟨N, hN, n, hn⟩ := exists_int_comb b c a
+    obtain ⟨N, hN, n, hn⟩ := GroundTheory.Heights₂.Heights.StandardModelDualRank.exists_int_comb b c a
     have hNΩ : (N : dualStdModelField K i) ≠ 0 := by
       rw [← map_intCast (embK K i)]
       exact (map_ne_zero_iff _ (embK K i).injective).mpr (Int.cast_ne_zero.mpr hN)
