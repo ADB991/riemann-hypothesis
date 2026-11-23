@@ -172,16 +172,16 @@ variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} [∀ k, Fint
 omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem logNorm_ofWeight_one (g : ((Σ k, ι k) → ℂ) → ℝ)
     (hg : ∀ (c : K → ℂ) z, (∀ k, c k ≠ 0) → g (fun p => c p.1 * z p) = g z) (z : (Σ k, ι k) → ℂ) :
-    logNorm (HermLine.ofWeight g hg) 1 z = g z := by
-  simp [logNorm, HermLine.ofWeight, Real.exp_neg]
+    logNorm (ReciprocityTheory.ChartRestriction.G.Geo.HermLine.ofWeight g hg) 1 z = g z := by
+  simp [logNorm, ReciprocityTheory.ChartRestriction.G.Geo.HermLine.ofWeight, Real.exp_neg]
 
 
 omit [DecidableEq K] in
 theorem isSectionOn_ofWeight_one {P : Ideal (MRing ι)} (hP : P.IsPrime) (g : ((Σ k, ι k) → ℂ) → ℝ)
     (hg : ∀ (c : K → ℂ) z, (∀ k, c k ≠ 0) → g (fun p => c p.1 * z p) = g z) :
-    IsSectionOn P (HermLine.ofWeight g hg) 1 := by
+    IsSectionOn P (ReciprocityTheory.ChartRestriction.G.Geo.HermLine.ofWeight g hg) 1 := by
   classical
-  refine ⟨0, fun k => by simp [HermLine.ofWeight], ?_, fun h => hP.ne_top ((Ideal.eq_top_iff_one P).2 h)⟩
+  refine ⟨0, fun k => by simp [ReciprocityTheory.ChartRestriction.G.Geo.HermLine.ofWeight], ?_, fun h => hP.ne_top ((Ideal.eq_top_iff_one P).2 h)⟩
   intro mm hm k
   rw [MvPolynomial.mem_support_iff, MvPolynomial.coeff_one] at hm
   have h0 : (0 : (Σ k, ι k) →₀ ℕ) = mm := by
