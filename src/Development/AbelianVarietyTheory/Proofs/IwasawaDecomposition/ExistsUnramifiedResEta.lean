@@ -257,7 +257,7 @@ theorem exists_unramified_resEta : ∀ (F L : Type) [Field F] [NumberField F] [F
   intro F L _ _ _ _ _ c I _ φ h hord hprod n hn hroot
   have := h.real
   obtain ⟨ψ, hψc, hψu, hψi, -, hψl, hψd⟩ := GlobalTheory.ModelChar.exists_modelChar L I φ h.bij n ∅ (fun _ => 1) (by simp)
-  have hψl' : ∀ v x, ψ (localIdele L v x) = 1 := fun v x => hψl v (by simp) x
+  have hψl' : ∀ v x, ψ (Neutral.B1.localIdele L v x) = 1 := fun v x => hψl v (by simp) x
   have hψF : ∀ v k, ψ (GlobalTheory.Mem.Chr.locF F v k) = 1 := fun v k => by
     unfold GlobalTheory.Mem.Chr.locF
     rw [map_prod]
@@ -294,7 +294,7 @@ theorem exists_unramified_resEta : ∀ (F L : Type) [Field F] [NumberField F] [F
   have hχd : ∀ k : Lˣ, χ (Neutral.B1.diagUnits L k) = 1 := fun k => by simpa using hχA (k, 1)
   have hχβ : ∀ m, χ (β m) = b m := fun m => by simpa using hχA (1, m)
   refine ⟨⟨χ, hχc, hχd⟩, hχu, fun v x hx => ?_, ⟨fun v k => ?_, fun w k => ?_⟩, fun k => ?_⟩
-  · show χ (localIdele L v x) = 1
+  · show χ (Neutral.B1.localIdele L v x) = 1
     rw [hχU _ fun w => ?_, hψl']
     show valAt w _ = 1
     by_cases e : w = v

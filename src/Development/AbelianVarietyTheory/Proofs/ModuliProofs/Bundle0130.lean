@@ -336,10 +336,10 @@ def objOfSABMap (o : Obj D l b s) {t' : SAB H S'} (m : SABMap t' o.t f) : Obj D 
     proper := MorphismProperty.of_isPullback (P := @IsProper) m.cart.1 hpr
     ample := hp.2.1 o.ample
     ktriv := hp.2.2 o.ktriv
-    eta := fun a => secPull m.cart (o.eta a)
+    eta := fun a => GlobalTheory.ObjPull.secPull m.cart (o.eta a)
     eta_add := fun a c => by rw [o.eta_add, map_mul]
     eta_ker := fun a ha => by rw [o.eta_ker a ha, map_one]
-    etaA := fun a => secPull m.cart (o.etaA a)
+    etaA := fun a => GlobalTheory.ObjPull.secPull m.cart (o.etaA a)
     etaA_add := fun a c => by rw [o.etaA_add, map_mul]
     etaA_ker := fun a => by rw [o.etaA_ker a, map_one]
     geom := fun k _ _ x β hx => by
@@ -361,7 +361,7 @@ def objMapOfSABMap (o : Obj D l b s) {t' : SAB H S'} (m : SABMap t' o.t f) : Obj
   ⟨m, fun _ => secPull_left m.cart _, fun _ => secPull_left m.cart _⟩
 
 theorem sec_eq_secPull {t : SAB H S} {t' : SAB H S'} (m : SABMap t' t f) {e : 𝟙_ (Over S) ⟶ t.G}
-    {e' : 𝟙_ (Over S') ⟶ t'.G} (h : e'.left ≫ m.φ = f ≫ e.left) : e' = secPull m.cart e := by
+    {e' : 𝟙_ (Over S') ⟶ t'.G} (h : e'.left ≫ m.φ = f ≫ e.left) : e' = GlobalTheory.ObjPull.secPull m.cart e := by
   apply Over.OverMorphism.ext
   apply m.cart.1.hom_ext
   · exact h.trans (secPull_left m.cart _).symm

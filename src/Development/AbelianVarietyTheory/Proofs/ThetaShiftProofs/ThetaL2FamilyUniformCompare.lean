@@ -164,12 +164,12 @@ noncomputable def fibLift (x : Sp ℂ ⟶ Xo.X) (e : Sp ℂ ⟶ Xo.univ.t.G.left
   pullback.lift (f := x) (g := Xo.univ.t.G.hom) (𝟙 _) e (by rw [Category.id_comp, he])
 
 theorem fibLift_fst (x : Sp ℂ ⟶ Xo.X) (e : Sp ℂ ⟶ Xo.univ.t.G.left) (he : e ≫ Xo.univ.t.G.hom = x) :
-    fibLift x e he ≫ gxFst x = e := pullback.lift_snd _ _ _
+    fibLift x e he ≫ Formalism.L2.PjFree.gxFst x = e := pullback.lift_snd _ _ _
 
 theorem fibLift_snd (x : Sp ℂ ⟶ Xo.X) (e : Sp ℂ ⟶ Xo.univ.t.G.left) (he : e ≫ Xo.univ.t.G.hom = x) :
     fibLift x e he ≫ gxSnd x = 𝟙 _ := pullback.lift_fst _ _ _
 
-theorem isPullback_gx (x : Sp ℂ ⟶ Xo.X) : IsPullback (gxSnd x) (gxFst x) x Xo.univ.t.G.hom :=
+theorem isPullback_gx (x : Sp ℂ ⟶ Xo.X) : IsPullback (gxSnd x) (Formalism.L2.PjFree.gxFst x) x Xo.univ.t.G.hom :=
   IsPullback.of_hasPullback x Xo.univ.t.G.hom
 
 theorem isHolTo_fibLift {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] (x : Sp ℂ ⟶ Xo.X)
@@ -182,7 +182,7 @@ theorem isHolTo_fibLift {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] (x
     exact hol
 
 theorem over_of_snd (x : Sp ℂ ⟶ Xo.X) (pt : Sp ℂ ⟶ Gx x) (h : pt ≫ gxSnd x = 𝟙 _) :
-    (pt ≫ gxFst x) ≫ Xo.univ.t.G.hom = x := by
+    (pt ≫ Formalism.L2.PjFree.gxFst x) ≫ Xo.univ.t.G.hom = x := by
   rw [Category.assoc, ← (isPullback_gx x).w, ← Category.assoc, h, Category.id_comp]
 
 open MonObj in
@@ -191,7 +191,7 @@ theorem ex_periodic {σ : KA l →+* ℂ} {g : ℕ} {ty : Fin g → (E →+* ℂ
   rw [Fu.ex_add i P hP, (Fu.ex_ker i P hP _).2 ⟨a, rfl⟩, _root_.mul_one]
 
 theorem chart_iff (x : Sp ℂ ⟶ Xo.X) (pt : Sp ℂ ⟶ Gx x) (j : Xo.univ.t.PP.L.ι) {e : Sp ℂ ⟶ Xo.univ.t.G.left}
-    (he : pt ≫ gxFst x = e) : ⊤ ≤ pt ⁻¹ᵁ (PPx x).U (fun _ => j) ↔ ⊤ ≤ e ⁻¹ᵁ Xo.univ.t.PP.L.U j := by
+    (he : pt ≫ Formalism.L2.PjFree.gxFst x = e) : ⊤ ≤ pt ⁻¹ᵁ (PPx x).U (fun _ => j) ↔ ⊤ ≤ e ⁻¹ᵁ Xo.univ.t.PP.L.U j := by
   subst he
   exact ⟨fun h _ hp => Set.mem_iInter.1 (h hp) 0, fun h _ hp => Set.mem_iInter.2 fun _ => h hp⟩
 
@@ -294,8 +294,8 @@ theorem theta_l2_positive_and_scaling : Out.Laws → Out.Laws2 → ∀ (E : Type
     exact ⟨gam a, hg a⟩
   · obtain ⟨J, r, hr, hne⟩ := sg.1 gen
     obtain ⟨j, rfl⟩ : ∃ j, J = fun _ => j := ⟨J 0, funext fun k => by rw [Subsingleton.elim k 0]⟩
-    obtain ⟨z, hz⟩ := Fu.ex_onto i Pm hP (Over.homMk (r ≫ gxFst (S := ℂ) x') ((over_of_snd x' r hr).trans hy))
-    have hz' : r ≫ gxFst (S := ℂ) x' = (Fu.ex i Pm z).left := by rw [hz]; rfl
+    obtain ⟨z, hz⟩ := Fu.ex_onto i Pm hP (Over.homMk (r ≫ Formalism.L2.PjFree.gxFst (S := ℂ) x') ((over_of_snd x' r hr).trans hy))
+    have hz' : r ≫ Formalism.L2.PjFree.gxFst (S := ℂ) x' = (Fu.ex i Pm z).left := by rw [hz]; rfl
     have hU := (chart_iff x' r j hz').1 (top_le_preimage_of_valAt'_ne_zero _ hne)
     have h1 := hθ j z r hz' hr hU
     have h2 : θ z ≠ 0 := left_ne_zero_of_mul (h1 ▸ hne)

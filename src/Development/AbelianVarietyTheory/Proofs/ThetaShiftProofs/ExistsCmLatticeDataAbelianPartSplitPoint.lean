@@ -121,7 +121,7 @@ theorem herm_smul_left (G : Matrix (Fin r) (Fin r) E) (a : E) (u w : Fin r → E
 
 theorem perFr_flow (X : Data E r) {ξ : Fin r → E} (hξ : herm X.Gm ξ ξ = 0) (h0 : 0 < X.p0) (s : X.Ψ → ℂ)
     (x : Frame X.Ψ r) {v : Fin r → E} (hv : herm X.Gm v ξ = 0) (τ : E →+* ℂ) (i : ℕ) :
-    perFr X (X.flow ξ s x) v τ i = perFr X x v τ i := by
+    Formalism.L2.PjFree.perFr X (X.flow ξ s x) v τ i = Formalism.L2.PjFree.perFr X x v τ i := by
   by_cases hτ : τ ∈ X.Ψ
   · rw [PerFlow.flow_mem X hξ s x v ⟨τ, hτ⟩ i, hv]; simp
   · have h' : conjEmb τ ∈ X.Ψ := by
@@ -129,8 +129,8 @@ theorem perFr_flow (X : Data E r) {ξ : Fin r → E} (hξ : herm X.Gm ξ ξ = 0)
       exact hτ ((X.cmType τ).2 h)
     have hc : τ = conjEmb (conjEmb τ) := by ext a; simp [conjEmb]
     have hlt : X.p0 - 1 - (X.p0 - 1 - (X.p0 - 1 - i)) < r := by have := X.p0_le; omega
-    have key : ∀ y : Frame X.Ψ r, perFr X y v (conjEmb (conjEmb τ)) i =
-        perFr X y v (conjEmb (conjEmb τ)) (X.p0 - 1 - (X.p0 - 1 - i)) := fun y => by
+    have key : ∀ y : Frame X.Ψ r, Formalism.L2.PjFree.perFr X y v (conjEmb (conjEmb τ)) i =
+        Formalism.L2.PjFree.perFr X y v (conjEmb (conjEmb τ)) (X.p0 - 1 - (X.p0 - 1 - i)) := fun y => by
       rw [PerFlow.perFr_conj X y v ⟨_, h'⟩ i ⟨_, hlt⟩ (by simp only; omega),
         PerFlow.perFr_conj X y v ⟨_, h'⟩ _ ⟨_, hlt⟩ rfl]
     rw [hc, key, key, PerFlow.flow_conj X ξ s x v ⟨_, h'⟩ _ (by omega), hv]
@@ -138,7 +138,7 @@ theorem perFr_flow (X : Data E r) {ξ : Fin r → E} (hξ : herm X.Gm ξ ξ = 0)
 
 theorem perFr_pos (X : Data E r) (ξ : Fin r → E) {x : Frame X.Ψ r} (hx : x ∈ X.dom) (v : Fin r → E)
     (hv : X.Jz x (X.ucomp x ξ (X.embV v)) = Complex.I • X.ucomp x ξ (X.embV v)) (a : E) {τ : E →+* ℂ}
-    (hτ : τ ∈ X.Ψ) : ∃ c : ℂ, ∀ i, perFr X x (a • v) τ i = c * perFr X x ξ τ i := by
+    (hτ : τ ∈ X.Ψ) : ∃ c : ℂ, ∀ i, Formalism.L2.PjFree.perFr X x (a • v) τ i = c * Formalism.L2.PjFree.perFr X x ξ τ i := by
   obtain ⟨c, u, hu, hp⟩ : ∃ (c : ℂ) (u : Fin r → ℂ), Data.emb τ v = u + c • Data.emb τ ξ ∧ X.ppos x ⟨τ, hτ⟩ u = u := by
     refine ⟨_, X.ucomp x ξ (X.embV v) ⟨τ, hτ⟩, (sub_add_cancel _ _).symm, ?_⟩
     have := congrFun hv ⟨τ, hτ⟩
@@ -160,7 +160,7 @@ theorem perFr_pos (X : Data E r) (ξ : Fin r → E) {x : Frame X.Ψ r} (hx : x �
 
 theorem perFr_neg (X : Data E r) (h0 : 0 < X.p0) (ξ : Fin r → E) {x : Frame X.Ψ r} (hx : x ∈ X.dom) (v : Fin r → E)
     (hv : X.Jz x (X.ucomp x ξ (X.embV v)) = -(Complex.I • X.ucomp x ξ (X.embV v))) (a : E) {τ : E →+* ℂ}
-    (hτ : τ ∉ X.Ψ) : ∃ c : ℂ, ∀ i, perFr X x (a • v) τ i = c * perFr X x ξ τ i := by
+    (hτ : τ ∉ X.Ψ) : ∃ c : ℂ, ∀ i, Formalism.L2.PjFree.perFr X x (a • v) τ i = c * Formalism.L2.PjFree.perFr X x ξ τ i := by
   have h' : conjEmb τ ∈ X.Ψ := by
     by_contra h
     exact hτ ((X.cmType τ).2 h)
@@ -312,7 +312,7 @@ theorem exists_cmLat (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) {
     (isom : ∀ a b : Y.Λ, herm Y.Gm a ξ = 0 → herm Y.Gm b ξ = 0 →
       ((D.EF (L a) (L b) : ℤ) : ℚ) = Algebra.trace ℚ E (-Y.ξ0 * herm Y.Gm a b))
     (onto : ∀ z, ∃ a : Y.Λ, herm Y.Gm a ξ = 0 ∧ L a = z)
-    (pm : ∀ a : Y.Λ, herm Y.Gm a ξ = 0 → ∀ i, (∃ c : ℂ, ∀ n, perFr Y x a (ty i) n = c * perFr Y x ξ (ty i) n) →
+    (pm : ∀ a : Y.Λ, herm Y.Gm a ξ = 0 → ∀ i, (∃ c : ℂ, ∀ n, Formalism.L2.PjFree.perFr Y x a (ty i) n = c * Formalism.L2.PjFree.perFr Y x ξ (ty i) n) →
       Pe (L a) i = 0)
     (La : ℝ) (lam : Fin (r - 2) → Fin r → E) (hl : SplitData X ξ La (hX ▸ x) lam) :
     ∃ Z : CMLat hP p q, ∀ j (τ : E →+* ℂ), ‖τ (Z.hh j : E)‖ ≤ La ^ 2 := by

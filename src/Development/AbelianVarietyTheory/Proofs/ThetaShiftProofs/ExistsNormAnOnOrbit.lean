@@ -238,7 +238,7 @@ theorem rank_one_form [Module.Finite ℤ Y] (hY : Module.finrank (𝓞 E) Y = 1)
 end Lattice
 
 variable {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
-  {σ : c.F →+* ℂ} {r : ℕ} {U : Unf Xo c σ r} (Uw : UnfWit U)
+  {σ : c.F →+* ℂ} {r : ℕ} {U : Formalism.L2.PjFree.Unf Xo c σ r} (Uw : UnfWit U)
 
 lemma flow_coord (hσ : GoodEmb c σ) (hU : IsUnf U) (k : U.Comp) (ξ' : Fin r → E) (hξ' : herm (U.X k).Gm ξ' ξ' = 0)
     (x : (U.X k).dom) :
@@ -355,7 +355,7 @@ lemma shift_periods [Algebra (FractionRing ℂ) ℂ] (hσ : GoodEmb c σ) (hU : 
       add_zero]
     simp only [AnArc.Pw_snd]
 
-theorem exists_normAn_onOrbit : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] (σ : c.F →+* ℂ) (r : ℕ) (U : Unf Xo c σ r) (Uw : UnfWit U) (k : U.Comp) (ξ' : Fin r → E) (x : Frame (U.X k).Ψ r) (n' : ℕ), GoodEmb c σ → IsUnf U → (U.X k).IsIso ξ' → x ∈ (U.X k).dom → 0 < n' → letI := H.starRing; ∀ (A : AnArc (𝓞 E)) (gam : (Uw.F.Di (Uw.ik k)).La ≃ₗ[𝓞 E] A.La) (ξ : Module.Dual ℤ A.X), OnOrbit Uw k ξ' x A gam ξ → ξ ≠ 0 → Module.finrank (𝓞 E) A.X = 1 → PrimAn H A → (∀ y, n' • A.ct y ∈ A.abelian₂) → ∃ (A' : AnArc (𝓞 E)) (gam' : (Uw.F.Di (Uw.ik k)).La ≃ₗ[𝓞 E] A'.La) (ξ₁ : Module.Dual ℤ A'.X) (eX : A'.X ≃ₗ[𝓞 E] A.X), OnOrbit Uw k ξ' x A' gam' ξ₁ ∧ PrimAn H A' ∧ NormAn A' n' ∧ (∀ y, ξ₁ y = ξ (eX y)) ∧ (∀ y y', A'.be y y' = A.be (eX y) (eX y')) ∧ ∀ DB : Datum H, (∃ tyB eB, AbDat H A DB tyB eB) → ∃ tyB eB, AbDat H A' DB tyB eB := by
+theorem exists_normAn_onOrbit : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] (σ : c.F →+* ℂ) (r : ℕ) (U : Formalism.L2.PjFree.Unf Xo c σ r) (Uw : UnfWit U) (k : U.Comp) (ξ' : Fin r → E) (x : Frame (U.X k).Ψ r) (n' : ℕ), GoodEmb c σ → IsUnf U → (U.X k).IsIso ξ' → x ∈ (U.X k).dom → 0 < n' → letI := H.starRing; ∀ (A : AnArc (𝓞 E)) (gam : (Uw.F.Di (Uw.ik k)).La ≃ₗ[𝓞 E] A.La) (ξ : Module.Dual ℤ A.X), OnOrbit Uw k ξ' x A gam ξ → ξ ≠ 0 → Module.finrank (𝓞 E) A.X = 1 → PrimAn H A → (∀ y, n' • A.ct y ∈ A.abelian₂) → ∃ (A' : AnArc (𝓞 E)) (gam' : (Uw.F.Di (Uw.ik k)).La ≃ₗ[𝓞 E] A'.La) (ξ₁ : Module.Dual ℤ A'.X) (eX : A'.X ≃ₗ[𝓞 E] A.X), OnOrbit Uw k ξ' x A' gam' ξ₁ ∧ PrimAn H A' ∧ NormAn A' n' ∧ (∀ y, ξ₁ y = ξ (eX y)) ∧ (∀ y y', A'.be y y' = A.be (eX y) (eX y')) ∧ ∀ DB : Datum H, (∃ tyB eB, AbDat H A DB tyB eB) → ∃ tyB eB, AbDat H A' DB tyB eB := by
   intro E _ _ _ H Dw l Xo c _ _ σ r U Uw k ξ' x n' hσ hU hiso _ _
   letI := H.starRing
   intro A gam ξ hO hξ hrk hP hn

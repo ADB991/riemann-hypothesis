@@ -22,8 +22,8 @@ def uOf (a : 𝓞 L) (ha : a ≠ 0) : Lˣ := Units.mk0 (algebraMap (𝓞 L) L a)
 
 theorem ordF_of_span (v v' w : HeightOneSpectrum (𝓞 L)) (j : ℕ) (a : 𝓞 L) (ha : a ≠ 0)
     (h : Ideal.span {a} = v.asIdeal * v'.asIdeal ^ j) :
-    ordF w (uOf a ha) = (if v = w then 1 else 0) + (if v' = w then (j : ℤ) else 0) := by
-  have h1 : ordF w (uOf a ha) = FractionalIdeal.count L w ((Ideal.span {a} : Ideal (𝓞 L)) : FractionalIdeal (nonZeroDivisors (𝓞 L)) L) := by
+    Formalism.L2.Host.ordF w (uOf a ha) = (if v = w then 1 else 0) + (if v' = w then (j : ℤ) else 0) := by
+  have h1 : Formalism.L2.Host.ordF w (uOf a ha) = FractionalIdeal.count L w ((Ideal.span {a} : Ideal (𝓞 L)) : FractionalIdeal (nonZeroDivisors (𝓞 L)) L) := by
     rw [FractionalIdeal.count_coe L w (by simpa using ha)]
     show -WithZero.log (w.valuation L (algebraMap (𝓞 L) L a)) = _
     rw [HeightOneSpectrum.valuation_of_algebraMap, HeightOneSpectrum.intValuation_if_neg _ ha]
@@ -45,7 +45,7 @@ theorem prod_rule_two (χ : HChar L) (S : Finset (HeightOneSpectrum (𝓞 L))) (
     χ.inf (uOf a ha) * (∏ w ∈ S, χ.locK w (uOf a ha)) * (χ.val v * χ.val v' ^ j) = 1 := by
   rw [← GlobalTheory.HeckeProduct.hchar_productRule L χ S hS (uOf a ha)]
   congr 1
-  have e : ∀ w, (∏ᶠ (_ : w ∉ S), χ.val w ^ ordF w (uOf a ha)) =
+  have e : ∀ w, (∏ᶠ (_ : w ∉ S), χ.val w ^ Formalism.L2.Host.ordF w (uOf a ha)) =
       (if v = w then χ.val v else 1) * (if v' = w then χ.val v' ^ j else 1) := by
     intro w
     rw [ordF_of_span v v' w j a ha h]

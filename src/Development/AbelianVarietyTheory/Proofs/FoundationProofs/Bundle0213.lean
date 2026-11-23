@@ -73,7 +73,7 @@ theorem gram_eq_mul {d j : ℕ} (X : InfinitePlace K → Matrix (Fin d) (Fin d) 
     gram X v e = (((Matrix.of e)ᵀ).map v.embedding)ᴴ * (((X v)⁻¹)ᴴ * (X v)⁻¹) *
       ((Matrix.of e)ᵀ).map v.embedding := by
   ext a c
-  simp only [gram, Formalism.HN.gramPl, Matrix.of_apply, majAt_eq, metMat, cv, Matrix.mul_apply,
+  simp only [gram, Formalism.HN.gramPl, Matrix.of_apply, Formalism.DivisionValues.majAt_eq, metMat, cv, Matrix.mul_apply,
     Matrix.conjTranspose_apply, Matrix.map_apply, Matrix.transpose_apply, dotProduct, Matrix.mulVec,
     Pi.star_apply, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]

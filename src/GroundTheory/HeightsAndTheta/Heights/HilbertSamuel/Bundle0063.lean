@@ -213,7 +213,7 @@ namespace IsomInvariance
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem exists_ratSection {P : Ideal (MRing ι)} (hP : P.IsPrime) (hrel : IsRelevant P) (B : HermLine ι) :
-    ∃ s t : MRing ι, IsRatSectionOn P B s t := by
+    ∃ s t : MRing ι, ReciprocityTheory.ChartRestriction.G.AI.I2.IsRatSectionOn P B s t := by
   classical
   let c : ∀ k, ι k := fun k => (hrel k).choose
   have hc : ∀ k, (X ⟨k, c k⟩ : MRing ι) ∉ P := fun k => (hrel k).choose_spec
@@ -229,10 +229,10 @@ theorem snoc_eq (hR : RatRStatement) {I : Ideal (MRing ι) → (n : ℕ) → (Fi
   have hPp : P.IsPrime := hP.2.1.1
   have nm : ∀ {x y : MRing ι}, x ∉ P → y ∉ P → x * y ∉ P := fun hx hy h => (hPp.mem_or_mem h).elim hx hy
   obtain ⟨s, t, σ, τ, hs, ht, hsP, htP, hst⟩ := exists_ratSection hPp hP.2.1.2.2 B
-  have hB' : IsRatSectionOn P B (s * g) (t * g) :=
+  have hB' : ReciprocityTheory.ChartRestriction.G.AI.I2.IsRatSectionOn P B (s * g) (t * g) :=
     ⟨σ + β, τ + β, Inter.AvoidRing.isMultiHomog_mul hs hg, Inter.AvoidRing.isMultiHomog_mul ht hg,
       nm hsP hgP, nm htP hgP, fun k => by have := hst k; simp only [Pi.add_apply]; push_cast; linarith⟩
-  have hA' : IsRatSectionOn P A (s * f * g) (t * g * g) :=
+  have hA' : ReciprocityTheory.ChartRestriction.G.AI.I2.IsRatSectionOn P A (s * f * g) (t * g * g) :=
     ⟨σ + α + β, τ + β + β,
       Inter.AvoidRing.isMultiHomog_mul (Inter.AvoidRing.isMultiHomog_mul hs hf) hg,
       Inter.AvoidRing.isMultiHomog_mul (Inter.AvoidRing.isMultiHomog_mul ht hg) hg,

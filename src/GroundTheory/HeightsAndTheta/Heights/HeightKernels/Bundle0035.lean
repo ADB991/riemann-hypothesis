@@ -100,7 +100,7 @@ theorem DualPointLineDegree.proof (hPt : DualCurvePoint.Statement) (hPos : Point
   refine ⟨hPos T K' y hW, K', inferInstance, inferInstance, inferInstance, v, hv, ?_⟩
   obtain ⟨t₀, ht₀⟩ := hW.2.1.2.2 ()
   set s : MRing (dualBlocks T) := X ⟨(), t₀⟩ with hs
-  have hs1 : IsMultiHomog s (fun _ => 1) := isMultiHomog_X t₀
+  have hs1 : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s (fun _ => 1) := isMultiHomog_X t₀
   have hsec : IsSectionOn (mCoordIdeal y) A s := ⟨fun _ => 1, fun _ => rfl, hs1, ht₀⟩
   have hsm : IsSmoothHerm A := (hSemi K i F T b hb).1
   have hy0 : y ⟨(), t₀⟩ ≠ 0 := by
@@ -370,7 +370,7 @@ namespace VerticalPointLength
 theorem maximal_and_mult_eq (hCh : VertPointChart.Statement) (hMC : VertPointMultChart.Statement)
     (hSQ : SectionQuotLocal.Statement) {T : Type} [Fintype T] {K' : Type} [Field K'] [NumberField K']
     {y : (Σ _ : Unit, T) → K'} {s : MRing (fun _ : Unit => T)} (hP : IsArithVar (mCoordIdeal y) 1)
-    (hs : IsMultiHomog s (fun _ => 1)) (hsP : s ∉ mCoordIdeal y) {W : Ideal (MRing (fun _ : Unit => T))}
+    (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s (fun _ => 1)) (hsP : s ∉ mCoordIdeal y) {W : Ideal (MRing (fun _ : Unit => T))}
     (hW : W ∈ divSupp (mCoordIdeal y) s) :
     (curvePtIdeal y W).IsMaximal ∧
       multAt (mCoordIdeal y ⊔ Ideal.span {s}) W = locLen (curvePtIdeal y W) (sectionQuot y (aeval y s)) := by

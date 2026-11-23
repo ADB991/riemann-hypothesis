@@ -207,8 +207,8 @@ section Relation
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
 omit [Fintype K] in
-theorem isMultiHomog_pow' {f : MRing ι} {d : K → ℕ} (hf : IsMultiHomog f d) (m : ℕ) :
-    IsMultiHomog (f ^ m) (m • d) := by
+theorem isMultiHomog_pow' {f : MRing ι} {d : K → ℕ} (hf : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f d) (m : ℕ) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f ^ m) (m • d) := by
   induction m with
   | zero => simpa using LowerBoundFree.isMultiHomog_C_zero (ι := ι) 1
   | succ m ih =>
@@ -217,7 +217,7 @@ theorem isMultiHomog_pow' {f : MRing ι} {d : K → ℕ} (hf : IsMultiHomog f d)
 
 omit [Fintype K] in
 theorem isMultiHomog_sum' {β : Type*} (s : Finset β) (f : β → MRing ι) {d : K → ℕ}
-    (hf : ∀ j ∈ s, IsMultiHomog (f j) d) : IsMultiHomog (∑ j ∈ s, f j) d := by
+    (hf : ∀ j ∈ s, ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (f j) d) : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (∑ j ∈ s, f j) d := by
   classical
   induction s using Finset.induction_on with
   | empty => simpa using LowerBoundFree.isMultiHomog_zero (ι := ι) d
@@ -227,8 +227,8 @@ theorem isMultiHomog_sum' {β : Type*} (s : Finset β) (f : β → MRing ι) {d 
       (ih fun j hj => hf j (Finset.mem_insert_of_mem hj))
 
 theorem exists_rel (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hyc : ∀ k, y ⟨k, c k⟩ ≠ 0) {t : Ω}
-    (ht : IsIntegral (chartRingZ y c) t) {A B : MRing ι} {δ : K → ℕ} (hA : IsMultiHomog A δ)
-    (hB : IsMultiHomog B δ) (htB : t * aeval y B = aeval y A) :
+    (ht : IsIntegral (chartRingZ y c) t) {A B : MRing ι} {δ : K → ℕ} (hA : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog A δ)
+    (hB : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog B δ) (htB : t * aeval y B = aeval y A) :
     ∃ (N : K → ℕ) (n : ℕ) (c' : ℕ → MRing ι),
       (∏ k, (X ⟨k, c k⟩ : MRing ι) ^ N k) * A ^ n +
         ∑ j ∈ Finset.range n, c' j * A ^ j * B ^ (n - j) ∈ mCoordIdeal y := by

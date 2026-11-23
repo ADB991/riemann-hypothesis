@@ -29,7 +29,7 @@ variable {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R'']
 
 theorem lbIso_pull_comp {X X' X'' : Scheme.{0}} {L : LB X} {L' : LB X'} {φ : X' ⟶ X} (h : LBIso (L.pull φ) L')
     (ψ : X'' ⟶ X') : LBIso (L.pull (ψ ≫ φ)) (L'.pull ψ) :=
-  LBIso.chartPull (chartPullSame L _ _ _ ψ fun _ => rfl) (chartPullPull L' ψ ψ rfl) h
+  LBIso.chartPull (chartPullSame L _ _ _ ψ fun _ => rfl) (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull L' ψ ψ rfl) h
 
 theorem dualMapR_comp (f : R →+* R') (g : R' →+* R'') :
     spMap (Chart.dualMapR g) ≫ spMap (Chart.dualMapR f) = spMap (Chart.dualMapR (g.comp f)) := by

@@ -112,9 +112,9 @@ theorem SmallSectionPointHeight.proof (hOrd : SectionOrderAtPoint.Statement) :
   obtain ⟨d, g0, h0, hg0, hh0, hh0y, hgh0⟩ := hbir (s * ∏ k, y ⟨k, c k⟩ ^ (-((τ : ℤ) * A.a k)))
   set G := g0 * IndefiniteRowSideFullHecke.HeightsSet.chartMon c ap with hGdef
   set H := h0 * IndefiniteRowSideFullHecke.HeightsSet.chartMon c an with hHdef
-  have hG : IsMultiHomog G (d + ap) :=
+  have hG : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog G (d + ap) :=
     IndefiniteRowSideFullHecke.HeightsSet.isMultiHomog_mul hg0 (IndefiniteRowSideFullHecke.HeightsSet.isMultiHomog_chartMon c ap)
-  have hH : IsMultiHomog H (d + an) :=
+  have hH : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog H (d + an) :=
     IndefiniteRowSideFullHecke.HeightsSet.isMultiHomog_mul hh0 (IndefiniteRowSideFullHecke.HeightsSet.isMultiHomog_chartMon c an)
   have hdeg : ∀ k, ((d + ap) k : ℤ) = (d + an) k + τ * A.a k := fun k ↦ by
     simp only [Pi.add_apply, Nat.cast_add, hpn k]

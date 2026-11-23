@@ -168,7 +168,7 @@ namespace GlobalTheory.Mem.FinOrder
 variable {L : Type} [Field L] [NumberField L]
 
 theorem exists_pow_congr (v : HeightOneSpectrum (𝓞 L)) (n : ℕ) :
-    ∃ m : ℕ, 0 < m ∧ ∀ x : (v.adicCompletion L)ˣ, IsUnitAt v x →
+    ∃ m : ℕ, 0 < m ∧ ∀ x : (v.adicCompletion L)ˣ, Formalism.L2.Host.IsUnitAt v x →
       Valued.v (((x ^ m : (v.adicCompletion L)ˣ) : v.adicCompletion L) - 1) ≤ WithZero.exp (-(n : ℤ)) := by
   have hu : Valued.v ((atFin v (unif v) : (v.adicCompletion L)ˣ) : v.adicCompletion L) = WithZero.exp (-1 : ℤ) :=
     unif_spec v
@@ -242,7 +242,7 @@ theorem finite_order_of_inf_eq_one : ∀ (L : Type) [Field L] [NumberField L] (�
     (∀ k, χ.inf k = 1) → ∃ n : ℕ, 0 < n ∧ χ.OrderDvd n := by
   intro L _ _ χ h
   obtain ⟨hfin, hlev⟩ := GlobalTheory.T.heckeCharacter_unramified_ae_and_exists_level L χ
-  have hm : ∀ v, ∃ m : ℕ, 0 < m ∧ ∀ x, IsUnitAt v x → χ.loc v x ^ m = 1 := by
+  have hm : ∀ v, ∃ m : ℕ, 0 < m ∧ ∀ x, Formalism.L2.Host.IsUnitAt v x → χ.loc v x ^ m = 1 := by
     intro v
     obtain ⟨n, hn⟩ := hlev v
     obtain ⟨m, hm, hx⟩ := exists_pow_congr v n
@@ -254,7 +254,7 @@ theorem finite_order_of_inf_eq_one : ∀ (L : Type) [Field L] [NumberField L] (�
   choose m hm0 hm using hm
   set M := ∏ v ∈ hfin.toFinset, m v with hM
   have hM0 : 0 < M := Finset.prod_pos fun v _ => hm0 v
-  have hloc : ∀ v x, IsUnitAt v x → χ.loc v x ^ M = 1 := by
+  have hloc : ∀ v x, Formalism.L2.Host.IsUnitAt v x → χ.loc v x ^ M = 1 := by
     intro v x hx
     by_cases hv : χ.UnrAt v
     · rw [hv x hx, one_pow]

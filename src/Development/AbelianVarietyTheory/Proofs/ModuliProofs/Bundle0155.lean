@@ -379,7 +379,7 @@ theorem act_unique (hL : Out.SymLiftSt) {S : Scheme.{0}} [IsLocallyNoetherian S]
 theorem lbIso_pow {X Y : Scheme.{0}} {L : LB X} (hL : L.IsLB) (f : Y ⟶ X) (n : ℕ) (z : ℤ) (hz : z = n) :
     LBIso (LB.LinComb L (K := Fin 1) (fun _ => f) (fun _ => z)) ((lbPow L n).pull f) := by
   subst hz
-  refine LBIso.chartPull (h := f) (A := lbPow L n) (B := lbPow L n) ?_ (chartPullPull _ f f rfl)
+  refine LBIso.chartPull (h := f) (A := lbPow L n) (B := lbPow L n) ?_ (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull _ f f rfl)
     ⟨_, idIso_isGen (LB.isLB_linComb hL _ _)⟩
   have le : ∀ j : Fin 1 → L.ι, LB.wchart L (fun _ : Fin 1 => f) j ≤
       f ⁻¹ᵁ LB.wchart L (fun _ : PUnit => 𝟙 X) (fun _ => j 0) :=

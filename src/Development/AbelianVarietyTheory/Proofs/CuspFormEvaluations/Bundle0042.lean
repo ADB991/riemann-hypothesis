@@ -412,8 +412,8 @@ theorem mem_of_forall_locP {K W : Type} [Field K] [NumberField K] [AddCommGroup 
   exact hs (hIm (show s ∈ I from hsx))
 
 theorem polyAction_one₂ {K Ix : Type} [Field K] [Fintype Ix] {n : ℕ} (lam : Ix → DomWeight n) (F : Pol K Ix n) :
-    actP lam 1 F = F := by
-  simp [actP, detTwK_one, trAct_one]
+    Formalism.L2.DIV.actP lam 1 F = F := by
+  simp [Formalism.L2.DIV.actP, detTwK_one, trAct_one]
 
 theorem nabP_colLat_one {K Ix : Type} [Field K] [NumberField K] [Fintype Ix] {n : ℕ} (lam : Ix → DomWeight n) :
     nabP lam (fun _ => colLat (1 : GL (Fin n) K)) = nabStd K lam := by
