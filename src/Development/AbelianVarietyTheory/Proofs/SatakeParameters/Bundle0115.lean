@@ -445,7 +445,7 @@ theorem isIwVec_of_isParahoricVec (k : Type) [Field k] [ValuativeRel k] [Topolog
       simp
     rw [hv _ (iwahori_le_KO k (Fin (r + t)) (diagT_mem_iwahori hs)) hlow _ hD]
     congr 2
-    rw [torusChar_apply, Fin.prod_univ_add, map_prod]
+    rw [GlobalTheory.SmGL.torusChar_apply, Fin.prod_univ_add, map_prod]
     simp [Fin.append_left, Fin.append_right]
 
 end GlobalTheory.TameParahoric
