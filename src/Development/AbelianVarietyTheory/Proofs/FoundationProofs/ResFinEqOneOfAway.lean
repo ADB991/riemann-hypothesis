@@ -183,11 +183,11 @@ theorem ideleMap_local (v : HeightOneSpectrum (𝓞 F)) (k : Fˣ) :
       (Neutral.B1.localIdele F v (Formalism.L2.Host.atFin v k) : AdeleRing (𝓞 F) F)) = ev w _
     rw [GlobalTheory.Mem.Chr.locF, Units.coe_prod, map_prod]
     by_cases hw : w.under (𝓞 F) = v
-    · rw [Finset.prod_eq_single_of_mem w (mem_aboveF.2 hw) (fun P _ hP => ev_local_ne hP.symm _), ev_local_self]
+    · erw [Finset.prod_eq_single_of_mem w (mem_aboveF.2 hw) (fun P _ hP => ev_local_ne hP.symm _), ev_local_self]
       subst hw
-      rw [ev_local_self]
+      erw [ev_local_self]
       exact finiteCompletionMap_coe F E w k
-    · rw [ev_local_ne hw, map_one]
+    · erw [ev_local_ne hw, map_one]
       exact (Finset.prod_eq_one fun P hP => ev_local_ne (fun e : w = P => hw (e ▸ mem_aboveF.1 hP)) _).symm
 
 
